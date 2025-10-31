@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "64b720c7531445a9",
+        "id": "4f110efb0d67f216",
         "type": "tabs",
         "children": [
           {
-            "id": "46b7d4188fb1728f",
+            "id": "ba58c35ed2f8c65c",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,19 +20,8 @@
               "icon": "lucide-file",
               "title": "Moja Prva Povezana Nota"
             }
-          },
-          {
-            "id": "87f3cf1d9bffe22e",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -163,10 +152,15 @@
       "bases:Create new base": false
     }
   },
-  "active": "87f3cf1d9bffe22e",
+  "active": "ba58c35ed2f8c65c",
   "lastOpenFiles": [
-    "Moje-Teme.md",
+    "Templates/🧩 Osnovni Template.md",
+    "🏠 Home.md",
     "Moja Prva Povezana Nota.md",
+    "Templates/test-template.md",
+    "Templates/Untitled.md",
+    "Untitled 1",
+    "Moje-Teme.md",
     "Untitled.md",
     "Untitled",
     "Grrrbrrr.md",
