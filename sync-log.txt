@@ -1,0 +1,3 @@
+# Sync Log
+## Ovo je log fajl za praćenje sinhronizacija
+
