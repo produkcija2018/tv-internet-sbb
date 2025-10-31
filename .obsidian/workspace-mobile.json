@@ -4,20 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "b3cdbd27bfdd2f29",
+        "id": "64b720c7531445a9",
         "type": "tabs",
         "children": [
           {
-            "id": "73fe2f0571a239d0",
+            "id": "46b7d4188fb1728f",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Moja Prva Povezana Nota.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Moja Prva Povezana Nota"
+            }
+          },
+          {
+            "id": "87f3cf1d9bffe22e",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -147,9 +162,14 @@
       "bases:Create new base": false
     }
   },
-  "active": "73fe2f0571a239d0",
+  "active": "87f3cf1d9bffe22e",
   "lastOpenFiles": [
+    "Moje-Teme.md",
+    "Moja Prva Povezana Nota.md",
+    "Untitled.md",
+    "Untitled",
     "Grrrbrrr.md",
+    "README.md",
     "Test iz Obsidiana.md"
   ]
 }
