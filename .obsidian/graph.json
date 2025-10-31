@@ -1,22 +1,30 @@
 {
   "collapse-filter": true,
-  "search": "",
-  "showTags": false,
+  "search": "#tehnologija",
+  "showTags": true,
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
   "collapse-color-groups": true,
-  "colorGroups": [],
+  "colorGroups": [
+    {
+      "query": "By Tags",
+      "color": {
+        "a": 1,
+        "rgb": 14048348
+      }
+    }
+  ],
   "collapse-display": true,
   "showArrow": false,
   "textFadeMultiplier": 0,
-  "nodeSizeMultiplier": 4.41543859649123,
-  "lineSizeMultiplier": 4.73350877192983,
+  "nodeSizeMultiplier": 4.75070175438596,
+  "lineSizeMultiplier": 3.81368421052632,
   "collapse-forces": true,
   "centerStrength": 0.518713248970312,
   "repelStrength": 18.0350877192982,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 2.1967269877614433,
+  "scale": 1.504571344119389,
   "close": false
 }
