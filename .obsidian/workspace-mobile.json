@@ -8,49 +8,273 @@
         "type": "tabs",
         "children": [
           {
-            "id": "365590a1d5ef21b8",
+            "id": "2bc02cc9418b720e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Moje Zabeleške/🚀 Git Sinhronizacija Sistema.md",
+                "file": "KOMPLETNI TUTORIJAL/🧭 Kompletni Tutorijal Setup-a.md.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "🚀 Git Sinhronizacija Sistema"
+              "title": "🧭 Kompletni Tutorijal Setup-a.md"
             }
           },
           {
-            "id": "f7285a74772be328",
+            "id": "b389350ddd1370e2",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "KOMPLETNI TUTORIJAL/🔐 Faza 2 - Git i Sinhronizacija.md",
+                "file": "KOMPLETNI TUTORIJAL/4.3 Templater Plugin.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "🔐 Faza 2 - Git i Sinhronizacija"
+              "title": "4.3 Templater Plugin"
             }
           },
           {
-            "id": "cfca0b269fec4a1e",
+            "id": "1816e7e79c061a8a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "KOMPLETNI TUTORIJAL/1.3 Kreiranje GitHub Naloga.md",
+                "file": "KOMPLETNI TUTORIJAL/⚡ Faza 5 - Automatizacija.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "1.3 Kreiranje GitHub Naloga"
+              "title": "⚡ Faza 5 - Automatizacija"
+            }
+          },
+          {
+            "id": "48df46cbc2a4b267",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/5.2 Termux Widget.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "5.2 Termux Widget"
+            }
+          },
+          {
+            "id": "3a8026ffbaa63945",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/5.3 Dodavanje Widgeta na Home Screen.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "5.3 Dodavanje Widgeta na Home Screen"
+            }
+          },
+          {
+            "id": "992f4177e93942a7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/🔧 Faza 6 - Pluginovi.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🔧 Faza 6 - Pluginovi"
+            }
+          },
+          {
+            "id": "6ca46fda4dee17f3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/6.2 Note Kreirane Danas.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "6.2 Note Kreirane Danas"
+            }
+          },
+          {
+            "id": "18fee060abb9c7a9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/6.2-6.3 Calendar Plugin- Kanban Plugin.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "6.2-6.3 Calendar Plugin- Kanban Plugin"
+            }
+          },
+          {
+            "id": "0062519368de6c3e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/📊 Faza 7 - Produktivnost Sistem.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "📊 Faza 7 - Produktivnost Sistem"
+            }
+          },
+          {
+            "id": "f5f646a781782a97",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/7.2 Automatski Izveštaji - text sintakse.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "7.2 Automatski Izveštaji - text sintakse"
+            }
+          },
+          {
+            "id": "36c81d9370fd44ae",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/7.3 Automatski Izveštaji.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "7.3 Automatski Izveštaji"
+            }
+          },
+          {
+            "id": "68567674e54ae844",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/🌐 Faza 8 - Mreža Znanja.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🌐 Faza 8 - Mreža Znanja"
+            }
+          },
+          {
+            "id": "c2a028de42382ce9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/Napredno povezivanje.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Napredno povezivanje"
+            }
+          },
+          {
+            "id": "87ee46e0e7649b49",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/8.3 Organizacija Znanja.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "8.3 Organizacija Znanja"
+            }
+          },
+          {
+            "id": "1d0146ca36f4e433",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/8.4 Napredne Strategije.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "8.4 Napredne Strategije"
+            }
+          },
+          {
+            "id": "b4da66c6e3a4e4f1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/9.1 ŠTA DALJE.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "9.1 ŠTA DALJE"
+            }
+          },
+          {
+            "id": "05943d8f7661bda2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/9.1 ŠTA DALJE.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "9.1 ŠTA DALJE"
+            }
+          },
+          {
+            "id": "334793ac048cdd78",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/9.2 Problemi.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "9.2 Problemi"
+            }
+          },
+          {
+            "id": "64cd219b3ad5f5c7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI TUTORIJAL/🎯 Faza 1 - Preduslovi i Priprema.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🎯 Faza 1 - Preduslovi i Priprema"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 18
       }
     ],
     "direction": "vertical"
@@ -127,7 +351,6 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "🚀 Git Sinhronizacija Sistema.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -192,40 +415,40 @@
       "bases:Create new base": false
     }
   },
-  "active": "ebd90ec95cfa2ce6",
+  "active": "64cd219b3ad5f5c7",
   "lastOpenFiles": [
-    "KOMPLETNI TUTORIJAL/🔐 Faza 2 - Git i Sinhronizacija.md",
-    "KOMPLETNI TUTORIJAL/1.3 Kreiranje GitHub Naloga.md",
     "KOMPLETNI TUTORIJAL/🧭 Kompletni Tutorijal Setup-a.md.md",
-    "KOMPLETNI TUTORIJAL/🎯 Faza 1 - Preduslovi i Priprema.md",
-    "🎯 Faza 1 - Preduslovi i Priprema.md.md",
-    "KOMPLETNI TUTORIJAL.md",
+    "KOMPLETNI TUTORIJAL/9.3 Poslednje ažuriranje.md",
+    "KOMPLETNI TUTORIJAL/9.2 Problemi.md",
+    "KOMPLETNI TUTORIJAL/9.1 ŠTA DALJE.md",
+    "KOMPLETNI TUTORIJAL/❌ Rešavanje Problema.md",
+    "KOMPLETNI TUTORIJAL/Rešavanje Problema.md.md",
+    "KOMPLETNI TUTORIJAL/8.4 Napredne Strategije.md",
+    "KOMPLETNI TUTORIJAL/8.3 Organizacija Znanja.md",
+    "KOMPLETNI TUTORIJAL/Napredno povezivanje.md",
+    "KOMPLETNI TUTORIJAL/🌐 Faza 8 - Mreža Znanja.md",
+    "KOMPLETNI TUTORIJAL/7.4 Redovno Održavanje.md",
+    "KOMPLETNI TUTORIJAL/7.3 Automatski Izveštaji.md",
+    "KOMPLETNI TUTORIJAL/7.2 Automatski Izveštaji - text sintakse.md",
+    "KOMPLETNI TUTORIJAL/📊 Faza 7 - Produktivnost Sistem.md",
+    "KOMPLETNI TUTORIJAL/6.4 Testiranje Pluginova.md",
+    "KOMPLETNI TUTORIJAL/6.2-6.3 Calendar Plugin- Kanban Plugin.md",
+    "KOMPLETNI TUTORIJAL/6.2 Note Kreirane Danas.md",
+    "KOMPLETNI TUTORIJAL/🔧 Faza 6 - Pluginovi.md",
+    "KOMPLETNI TUTORIJAL/5.4 Testiranje Automatizacije.md",
+    "KOMPLETNI TUTORIJAL/5.3 Dodavanje Widgeta na Home Screen.md",
+    "KOMPLETNI TUTORIJAL/5.2 Termux Widget.md",
+    "KOMPLETNI TUTORIJAL/⚡ Faza 5 - Automatizacija.md",
+    "KOMPLETNI TUTORIJAL/4.4 Testiranje Template-a.md",
+    "KOMPLETNI TUTORIJAL/4.3 Templater Plugin.md",
+    "KOMPLETNI TUTORIJAL/📝 Faza 4 - Template Sistem.md",
+    "KOMPLETNI TUTORIJAL/4.2 Kreiranje Prvih Template-a..md",
     "Moje Zabeleške",
-    "Moje Zabeleške/🚀 Git Sinhronizacija Sistema.md",
-    "Untitled 1.md",
-    "Moje Zabeleške/🔧 Graph View Podešavanja.md.md",
-    "Moje Zabeleške/📋 Glavni Projekti.md.md",
     "KOMPLETNI TUTORIJAL",
-    "Moje Zabeleške/Moje-Teme.md",
-    "README.md",
-    "Test iz Obsidiana.md",
-    "Grrrbrrr.md",
-    "Untitled 2.md",
-    "Untitled 3.md",
-    "Moje Zabeleške/📊 Komandna Tabla.md.md",
-    "Daily Notes/Untitled.md",
-    "Moje Zabeleške/Moja Prva Povezana Nota.md",
-    "Moje Zabeleške/🚀 Projekat - Unapređenje Vault-a.md.md",
     "Untitled 2",
-    "Moje Zabeleške/📈 Automatski Izveštaji.md",
     "T",
-    "Moje Zabeleške/🏠 Home.md",
     "Reviews\"",
     "\"Weekly",
-    "Templates/📅 Nedeljni Pregled.md",
-    "Templates/📅 Dnevna Nota.md",
-    "Templates/Untitled 1.md",
-    "Templates/🧩 Osnovni Template.md",
     "Untitled 1"
   ]
 }
