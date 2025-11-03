@@ -447,16 +447,320 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CENTRALNA MAPA/Folder Struktura.md",
+                "file": "CENTRALNA MAPA/01📋  FAZA 1 OSNOVNA INFRASTRUKTURA ✅.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Folder Struktura"
+              "title": "01📋  FAZA 1 OSNOVNA INFRASTRUKTURA ✅"
+            }
+          },
+          {
+            "id": "15282dd26a696ae0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI PROCES/FAZA 3 TEMPLATE SISTEM.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "FAZA 3 TEMPLATE SISTEM"
+            }
+          },
+          {
+            "id": "c4f0ba9137047f44",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI PROCES/FAZA 4 AUTOMATIZACIJA.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "FAZA 4 AUTOMATIZACIJA"
+            }
+          },
+          {
+            "id": "96533ff22745a9d1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI PROCES/FAZA 5 PLUGINOVI.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "FAZA 5 PLUGINOVI"
+            }
+          },
+          {
+            "id": "7ef541f07d2645cf",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI PROCES/FAZA 5 PLUGINOVI.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "FAZA 5 PLUGINOVI"
+            }
+          },
+          {
+            "id": "42c4da717839c0f4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "FAZA 6 MAPA ZNANJA.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "FAZA 6 MAPA ZNANJA"
+            }
+          },
+          {
+            "id": "574ce567dfe69365",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "FAZA 7 Struktura.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "FAZA 7 Struktura"
+            }
+          },
+          {
+            "id": "c8a6ea46f59fa4e9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "FAZA 7 Struktura.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "FAZA 7 Struktura"
+            }
+          },
+          {
+            "id": "e1fabfc5e5873233",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "FAZA 9 ŠTA JE ŠTA I GDE SE KORISTI.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "FAZA 9 ŠTA JE ŠTA I GDE SE KORISTI"
+            }
+          },
+          {
+            "id": "6c795f431a6319b5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "KOMPLETNI PROCES/FAZA 9.1 KRATKOROČNI PLAN.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "FAZA 9.1 KRATKOROČNI PLAN"
+            }
+          },
+          {
+            "id": "e70a77c8ce0b1afb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📋 METODA 1 AUTOMATSKI DATAVIEW INDEKS.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "📋 METODA 1 AUTOMATSKI DATAVIEW INDEKS"
+            }
+          },
+          {
+            "id": "50a43bd61176bcca",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🎯 METODA 2 SIROČAD - NEPOVEZANE NOTE.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🎯 METODA 2 SIROČAD - NEPOVEZANE NOTE"
+            }
+          },
+          {
+            "id": "be64e72712762990",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🔧 METODA 3 RUČNO POVEZIVANJE KROZ HOME NOTU.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🔧 METODA 3 RUČNO POVEZIVANJE KROZ HOME NOTU"
+            }
+          },
+          {
+            "id": "34681abd2054a540",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🚀 METODA 4 KREIRAJTE -SPONGE-NOTE KOJE PRIVLAČE SVE.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🚀 METODA 4 KREIRAJTE -SPONGE-NOTE KOJE PRIVLAČE SVE"
+            }
+          },
+          {
+            "id": "0bc9674a719c04c3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "💡 PRAKTIČNI KORACI ZA POČETAK.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "💡 PRAKTIČNI KORACI ZA POČETAK"
+            }
+          },
+          {
+            "id": "ea17d2b6d5190e4b",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          },
+          {
+            "id": "88cd413230b2768e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "01 LogSeq može biti bolji za učenje.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "01 LogSeq može biti bolji za učenje"
+            }
+          },
+          {
+            "id": "f0e1ddd02dd242b4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "02 Kako bi LogSeq sistem izgledao.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "02 Kako bi LogSeq sistem izgledao"
+            }
+          },
+          {
+            "id": "ad31f321da1e6b7c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "03 EKSPERIMENT TESTIRAJTE LOGSEQLOGSEQLOGSEQLOGSEQ.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "03 EKSPERIMENT TESTIRAJTE LOGSEQLOGSEQLOGSEQLOGSEQ"
+            }
+          },
+          {
+            "id": "59c0ba0b377ef7b4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Logseq - opis - Budućnost/🔮 BUDUĆNOST EMERGING SOLUTIONS.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🔮 BUDUĆNOST EMERGING SOLUTIONS"
+            }
+          },
+          {
+            "id": "2603c17d979401da",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "LOGSEQ/🚀 KORAK 1 INSTALACIJA I SETUP.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🚀 KORAK 1 INSTALACIJA I SETUP"
+            }
+          },
+          {
+            "id": "1ca834e1ec52460f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📝 KORAK 2 PARALELNI TEST - PYTHON TUTORIJAL.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "📝 KORAK 2 PARALELNI TEST - PYTHON TUTORIJAL"
+            }
+          },
+          {
+            "id": "eca791a0c8757e7d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Korak 2.1.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Korak 2.1"
             }
           }
         ],
-        "currentTab": 31
+        "currentTab": 53
       }
     ],
     "direction": "vertical"
@@ -597,43 +901,43 @@
       "bases:Create new base": false
     }
   },
-  "active": "762811fb6a69f206",
+  "active": "eca791a0c8757e7d",
   "lastOpenFiles": [
-    "CENTRALNA MAPA/00 📊 G L A V N I DATAVIEW INDEKS.md",
-    "CENTRALNA MAPA/07🚀FAZA 7 SINHRONIZACIJA I TEST.md",
-    "CENTRALNA MAPA/06🎯 FAZA 6 BUDUĆI PRAVCI RAZVOJA.md",
-    "CENTRALNA MAPA/05🌐 FAZA 5 MREŽA ZNANJA 🚧.md",
-    "CENTRALNA MAPA/🧭 Mapa Znanja - Čitav Put.md.md",
-    "CENTRALNA MAPA/04📊 FAZA 4 PRODUKTIVNOST SISTEM ✅.md",
-    "CENTRALNA MAPA/03🚀FAZA 3 PLUGINOVI I AUTOMATIZACIJA ✅.md",
-    "CENTRALNA MAPA/02🔧 FAZA 2 OBSIDIAN SETUP ✅.md",
-    "CENTRALNA MAPA/01 FAZA 1 OSNOVNA INFRASTRUKTURA ✅.md",
+    "📝 KORAK 2 PARALELNI TEST - PYTHON TUTORIJAL.md",
+    "Korak 2.1.md",
+    "LOGSEQ/🚀 KORAK 1 INSTALACIJA I SETUP.md",
+    "Logseq - opis - Budućnost/🔮 BUDUĆNOST EMERGING SOLUTIONS.md",
+    "Logseq - opis - Budućnost",
+    "Logseq - opis - Budućnost/03 EKSPERIMENT TESTIRAJTE LOGSEQLOGSEQLOGSEQLOGSEQ.md",
     "Untitled",
+    "Logseq - opis - Budućnost/02 Kako bi LogSeq sistem izgledao.md",
+    "Logseq - opis - Budućnost/01 LogSeq može biti bolji za učenje.md",
+    "LOGSEQ",
+    "Moje Zabeleške/🏠 Home.md",
+    "POVEZIVANJE NOTE SA INDEXOM/🎯 BRZI NAČIN ZA POČETAK.md",
+    "POVEZIVANJE NOTE SA INDEXOM/💡 PRAKTIČNI KORACI ZA POČETAK.md",
+    "POVEZIVANJE NOTE SA INDEXOM/🚀 METODA 4 KREIRAJTE -SPONGE-NOTE KOJE PRIVLAČE SVE.md",
+    "POVEZIVANJE NOTE SA INDEXOM/🔧 METODA 3 RUČNO POVEZIVANJE KROZ HOME NOTU.md",
+    "POVEZIVANJE NOTE SA INDEXOM/🎯 METODA 2 SIROČAD - NEPOVEZANE NOTE.md",
+    "POVEZIVANJE NOTE SA INDEXOM/📋 METODA 1 AUTOMATSKI DATAVIEW INDEKS.md",
+    "KOMPLETNI PROCES/FAZA 9.1 KRATKOROČNI PLAN.md",
+    "POVEZIVANJE NOTE SA INDEXOM",
+    "T",
+    "KOMPLETNI PROCES/FAZA 9 ŠTA JE ŠTA I GDE SE KORISTI.md",
+    "KOMPLETNI PROCES/FAZA 7 Struktura.md",
+    "KOMPLETNI PROCES/FAZA 8 PROVERA SISTEMA.md",
+    "KOMPLETNI PROCES/FAZA 6 MAPA ZNANJA.md",
+    "KOMPLETNI PROCES/FAZA 5 PLUGINOVI.md",
+    "KOMPLETNI PROCES/FAZA 4 AUTOMATIZACIJA.md",
+    "KOMPLETNI PROCES/FAZA 3 TEMPLATE SISTEM.md",
+    "Moje Zabeleške/📈 AUTOMATSKI IZVEŠTAJI.md.md",
+    "Moje Zabeleške/📈 Automatski Izveštaji.md",
+    "CENTRALNA MAPA/01📋  FAZA 1 OSNOVNA INFRASTRUKTURA ✅.md",
     "CENTRALNA MAPA/Folder Struktura.md",
-    "KOMPLETNI PROCES/FAZA 1 GIT SINHRONIZACIJA - TERMUX.md",
     "CENTRALNA MAPA",
     "KOMPLETNI PROCES",
-    "Untitled 1",
-    "KOMPLETNI PROCES/FAZA 3 TEMPLATE SISTEM.md",
-    "KOMPLETNI PROCES/FAZA 2 OBSIDIAN SETUP.md",
-    "KOMPLETNI TUTORIJAL/🧭 Kompletni Tutorijal Setup-a.md.md",
-    "KOMPLETNI TUTORIJAL/📊 Faza 7 - Produktivnost Sistem.md",
-    "KOMPLETNI TUTORIJAL/🔧 Faza 6 - Pluginovi.md",
-    "KOMPLETNI TUTORIJAL/🎯 Faza 1 - Preduslovi i Priprema.md",
-    "KOMPLETNI TUTORIJAL/9.3 Poslednje ažuriranje.md",
-    "KOMPLETNI TUTORIJAL/9.2 Problemi.md",
-    "KOMPLETNI TUTORIJAL/9.1 ŠTA DALJE.md",
-    "KOMPLETNI TUTORIJAL/❌ Rešavanje Problema.md",
-    "KOMPLETNI TUTORIJAL/Rešavanje Problema.md.md",
-    "KOMPLETNI TUTORIJAL/8.4 Napredne Strategije.md",
-    "KOMPLETNI TUTORIJAL/8.3 Organizacija Znanja.md",
-    "KOMPLETNI TUTORIJAL/Napredno povezivanje.md",
-    "KOMPLETNI TUTORIJAL/🌐 Faza 8 - Mreža Znanja.md",
     "Moje Zabeleške",
     "KOMPLETNI TUTORIJAL",
-    "Untitled 2",
-    "T",
-    "Reviews\"",
-    "\"Weekly"
+    "Untitled 2"
   ]
 }
