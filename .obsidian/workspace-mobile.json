@@ -751,16 +751,58 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Korak 2.1.md",
+                "file": "LOGSEQ/KORAK 2.1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Korak 2.1"
+              "title": "KORAK 2.1"
+            }
+          },
+          {
+            "id": "46e5bc7086e651c7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "LOGSEQ/KORAK 3.1.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "KORAK 3.1"
+            }
+          },
+          {
+            "id": "9feea5313122db7d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🔧 KORAK 7 LOGSEQ SPECIFIČNI TEMPLATEI.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🔧 KORAK 7 LOGSEQ SPECIFIČNI TEMPLATEI"
+            }
+          },
+          {
+            "id": "6336490d4ed7b8e2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🚀 KORAK 8 SINHRONIZACIJA I BACKUP.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "🚀 KORAK 8 SINHRONIZACIJA I BACKUP"
             }
           }
         ],
-        "currentTab": 53
+        "currentTab": 56
       }
     ],
     "direction": "vertical"
@@ -901,43 +943,43 @@
       "bases:Create new base": false
     }
   },
-  "active": "eca791a0c8757e7d",
+  "active": "ebd90ec95cfa2ce6",
   "lastOpenFiles": [
-    "📝 KORAK 2 PARALELNI TEST - PYTHON TUTORIJAL.md",
-    "Korak 2.1.md",
+    "OBSIDIAN - TERMUX - GIT/Untitled",
+    "OBSIDIAN - TERMUX - GIT",
+    "🚀 KORAK 8 SINHRONIZACIJA I BACKUP.md",
+    "Untitled.md",
+    "LOGSEQ/🔧 KORAK 7 LOGSEQ SPECIFIČNI TEMPLATEI.md",
+    "LOGSEQ/KORAK 3.1.md",
+    "LOGSEQ/KORAK 2.1.md",
+    "LOGSEQ/📝 KORAK 2 PARALELNI TEST - PYTHON TUTORIJAL.md",
     "LOGSEQ/🚀 KORAK 1 INSTALACIJA I SETUP.md",
-    "Logseq - opis - Budućnost/🔮 BUDUĆNOST EMERGING SOLUTIONS.md",
-    "Logseq - opis - Budućnost",
-    "Logseq - opis - Budućnost/03 EKSPERIMENT TESTIRAJTE LOGSEQLOGSEQLOGSEQLOGSEQ.md",
-    "Untitled",
-    "Logseq - opis - Budućnost/02 Kako bi LogSeq sistem izgledao.md",
-    "Logseq - opis - Budućnost/01 LogSeq može biti bolji za učenje.md",
+    "LOGSEQ/Logseq - opis - Budućnost/🔮 BUDUĆNOST EMERGING SOLUTIONS.md",
+    "LOGSEQ/Logseq - opis - Budućnost",
+    "LOGSEQ/Logseq - opis - Budućnost/03 EKSPERIMENT TESTIRAJTE LOGSEQLOGSEQLOGSEQLOGSEQ.md",
+    "LOGSEQ/Logseq - opis - Budućnost/02 Kako bi LogSeq sistem izgledao.md",
+    "LOGSEQ/Logseq - opis - Budućnost/01 LogSeq može biti bolji za učenje.md",
     "LOGSEQ",
     "Moje Zabeleške/🏠 Home.md",
-    "POVEZIVANJE NOTE SA INDEXOM/🎯 BRZI NAČIN ZA POČETAK.md",
-    "POVEZIVANJE NOTE SA INDEXOM/💡 PRAKTIČNI KORACI ZA POČETAK.md",
-    "POVEZIVANJE NOTE SA INDEXOM/🚀 METODA 4 KREIRAJTE -SPONGE-NOTE KOJE PRIVLAČE SVE.md",
-    "POVEZIVANJE NOTE SA INDEXOM/🔧 METODA 3 RUČNO POVEZIVANJE KROZ HOME NOTU.md",
-    "POVEZIVANJE NOTE SA INDEXOM/🎯 METODA 2 SIROČAD - NEPOVEZANE NOTE.md",
-    "POVEZIVANJE NOTE SA INDEXOM/📋 METODA 1 AUTOMATSKI DATAVIEW INDEKS.md",
-    "KOMPLETNI PROCES/FAZA 9.1 KRATKOROČNI PLAN.md",
-    "POVEZIVANJE NOTE SA INDEXOM",
+    "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/🎯 BRZI NAČIN ZA POČETAK.md",
+    "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/💡 PRAKTIČNI KORACI ZA POČETAK.md",
+    "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/🚀 METODA 4 KREIRAJTE -SPONGE-NOTE KOJE PRIVLAČE SVE.md",
+    "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/🔧 METODA 3 RUČNO POVEZIVANJE KROZ HOME NOTU.md",
+    "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/🎯 METODA 2 SIROČAD - NEPOVEZANE NOTE.md",
+    "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/📋 METODA 1 AUTOMATSKI DATAVIEW INDEKS.md",
+    "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 9.1 KRATKOROČNI PLAN.md",
+    "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM",
     "T",
-    "KOMPLETNI PROCES/FAZA 9 ŠTA JE ŠTA I GDE SE KORISTI.md",
-    "KOMPLETNI PROCES/FAZA 7 Struktura.md",
-    "KOMPLETNI PROCES/FAZA 8 PROVERA SISTEMA.md",
-    "KOMPLETNI PROCES/FAZA 6 MAPA ZNANJA.md",
-    "KOMPLETNI PROCES/FAZA 5 PLUGINOVI.md",
-    "KOMPLETNI PROCES/FAZA 4 AUTOMATIZACIJA.md",
-    "KOMPLETNI PROCES/FAZA 3 TEMPLATE SISTEM.md",
-    "Moje Zabeleške/📈 AUTOMATSKI IZVEŠTAJI.md.md",
-    "Moje Zabeleške/📈 Automatski Izveštaji.md",
-    "CENTRALNA MAPA/01📋  FAZA 1 OSNOVNA INFRASTRUKTURA ✅.md",
-    "CENTRALNA MAPA/Folder Struktura.md",
-    "CENTRALNA MAPA",
-    "KOMPLETNI PROCES",
+    "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 9 ŠTA JE ŠTA I GDE SE KORISTI.md",
+    "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 7 Struktura.md",
+    "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 8 PROVERA SISTEMA.md",
+    "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 6 MAPA ZNANJA.md",
+    "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 5 PLUGINOVI.md",
+    "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 4 AUTOMATIZACIJA.md",
+    "OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA",
+    "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES",
     "Moje Zabeleške",
-    "KOMPLETNI TUTORIJAL",
+    "OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL",
     "Untitled 2"
   ]
 }
