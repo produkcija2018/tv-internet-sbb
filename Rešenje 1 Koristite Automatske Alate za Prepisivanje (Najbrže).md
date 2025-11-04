@@ -1,0 +1,1 @@
+Postoje alati koji mogu da "isčitaju" govor sa videa i pretvore ga u tekst. Ovo je moderna zamena za transkript.
