@@ -863,12 +863,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Rešenje 1 Koristite Automatske Alate za Prepisivanje (Najbrže).md",
+                "file": "TRANSKRIPT/Ako Tutorial nema TRANSKRIPT/Rešenje 2 Aktivno Slušanje i Ručno Beleženje (Najučinkovitije).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Rešenje 1 Koristite Automatske Alate za Prepisivanje (Najbrže)"
+              "title": "Rešenje 2 Aktivno Slušanje i Ručno Beleženje (Najučinkovitije)"
             }
           }
         ],
@@ -1013,10 +1013,13 @@
       "bases:Create new base": false
     }
   },
-  "active": "36a3cde1fad1d98f",
+  "active": "ebd90ec95cfa2ce6",
   "lastOpenFiles": [
+    "TRANSKRIPT/Ako Tutorial nema TRANSKRIPT/Rešenje 1 Koristite Automatske Alate za Prepisivanje (Najbrže).md",
+    "TRANSKRIPT/Ako Tutorial nema TRANSKRIPT/Rešenje 2 Aktivno Slušanje i Ručno Beleženje (Najučinkovitije).md",
+    "Templates/🚀 Projekat Template.md",
+    "OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA/🧭 Mapa Znanja - Čitav Put.md.md",
     "TRANSKRIPT/Korak 4 Ručno strukturirajte po konceptima.md",
-    "Rešenje 1 Koristite Automatske Alate za Prepisivanje (Najbrže).md",
     "TRANSKRIPT/Ako Tutorial nema TRANSKRIPT",
     "TRANSKRIPT/Korak 3 Kopirajte transkript u novu belešku u Obsidianu-LogSeq-u.md",
     "TRANSKRIPT/Korak 2 Koristite YouTube transkript (tekst snimka).md",
@@ -1044,11 +1047,8 @@
     "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/🔧 METODA 3 RUČNO POVEZIVANJE KROZ HOME NOTU.md",
     "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/🎯 METODA 2 SIROČAD - NEPOVEZANE NOTE.md",
     "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/📋 METODA 1 AUTOMATSKI DATAVIEW INDEKS.md",
-    "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 9.1 KRATKOROČNI PLAN.md",
     "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM",
     "T",
-    "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 9 ŠTA JE ŠTA I GDE SE KORISTI.md",
-    "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 7 Struktura.md",
     "OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA",
     "OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES"
   ]
