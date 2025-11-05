@@ -1,14 +1,82 @@
 {
-	"nodes":[
-		{"id":"central","type":"text","text":"# 🎯 TV & INTERNET PAKETI SAAS\n\n## 💰 Budžet: Minimalan\n## 🎯 Cilj: Profitabilan SaaS\n## 🛠️ Tehnologije: Obsidian + Termux + Git + AI\n## 📈 Metrike: Posete, Konverzije, Klijenti","x":0,"y":0,"width":400,"height":300,"color":"4"},
-		{"id":"trenutna-nedelja","type":"text","text":"## 🧩 TEKUĆA NEDELJA\n\n- [ ] GitHub Repozitorijum\n- [ ] GitHub Pages Setup\n- [ ] Obsidian Git Plugin\n- [ ] Osnovna struktura sajta\n- [ ] Prvi deploy test","x":-800,"y":-200,"width":300,"height":250,"color":"1"},
-		{"id":"sledeca-nedelja","type":"text","text":"## 📅 SLEDEĆA NEDELJA\n\n- [ ] Telegram Bot registracija\n- [ ] Osnovne AI komande\n- [ ] Baza čestih pitanja\n- [ ] Kontakt forma","x":-800,"y":100,"width":300,"height":220,"color":"1"},
-		{"id":"u-toku","type":"text","text":"## 🟡 U TOKU\n\n• GitHub Pages konfiguracija\n• Canvas setup","x":625,"y":-420,"width":250,"height":180,"color":"3"},
-		{"id":"github","type":"text","text":"## 🐙 GITHUB\n\n✅ Repozitorijum kreiran\n🌐 Pages aktiviran\n🤖 Auto-sync u toku","x":500,"y":-220,"width":250,"height":150,"color":"2"},
-		{"id":"zavrseno","type":"text","text":"## ✅ ZAVRŠENO\n\n• GitHub nalog kreiran\n• Canvas template napravljen","x":680,"y":-30,"width":250,"height":180,"color":"2"},
-		{"id":"telegram-bot","type":"text","text":"## 🤖 TELEGRAM BOT\\n\\n✅ Bot aktiviran\\n🤖 AI funkcionalnosti\\n💬 Auto-odgovori\\n🟢 Online status\\n\\n@tv_internet_paketi_bot","x":500,"y":150,"width":280,"height":310,"color":"3"}
-	],
-	"edges":[
-		{"fromNode":"central","fromSide":"right","toNode":"telegram-bot","toSide":"left"}
-	]
+  "nodes": [
+    {
+      "id": "central",
+      "type": "text",
+      "text": "# \ud83c\udfaf TV & INTERNET PAKETI SAAS\n\n## \ud83d\udcb0 Bud\u017eet: Minimalan\n## \ud83c\udfaf Cilj: Profitabilan SaaS\n## \ud83d\udee0\ufe0f Tehnologije: Obsidian + Termux + Git + AI\n## \ud83d\udcc8 Metrike: Posete, Konverzije, Klijenti",
+      "x": 0,
+      "y": 0,
+      "width": 400,
+      "height": 300,
+      "color": "4"
+    },
+    {
+      "id": "trenutna-nedelja",
+      "type": "text",
+      "text": "## \ud83e\udde9 TEKU\u0106A NEDELJA\n\n- [ ] GitHub Repozitorijum\n- [ ] GitHub Pages Setup\n- [ ] Obsidian Git Plugin\n- [ ] Osnovna struktura sajta\n- [ ] Prvi deploy test",
+      "x": -800,
+      "y": -200,
+      "width": 300,
+      "height": 250,
+      "color": "1"
+    },
+    {
+      "id": "sledeca-nedelja",
+      "type": "text",
+      "text": "## \ud83d\udcc5 SLEDE\u0106A NEDELJA\n\n- [ ] Telegram Bot registracija\n- [ ] Osnovne AI komande\n- [ ] Baza \u010destih pitanja\n- [ ] Kontakt forma",
+      "x": -800,
+      "y": 100,
+      "width": 300,
+      "height": 220,
+      "color": "1"
+    },
+    {
+      "id": "u-toku",
+      "type": "text",
+      "text": "## \ud83d\udfe1 U TOKU\n\n\u2022 GitHub Pages konfiguracija\n\u2022 Canvas setup",
+      "x": 625,
+      "y": -420,
+      "width": 250,
+      "height": 180,
+      "color": "3"
+    },
+    {
+      "id": "github",
+      "type": "text",
+      "text": "## \ud83d\udc19 GITHUB\n\n\u2705 Repozitorijum kreiran\n\ud83c\udf10 Pages aktiviran\n\ud83e\udd16 Auto-sync u toku",
+      "x": 500,
+      "y": -220,
+      "width": 250,
+      "height": 150,
+      "color": "2"
+    },
+    {
+      "id": "zavrseno",
+      "type": "text",
+      "text": "## \u2705 ZAVR\u0160ENO\n\n\u2022 GitHub nalog kreiran\n\u2022 Canvas template napravljen",
+      "x": 680,
+      "y": -30,
+      "width": 250,
+      "height": 180,
+      "color": "2"
+    },
+    {
+      "id": "telegram-bot",
+      "type": "text",
+      "text": "## \ud83e\udd16 TVINTERNET SBB BOT\n\n\u2705 **STATUS: AKTIVAN**\n\ud83d\udcca HTTP zahtevi: 200 OK\n\ud83d\udcac Komande postavljene\n\ud83c\udfaf Keyboard aktiviran\n\ud83d\udc65 Spreman za klijente\n\n**Token:** 8105923056:AAFdk-iR...\n**Username:** @TVInternetSBB_bot",
+      "x": 500,
+      "y": 100,
+      "width": 320,
+      "height": 220,
+      "color": "2"
+    }
+  ],
+  "edges": [
+    {
+      "fromNode": "central",
+      "fromSide": "right",
+      "toNode": "telegram-bot",
+      "toSide": "left"
+    }
+  ]
 }

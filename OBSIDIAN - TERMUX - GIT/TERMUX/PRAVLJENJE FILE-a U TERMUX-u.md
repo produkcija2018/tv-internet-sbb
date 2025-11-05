@@ -174,3 +174,5 @@ Izaberi "Paste"
 -------------------------------
 Ctrl+X → Y → Enter da sačuvaš
 
+
+python3 tv_internet_sbb_complete.py
