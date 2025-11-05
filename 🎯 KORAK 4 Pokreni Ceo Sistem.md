@@ -28,3 +28,9 @@ sed -i '8105923056:AAFdk-iRcIgmVGHxdAE7R-qhTNoq7WbRTW0/' tv_internet_sbb_bot.py
 git add .
 git commit -m "Dodat kompletan TVInternetSBB.rs sistem"
 git push origin main
+
+
+https://produkcija2018.github.io/tv-internet-sbb
+
+
+https://github.com/produkcija2018/tv-internet-sbb
