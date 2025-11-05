@@ -1,0 +1,7 @@
+{
+	"nodes":[
+		{"id":"b6292b11fd60a3e0","x":120,"y":261,"width":252,"height":299,"type":"text","text":"🎯 TV & INTERNET PAKETI SAAS\n│\n├── 💰 Budžet: Minimalan\n├── 🎯 Cilj: Profitabilan SaaS\n├── 🛠️ Tehnologije: Obsidian + Termux + Git + AI\n└── 📈 Metrike: Posete, Konverzije, Klijenti"},
+		{"id":"71793eeb7df5bb18","x":200,"y":640,"width":261,"height":180,"type":"text","text":"[ ] GitHub Repozitorijum\n[ ] GitHub Pages Setup\n[ ] Obsidian Git Plugin\n[ ] Osnovna struktura sajta\n[ ] Prvi deploy test"}
+	],
+	"edges":[]
+}

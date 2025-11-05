@@ -23,8 +23,68 @@
               "icon": "lucide-layout-dashboard",
               "title": "Untitled"
             }
+          },
+          {
+            "id": "e17b20781c91d60b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Paketi Tv Internet.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Paketi Tv Internet"
+            }
+          },
+          {
+            "id": "b7142ed2bd8bacab",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "Tv -Internet Projekat.canvas.canvas",
+                "viewState": {
+                  "x": 1.2714653015136719,
+                  "y": 76.04995727539062,
+                  "zoom": 0
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Tv -Internet Projekat.canvas"
+            }
+          },
+          {
+            "id": "8b2acee7af00eafd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Untitled.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Untitled"
+            }
+          },
+          {
+            "id": "f0d47b41c39075a8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "OBSIDIAN - TERMUX - GIT/TERMUX/PRAVLJENJE FILE-a U TERMUX-u.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "PRAVLJENJE FILE-a U TERMUX-u"
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -165,17 +225,23 @@
       "bases:Create new base": false
     }
   },
-  "active": "7fe7b76cb21ee1d1",
+  "active": "ebd90ec95cfa2ce6",
   "lastOpenFiles": [
     "Untitled.md",
-    "Untitled.canvas",
+    "OBSIDIAN - TERMUX - GIT/TERMUX/PRAVLJENJE FILE-a U TERMUX-u.md",
+    "OBSIDIAN - TERMUX - GIT/TERMUX",
+    "TV_Internet_Projekt.canvas",
+    "Tv -Internet Projekat.canvas.canvas",
+    "Paketi Tv Internet.md",
+    "-Tv Internet Projekat.canvas.canvas",
+    "Templates/canvas-template.canvas.md",
+    "TV Internet Projekt.canvas.md",
     "quick-$(date +%s).md",
     "resenje-1762323124.md",
     "ideja-1762323078.md",
     "OSNOVNE FUNKCIJE OBSIDIAN/🎯 OSNOVNE FUNKCIJE OBSIDIANA.md",
     "OSNOVNE FUNKCIJE OBSIDIAN/🛠️ KAKO DA DODAŠ COMMAND PALETTE U TOOLBAR.md",
     "```.md",
-    "Untitled 1.md",
     "PYTHON X/🔄 STRATEGIJA INTEGRACIJE.md",
     "PYTHON X/Čuvanje code snippet-ova.md",
     "OSNOVNE FUNKCIJE OBSIDIAN",
@@ -197,11 +263,8 @@
     "LOGSEQ/🚀 KORAK 8 SINHRONIZACIJA I BACKUP.md",
     "OBSIDIAN - TERMUX - GIT/Untitled",
     "OBSIDIAN - TERMUX - GIT",
-    "LOGSEQ/🔧 KORAK 7 LOGSEQ SPECIFIČNI TEMPLATEI.md",
-    "LOGSEQ/🚀 KORAK 1 INSTALACIJA I SETUP.md",
     "LOGSEQ/Logseq - opis - Budućnost",
     "LOGSEQ",
-    "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM",
-    "T"
+    "OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM"
   ]
 }
