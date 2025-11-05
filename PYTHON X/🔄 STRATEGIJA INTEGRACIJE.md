@@ -103,7 +103,17 @@ Napravi note po temama:
 2. **YouTube + transkript koristi za** "dubinsko razumevanje"
     
 3. **Obsidian koristi za** "trajno čuvanje i povezivanje znanja"
-   
+   ```
    ## 🚀 **MOJA PREPORUKA:**
 
 Počni sa **jednostavnim "copy-paste" metodom** dok ne vidiš šta ti najbolje odgovara. Ako Python X ima dobre kurseve, možeš da koristiš njegovu strukturu kao vodič za svoje učenje u Obsidianu.
+## 📚 **STRUKTURIRANI KURSEVI:**
+
+text
+
+✅ Python za početnike
+✅ Napredni Python koncepti  
+✅ Web development (Django, Flask)
+✅ Data Science (Pandas, NumPy, Matplotlib)
+✅ Automatizacija i skripting
+✅ Testiranje koda

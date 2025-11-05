@@ -1,0 +1,6 @@
+{
+	"nodes":[
+		{"id":"57194500ddb12763","x":-120,"y":-260,"width":252,"height":520,"type":"text","text":"# Moj Python Learning Canvas\n\n[🎯 Ciljevi Učenja]\n│\n├── [📚 Osnovni Koncepti]\n│   ├── [Varijable i Tipovi]\n│   ├── [Kontrola Toka]\n│   └── [Funkcije]\n│\n├── [💻 Projekti]\n│   ├── [Kalkulator]\n│   ├── [To-Do App]\n│   └── [Data Analysis]\n│\n└── [🔗 Resursi]\n    ├── [YouTube Tutorijali]\n    └── [Dokumentacija]\n    "}
+	],
+	"edges":[]
+}
