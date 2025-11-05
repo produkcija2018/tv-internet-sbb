@@ -2,7 +2,10 @@ U Termux-u ukucaj:
 
 # Idi u tvoj vault folder
 
-cd"/storage/emulated/0/Documents/moje-zabele-ke-"
+cd
+"/storage/emulated/0/Documents/moje-zabele-ke-/TV_Internet_Projekt.canvas"
+
+cd "/storage/emulated/0/Documents/moje-zabele-ke-"
 
 # Proveri šta je u folderu
 ls -la
