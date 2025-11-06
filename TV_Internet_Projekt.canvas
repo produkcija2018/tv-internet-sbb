@@ -2,79 +2,59 @@
   "nodes": [
     {
       "id": "central",
-      "type": "text",
-      "text": "# \ud83c\udfaf TVINTERNET SBB PROJEKT\n\n## \u2705 PROJEKT ZAVR\u0160EN!\n\n### \ud83c\udf8a SVE FUNKCIONALNOSTI AKTIVNE:\n- \ud83e\udd16 Telegram Bot radi\n- \ud83c\udf10 Web sajt spreman\n- \ud83d\udcb0 Biznis model definisan\n- \ud83d\udcca Lead sistem spreman\n- \ud83d\ude80 GitHub Pages postavljen",
+      "type": "text", 
+      "text": "# 🎯 TVINTERNET SBB PROJEKT\n\n## ✅ PROJEKT USPEO!\n\n### 🎊 BOT JE ŽIV I RADI!\n\n**Ključne funkcionalnosti:**\n- 🤖 AI Telegram Bot - AKTIVAN\n- 💬 Automatski odgovori - RADI\n- 📊 Lead management - SPREMAN\n- 💰 Biznis model - DEFINISAN\n\n**Status:** 🚀 SPREMAN ZA KLIJENTE!",
       "x": 0,
       "y": 0,
-      "width": 450,
+      "width": 500,
       "height": 300,
       "color": "2"
     },
     {
-      "id": "telegram-bot",
+      "id": "bot-status",
       "type": "text",
-      "text": "## \ud83e\udd16 TELEGRAM BOT\n\n**Status:** \u2705 AKTIVAN\n**Username:** @TVInternetSBB_bot\n**Token:** 8105923056:AAFdk-iRcIgmVGHxdAE7R-qhTNoq7WbRTW0\n\n### Funkcionalnosti:\n- AI odgovori na pitanja\n- TV/Internet paketi\n- Kontakt informacije\n- 24/7 dostupan",
+      "text": "## 🤖 BOT STATUS\n\n✅ **AKTIVAN I RADI!**\n\n**Username:** @TVInternetSBB_bot\n**Token:** 8105923056:AAFdk-iRcIgmVGHxdAE7R-qhTNoq7WbRTW0\n\n**Funkcionalnosti:**\n- AI odgovori na pitanja\n- TV/Internet paketi\n- Kontakt informacije\n- Čuva leadove\n- 24/7 dostupan\n\n**Testiraj ga sada!**",
       "x": -600,
-      "y": -150,
+      "y": -100,
       "width": 350,
-      "height": 250,
+      "height": 320,
       "color": "4"
     },
     {
-      "id": "web-sajt",
+      "id": "next-steps",
       "type": "text",
-      "text": "## \ud83c\udf10 WEB SAJT\n\n**Status:** \u2705 GOTOV\n**Tehnologije:** HTML5 + CSS3\n**Responsive:** Da\n**Telegram integracija:** Da\n\n### Sadr\u017eaj:\n- TV paketi sa cenama\n- Internet paketi sa cenama\n- Telegram bot integracija\n- Kontakt forme\n- Professional dizajn",
-      "x": -600,
-      "y": 150,
+      "text": "## 🚀 SLEDEĆI KORACI\n\n### 📈 MARKETING:\n1. Podeli @TVInternetSBB_bot\n2. Testiraj sa prijateljima\n3. Prikupljaj leadove\n4. Analiziraj pitanja\n\n### 🔧 TEHNIČKI:\n1. Bot radi u pozadini\n2. Logovi se čuvaju\n3. Baza radi\n4. Sve automatizovano\n\n### 💰 BIZNIS:\n- TV: 1.990-2.990 RSD\n- Internet: 1.490-3.490 RSD\n- Kombinovani: 2.990 RSD\n- Troškovi: $0",
+      "x": 600,
+      "y": -100,
       "width": 350,
-      "height": 250,
+      "height": 320,
       "color": "1"
     },
     {
-      "id": "gitHub",
+      "id": "stats",
       "type": "text",
-      "text": "## \ud83d\udc19 GITHUB\n\n**Status:** \u2705 POSTAVLJEN\n**Pages:** Aktivan\n**Repo:** tv-internet-sbb\n**CI/CD:** Spreman\n\n### Sadr\u017eaj:\n- Source code bota\n- Web sajt files\n- Dokumentacija\n- Canvas projekt file",
-      "x": 600,
-      "y": -150,
-      "width": 350,
-      "height": 250,
-      "color": "5"
-    },
-    {
-      "id": "budzet",
-      "type": "text",
-      "text": "## \ud83d\udcb0 BUD\u017dET\n\n### Tro\u0161kovi: $0\n- Hosting: GitHub Pages (besplatno)\n- Domain: GitHub subdomain (besplatno)\n- Bot: Telegram API (besplatno)\n- Development: Termux + Obsidian (besplatno)\n\n### Potencijalni prihodi:\n- TV paketi: 1.990-2.990 RSD/mesec\n- Internet: 1.490-3.490 RSD/mesec\n- Kombinovani: 2.990 RSD/mesec",
-      "x": 600,
-      "y": 150,
+      "text": "## 📊 STATISTIKE\n\n**Bot Aktivnosti:**\n- Pokretanja: /start\n- Poruke: 📈\n- Leadovi: 📊\n- Uptime: 24/7\n\n**Tehnologije:**\n- Python + AI\n- Telegram API\n- SQLite baza\n- Termux hosting\n\n**Budžet:**\n- Troškovi: $0\n- Vreme: 1 dan\n- Vrednost: 🚀",
+      "x": -600,
+      "y": 250,
       "width": 350,
       "height": 250,
       "color": "3"
+    },
+    {
+      "id": "success",
+      "type": "text", 
+      "text": "## 🎉 USPEH!\n\n**Projekt Završen:**\n- ✅ MVP kreiran\n- ✅ Bot funkcioniše\n- ✅ Biznis spreman\n- ✅ Troškovi: $0\n\n**Čestitam!** 🎊\n\nImaš potpuno funkcionalan AI biznis!\n\n**Sledeće:** Testiraj sa pravim klijentima!",
+      "x": 600,
+      "y": 250,
+      "width": 350,
+      "height": 250,
+      "color": "2"
     }
   ],
   "edges": [
-    {
-      "fromNode": "telegram-bot",
-      "toNode": "central",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "fromNode": "web-sajt",
-      "toNode": "central",
-      "fromSide": "right",
-      "toSide": "left"
-    },
-    {
-      "fromNode": "gitHub",
-      "toNode": "central",
-      "fromSide": "left",
-      "toSide": "right"
-    },
-    {
-      "fromNode": "budzet",
-      "toNode": "central",
-      "fromSide": "left",
-      "toSide": "right"
-    }
+    {"fromNode": "bot-status", "toNode": "central", "fromSide": "right", "toSide": "left"},
+    {"fromNode": "next-steps", "toNode": "central", "fromSide": "left", "toSide": "right"},
+    {"fromNode": "stats", "toNode": "central", "fromSide": "right", "toSide": "left"},
+    {"fromNode": "success", "toNode": "central", "fromSide": "left", "toSide": "right"}
   ]
 }
