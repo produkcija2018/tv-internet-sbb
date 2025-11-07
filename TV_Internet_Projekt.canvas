@@ -2,8 +2,8 @@
   "nodes": [
     {
       "id": "central",
-      "type": "text", 
-      "text": "# 🎯 TVINTERNET SBB PROJEKT\n\n## ✅ PROJEKT USPEO!\n\n### 🎊 BOT JE ŽIV I RADI!\n\n**Ključne funkcionalnosti:**\n- 🤖 AI Telegram Bot - AKTIVAN\n- 💬 Automatski odgovori - RADI\n- 📊 Lead management - SPREMAN\n- 💰 Biznis model - DEFINISAN\n\n**Status:** 🚀 SPREMAN ZA KLIJENTE!",
+      "type": "text",
+      "text": "# \ud83c\udfaf TVINTERNET SBB PROJEKT\n\n## \u2705 PROJEKT USPEO!\n\n### \ud83c\udf8a BOT JE \u017dIV I RADI!\n\n**Klju\u010dne funkcionalnosti:**\n- \ud83e\udd16 AI Telegram Bot - AKTIVAN\n- \ud83d\udcac Automatski odgovori - RADI\n- \ud83d\udcca Lead management - SPREMAN\n- \ud83d\udcb0 Biznis model - DEFINISAN\n\n**Status:** \ud83d\ude80 SPREMAN ZA KLIJENTE!",
       "x": 0,
       "y": 0,
       "width": 500,
@@ -13,7 +13,7 @@
     {
       "id": "bot-status",
       "type": "text",
-      "text": "## 🤖 BOT STATUS\n\n✅ **AKTIVAN I RADI!**\n\n**Username:** @TVInternetSBB_bot\n**Token:** 8105923056:AAFdk-iRcIgmVGHxdAE7R-qhTNoq7WbRTW0\n\n**Funkcionalnosti:**\n- AI odgovori na pitanja\n- TV/Internet paketi\n- Kontakt informacije\n- Čuva leadove\n- 24/7 dostupan\n\n**Testiraj ga sada!**",
+      "text": "## \ud83e\udd16 BOT STATUS\n\n\u2705 **AKTIVAN I RADI!**\n\n**Username:** @TVInternetSBB_bot\n**Token:** 8105923056:AAFdk-iRcIgmVGHxdAE7R-qhTNoq7WbRTW0\n\n**Funkcionalnosti:**\n- AI odgovori na pitanja\n- TV/Internet paketi\n- Kontakt informacije\n- \u010cuva leadove\n- 24/7 dostupan\n\n**Testiraj ga sada!**",
       "x": -600,
       "y": -100,
       "width": 350,
@@ -23,7 +23,7 @@
     {
       "id": "next-steps",
       "type": "text",
-      "text": "## 🚀 SLEDEĆI KORACI\n\n### 📈 MARKETING:\n1. Podeli @TVInternetSBB_bot\n2. Testiraj sa prijateljima\n3. Prikupljaj leadove\n4. Analiziraj pitanja\n\n### 🔧 TEHNIČKI:\n1. Bot radi u pozadini\n2. Logovi se čuvaju\n3. Baza radi\n4. Sve automatizovano\n\n### 💰 BIZNIS:\n- TV: 1.990-2.990 RSD\n- Internet: 1.490-3.490 RSD\n- Kombinovani: 2.990 RSD\n- Troškovi: $0",
+      "text": "## \ud83d\ude80 SLEDE\u0106I KORACI\n\n### \ud83d\udcc8 MARKETING:\n1. Podeli @TVInternetSBB_bot\n2. Testiraj sa prijateljima\n3. Prikupljaj leadove\n4. Analiziraj pitanja\n\n### \ud83d\udd27 TEHNI\u010cKI:\n1. Bot radi u pozadini\n2. Logovi se \u010duvaju\n3. Baza radi\n4. Sve automatizovano\n\n### \ud83d\udcb0 BIZNIS:\n- TV: 1.990-2.990 RSD\n- Internet: 1.490-3.490 RSD\n- Kombinovani: 2.990 RSD\n- Tro\u0161kovi: $0",
       "x": 600,
       "y": -100,
       "width": 350,
@@ -33,7 +33,7 @@
     {
       "id": "stats",
       "type": "text",
-      "text": "## 📊 STATISTIKE\n\n**Bot Aktivnosti:**\n- Pokretanja: /start\n- Poruke: 📈\n- Leadovi: 📊\n- Uptime: 24/7\n\n**Tehnologije:**\n- Python + AI\n- Telegram API\n- SQLite baza\n- Termux hosting\n\n**Budžet:**\n- Troškovi: $0\n- Vreme: 1 dan\n- Vrednost: 🚀",
+      "text": "## \ud83d\udcca STATISTIKE\n\n**Bot Aktivnosti:**\n- Pokretanja: /start\n- Poruke: \ud83d\udcc8\n- Leadovi: \ud83d\udcca\n- Uptime: 24/7\n\n**Tehnologije:**\n- Python + AI\n- Telegram API\n- SQLite baza\n- Termux hosting\n\n**Bud\u017eet:**\n- Tro\u0161kovi: $0\n- Vreme: 1 dan\n- Vrednost: \ud83d\ude80",
       "x": -600,
       "y": 250,
       "width": 350,
@@ -42,19 +42,59 @@
     },
     {
       "id": "success",
-      "type": "text", 
-      "text": "## 🎉 USPEH!\n\n**Projekt Završen:**\n- ✅ MVP kreiran\n- ✅ Bot funkcioniše\n- ✅ Biznis spreman\n- ✅ Troškovi: $0\n\n**Čestitam!** 🎊\n\nImaš potpuno funkcionalan AI biznis!\n\n**Sledeće:** Testiraj sa pravim klijentima!",
+      "type": "text",
+      "text": "## \ud83c\udf89 USPEH!\n\n**Projekt Zavr\u0161en:**\n- \u2705 MVP kreiran\n- \u2705 Bot funkcioni\u0161e\n- \u2705 Biznis spreman\n- \u2705 Tro\u0161kovi: $0\n\n**\u010cestitam!** \ud83c\udf8a\n\nIma\u0161 potpuno funkcionalan AI biznis!\n\n**Slede\u0107e:** Testiraj sa pravim klijentima!",
       "x": 600,
       "y": 250,
       "width": 350,
       "height": 250,
       "color": "2"
+    },
+    {
+      "id": "github-pages",
+      "type": "text",
+      "text": "## \ud83c\udf10 GITHUB PAGES STATUS\n\n### \ud83d\udd04 U DEPLOY-U\n\n**URL:** https://produkcija2018.github.io/tv-internet-sbb/\n**Branch:** main\n**Folder:** /web-content\n\n### Provera:\n- \u2705 Push uspe\u0161an\n- \ud83d\udd04 \u010cekamo deploy\n- \u23f3 GitHub procesira\n\n### Akcije:\n1. Proveri Actions tab\n2. Proveri Pages settings\n3. Testiraj URL\n4. Sa\u010dekaj 5-10 minuta",
+      "x": 600,
+      "y": -150,
+      "width": 380,
+      "height": 300,
+      "color": "3"
+    },
+    {
+      "id": "cloud-deployment",
+      "type": "text",
+      "text": "## \u2601\ufe0f CLOUD DEPLOYMENT\n\n### \ud83d\ude80 SPREMNO ZA HOSTING\n\n**Status:** Fajlovi pripremljeni\n**Bot:** bot_cloud.py optimizovan\n**Requirements:** requirements.txt kreiran\n\n### Cloud Opcije:\n1. PythonAnywhere (preporu\u010deno)\n2. Railway.app (moderno)\n3. Render.com (jednostavno)\n\n### Prednosti Cloud-a:\n- \u2705 24/7 rad bota\n- \u2705 Automatski restart\n- \u2705 Bez brige o bateriji\n- \u2705 Profesionalni hosting\n- \u2705 Scalability\n\n### Slede\u0107i korak:\nOdabir cloud provajdera i deploy!",
+      "x": 600,
+      "y": 150,
+      "width": 400,
+      "height": 380,
+      "color": "4"
     }
   ],
   "edges": [
-    {"fromNode": "bot-status", "toNode": "central", "fromSide": "right", "toSide": "left"},
-    {"fromNode": "next-steps", "toNode": "central", "fromSide": "left", "toSide": "right"},
-    {"fromNode": "stats", "toNode": "central", "fromSide": "right", "toSide": "left"},
-    {"fromNode": "success", "toNode": "central", "fromSide": "left", "toSide": "right"}
+    {
+      "fromNode": "bot-status",
+      "toNode": "central",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "fromNode": "next-steps",
+      "toNode": "central",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "fromNode": "stats",
+      "toNode": "central",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "fromNode": "success",
+      "toNode": "central",
+      "fromSide": "left",
+      "toSide": "right"
+    }
   ]
 }
