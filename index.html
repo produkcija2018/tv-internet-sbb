@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SBB Biznis Paketi - TV & Internet za Preduzeća</title>
+    <title>SBB Paketi - TV & Internet za Dom i Biznis</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -11,10 +11,11 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <h2>🏢 SBB Biznis</h2>
+                <h2>📺🌐 SBB</h2>
             </div>
             <div class="nav-menu">
                 <a href="#home" class="nav-link">Početna</a>
+                <a href="#regularni" class="nav-link">Porodični Paketi</a>
                 <a href="#biznis" class="nav-link">Biznis Paketi</a>
                 <a href="#contact" class="nav-link">Kontakt</a>
             </div>
@@ -24,17 +25,155 @@
     <!-- HERO SEKCIJA -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">SBB BIZNIS PAKETI</h1>
-            <p class="hero-subtitle">Kompletna rešenja za uspešno poslovanje vaše firme</p>
+            <h1 class="hero-title">SBB PAKETI</h1>
+            <p class="hero-subtitle">Najbolji TV i Internet za vaš dom i biznis</p>
             <div class="hero-buttons">
-                <button class="btn btn-primary" onclick="scrollToSection('biznis')">BIZNIS PAKETI</button>
-                <button class="btn btn-secondary" onclick="scrollToSection('contact')">KONTAKT</button>
+                <button class="btn btn-primary" onclick="scrollToSection('regularni')">PORODIČNI PAKETI</button>
+                <button class="btn btn-secondary" onclick="scrollToSection('biznis')">BIZNIS PAKETI</button>
             </div>
         </div>
     </section>
 
-    <!-- BIZNIS PAKETI -->
-    <section id="biznis" class="section">
+    <!-- REGULARNI PAKETI ZA FIZIČKA LICA -->
+    <section id="regularni" class="section">
+        <div class="container">
+            <h2 class="section-title">🏠 Porodični Paketi</h2>
+            <p class="section-subtitle">Savršeno rešenje za vaš dom</p>
+            
+            <div class="packages-grid">
+                <!-- TV PAKETI -->
+                <div class="package-category">
+                    <h3>📺 Televizija</h3>
+                    <div class="package-card">
+                        <h4>EON LIGHT</h4>
+                        <div class="price">1.290 RSD/mes</div>
+                        <ul class="features">
+                            <li>✅ 120+ kanala</li>
+                            <li>✅ 20 HD kanala</li>
+                            <li>✅ EON TV aplikacija</li>
+                            <li>✅ 7 dana catch-up TV</li>
+                        </ul>
+                        <button class="btn btn-outline" onclick="openContact('EON LIGHT TV')">PORUČI</button>
+                    </div>
+
+                    <div class="package-card popular">
+                        <div class="popular-badge">NAJPOPULARNIJI</div>
+                        <h4>EON FULL</h4>
+                        <div class="price">1.790 RSD/mes</div>
+                        <ul class="features">
+                            <li>✅ 200+ kanala</li>
+                            <li>✅ 50 HD kanala</li>
+                            <li>✅ 15 Premium kanala</li>
+                            <li>✅ EON Smart Box</li>
+                            <li>✅ 30 dana catch-up TV</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="openContact('EON FULL TV')">PORUČI</button>
+                    </div>
+
+                    <div class="package-card">
+                        <h4>EON PREMIUM</h4>
+                        <div class="price">2.490 RSD/mes</div>
+                        <ul class="features">
+                            <li>✅ 300+ kanala</li>
+                            <li>✅ 80 HD kanala</li>
+                            <li>✅ 30 Premium kanala</li>
+                            <li>✅ Max Sport paket</li>
+                            <li>✅ EON 4K Box</li>
+                        </ul>
+                        <button class="btn btn-outline" onclick="openContact('EON PREMIUM TV')">PORUČI</button>
+                    </div>
+                </div>
+
+                <!-- INTERNET PAKETI -->
+                <div class="package-category">
+                    <h3>🌐 Internet</h3>
+                    <div class="package-card">
+                        <h4>INTERNET 50</h4>
+                        <div class="price">1.190 RSD/mes</div>
+                        <ul class="features">
+                            <li>✅ 50/10 Mbps brzina</li>
+                            <li>✅ Neograničen protok</li>
+                            <li>✅ Wi-Fi ruter</li>
+                            <li>✅ Podrška 24/7</li>
+                        </ul>
+                        <button class="btn btn-outline" onclick="openContact('INTERNET 50')">PORUČI</button>
+                    </div>
+
+                    <div class="package-card popular">
+                        <div class="popular-badge">IDEALNO ZA PORODICU</div>
+                        <h4>INTERNET 150</h4>
+                        <div class="price">1.590 RSD/mes</div>
+                        <ul class="features">
+                            <li>✅ 150/50 Mbps brzina</li>
+                            <li>✅ Neograničen protok</li>
+                            <li>✅ Wi-Fi 6 ruter</li>
+                            <li>✅ Podrška 24/7</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="openContact('INTERNET 150')">PORUČI</button>
+                    </div>
+
+                    <div class="package-card">
+                        <h4>INTERNET 300</h4>
+                        <div class="price">2.290 RSD/mes</div>
+                        <ul class="features">
+                            <li>✅ 300/100 Mbps brzina</li>
+                            <li>✅ Neograničen protok</li>
+                            <li>✅ Wi-Fi 6 ruter</li>
+                            <li>✅ Premium podrška</li>
+                        </ul>
+                        <button class="btn btn-outline" onclick="openContact('INTERNET 300')">PORUČI</button>
+                    </div>
+                </div>
+
+                <!-- KOMBINOVANI PAKETI -->
+                <div class="package-category">
+                    <h3>🔥 Kombinovani</h3>
+                    <div class="package-card">
+                        <h4>DUO LIGHT</h4>
+                        <div class="price">2.290 RSD/mes</div>
+                        <div class="savings">Ušteda: 190 RSD</div>
+                        <ul class="features">
+                            <li>✅ EON LIGHT TV</li>
+                            <li>✅ INTERNET 50</li>
+                            <li>✅ Besplatna instalacija</li>
+                        </ul>
+                        <button class="btn btn-outline" onclick="openContact('DUO LIGHT')">PORUČI</button>
+                    </div>
+
+                    <div class="package-card popular">
+                        <div class="popular-badge">NAJBOlJA PONUDA</div>
+                        <h4>DUO FULL</h4>
+                        <div class="price">2.990 RSD/mes</div>
+                        <div class="savings">Ušteda: 590 RSD</div>
+                        <ul class="features">
+                            <li>✅ EON FULL TV</li>
+                            <li>✅ INTERNET 150</li>
+                            <li>✅ Besplatna instalacija</li>
+                            <li>✅ 1 mesec gratis</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="openContact('DUO FULL')">PORUČI</button>
+                    </div>
+
+                    <div class="package-card premium">
+                        <div class="premium-badge">PREMIUM</div>
+                        <h4>DUO PREMIUM</h4>
+                        <div class="price">3.990 RSD/mes</div>
+                        <div class="savings">Ušteda: 790 RSD</div>
+                        <ul class="features">
+                            <li>✅ EON PREMIUM TV</li>
+                            <li>✅ INTERNET 300</li>
+                            <li>✅ Besplatna instalacija</li>
+                            <li>✅ 2 meseca gratis</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="openContact('DUO PREMIUM')">PORUČI</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BIZNIS PAKETI (POSTOJEĆI) -->
+    <section id="biznis" class="section bg-light">
         <div class="container">
             <h2 class="section-title">🏢 SBB BIZNIS PAKETI</h2>
             <p class="section-subtitle">-50% POPUSTA PRVIH 6 MESECI</p>
@@ -118,26 +257,26 @@
         </div>
     </section>
 
-    <!-- KONTAKT -->
-    <section id="contact" class="section bg-light">
+    <!-- KONTAKT (AŽURIRAN SA PRAVIM TELEFONOM) -->
+    <section id="contact" class="section">
         <div class="container">
-            <h2 class="section-title">📞 Kontakt za Biznis Pakete</h2>
+            <h2 class="section-title">📞 Kontaktirajte Nas</h2>
             <div class="contact-grid">
                 <div class="contact-info">
-                    <h3>💼 Direktan Kontakt</h3>
-                    <p><strong>Specijalizovani konsultant za biznis pakete</strong></p>
+                    <h3>💼 Kontakt za Sve Pakete</h3>
+                    <p><strong>Specijalizovani konsultant za sve vrste paketa</strong></p>
                     <p>📞 <strong>Telefon:</strong> 063/82-51-934</p>
-                    <p>📧 <strong>Email:</strong> biznis@sbb.rs</p>
+                    <p>📧 <strong>Email:</strong> info@sbb-paketi.rs</p>
                     <p>🕒 <strong>Radno vreme:</strong> 08-20h svakodnevno</p>
-                    <p>🚀 <strong>Besplatna instalacija</strong> za sve biznis pakete</p>
+                    <p>🚀 <strong>Besplatna instalacija</strong> za sve pakete</p>
                     
                     <div class="urgency-badge">
-                        ⚡ <strong>AKCIJA:</strong> -50% prvih 6 meseci!
+                        ⚡ <strong>BIZNIS AKCIJA:</strong> -50% prvih 6 meseci!
                     </div>
 
                     <div class="contact-actions">
                         <a href="tel:0638251934" class="btn btn-primary">
-                            📞 Pozovite Odmah
+                            📞 Pozovite 063/82-51-934
                         </a>
                         <a href="https://t.me/TVInternetSBB_bot" target="_blank" class="btn btn-telegram">
                             📱 Telegram Bot
@@ -146,18 +285,33 @@
                 </div>
                 <div class="contact-form">
                     <h3>📋 Brza Porudžbina</h3>
-                    <form id="biznisForm">
-                        <input type="text" id="biznisName" placeholder="Ime preduzeća" required>
-                        <input type="text" id="biznisContact" placeholder="Kontakt osoba" required>
-                        <input type="tel" id="biznisPhone" placeholder="Vaš telefon" required>
-                        <select id="biznisPackage" required>
-                            <option value="">Izaberite biznis paket</option>
-                            <option value="BIZNIS 1">BIZNIS 1 - 1.575 RSD/mes</option>
-                            <option value="BIZNIS 2">BIZNIS 2 - 2.025 RSD/mes</option>
-                            <option value="BIZNIS 3">BIZNIS 3 - 2.475 RSD/mes</option>
-                            <option value="BIZNIS GIGA">BIZNIS GIGA - 4.025 RSD/mes</option>
+                    <form id="contactForm">
+                        <input type="text" id="name" placeholder="Ime i prezime" required>
+                        <input type="tel" id="phone" placeholder="Vaš telefon" required>
+                        <select id="packageType" required>
+                            <option value="">Vrsta paketa</option>
+                            <option value="regularni">Porodični paketi</option>
+                            <option value="biznis">Biznis paketi</option>
                         </select>
-                        <textarea id="biznisMessage" placeholder="Dodatne napomene (adresa, specijalni zahtevi...)"></textarea>
+                        <select id="package" required>
+                            <option value="">Izaberite konkretan paket</option>
+                            <!-- Regularni paketi -->
+                            <option value="EON LIGHT">EON LIGHT TV - 1.290 RSD</option>
+                            <option value="EON FULL">EON FULL TV - 1.790 RSD</option>
+                            <option value="EON PREMIUM">EON PREMIUM TV - 2.490 RSD</option>
+                            <option value="INTERNET 50">INTERNET 50 - 1.190 RSD</option>
+                            <option value="INTERNET 150">INTERNET 150 - 1.590 RSD</option>
+                            <option value="INTERNET 300">INTERNET 300 - 2.290 RSD</option>
+                            <option value="DUO LIGHT">DUO LIGHT - 2.290 RSD</option>
+                            <option value="DUO FULL">DUO FULL - 2.990 RSD</option>
+                            <option value="DUO PREMIUM">DUO PREMIUM - 3.990 RSD</option>
+                            <!-- Biznis paketi -->
+                            <option value="BIZNIS 1">BIZNIS 1 - 1.575 RSD</option>
+                            <option value="BIZNIS 2">BIZNIS 2 - 2.025 RSD</option>
+                            <option value="BIZNIS 3">BIZNIS 3 - 2.475 RSD</option>
+                            <option value="BIZNIS GIGA">BIZNIS GIGA - 4.025 RSD</option>
+                        </select>
+                        <textarea id="message" placeholder="Dodatne napomene (adresa...)"></textarea>
                         <button type="submit" class="btn btn-primary">POŠALJI ZAHTEV</button>
                     </form>
                 </div>
@@ -168,7 +322,7 @@
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 SBB Biznis Paketi. Sva prava zadržana.</p>
+            <p>&copy; 2024 SBB Paketi - TV & Internet za Dom i Biznis</p>
             <p>📞 Kontakt: 063/82-51-934 | 🕒 Radno vreme: 08-20h</p>
         </div>
     </footer>
@@ -178,16 +332,16 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h3>Izabrali ste: <span id="selectedPackage"></span></h3>
-            <p>Kontaktirajte nas za brzu narudžbinu biznis paketa:</p>
+            <p>Kontaktirajte nas za brzu narudžbinu:</p>
             <div class="contact-actions">
                 <a href="tel:0638251934" class="btn btn-primary">
                     📞 Pozovite 063/82-51-934
                 </a>
                 <a href="https://t.me/TVInternetSBB_bot" target="_blank" class="btn btn-telegram">
-                    📱 Telegram Biznis Bot
+                    📱 Telegram Bot
                 </a>
             </div>
-            <p class="modal-note">⚡ <strong>AKCIJA:</strong> -50% popusta prvih 6 meseci!</p>
+            <p class="modal-note">⚡ <strong>BIZNIS PAKETI:</strong> -50% popusta prvih 6 meseci!</p>
         </div>
     </div>
 
