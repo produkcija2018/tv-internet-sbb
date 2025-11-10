@@ -3,110 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TVInternetSBB - Najbolji TV i Internet Paketi</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; line-height: 1.6; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; min-height: 100vh; }
-        
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        
-        header { 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 2rem; 
-            text-align: center; 
-            border-radius: 15px; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
-            margin-bottom: 2rem;
-            border: 3px solid #3498db;
-        }
-        
-        .package { 
-            background: white; 
-            margin: 20px 0; 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1); 
-            transition: all 0.3s ease;
-            border-left: 5px solid #3498db;
-        }
-        
-        .telegram-section {
-            background: #0088cc;
-            color: white;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 30px 0;
-        }
-        
-        .btn { 
-            display: inline-block; 
-            background: linear-gradient(45deg, #3498db, #2980b9); 
-            color: white; 
-            padding: 15px 35px; 
-            border-radius: 50px; 
-            text-decoration: none; 
-            font-weight: bold; 
-            margin: 10px; 
-            transition: all 0.3s ease;
-            font-size: 1.1em;
-        }
-        
-        .telegram-btn {
-            background: linear-gradient(45deg, #0088cc, #006699);
-            font-size: 1.2em;
-            padding: 20px 40px;
-        }
-        
-        h1 { color: #2c3e50; margin-bottom: 0.5rem; font-size: 2.5rem; }
-        h2 { color: #3498db; margin-bottom: 1rem; font-size: 1.8rem; }
-        .price { color: #e74c3c; font-weight: bold; font-size: 1.5em; }
-    </style>
+    <title>SBB Biznis Paketi - TV & Internet za Preduzeća</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📺🌐 TVInternetSBB</h1>
-            <p style="font-size: 1.3em; color: #7f8c8d;">Najpovoljniji TV i internet paketi u Srbiji</p>
-        </header>
-
-        <div class="telegram-section">
-            <h2>💬 Brza poruka preko Telegrama</h2>
-            <p>Naš AI asistent je dostupan 24/7 da odgovori na sva vaša pitanja!</p>
-            <a href="https://t.me/TVInternetSBB_bot" class="btn telegram-btn">📱 Otvori Telegram Bota</a>
-            <p style="margin-top: 15px; font-size: 0.9em;">Klikni gore da direktno pošalješ poruku našem botu!</p>
+    <!-- NAVIGACIJA -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🏢 SBB Biznis</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Početna</a>
+                <a href="#biznis" class="nav-link">Biznis Paketi</a>
+                <a href="#contact" class="nav-link">Kontakt</a>
+            </div>
         </div>
+    </nav>
 
-        <div class="package">
-            <h2>📺 TV Paketi</h2>
-            <p><strong>Osnovni paket:</strong> 200+ kanala <span class="price">1.990 RSD/mesec</span></p>
-            <p><strong>Sportski paket:</strong> +50 sportskih kanala <span class="price">2.490 RSD/mesec</span></p>
-            <p><strong>Premium paket:</strong> Svi kanali + filmovi <span class="price">2.990 RSD/mesec</span></p>
-            <a href="https://t.me/TVInternetSBB_bot?text=Želim+TV+paket" class="btn">📞 Poruči TV Paket</a>
+    <!-- HERO SEKCIJA -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">SBB BIZNIS PAKETI</h1>
+            <p class="hero-subtitle">Kompletna rešenja za uspešno poslovanje vaše firme</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToSection('biznis')">BIZNIS PAKETI</button>
+                <button class="btn btn-secondary" onclick="scrollToSection('contact')">KONTAKT</button>
+            </div>
         </div>
+    </section>
 
-        <div class="package">
-            <h2>🌐 Internet Paketi</h2>
-            <p><strong>100 Mbps:</strong> Idealno za porodicu <span class="price">1.490 RSD/mesec</span></p>
-            <p><strong>300 Mbps:</strong> Za zahtevnije korisnike <span class="price">2.290 RSD/mesec</span></p>
-            <p><strong>1 Gbps:</strong> Najbrža opcija <span class="price">3.490 RSD/mesec</span></p>
-            <a href="https://t.me/TVInternetSBB_bot?text=Želim+Internet+paket" class="btn">📞 Poruči Internet</a>
+    <!-- BIZNIS PAKETI -->
+    <section id="biznis" class="section">
+        <div class="container">
+            <h2 class="section-title">🏢 SBB BIZNIS PAKETI</h2>
+            <p class="section-subtitle">-50% POPUSTA PRVIH 6 MESECI</p>
+            
+            <div class="packages-grid">
+                <!-- BIZNIS 1 -->
+                <div class="package-card">
+                    <h3>BIZNIS 1</h3>
+                    <div class="price-old">3.150 RSD/mes</div>
+                    <div class="price">1.575 RSD/mes</div>
+                    <div class="discount-badge">-50% 6 meseci</div>
+                    <ul class="features">
+                        <li>🌐 <strong>Internet 200/20 Mbps</strong></li>
+                        <li>📞 1 linija - 200 min ka fiksnim</li>
+                        <li>📺 EON Light TV + D3 Box</li>
+                        <li>🖥️ SSD Hosting 10GB</li>
+                        <li>🌍 Nacionalni domen</li>
+                        <li>📡 Statička IP adresa</li>
+                        <li>🔄 UNIFI / UNIFI Travel</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openContact('BIZNIS 1 Paket')">PORUČI ODMAH</button>
+                </div>
+
+                <!-- BIZNIS 2 -->
+                <div class="package-card popular">
+                    <div class="popular-badge">NAJPOPULARNIJI</div>
+                    <h3>BIZNIS 2</h3>
+                    <div class="price-old">4.050 RSD/mes</div>
+                    <div class="price">2.025 RSD/mes</div>
+                    <div class="discount-badge">-50% 6 meseci</div>
+                    <ul class="features">
+                        <li>🌐 <strong>Internet 400/40 Mbps</strong></li>
+                        <li>📞 2 linije - 200 min ka fiksnim</li>
+                        <li>📺 EON Full TV + Smart Box</li>
+                        <li>🖥️ SSD Hosting 10GB</li>
+                        <li>🌍 Nacionalni domen</li>
+                        <li>📡 Statička IP adresa</li>
+                        <li>🔄 UNIFI / UNIFI Travel</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openContact('BIZNIS 2 Paket')">PORUČI ODMAH</button>
+                </div>
+
+                <!-- BIZNIS 3 -->
+                <div class="package-card">
+                    <h3>BIZNIS 3</h3>
+                    <div class="price-old">4.950 RSD/mes</div>
+                    <div class="price">2.475 RSD/mes</div>
+                    <div class="discount-badge">-50% 6 meseci</div>
+                    <ul class="features">
+                        <li>🌐 <strong>Internet 700/70 Mbps</strong></li>
+                        <li>📞 2 linije - 200 min (fiksni+mobilni)</li>
+                        <li>📺 EON Premium TV + Smart Box</li>
+                        <li>🖥️ SSD Hosting 20GB</li>
+                        <li>🛡️ PANDA Defence 360</li>
+                        <li>🌍 Nacionalni domen</li>
+                        <li>📡 Statička IP adresa</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openContact('BIZNIS 3 Paket')">PORUČI ODMAH</button>
+                </div>
+
+                <!-- BIZNIS GIGA -->
+                <div class="package-card premium">
+                    <div class="premium-badge">PREMIUM</div>
+                    <h3>BIZNIS GIGA</h3>
+                    <div class="price-old">8.050 RSD/mes</div>
+                    <div class="price">4.025 RSD/mes</div>
+                    <div class="discount-badge">-50% 6 meseci</div>
+                    <ul class="features">
+                        <li>🌐 <strong>Internet 1000/100 Mbps</strong></li>
+                        <li>📞 2 linije - 200 min (fiksni+mobilni)</li>
+                        <li>📺 EON Premium TV + Smart Box</li>
+                        <li>🖥️ SSD Hosting 30GB</li>
+                        <li>🛡️ PANDA Defence 360</li>
+                        <li>📊 eZakati/eFaktura servis</li>
+                        <li>🔄 Flexibilne opcije</li>
+                        <li>🌍 Nacionalni domen</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openContact('BIZNIS GIGA Paket')">PORUČI ODMAH</button>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="package">
-            <h2>🔥 Kombinovani Paket</h2>
-            <p><strong>TV + Internet:</strong> Sve u jednom <span class="price">2.990 RSD/mesec</span></p>
-            <p style="color: #27ae60; font-weight: bold;">🎁 Ušteda 30% u odnosu na odvojene pakete!</p>
-            <a href="https://t.me/TVInternetSBB_bot?text=Želim+Kombinovani+paket" class="btn">📞 Poruči Kombinovano</a>
+    <!-- KONTAKT -->
+    <section id="contact" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">📞 Kontakt za Biznis Pakete</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>💼 Direktan Kontakt</h3>
+                    <p><strong>Specijalizovani konsultant za biznis pakete</strong></p>
+                    <p>📞 <strong>Telefon:</strong> 063/82-51-934</p>
+                    <p>📧 <strong>Email:</strong> biznis@sbb.rs</p>
+                    <p>🕒 <strong>Radno vreme:</strong> 08-20h svakodnevno</p>
+                    <p>🚀 <strong>Besplatna instalacija</strong> za sve biznis pakete</p>
+                    
+                    <div class="urgency-badge">
+                        ⚡ <strong>AKCIJA:</strong> -50% prvih 6 meseci!
+                    </div>
+
+                    <div class="contact-actions">
+                        <a href="tel:0638251934" class="btn btn-primary">
+                            📞 Pozovite Odmah
+                        </a>
+                        <a href="https://t.me/TVInternetSBB_bot" target="_blank" class="btn btn-telegram">
+                            📱 Telegram Bot
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>📋 Brza Porudžbina</h3>
+                    <form id="biznisForm">
+                        <input type="text" id="biznisName" placeholder="Ime preduzeća" required>
+                        <input type="text" id="biznisContact" placeholder="Kontakt osoba" required>
+                        <input type="tel" id="biznisPhone" placeholder="Vaš telefon" required>
+                        <select id="biznisPackage" required>
+                            <option value="">Izaberite biznis paket</option>
+                            <option value="BIZNIS 1">BIZNIS 1 - 1.575 RSD/mes</option>
+                            <option value="BIZNIS 2">BIZNIS 2 - 2.025 RSD/mes</option>
+                            <option value="BIZNIS 3">BIZNIS 3 - 2.475 RSD/mes</option>
+                            <option value="BIZNIS GIGA">BIZNIS GIGA - 4.025 RSD/mes</option>
+                        </select>
+                        <textarea id="biznisMessage" placeholder="Dodatne napomene (adresa, specijalni zahtevi...)"></textarea>
+                        <button type="submit" class="btn btn-primary">POŠALJI ZAHTEV</button>
+                    </form>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="package" style="text-align: center; background: #2c3e50; color: white;">
-            <h2>📞 Kontaktirajte nas!</h2>
-            <p>Telefon: <strong>011/123-456</strong></p>
-            <p>Email: <strong>info@tvinternetsbb.rs</strong></p>
-            <p>Telegram: <strong>@TVInternetSBB_bot</strong></p>
-            <p>Radno vreme: 08:00 - 20:00</p>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 SBB Biznis Paketi. Sva prava zadržana.</p>
+            <p>📞 Kontakt: 063/82-51-934 | 🕒 Radno vreme: 08-20h</p>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Izabrali ste: <span id="selectedPackage"></span></h3>
+            <p>Kontaktirajte nas za brzu narudžbinu biznis paketa:</p>
+            <div class="contact-actions">
+                <a href="tel:0638251934" class="btn btn-primary">
+                    📞 Pozovite 063/82-51-934
+                </a>
+                <a href="https://t.me/TVInternetSBB_bot" target="_blank" class="btn btn-telegram">
+                    📱 Telegram Biznis Bot
+                </a>
+            </div>
+            <p class="modal-note">⚡ <strong>AKCIJA:</strong> -50% popusta prvih 6 meseci!</p>
         </div>
     </div>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
