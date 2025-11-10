@@ -3,110 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TVInternetSBB - Najbolji TV i Internet Paketi</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; line-height: 1.6; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; min-height: 100vh; }
-        
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        
-        header { 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 2rem; 
-            text-align: center; 
-            border-radius: 15px; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
-            margin-bottom: 2rem;
-            border: 3px solid #3498db;
-        }
-        
-        .package { 
-            background: white; 
-            margin: 20px 0; 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1); 
-            transition: all 0.3s ease;
-            border-left: 5px solid #3498db;
-        }
-        
-        .telegram-section {
-            background: #0088cc;
-            color: white;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 30px 0;
-        }
-        
-        .btn { 
-            display: inline-block; 
-            background: linear-gradient(45deg, #3498db, #2980b9); 
-            color: white; 
-            padding: 15px 35px; 
-            border-radius: 50px; 
-            text-decoration: none; 
-            font-weight: bold; 
-            margin: 10px; 
-            transition: all 0.3s ease;
-            font-size: 1.1em;
-        }
-        
-        .telegram-btn {
-            background: linear-gradient(45deg, #0088cc, #006699);
-            font-size: 1.2em;
-            padding: 20px 40px;
-        }
-        
-        h1 { color: #2c3e50; margin-bottom: 0.5rem; font-size: 2.5rem; }
-        h2 { color: #3498db; margin-bottom: 1rem; font-size: 1.8rem; }
-        .price { color: #e74c3c; font-weight: bold; font-size: 1.5em; }
-    </style>
+    <title>TV & Internet Paketi - SBB</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📺🌐 TVInternetSBB</h1>
-            <p style="font-size: 1.3em; color: #7f8c8d;">Najpovoljniji TV i internet paketi u Srbiji</p>
-        </header>
-
-        <div class="telegram-section">
-            <h2>💬 Brza poruka preko Telegrama</h2>
-            <p>Naš AI asistent je dostupan 24/7 da odgovori na sva vaša pitanja!</p>
-            <a href="https://t.me/TVInternetSBB_bot" class="btn telegram-btn">📱 Otvori Telegram Bota</a>
-            <p style="margin-top: 15px; font-size: 0.9em;">Klikni gore da direktno pošalješ poruku našem botu!</p>
+    <!-- NAVIGACIJA -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>📺 TVInternetSBB</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Početna</a>
+                <a href="#tv" class="nav-link">TV Paketi</a>
+                <a href="#internet" class="nav-link">Internet</a>
+                <a href="#combined" class="nav-link">Kombinovani</a>
+                <a href="#contact" class="nav-link">Kontakt</a>
+            </div>
         </div>
+    </nav>
 
-        <div class="package">
-            <h2>📺 TV Paketi</h2>
-            <p><strong>Osnovni paket:</strong> 200+ kanala <span class="price">1.990 RSD/mesec</span></p>
-            <p><strong>Sportski paket:</strong> +50 sportskih kanala <span class="price">2.490 RSD/mesec</span></p>
-            <p><strong>Premium paket:</strong> Svi kanali + filmovi <span class="price">2.990 RSD/mesec</span></p>
-            <a href="https://t.me/TVInternetSBB_bot?text=Želim+TV+paket" class="btn">📞 Poruči TV Paket</a>
+    <!-- HERO SEKCIJA -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Najbolji TV & Internet Paketi</h1>
+            <p class="hero-subtitle">Brzi internet + Premium TV kanali po neverovatnim cenama!</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToSection('tv')">TV Paketi</button>
+                <button class="btn btn-secondary" onclick="scrollToSection('internet')">Internet</button>
+            </div>
         </div>
+    </section>
 
-        <div class="package">
-            <h2>🌐 Internet Paketi</h2>
-            <p><strong>100 Mbps:</strong> Idealno za porodicu <span class="price">1.490 RSD/mesec</span></p>
-            <p><strong>300 Mbps:</strong> Za zahtevnije korisnike <span class="price">2.290 RSD/mesec</span></p>
-            <p><strong>1 Gbps:</strong> Najbrža opcija <span class="price">3.490 RSD/mesec</span></p>
-            <a href="https://t.me/TVInternetSBB_bot?text=Želim+Internet+paket" class="btn">📞 Poruči Internet</a>
+    <!-- TV PAKETI -->
+    <section id="tv" class="section">
+        <div class="container">
+            <h2 class="section-title">📺 Televizijski Paketi</h2>
+            <div class="packages-grid">
+                <div class="package-card">
+                    <h3>Osnovni Paket</h3>
+                    <div class="price">1.999 RSD/mesečno</div>
+                    <ul class="features">
+                        <li>✅ 120 kanala</li>
+                        <li>✅ 30 HD kanala</li>
+                        <li>✅ 10 muzičkih kanala</li>
+                        <li>✅ EPG program</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="openContact('Osnovni TV Paket')">Izaberi</button>
+                </div>
+
+                <div class="package-card popular">
+                    <div class="popular-badge">POPULARNO</div>
+                    <h3>Porodični Paket</h3>
+                    <div class="price">2.999 RSD/mesečno</div>
+                    <ul class="features">
+                        <li>✅ 200 kanala</li>
+                        <li>✅ 50 HD kanala</li>
+                        <li>✅ 20 muzičkih kanala</li>
+                        <li>✅ 5 film kanala</li>
+                        <li>✅ EPG program</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openContact('Porodični TV Paket')">Izaberi</button>
+                </div>
+
+                <div class="package-card">
+                    <h3>Premium Paket</h3>
+                    <div class="price">3.999 RSD/mesečno</div>
+                    <ul class="features">
+                        <li>✅ 300 kanala</li>
+                        <li>✅ 80 HD kanala</li>
+                        <li>✅ 30 muzičkih kanala</li>
+                        <li>✅ 10 film kanala</li>
+                        <li>✅ Sportska pak</li>
+                        <li>✅ EPG program</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="openContact('Premium TV Paket')">Izaberi</button>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="package">
-            <h2>🔥 Kombinovani Paket</h2>
-            <p><strong>TV + Internet:</strong> Sve u jednom <span class="price">2.990 RSD/mesec</span></p>
-            <p style="color: #27ae60; font-weight: bold;">🎁 Ušteda 30% u odnosu na odvojene pakete!</p>
-            <a href="https://t.me/TVInternetSBB_bot?text=Želim+Kombinovani+paket" class="btn">📞 Poruči Kombinovano</a>
+    <!-- INTERNET PAKETI -->
+    <section id="internet" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">🌐 Internet Paketi</h2>
+            <div class="packages-grid">
+                <div class="package-card">
+                    <h3>Basic Internet</h3>
+                    <div class="price">1.499 RSD/mesečno</div>
+                    <ul class="features">
+                        <li>✅ Brzina: 30/10 Mbps</li>
+                        <li>✅ Neograničen protok</li>
+                        <li>✅ Wi-Fi ruter</li>
+                        <li>✅ 24/7 podrška</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="openContact('Basic Internet')">Izaberi</button>
+                </div>
+
+                <div class="package-card popular">
+                    <div class="popular-badge">NAJPOVOLJNIJE</div>
+                    <h3>Standard Internet</h3>
+                    <div class="price">1.999 RSD/mesečno</div>
+                    <ul class="features">
+                        <li>✅ Brzina: 100/50 Mbps</li>
+                        <li>✅ Neograničen protok</li>
+                        <li>✅ Wi-Fi ruter</li>
+                        <li>✅ 24/7 podrška</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openContact('Standard Internet')">Izaberi</button>
+                </div>
+
+                <div class="package-card">
+                    <h3>Premium Internet</h3>
+                    <div class="price">2.999 RSD/mesečno</div>
+                    <ul class="features">
+                        <li>✅ Brzina: 250/100 Mbps</li>
+                        <li>✅ Neograničen protok</li>
+                        <li>✅ Wi-Fi 6 ruter</li>
+                        <li>✅ 24/7 podrška</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="openContact('Premium Internet')">Izaberi</button>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="package" style="text-align: center; background: #2c3e50; color: white;">
-            <h2>📞 Kontaktirajte nas!</h2>
-            <p>Telefon: <strong>011/123-456</strong></p>
-            <p>Email: <strong>info@tvinternetsbb.rs</strong></p>
-            <p>Telegram: <strong>@TVInternetSBB_bot</strong></p>
-            <p>Radno vreme: 08:00 - 20:00</p>
+    <!-- KOMBINOVANI PAKETI -->
+    <section id="combined" class="section">
+        <div class="container">
+            <h2 class="section-title">🔥 Kombinovani Paketi</h2>
+            <div class="packages-grid">
+                <div class="package-card combined">
+                    <h3>Duo Paket</h3>
+                    <div class="price">3.499 RSD/mesečno</div>
+                    <div class="savings">Ušteda: 500 RSD</div>
+                    <ul class="features">
+                        <li>✅ Porodični TV Paket</li>
+                        <li>✅ Standard Internet</li>
+                        <li>✅ Besplatna instalacija</li>
+                        <li>✅ 2 meseca gratis</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openContact('Duo Paket')">Izaberi</button>
+                </div>
+
+                <div class="package-card combined popular">
+                    <div class="popular-badge">NAJBOlJA PONUDA</div>
+                    <h3>Triple Paket</h3>
+                    <div class="price">4.999 RSD/mesečno</div>
+                    <div class="savings">Ušteda: 1.000 RSD</div>
+                    <ul class="features">
+                        <li>✅ Premium TV Paket</li>
+                        <li>✅ Premium Internet</li>
+                        <li>✅ Besplatna instalacija</li>
+                        <li>✅ 3 meseca gratis</li>
+                        <li>✅ VIP podrška</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openContact('Triple Paket')">Izaberi</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KONTAKT FORMA -->
+    <section id="contact" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">💬 Kontaktirajte Nas</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Informacije</h3>
+                    <p><strong>📞 Telefon:</strong> +381 60 123 4567</p>
+                    <p><strong>📧 Email:</strong> info@tvinternetsbb.rs</p>
+                    <p><strong>🕒 Radno vreme:</strong> 08-20h</p>
+                    <p><strong>🤖 Telegram Bot:</strong> @TVInternetSBB_bot</p>
+                </div>
+                <div class="contact-form">
+                    <h3>Pošaljite Poruku</h3>
+                    <form id="contactForm">
+                        <input type="text" id="name" placeholder="Vaše ime" required>
+                        <input type="tel" id="phone" placeholder="Broj telefona" required>
+                        <select id="package" required>
+                            <option value="">Izaberite paket</option>
+                            <option value="Osnovni TV">Osnovni TV Paket</option>
+                            <option value="Porodični TV">Porodični TV Paket</option>
+                            <option value="Premium TV">Premium TV Paket</option>
+                            <option value="Basic Internet">Basic Internet</option>
+                            <option value="Standard Internet">Standard Internet</option>
+                            <option value="Premium Internet">Premium Internet</option>
+                            <option value="Duo Paket">Duo Paket</option>
+                            <option value="Triple Paket">Triple Paket</option>
+                        </select>
+                        <textarea id="message" placeholder="Dodatna poruka (opciono)"></textarea>
+                        <button type="submit" class="btn btn-primary">Pošalji Upit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 TVInternetSBB. Sva prava zadržana.</p>
+            <p>Projekat razvijen uz pomoć AI asistenta</p>
+        </div>
+    </footer>
+
+    <!-- MODAL ZA KONTAKT -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Izabrali ste: <span id="selectedPackage"></span></h3>
+            <p>Kontaktirajte nas putem Telegram bota za brzu narudžbinu:</p>
+            <div class="telegram-link">
+                <a href="https://t.me/TVInternetSBB_bot" target="_blank" class="btn btn-telegram">
+                    📱 Otvori Telegram Bot
+                </a>
+            </div>
+            <p>Ili nas pozovite: <strong>+381 60 123 4567</strong></p>
         </div>
     </div>
+
+    <script src="js/script.js"></script>
 </body>
 </html>

@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment
+.env
+.envcd
+
+# Logs
+*.log
+bot.log
+sync_errors.log
+sync_monitor.log
+
+# Database
+*.db
+leads.db
+
+# Temporary files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# PythonAnywhere
+.pythonlibs/
+
+# Other
+*.sh
+Procfile
+admin.html
+logs.html
+logs/
+static/
+templates/
+*.old
+*_old.py
