@@ -1,0 +1,123 @@
+#!/bin/bash
+echo "🔍 POKREĆEM MONITORING SINHRONIZACIJE - TERMUX..."
+
+# LOG FAJL
+LOG_FILE="sync_monitor.log"
+ERROR_FILE="sync_errors.log"
+
+# Pronađi admin chat ID automatski iz .env fajla
+if [ -f ".env" ]; then
+    ADMIN_CHAT_ID=$(grep "ADMIN_CHAT_ID" .env | cut -d '=' -f2)
+else
+    ADMIN_CHAT_ID="123456789"  # Zameni sa svojim ID
+fi
+
+# FUNKCIJE ZA LOGOVANJE
+log_message() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> $LOG_FILE
+    echo "📝 $1"
+}
+
+log_error() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ❌ GREŠKA: $1" >> $ERROR_FILE
+    echo "🚨 $1"
+}
+
+# FUNKCIJA ZA SLANJE TELEGRAM OBRAVEŠTENJA
+send_telegram_alert() {
+    local message="$1"
+    local token="8105923056:AAFdk-iRcIgmVGHxdAE7R-qhTNoq7WbRTW0"
+    
+    curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
+        -d chat_id="$ADMIN_CHAT_ID" \
+        -d text="🔔 TVInternetSBB MONITOR: $message" \
+        -d parse_mode="HTML" >> /dev/null
+}
+
+# PROVERA DA LI JE INTERNET DOSTUPAN
+check_internet() {
+    if ! ping -c 1 github.com &> /dev/null; then
+        log_error "Nema internet konekcije"
+        send_telegram_alert "🌐 INTERNET NEDOSTUPAN - Sinhronizacija onemogućena"
+        return 1
+    fi
+    return 0
+}
+
+# PROVERA GIT STATUS
+check_git_status() {
+    log_message "Proveravam Git status..."
+    
+    if [ ! -d ".git" ]; then
+        log_error "Git repo nije inicijalizovan"
+        send_telegram_alert "⚠️ GIT REPO NIJE INICIJALIZOVAN"
+        return 1
+    fi
+    
+    return 0
+}
+
+# PROVERA BAZE PODATAKA - TERMUX SPECIFIČNO
+check_database() {
+    log_message "Proveravam bazu podataka..."
+    
+    # TERMUX: Baza je jedan nivo iznad
+    if [ ! -f "../sbb_leads.db" ]; then
+        log_error "Baza podataka ../sbb_leads.db ne postoji"
+        # Pokušaj da pronadeš bazu drugde
+        if [ -f "sbb_leads.db" ]; then
+            log_message "✅ Pronađena baza u trenutnom folderu"
+            return 0
+        else
+            send_telegram_alert "🗄️ BAZA PODATAKA NIJE PRONAĐENA"
+            return 1
+        fi
+    fi
+    
+    log_message "✅ Baza podataka pronađena"
+    return 0
+}
+
+# SINHRONIZACIJA
+sync_with_monitoring() {
+    log_message "🚀 POKREĆEM SINHRONIZACIJU SA TERMUX-A..."
+    
+    if ! check_internet; then return 1; fi
+    if ! check_git_status; then return 1; fi
+    if ! check_database; then return 1; fi
+    
+    # Povuci promene
+    log_message "📥 Povlačim najnovije sa GitHuba..."
+    git pull origin main
+    
+    # Dodaj sve promene
+    log_message "📦 Dodajem promene..."
+    git add .
+    
+    # Commit
+    log_message "💾 Praviм commit..."
+    git commit -m "Termux sync: $(date '+%Y-%m-%d %H:%M:%S')" || true
+    
+    # Push
+    log_message "🚀 Šaljem na GitHub..."
+    if git push origin main; then
+        log_message "✅ SINHRONIZACIJA USPELA"
+        send_telegram_alert "✅ Termux sinhronizacija uspela!"
+    else
+        log_error "Sinhronizacija neuspešna"
+        send_telegram_alert "❌ Termux sinhronizacija failed!"
+        return 1
+    fi
+    
+    return 0
+}
+
+# POKRENI
+log_message "=== TERMUX MONITORING START ==="
+sync_with_monitoring
+log_message "=== TERMUX MONITORING END ==="
+
+# Prikaži logove
+echo ""
+echo "📋 LOGOVI:"
+tail -3 "$LOG_FILE" 2>/dev/null || echo "Nema logova"
