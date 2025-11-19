@@ -1,0 +1,12 @@
+
+#!/bin/bash
+echo "🔄 SINHRONIZACIJA: Telefon → Server"
+echo "📁 Izvor:      ~/sbb-project/"
+echo "🎯 Odredište:  moje-zabele-ke-/ na serveru"
+echo "----------------------------------------"
+
+rsync -avz --delete ~/sbb-project/ sbb-server:moje-zabele-ke-/
+
+echo "✅ Sinhronizacija završena!"
+echo "📊 Vreme: $(date)"
+ 
