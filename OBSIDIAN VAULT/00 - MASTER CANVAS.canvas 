@@ -1,0 +1,170 @@
+
+
+```json
+{
+  "nodes": [
+    {
+      "id": "project-vision",
+      "type": "text",
+      "x": 100,
+      "y": 100,
+      "width": 300,
+      "height": 150,
+      "text": "# 🔮 PROJECT VISION\n\n**TVInternetSBB AI Bot**\n\n- Telegram bot sa AI\n- 24/7 hosting\n- Multi-platform sync\n- User support system"
+    },
+    {
+      "id": "questions-hub",
+      "type": "text", 
+      "x": 500,
+      "y": 100,
+      "width": 350,
+      "height": 200,
+      "text": "# ❓ QUESTIONS HUB\n\n## Aktivna pitanja:\n\n- [[Kako započeti Telegram bot projekt]]\n- [[Koji hosting za 24-7 bot]]\n- [[Kako integrirati OpenAI API]]\n\n[[09 - QUESTIONS & ANSWERS]]"
+    },
+    {
+      "id": "chat1-extraction",
+      "type": "text",
+      "x": 900,
+      "y": 100,
+      "width": 400,
+      "height": 250,
+      "text": "# 💬 CHAT 1 EXTRACTION\n\n**Project Foundation**\n\n- Telegram bot setup\n- OpenAI integration\n- Hosting strategy\n- Development approach\n\n[[Chat 1 - Project Foundation]]"
+    },
+    {
+      "id": "bot-code",
+      "type": "text",
+      "x": 100,
+      "y": 300,
+      "width": 300,
+      "height": 120,
+      "text": "# 🤖 BOT CODE\n\n**Implementacija**\n\n- `bot_ai.py` - AI integracija\n- `bot_cloud.py` - Production\n- Database manager\n\n[[Bot Development Guide]]"
+    },
+    {
+      "id": "problems",
+      "type": "text",
+      "x": 500,
+      "y": 350,
+      "width": 300,
+      "height": 120, 
+      "text": "# ⚠️ PROBLEMS\n\n**Trenutni izazovi:**\n\n- OpenAI API quota\n- Multi-platform sync\n- Chat extraction\n\n[[06 - PROBLEMS & SOLUTIONS]]"
+    },
+    {
+      "id": "solutions",
+      "type": "text",
+      "x": 900,
+      "y": 400,
+      "width": 300,
+      "height": 120,
+      "text": "# 💡 SOLUTIONS\n\n**Rešenja:**\n\n- Fallback mechanisms\n- Git synchronization\n- Template system\n\n[[06 - PROBLEMS & SOLUTIONS]]"
+    },
+    {
+      "id": "hosting-setup",
+      "type": "text",
+      "x": 100,
+      "y": 470,
+      "width": 300,
+      "height": 120,
+      "text": "# ☁️ HOSTING SETUP\n\n**PythonAnywhere**\n\n- Web app configuration\n- SSL certificates\n- Domain setup\n\n[[Hosting Setup Guide]]"
+    },
+    {
+      "id": "sync-system",
+      "type": "text",
+      "x": 500,
+      "y": 520,
+      "width": 300,
+      "height": 120,
+      "text": "# 🔄 SYNC SYSTEM\n\n**Git Sinhronizacija**\n\n- Termux ↔ Računar\n- Automatski commit\n- Backup strategy\n\n[[Sync System Guide]]"
+    },
+    {
+      "id": "future-plans",
+      "type": "text",
+      "x": 900,
+      "y": 570,
+      "width": 300,
+      "height": 120,
+      "text": "# 🚀 FUTURE PLANS\n\n**Razvoj:**\n\n- Advanced AI features\n- User analytics\n- Multi-language\n\n[[07 - FUTURE DEVELOPMENT]]"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge1",
+      "fromNode": "project-vision",
+      "fromSide": "right",
+      "toNode": "questions-hub",
+      "fromEnd": "none",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "edge2", 
+      "fromNode": "questions-hub",
+      "fromSide": "right",
+      "toNode": "chat1-extraction",
+      "fromEnd": "none",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "edge3",
+      "fromNode": "project-vision",
+      "fromSide": "bottom",
+      "toNode": "bot-code",
+      "fromEnd": "none",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "edge4",
+      "fromNode": "questions-hub",
+      "fromSide": "bottom", 
+      "toNode": "problems",
+      "fromEnd": "none",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "edge5",
+      "fromNode": "chat1-extraction",
+      "fromSide": "bottom",
+      "toNode": "solutions",
+      "fromEnd": "none",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "edge6",
+      "fromNode": "bot-code",
+      "fromSide": "right",
+      "toNode": "hosting-setup",
+      "fromEnd": "none",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "edge7",
+      "fromNode": "problems",
+      "fromSide": "right",
+      "toNode": "sync-system",
+      "fromEnd": "none",
+      "toEnd": "arrow" 
+    },
+    {
+      "id": "edge8",
+      "fromNode": "solutions",
+      "fromSide": "left",
+      "toNode": "sync-system",
+      "fromEnd": "none",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "edge9",
+      "fromNode": "hosting-setup",
+      "fromSide": "right",
+      "toNode": "sync-system",
+      "fromEnd": "none",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "edge10",
+      "fromNode": "sync-system",
+      "fromSide": "right", 
+      "toNode": "future-plans",
+      "fromEnd": "none",
+      "toEnd": "arrow"
+    }
+  ]
+}

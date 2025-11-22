@@ -1,0 +1,36 @@
+---
+problem_id: {{date:YYYYMMDDHHmm}}
+date_created: {{date}}
+date_solved: 
+status: "open"
+severity: "medium"
+platforms: []
+tags: []
+related_chats: []
+---
+
+# 🚨 {{title}}
+
+## 📋 Problem Description
+
+
+## 🔍 Symptoms
+- 
+
+## 🎯 Expected Behavior
+- 
+
+## ⚠️ Actual Behavior
+- 
+
+## 🛠️ Troubleshooting Steps
+1. 
+2. 
+3. 
+
+## 💡 Solution
+**Root Cause**: 
+
+**Fix Applied**:
+```python
+

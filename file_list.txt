@@ -1,0 +1,376 @@
+./.git/description
+./.git/hooks/commit-msg.sample
+./.git/hooks/fsmonitor-watchman.sample
+./.git/hooks/post-update.sample
+./.git/hooks/pre-applypatch.sample
+./.git/hooks/pre-commit.sample
+./.git/hooks/pre-merge-commit.sample
+./.git/hooks/pre-push.sample
+./.git/hooks/pre-rebase.sample
+./.git/hooks/pre-receive.sample
+./.git/hooks/prepare-commit-msg.sample
+./.git/hooks/push-to-checkout.sample
+./.git/hooks/sendemail-validate.sample
+./.git/hooks/update.sample
+./.git/hooks/applypatch-msg.sample
+./.git/info/exclude
+./.git/objects/pack/pack-970ecfb03b60db3cf912a4eba01df43797e6a3d7.pack
+./.git/objects/pack/pack-970ecfb03b60db3cf912a4eba01df43797e6a3d7.rev
+./.git/objects/pack/pack-970ecfb03b60db3cf912a4eba01df43797e6a3d7.idx
+./.git/objects/pack/pack-80891ed291a67856211be3da131d63d85adb56a4.pack
+./.git/objects/pack/pack-80891ed291a67856211be3da131d63d85adb56a4.rev
+./.git/objects/pack/pack-80891ed291a67856211be3da131d63d85adb56a4.idx
+./.git/objects/08/2772a0551d8efd08f9f1f1f6f741250eb6b7f1
+./.git/objects/02/07d9f873e93fb95e27cfb4a8950e646a4442ed
+./.git/objects/ec/a8936cbcca06a151f7db01e2339d5ca678de8f
+./.git/objects/ca/57ceff987386144f0709afa493a25c8c9875cf
+./.git/objects/38/a73da398c765283e9b5320572cf4a43df3bc70
+./.git/objects/b3/bfc85ab27c917ba4fd292e8d527727b9ea0fff
+./.git/objects/b3/9beb53ed42f0890a29f11dac37f3406ac976eb
+./.git/objects/37/47caca45e1d5ccb493e18939c3cb5dc63c0224
+./.git/objects/37/fc02ee0c88c40615a949c2f87c8e59a73b2d8f
+./.git/objects/3f/ca551eec1c3f2dc3350e4ac20d06642ad2b62b
+./.git/objects/3f/fcb371bd43c83af953f675486208f5d881f2ae
+./.git/objects/c9/e84198cc46a313ca556197c6317738a5d212ca
+./.git/objects/98/9ae446bad9f79f6569febedf4d2a9c93d4c6cf
+./.git/objects/98/ac75e911aaa466da544abafe2a13a0bc58b80c
+./.git/objects/84/575982f8af9cfbcf8edc64ace6deb04c6fa19b
+./.git/objects/25/8027ac407ecfaf46ff63f63d1a4fb097e92be2
+./.git/objects/c4/a2b7c9349476792257b319d7f61c41af5c75ff
+./.git/objects/0a/78e6ef390dbde446791e510981052c613d1bf1
+./.git/objects/7b/2d249d69b9cbc3875577d1340cd30c4ae91c29
+./.git/objects/7b/b6605277fbcb5abfb16c40abfe5a9daa96fd8a
+./.git/objects/42/6664ff678236e9e4fdbae171007793fc3cd067
+./.git/objects/1e/dbe8e38ca80e608b7817ec983b42604cb0d8ba
+./.git/objects/2b/68e2a7710a10ea5c53dbf9790c8eb57f6793ed
+./.git/objects/65/3c782de2e558f37f960e83734f70f813733aab
+./.git/objects/cd/bb539681ae47cb7aa3e71d9ab81c1ea58c1943
+./.git/objects/cd/ab70ed7c028ae40595f54045397d0919c95bc0
+./.git/objects/88/76c8f6576c2fddfc92aa0ba8f87b5096961192
+./.git/objects/5c/60b19565a9ec0ce95a800974ad1b0b9828c5b5
+./.git/objects/fd/efce424e75e127030ee85db9fc0c6ff51d9522
+./.git/objects/c3/5b770d3caa266054ab7c35c3cd1334be15ab7b
+./.git/objects/b2/edc284e830580ed63a373240f7f54c83e7fb57
+./.git/objects/ea/96f5597eb8e1132e050ab143ffcfcc741ac92d
+./.git/objects/00/4cfa95de9f1ba12d4f28565ded9c5f25d343a0
+./.git/objects/00/d530e9dcf27c6afc8701dcd3e5a7c407155cf6
+./.git/objects/90/07f9f9943b0701b5d2ec4128c2ef35aa796d98
+./.git/objects/f5/ea6e3e8e50d16c784a79fc1d9a132c53c8d4dd
+./.git/objects/f2/a91902d791ad08937fccd352b824eca9fb8252
+./.git/objects/3b/12464976a5fd9e07d67dd7d5cf4f0f10188410
+./.git/objects/3b/efc0b64af036f3d40debaac8d60bd1bfefa172
+./.git/objects/81/eb63ef666005a831c9d671e7e926fde5c2cdd7
+./.git/objects/70/001782b5b93c8337cb1d170c82ffd279cb2e74
+./.git/objects/bf/d987fc308a6f8ddc7cc8dd458526ce4c801068
+./.git/objects/b7/a1fafab0b5b0405dcf321a1cfd8af2e6849bef
+./.git/objects/b7/36107dd851c3374453bbdd135d53c3ec521c2b
+./.git/objects/1b/ecba2bb0a80e7b9b0a7715f15e56512a7e5f7e
+./.git/objects/e7/51fe5090882a6c99a67dfdbf11264cabe9e147
+./.git/objects/a1/50dbdd4d9ff0e8e58ecadb1865abd03c656ce9
+./.git/objects/a5/ad807152dcbfe91661112a2d0f61d96f30aad2
+./.git/objects/a2/da18b2fd706a5e200fa52f3504b97fd758f6d1
+./.git/objects/44/44a111f2dee83732c037f4e5fb3d2741fd14b9
+./.git/objects/9e/a50e72f51e85c267b777c26688d8240fb2f38e
+./.git/objects/6c/6e21fa1eaa2380e95fa4f23789f460b2bd3181
+./.git/objects/12/018634a48d89754d1e91af431cd30c02c152fd
+./.git/objects/12/38441b30816f6dbe4395256e36f2d40f914406
+./.git/objects/d5/4ef08e66a98d61ba6040b5a1c980438f76f459
+./.git/objects/d3/0af246b300bbce10c8e310e4323e148973b2ba
+./.git/objects/36/ce1efc9194375314fb02d0a7b7e91aef59ea67
+./.git/objects/73/88003c8aced382ba8a4d29766e21c89308c254
+./.git/objects/4d/103367218de95ecc38d48c6892c0138aa0c6cc
+./.git/objects/4d/6910ecfb738f1d81e16ada59d08fe4a38f76f8
+./.git/objects/29/4d7f8085c4229243fe84b3675e860965d567a1
+./.git/objects/71/d6df52d73d3b753030642b45c27cac45373e37
+./.git/objects/6b/ce1c1b6886e3cb8b8d1cd616658671559d53c6
+./.git/objects/ae/c9f33d913a743283ee1bc07860a0dec95699c7
+./.git/objects/0d/a9a6efb2cc4d97decd44b722134cc1d00d609f
+./.git/objects/41/3c1eb6c4045891f2718796aec02774ea9b3740
+./.git/objects/4c/f2e7ec56c722daf1905771c617eef7ac9c43ae
+./.git/objects/b5/d4a58880d18189b3455d370a5c9a30a1ab14bc
+./.git/objects/0b/e56fc01b746a548512159c2f7bea5716ac9a5f
+./.git/objects/78/872becf6be9c96c00d2f6f7cb85860d1cf3718
+./.git/objects/c6/471fc9d8449b6040eee1c745ba83076800dafb
+./.git/objects/ef/1c697e521bb01fd5be0ffe8c07dfb636bfcd16
+./.git/objects/5a/f6109232757ecd5fb1081d293bcef5b879def5
+./.git/objects/2c/d94069328ca8a564c9c2908d0750be110a5165
+./.git/objects/01/a2e0ff6592d7c890c973d8f2e54078273fef1a
+./.git/objects/9f/93e109474202e830a6f7ad73206526f08f3a65
+./.git/objects/b4/473a83be7a3084fd5ae127a79b71eda08f56e0
+./.git/objects/5b/e2411ef0e1145f6406d6e34a5e9735c1ec4632
+./.git/objects/45/40b9c58446648e9c2a9377153cc9d60871c88a
+./.git/objects/97/1ba988808430cba820b87939c70393f51ed72d
+./.git/objects/8e/11348121cb479d0b6a9f5cb03c3a39bf04751e
+./.git/objects/f1/74ade21ce478f5b3043295ca7fb54a4603e1d3
+./.git/objects/ff/a7ae4346b0dcc59977da7eb92c64391d27bd16
+./.git/objects/5f/5eee20507c3c8778f78b622108d40bc5d57f70
+./.git/objects/e0/eb69c3867b0b39fc704beb3878d4da1a280f0f
+./.git/objects/dc/f39e161127c2439fd3f7db254a144937788bc8
+./.git/objects/e8/7fa37d733b41d82b7d81ccfbce129eafb777a9
+./.git/objects/a6/5a6188f9c22d5435d5057ed1899ea1061113bf
+./.git/objects/8b/145c86e3257d201c952fa8e693681b5bba21a6
+./.git/config
+./.git/HEAD
+./.git/refs/heads/main
+./.git/refs/remotes/origin/HEAD
+./.git/refs/remotes/origin/main
+./.git/logs/refs/remotes/origin/HEAD
+./.git/logs/refs/remotes/origin/main
+./.git/logs/refs/heads/main
+./.git/logs/HEAD
+./.git/COMMIT_EDITMSG
+./.git/packed-refs
+./.git/index
+./.git/FETCH_HEAD
+./.git/ORIG_HEAD
+./.obsidian/app.json
+./.obsidian/appearance.json
+./.obsidian/community-plugins.json
+./.obsidian/core-plugins.json
+./.obsidian/graph.json
+./.obsidian/plugins/calendar/data.json
+./.obsidian/plugins/calendar/main.js
+./.obsidian/plugins/calendar/manifest.json
+./.obsidian/plugins/dataview/main.js
+./.obsidian/plugins/dataview/manifest.json
+./.obsidian/plugins/dataview/styles.css
+./.obsidian/plugins/quickadd/main.js
+./.obsidian/plugins/quickadd/manifest.json
+./.obsidian/plugins/quickadd/styles.css
+./.obsidian/plugins/templater-obsidian/data.json
+./.obsidian/plugins/templater-obsidian/main.js
+./.obsidian/plugins/templater-obsidian/manifest.json
+./.obsidian/plugins/templater-obsidian/styles.css
+./.obsidian/workspace-mobile.json
+./.trash/-Tv Internet Projekat.canvas.canvas
+./.trash/2.2 SSH Ključevi Generisanje SSH ključa.md
+./.trash/2.5 Kloniranje u Termux-u.md
+./.trash/3.3 Test SinhronizacijeU Termux-u.md
+./.trash/4.2 Kreiranje Prvih Template-a.md
+./.trash/7.3 Automatski Izveštaji 2.md
+./.trash/7.3 Automatski Izveštaji.md
+./.trash/Daily Notes/Untitled.md
+./.trash/FAZA 3 TEMPLATE SISTEM.md
+./.trash/Grrrbrrr.md
+./.trash/KOMPLETNI TUTORIJAL.md
+./.trash/README.md
+./.trash/Rešavanje Problema.md.md
+./.trash/TV Internet Projekt.canvas.md
+./.trash/Test iz Obsidiana.md
+./.trash/Tv -Internet Projekat.canvas.canvas
+./.trash/Untitled 1 2.md
+./.trash/Untitled 1 3.md
+./.trash/Untitled 1 4.md
+./.trash/Untitled 1.md
+./.trash/Untitled 10.md
+./.trash/Untitled 11.md
+./.trash/Untitled 12.md
+./.trash/Untitled 13.md
+./.trash/Untitled 14.md
+./.trash/Untitled 15.md
+./.trash/Untitled 16.md
+./.trash/Untitled 17.md
+./.trash/Untitled 2.md
+./.trash/Untitled 3.md
+./.trash/Untitled 4.md
+./.trash/Untitled 5.md
+./.trash/Untitled 6.md
+./.trash/Untitled 7.md
+./.trash/Untitled 8.md
+./.trash/Untitled 9.md
+./.trash/Untitled.canvas
+./.trash/Untitled.md
+./.trash/```.md
+./.trash/ideja-1762323078.md
+./.trash/quick-$(date +%s).md
+./.trash/resenje-1762323124.md
+./.trash/transkripta.md
+./.trash/🎯 Faza 1 - Preduslovi i Priprema 2.md
+./.trash/🎯 Faza 1 - Preduslovi i Priprema.md
+./.trash/🎯 Faza 1 - Preduslovi i Priprema.md 2.md
+./.trash/🎯 Faza 1 - Preduslovi i Priprema.md.md
+./.trash/📈 Automatski Izveštaji.md
+./.trash/🔐 Faza 2 - Git i Sinhronizacija.md
+./LOGSEQ/KORAK 2.1.md
+./LOGSEQ/KORAK 3.1.md
+./LOGSEQ/Logseq - opis - Budućnost/01 LogSeq može biti bolji za učenje.md
+./LOGSEQ/Logseq - opis - Budućnost/02 Kako bi LogSeq sistem izgledao.md
+./LOGSEQ/Logseq - opis - Budućnost/03 EKSPERIMENT TESTIRAJTE LOGSEQLOGSEQLOGSEQLOGSEQ.md
+./LOGSEQ/Logseq - opis - Budućnost/🔮 BUDUĆNOST EMERGING SOLUTIONS.md
+./LOGSEQ/📝 KORAK 2 PARALELNI TEST - PYTHON TUTORIJAL.md
+./LOGSEQ/🔧 KORAK 7 LOGSEQ SPECIFIČNI TEMPLATEI.md
+./LOGSEQ/🚀 KORAK 1 INSTALACIJA I SETUP.md
+./LOGSEQ/🚀 KORAK 8 SINHRONIZACIJA I BACKUP.md
+./Moje Zabeleške/Moja Prva Povezana Nota.md
+./Moje Zabeleške/Moje-Teme.md
+./Moje Zabeleške/🏠 Home.md
+./Moje Zabeleške/📈 AUTOMATSKI IZVEŠTAJI.md.md
+./Moje Zabeleške/📊 Komandna Tabla.md.md
+./Moje Zabeleške/📋 Glavni Projekti.md.md
+./Moje Zabeleške/🔧 Graph View Podešavanja.md.md
+./Moje Zabeleške/🚀 Git Sinhronizacija Sistema.md
+./Moje Zabeleške/🚀 Projekat - Unapređenje Vault-a.md.md
+./OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA/00 📊 G L A V N I DATAVIEW INDEKS.md
+./OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA/01📋  FAZA 1 OSNOVNA INFRASTRUKTURA ✅.md
+./OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA/02🔧 FAZA 2 OBSIDIAN SETUP ✅.md
+./OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA/03🚀FAZA 3 PLUGINOVI I AUTOMATIZACIJA ✅.md
+./OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA/04📊 FAZA 4 PRODUKTIVNOST SISTEM ✅.md
+./OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA/05🌐 FAZA 5 MREŽA ZNANJA 🚧.md
+./OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA/06🎯 FAZA 6 BUDUĆI PRAVCI RAZVOJA.md
+./OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA/07🚀FAZA 7 SINHRONIZACIJA I TEST.md
+./OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA/Folder Struktura.md
+./OBSIDIAN - TERMUX - GIT/CENTRALNA MAPA/🧭 Mapa Znanja - Čitav Put.md.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 1 GIT SINHRONIZACIJA - TERMUX.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 2 OBSIDIAN SETUP.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 3 TEMPLATE SISTEM.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 4 AUTOMATIZACIJA.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 5 PLUGINOVI.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 6 MAPA ZNANJA.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 7 Struktura.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 8 PROVERA SISTEMA.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 9 ŠTA JE ŠTA I GDE SE KORISTI.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI PROCES/FAZA 9.1 KRATKOROČNI PLAN.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/1.3 Kreiranje GitHub Naloga.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/2.2 SSH Ključevi.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/2.3 GitHub SSH Setup.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/2.4 Kreiranje Repozitorijuma.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/2.5 Kloniranje u Termux-u.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/3.3 Test SinhronizacijeU Termux-u.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/4.2 Kreiranje Prvih Template-a..md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/4.3 Templater Plugin.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/4.4 Testiranje Template-a.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/5.2 Termux Widget.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/5.3 Dodavanje Widgeta na Home Screen.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/5.4 Testiranje Automatizacije.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/6.2 Note Kreirane Danas.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/6.2-6.3 Calendar Plugin- Kanban Plugin.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/6.4 Testiranje Pluginova.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/7.2 Automatski Izveštaji - text sintakse.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/7.3 Automatski Izveštaji.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/7.4 Redovno Održavanje.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/8.3 Organizacija Znanja.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/8.4 Napredne Strategije.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/9.1 ŠTA DALJE.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/9.2 Problemi.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/9.3 Poslednje ažuriranje.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/Napredno povezivanje.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/⚡ Faza 5 - Automatizacija.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/❌ Rešavanje Problema.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/🌐 Faza 8 - Mreža Znanja.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/🎯 Faza 1 - Preduslovi i Priprema.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/📊 Faza 7 - Produktivnost Sistem.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/📝 Faza 4 - Template Sistem.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/📱 Faza 3 - Obsidian Setup.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/🔐 Faza 2 - Git i Sinhronizacija.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/🔧 Faza 6 - Pluginovi.md
+./OBSIDIAN - TERMUX - GIT/KOMPLETNI TUTORIJAL/🧭 Kompletni Tutorijal Setup-a.md.md
+./OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/🎯 BRZI NAČIN ZA POČETAK.md
+./OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/🎯 METODA 2 SIROČAD - NEPOVEZANE NOTE.md
+./OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/💡 PRAKTIČNI KORACI ZA POČETAK.md
+./OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/📋 METODA 1 AUTOMATSKI DATAVIEW INDEKS.md
+./OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/🔧 METODA 3 RUČNO POVEZIVANJE KROZ HOME NOTU.md
+./OBSIDIAN - TERMUX - GIT/POVEZIVANJE NOTE SA INDEXOM/🚀 METODA 4 KREIRAJTE -SPONGE-NOTE KOJE PRIVLAČE SVE.md
+./OBSIDIAN - TERMUX - GIT/TERMUX/PRAVLJENJE FILE-a U TERMUX-u.md
+./OSNOVNE FUNKCIJE OBSIDIAN/🎯 OSNOVNE FUNKCIJE OBSIDIANA.md
+./OSNOVNE FUNKCIJE OBSIDIAN/🛠️ KAKO DA DODAŠ COMMAND PALETTE U TOOLBAR.md
+./PYTHON X/Čuvanje code snippet-ova.md
+./PYTHON X/🔄 STRATEGIJA INTEGRACIJE.md
+./Paketi Tv Internet.md
+./TRANSKRIPT/Ako Tutorial nema TRANSKRIPT/Rešenje 1 Koristite Automatske Alate za Prepisivanje (Najbrže).md
+./TRANSKRIPT/Ako Tutorial nema TRANSKRIPT/Rešenje 2 Aktivno Slušanje i Ručno Beleženje (Najučinkovitije).md
+./TRANSKRIPT/Korak 1 Pronađite Python tutorijal na YouTube-u.md
+./TRANSKRIPT/Korak 2 Koristite YouTube transkript (tekst snimka).md
+./TRANSKRIPT/Korak 3 Kopirajte transkript u novu belešku u Obsidianu-LogSeq-u.md
+./TRANSKRIPT/Korak 4 Ručno strukturirajte po konceptima.md
+./TV_Internet_Projekt.canvas
+./Telegram setings.md
+./Templates/Untitled 1.md
+./Templates/Untitled.md
+./Templates/canvas-template.canvas.md
+./Templates/test-template.md
+./Templates/🐛 Problem Resenje.md
+./Templates/💡 Nova Ideja.md
+./Templates/📅 Dnevna Nota.md
+./Templates/📅 Nedeljni Pregled.md
+./Templates/🔧 Tehnologija Resenje.md
+./Templates/🚀 Projekat Template.md
+./Templates/🧠 Pametni Template.md
+./Templates/🧩 Osnovni Template.md
+./Templates/Chat-Template.md 
+./Templates/Chat-Template.md  
+./Templates/Problem-Template.md 
+./Templates/Problem-Template.md  
+./Templates/Chat-Template.md    
+./Templates/Chat-Template.md     
+./Templates/Chat-Template 
+./Templates/Chat-Template  
+./Templates/Chat Template 
+./Templates/Chat Template  y 
+./Templates/.Chat-Template.swp
+./Templates/.Chat-Template.swo
+./Templates/.Chat-Template.swn
+./Templates/Chat-Template
+./Untitled 1.md
+./Untitled 2.md
+./Untitled.md
+./bot.log
+./bot.py
+./bot_ai.py
+./bot_with_logs.py
+./index.md
+./leads.db
+./project_manager.py
+./sbb_bot.log
+./sbb_leads.db
+./smart_bot.log
+./smart_bot.py
+./start-bot-ai.sh
+./start-bot.sh
+./sync-log.txt
+./sync-simple.sh
+./sync.sh
+./test_bot.py
+./tv_internet_sbb_bot.py
+./tv_internet_sbb_complete.py
+./update-canvas.py
+./update_canvas.py
+./update_canvas_final.py
+./web-content/index.html
+./web-content/.nojekyll
+./web-content/update_canvas_pages.py
+./web-content/css/style.css
+./web-content/js/script.js
+./🎯 KORAK 4 Pokreni Ceo Sistem.md
+./.nojekyll
+./update_canvas_pages.py
+./index.html
+./requirements.txt
+./.env
+./DEPLOY.md
+./bot_cloud.py
+./update_canvas_cloud_deployment.py
+./database_manager.py 
+./database_manager.py  
+./database_manager.py   
+./database_manager.py
+./bot_cloud.py y
+./__pycache__/bot_cloud.cpython-312.pyc
+./__pycache__/database_manager.cpython-312.pyc
+./database_manager.py        
+./test.txt
+./test2.txt
+./test1.txt
+./test5.txt
+./bot_with_stats.py
+./monitor_sync.sh  
+./monitor_sync.sh   
+./monitor_sync.sh
+./quick_monitor.sh
+./.gitignore
+./css/style.css
+./js/script.js
+./bot_service.log
+./emergency_bot_fix.py
+./start_bot_service.sh
+./sbb_backup.sql
+./file_list.txt
