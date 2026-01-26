@@ -286,6 +286,11 @@
         z-index:-1;
         pointer-events:none;
       }
+    @media (max-width: 900px){
+  #dijagram > div {
+    grid-template-columns: 1fr !important;
+  }
+}
   </style>
 </head>
 
@@ -562,6 +567,8 @@
               Ideja: sva infrastruktura ide kroz zajednički “core”, zatim u subsisteme, pa u centralni nadzor (NOC).
               U Fazi 3 dodajemo AI sloj: predikcija, asistenti i automatizacija.
             </p>
+            <!-- GRID: DIJAGRAM + VIDEO -->
+            <div style="display:grid; grid-template-columns: 1.3fr .7fr; gap:16px; align-items:start">
 
             <div class="svgWrap" aria-label="Dijagram infrastrukture">
               <svg width="980" height="390" viewBox="0 0 980 390" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
@@ -628,12 +635,41 @@
               </svg>
             </div>
 
-            <p style="margin-top:12px; color:var(--muted2); font-size:12px">
-              Napomena: Dijagram je namerno “čitljiv” za direktore — ali tehnički je kompatibilan sa enterprise praksom.
-            </p>
-          </div>
-        </div>
-      </div>
+                <!-- VIDEO PODSETNIK -->
+    <div style="
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.35);
+      padding:12px;
+    ">
+      <h4 style="margin:0 0 8px; font-size:14px; color:rgba(255,255,255,.85)">
+        🎤 Kako je sve počelo
+      </h4>
+
+      <video
+        src="assets/FINAL.mp4"
+        controls
+        preload="metadata"
+        style="
+          width:100%;
+          border-radius:14px;
+          background:black;
+        ">
+        Vaš browser ne podržava video.
+      </video>
+
+      <p style="
+        margin:8px 0 0;
+        font-size:12px;
+        color:rgba(255,255,255,.6);
+        line-height:1.4
+      ">
+        Kratki podsetnik: jedan sistem, više kanala — web, voice, Telegram.
+      </p>
+    </div>
+
+  </div>
+</div></div>
     </section>
 
     <section class="section" id="kontakt">
