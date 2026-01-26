@@ -40,6 +40,7 @@
     }
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
+    <canvas id="meshBg"></canvas>
     .nav{
       position:sticky; top:0; z-index:999;
       backdrop-filter: blur(14px);
@@ -280,6 +281,12 @@
       .cta{flex-direction:column; align-items:flex-start}
       .menu{display:none}
     }
+      #meshBg{
+        position:fixed;
+        inset:0;
+        z-index:-1;
+        pointer-events:none;
+      }
   </style>
 </head>
 
@@ -303,6 +310,9 @@
 
       <a class="btn primary" href="#kontakt" title="Kontakt">
         <span>⚡</span> Zakaži konsultacije
+      </a>
+      <a class="btn" href="vision.pdf" download>
+       📄 Preuzmi PDF viziju (5 godina)
       </a>
     </div>
   </div>
@@ -434,7 +444,54 @@
         </div>
       </div>
     </section>
+    <section class="section">
+  <div class="wrap">
+    <div class="secTitle fadeUp">
+      <div>
+        <h2>Studije slučaja (primeri primene)</h2>
+        <p>Hipotetički, ali tehnički realni scenariji za enterprise okruženja.</p>
+      </div>
+    </div>
 
+    <div class="grid3">
+      <div class="feature fadeUp">
+        <div class="tag"><i></i> Poslovni kampus</div>
+        <h3>Smart Office Campus</h3>
+        <p>
+          Optički backbone, Cat6A SKS, managed WiFi, IP video nadzor,
+          centralni NOC. Integracija BMS za energiju i osvetljenje.
+        </p>
+        <p class="muted">
+          Rezultat: -22% potrošnje energije, 99.98% uptime.
+        </p>
+      </div>
+
+      <div class="feature fadeUp" style="transition-delay:.08s">
+        <div class="tag"><i></i> Industrija</div>
+        <h3>Industrijski proizvodni pogon</h3>
+        <p>
+          Redundantna optika, segmentisana mreža, IP interfon,
+          video analitika za bezbednost i pristup zonama.
+        </p>
+        <p class="muted">
+          Rezultat: nulti prekidi proizvodnje zbog mreže.
+        </p>
+      </div>
+
+      <div class="feature fadeUp" style="transition-delay:.14s">
+        <div class="tag"><i></i> Retail / Logistika</div>
+        <h3>Distributivni centar</h3>
+        <p>
+          WiFi bez mrtvih zona, IP kamere visoke rezolucije,
+          centralni monitoring više lokacija.
+        </p>
+        <p class="muted">
+          Rezultat: potpuna vidljivost operacija u realnom vremenu.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
     <section id="roadmap" class="section">
       <div class="wrap">
         <div class="secTitle fadeUp">
@@ -635,6 +692,51 @@
       });
     }, {threshold: 0.12});
     document.querySelectorAll('.fadeUp').forEach(el=>io.observe(el));
+    <script>
+/* === LIGHT WEBGL-LIKE ANIMATED MESH (CANVAS) === */
+const c = document.getElementById('meshBg');
+const ctx = c.getContext('2d');
+let w,h,pts;
+
+function resize(){
+  w = c.width = window.innerWidth;
+  h = c.height = window.innerHeight;
+  pts = Array.from({length:80},()=>({
+    x:Math.random()*w,
+    y:Math.random()*h,
+    vx:(Math.random()-.5)*0.3,
+    vy:(Math.random()-.5)*0.3
+  }));
+}
+window.addEventListener('resize', resize);
+resize();
+
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  for(let i=0;i<pts.length;i++){
+    const p=pts[i];
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0||p.x>w) p.vx*=-1;
+    if(p.y<0||p.y>h) p.vy*=-1;
+
+    for(let j=i+1;j<pts.length;j++){
+      const q=pts[j];
+      const d=Math.hypot(p.x-q.x,p.y-q.y);
+      if(d<140){
+        ctx.strokeStyle=`rgba(124,58,237,${1-d/140})`;
+        ctx.lineWidth=0.5;
+        ctx.beginPath();
+        ctx.moveTo(p.x,p.y);
+        ctx.lineTo(q.x,q.y);
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+
   </script>
 </body>
 </html>
