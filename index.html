@@ -40,7 +40,6 @@
     }
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
-    <canvas id="meshBg"></canvas>
     .nav{
       position:sticky; top:0; z-index:999;
       backdrop-filter: blur(14px);
@@ -291,6 +290,7 @@
 </head>
 
 <body>
+  <canvas id="meshBg"></canvas>
   <div class="nav">
     <div class="wrap navin">
       <div class="brand">
@@ -673,26 +673,28 @@
   </main>
 
   <script>
-    // smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', e=>{
-        const id = a.getAttribute('href');
-        const el = document.querySelector(id);
-        if(!el) return;
-        e.preventDefault();
-        el.scrollIntoView({behavior:'smooth', block:'start'});
-        history.replaceState(null,'',id);
-      });
+  // smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const id = a.getAttribute('href');
+      const el = document.querySelector(id);
+      if(!el) return;
+      e.preventDefault();
+      el.scrollIntoView({behavior:'smooth', block:'start'});
+      history.replaceState(null,'',id);
     });
+  });
 
-    // reveal on scroll
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(en=>{
-        if(en.isIntersecting) en.target.classList.add('show');
-      });
-    }, {threshold: 0.12});
-    document.querySelectorAll('.fadeUp').forEach(el=>io.observe(el));
-    <script>
+  // reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting) en.target.classList.add('show');
+    });
+  }, {threshold: 0.12});
+  document.querySelectorAll('.fadeUp').forEach(el=>io.observe(el));
+</script>
+
+<script>
 /* === LIGHT WEBGL-LIKE ANIMATED MESH (CANVAS) === */
 const c = document.getElementById('meshBg');
 const ctx = c.getContext('2d');
@@ -736,6 +738,7 @@ function draw(){
 }
 draw();
 </script>
+
 
   </script>
 </body>
