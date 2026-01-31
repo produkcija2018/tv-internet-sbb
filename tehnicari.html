@@ -108,6 +108,7 @@
       font-size:16px; /* iOS: bez zoom-a */
       min-height:52px; /* veliki “prozor” za unos */
     }
+    textarea{min-height:120px; resize:vertical}
     input::placeholder{color:rgba(255,255,255,.45)}
 
     input:focus, select:focus, textarea:focus{
@@ -209,32 +210,30 @@
       color:var(--txt);
       font-size:14px;
     }
+
+    /* ===== Training Cards ===== */
     .training-grid{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
       gap:12px;
     }
-
     .tcard{
       border-radius:18px;
       border:1px solid rgba(255,255,255,.12);
       background:rgba(255,255,255,.05);
       padding:14px;
     }
-
     .tcard h4{
       margin:0 0 8px;
       font-size:14px;
       letter-spacing:.2px;
     }
-
     .tcard p{
       margin:0 0 10px;
       color:var(--muted);
       font-size:13px;
       line-height:1.55;
     }
-
     .tcard ul{
       margin:10px 0 0;
       padding-left:18px;
@@ -242,17 +241,45 @@
       font-size:13px;
       line-height:1.55;
     }
-
     .tcard .mini{
       color:var(--muted2);
       font-size:12px;
       margin-top:10px;
     }
-
     .tcard.ok{ border-color:rgba(34,197,94,.25); background:rgba(34,197,94,.07); }
     .tcard.warn{ border-color:rgba(245,158,11,.25); background:rgba(245,158,11,.06); }
     .tcard.fail{ border-color:rgba(239,68,68,.25); background:rgba(239,68,68,.06); }
     .tcard.info{ border-color:rgba(6,182,212,.25); background:rgba(6,182,212,.05); }
+
+    /* Training toggle */
+    .panel-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:8px;
+    }
+    .toggle{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      cursor:pointer;
+      user-select:none;
+      font-weight:800;
+      font-size:12px;
+      color:var(--txt);
+    }
+    .toggle .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:rgba(255,255,255,.35);
+      box-shadow:0 0 0 3px rgba(255,255,255,.06);
+    }
+    .toggle.on .dot{ background:rgba(34,197,94,.9); box-shadow:0 0 0 3px rgba(34,197,94,.18); }
+    .toggle.off .dot{ background:rgba(239,68,68,.85); box-shadow:0 0 0 3px rgba(239,68,68,.14); }
 
     /* MOBILE: sve u 1 kolonu + još veći input */
     @media (max-width: 680px){
@@ -267,6 +294,7 @@
       }
       .btn-primary,.btn-ghost{width:100%}
       .actions{flex-direction:column;align-items:stretch}
+      .panel-head{flex-direction:column;align-items:flex-start}
     }
 
     footer{
@@ -447,11 +475,22 @@
 
             <!-- Output -->
             <div class="col-12 panel">
-              <h3 style="margin:0 0 8px;font-size:16px;">Rezultat</h3>
+              <div class="panel-head">
+                <h3 style="margin:0;font-size:16px;">Rezultat</h3>
+
+                <!-- Training toggle -->
+                <button id="btnTrainingToggle" class="toggle" type="button" aria-pressed="true" title="Uključi/isključi training kartice">
+                  <span class="dot"></span>
+                  <span id="trainingToggleText">Training: ON</span>
+                </button>
+              </div>
+
               <div class="badges" id="statusBar"></div>
               <pre id="resultText"></pre>
+
               <div id="trainingCards" class="training-grid" style="margin-top:12px;"></div>
             </div>
+
             <!-- ===== AI COPILOT ===== -->
             <div class="col-12 panel">
               <h3 style="margin:0 0 8px;font-size:16px;">🤖 AI Copilot (teren)</h3>
@@ -492,6 +531,8 @@
 
 <script>
 (() => {
+  const STORAGE_KEY_TRAINING = "tech_training_enabled";
+
   const CONFIG = {
     targets: {
       afterTap: { target: 66, okMin: 64, okMax: 68, warnHigh: 70, warnLow: 60, failHigh: 75, failLow: 55 },
@@ -592,112 +633,152 @@
     const isUnbal = $("homePassive").value === "sp3_unbal";
     $("sp3UnbalWrap").style.display = isUnbal ? "block" : "none";
   }
-  function createTrainingCard(tone, title, desc, bullets, footer) {
-  const el = document.createElement("div");
-  el.className = `tcard ${tone || "info"}`;
 
-  const ul = (bullets || []).map(x => `<li>${x}</li>`).join("");
-  el.innerHTML = `
-    <h4>${title}</h4>
-    ${desc ? `<p>${desc}</p>` : ""}
-    ${bullets && bullets.length ? `<ul>${ul}</ul>` : ""}
-    ${footer ? `<div class="mini">${footer}</div>` : ""}
-  `;
-  return el;
-}
-function renderTrainingCards(state) {
-  const wrap = document.getElementById("trainingCards");
-  if (!wrap) return;
-  wrap.innerHTML = "";
-
-  // Uvek: standardni workflow (teren)
-  wrap.appendChild(createTrainingCard(
-    "info",
-    "Standard workflow (teren)",
-    "Drži redosled uvek isti da ne preskočiš povrat ili tilt problem.",
-    [
-      "<b>Forward check</b> → DS nivo + tilt (low/high).",
-      "<b>Return clean check</b> → return spectrum (šiljci / noise floor).",
-      "<b>Unity gain adjust</b> → tek kad je return čist (balans).",
-      "<b>Validate via modem</b> → servis test / TX (ako imaš).",
-      "<b>Zapis u as-built</b> → rezultat + šta je menjano (SP2/SP3, atenuator, drop).",
-    ],
-    "Tip: Ako dodaješ pasivu da spustiš DS, proveri da li US/TX raste."
-  ));
-
-  // Tilt kartica
-  if (state.tiltStatus === "warn" || state.tiltStatus === "fail") {
-    const tone = state.tiltStatus;
-    wrap.appendChild(createTrainingCard(
-      tone,
-      `Tilt ${state.tiltStatus.toUpperCase()} — šta znači`,
-      `Tilt je razlika nivoa između high i low frekvencija. Velik tilt često znači gubitke/loš kontakt na high opsegu.`,
-      [
-        "<b>Tipični uzroci:</b> loš F konektor, korozija, loš splitter/pasiva, predugačak drop, RG6 na velikoj dužini, loš tap port kontakt.",
-        "<b>Potvrdi:</b> izmeri low/high na 2 tačke (posle tapa vs kod modema). Ako se tilt pogorša “nizvodno”, problem je u drop/pasivi/konektorima.",
-        "<b>Akcija:</b> zameni/ponovo uradi konektore, ukloni nepotrebnu pasivu, razmisli o RG11 za duže drop-ove.",
-      ],
-      `Trenutni tilt: ${clampRound(state.tilt,1)} dB`
-    ));
+  /* ===== Training toggle ===== */
+  function getTrainingEnabled() {
+    const v = localStorage.getItem(STORAGE_KEY_TRAINING);
+    if (v === null) return true; // default ON
+    return v === "1";
   }
 
-  // DS prejako / prenisko
-  if (state.dsStatus === "warn" || state.dsStatus === "fail") {
-    if (state.avgAdj > state.okMax) {
+  function setTrainingEnabled(enabled) {
+    localStorage.setItem(STORAGE_KEY_TRAINING, enabled ? "1" : "0");
+    applyTrainingToggleUI();
+  }
+
+  function applyTrainingToggleUI() {
+    const enabled = getTrainingEnabled();
+    const btn = $("btnTrainingToggle");
+    const txt = $("trainingToggleText");
+    const cards = $("trainingCards");
+
+    if (btn) {
+      btn.classList.toggle("on", enabled);
+      btn.classList.toggle("off", !enabled);
+      btn.setAttribute("aria-pressed", enabled ? "true" : "false");
+    }
+    if (txt) txt.textContent = enabled ? "Training: ON" : "Training: OFF";
+    if (cards) cards.style.display = enabled ? "grid" : "none";
+  }
+
+  /* ===== Training Cards renderer ===== */
+  function createTrainingCard(tone, title, desc, bullets, footer) {
+    const el = document.createElement("div");
+    el.className = `tcard ${tone || "info"}`;
+
+    const ul = (bullets || []).map(x => `<li>${x}</li>`).join("");
+    el.innerHTML = `
+      <h4>${title}</h4>
+      ${desc ? `<p>${desc}</p>` : ""}
+      ${bullets && bullets.length ? `<ul>${ul}</ul>` : ""}
+      ${footer ? `<div class="mini">${footer}</div>` : ""}
+    `;
+    return el;
+  }
+
+  function renderTrainingCards(state) {
+    const enabled = getTrainingEnabled();
+    const wrap = $("trainingCards");
+    if (!wrap) return;
+
+    // Ako je OFF, samo sakrij i ne renderuj
+    if (!enabled) {
+      wrap.innerHTML = "";
+      wrap.style.display = "none";
+      return;
+    }
+
+    wrap.style.display = "grid";
+    wrap.innerHTML = "";
+
+    // Uvek: standardni workflow
+    wrap.appendChild(createTrainingCard(
+      "info",
+      "Standard workflow (teren)",
+      "Drži redosled uvek isti da ne preskočiš povrat ili tilt problem.",
+      [
+        "<b>Forward check</b> → DS nivo + tilt (low/high).",
+        "<b>Return clean check</b> → return spectrum (šiljci / noise floor).",
+        "<b>Unity gain adjust</b> → tek kad je return čist (balans).",
+        "<b>Validate via modem</b> → servis test / TX (ako imaš).",
+        "<b>Zapis u as-built</b> → rezultat + šta je menjano (SP2/SP3, atenuator, drop).",
+      ],
+      "Tip: Ako dodaješ pasivu da spustiš DS, proveri da li US/TX raste."
+    ));
+
+    // Tilt kartica
+    if (state.tiltStatus === "warn" || state.tiltStatus === "fail") {
+      const tone = state.tiltStatus;
       wrap.appendChild(createTrainingCard(
-        "warn",
-        "Prejak DS — kako rešiti bez haosa",
-        "Prejak nivo može izazvati greške/overload. Bolje je ciljano prigušenje nego nagomilavanje splittera.",
+        tone,
+        `Tilt ${state.tiltStatus.toUpperCase()} — šta znači`,
+        "Tilt je razlika nivoa između high i low frekvencija. Velik tilt često znači gubitke/loš kontakt na high opsegu.",
         [
-          "<b>Potvrdi:</b> izmeri DS low/high na istoj tački, proveri da li je preko OK opsega.",
-          "<b>Akcija 1:</b> SP3 unbalanced koristi <b>7 dB</b> izlaz (ako je dostupan).",
-          "<b>Akcija 2:</b> atenuator 6/8 dB (po potrebi).",
-          "<b>Pazi:</b> dodato prigušenje često podiže upstream/TX modema ~ približno isti dB → posle obavezno US proveri.",
+          "<b>Tipični uzroci:</b> loš F konektor, korozija, loš splitter/pasiva, predugačak drop, RG6 na velikoj dužini.",
+          "<b>Potvrdi:</b> izmeri low/high na 2 tačke (posle tapa vs kod modema). Ako se tilt pogorša nizvodno → drop/pasiva.",
+          "<b>Akcija:</b> uradi konektore ponovo, ukloni nepotrebnu pasivu, razmisli o RG11 za duže drop-ove.",
         ],
-        state.suggestionNeedDb !== null ? `Procena potrebnog prigušenja: ~ ${clampRound(state.suggestionNeedDb,1)} dB` : ""
+        `Trenutni tilt: ${clampRound(state.tilt,1)} dB`
       ));
-    } else if (state.avgAdj < state.okMin) {
+    }
+
+    // DS prejako / prenisko
+    if (state.dsStatus === "warn" || state.dsStatus === "fail") {
+      if (state.avgAdj > state.okMax) {
+        wrap.appendChild(createTrainingCard(
+          "warn",
+          "Prejak DS — kako rešiti",
+          "Prejak nivo može izazvati greške/overload. Bolje ciljano prigušenje nego nagomilavanje splittera.",
+          [
+            "<b>Potvrdi:</b> izmeri DS low/high i uporedi sa OK opsegom.",
+            "<b>Akcija 1:</b> SP3 unbalanced koristi <b>7 dB</b> izlaz (ako je dostupan).",
+            "<b>Akcija 2:</b> atenuator 6/8 dB po potrebi.",
+            "<b>Pazi:</b> prigušenje često podiže upstream/TX → posle obavezno proveri US.",
+          ],
+          state.suggestionNeedDb !== null ? `Procena potrebnog prigušenja: ~ ${clampRound(state.suggestionNeedDb,1)} dB` : ""
+        ));
+      } else if (state.avgAdj < state.okMin) {
+        wrap.appendChild(createTrainingCard(
+          "warn",
+          "Prenizak DS — gde prvo tražiti",
+          "Nizak DS pravi slab SNR i greške, posebno na višim frekvencijama.",
+          [
+            "<b>Uzroci:</b> loš kontakt, voda u konektoru, previše pasive, pogrešan izlaz/tap, predugačak drop.",
+            "<b>Potvrdi:</b> uporedi nivo na tap portu i kod modema. Velik pad → drop/pasiva/stambeni deo.",
+            "<b>Akcija:</b> ukloni pasivu/atenuator, sredi konektore, zameni drop (RG11 za duže trase).",
+          ],
+          `Procena avg: ${clampRound(state.avgAdj,1)} dBµV`
+        ));
+      }
+    }
+
+    // US (return)
+    if (state.usStatus === "warn") {
       wrap.appendChild(createTrainingCard(
         "warn",
-        "Prenizak DS — gde prvo tražiti",
-        "Nizak DS pravi slab SNR i greške, posebno na višim frekvencijama.",
+        "Return/Ingress — izolacija",
+        "Ako je return problematičan, fokus je na ingress/leak i otvorenim portovima.",
         [
-          "<b>Tipični uzroci:</b> loš kontakt (F), voda u konektoru, previše pasive, pogrešan tap/izlaz, predugačak drop, loš kabl.",
-          "<b>Potvrdi:</b> uporedi nivo na tap portu i kod modema. Ako je veliki pad, problem je u drop/pasivi/stanu.",
-          "<b>Akcija:</b> ukloni nepotrebnu pasivu/atenuator, sredi konektore, skrati ili zameni drop (RG11 za duže trase).",
+          "<b>Potvrdi:</b> proveri da li je split 65 ili 85 i skeniraj samo taj opseg.",
+          "<b>Izoluj:</b> odspoji grane jednu po jednu (ako procedura dozvoljava) i gledaj da li šum/pik nestaje.",
+          "<b>Najčešće:</b> otvoren port bez 75Ω, loš konektor, loš splitter u stanu, oštećen drop.",
         ],
-        `Procena avg posle pasive/drop: ${clampRound(state.avgAdj,1)} dBµV`
+        state.usPeakF !== null ? `Peak: ${clampRound(state.usPeakF,2)} MHz | Return max: ${state.returnMax} MHz` : ""
+      ));
+    } else if (state.usStatus === "ok") {
+      wrap.appendChild(createTrainingCard(
+        "ok",
+        "Return OK — šta još proveriti",
+        "Ako je return u opsegu, traži intermittent (bursty) probleme i validiraj servis.",
+        [
+          "<b>Posmatraj 60–120s:</b> da li se pojavljuju povremeni šiljci.",
+          "<b>Validiraj:</b> servis test / modem (ako imaš).",
+          "<b>Uporedi:</b> tap port vs kod modema (da li se pogoršava nizvodno).",
+        ],
+        ""
       ));
     }
   }
-
-  // US (return) kartica
-  if (state.usStatus === "warn") {
-    wrap.appendChild(createTrainingCard(
-      "warn",
-      "Return/Ingress — izolacija problema",
-      "Ako peak ili šum nije “normalan”, fokus je na ingress/leak i otvorenim portovima.",
-      [
-        "<b>Potvrdi:</b> proveri da li je mreža low-split (65) ili mid-split (85) i skeniraj samo taj opseg.",
-        "<b>Izoluj:</b> odspoji grane jednu po jednu (ako procedura dozvoljava) i gledaj da li šum/pik nestaje.",
-        "<b>Najčešće:</b> otvoren port bez 75Ω terminatora, loš konektor, loš splitter u stanu, oštećen drop, korozija.",
-      ],
-      state.usPeakF !== null ? `Peak: ${clampRound(state.usPeakF,2)} MHz | Return max: ${state.returnMax} MHz` : ""
-    ));
-  } else if (state.usStatus === "ok") {
-    wrap.appendChild(createTrainingCard(
-      "ok",
-      "Return “čist” — šta još proveriti",
-      "Ako je return u opsegu, traži bursty probleme (intermittent) i validiraj servis.",
-      [
-        "<b>Posmatraj 60–120s:</b> da li se pojavljuju povremeni šiljci.",
-        "<b>Validiraj:</b> modem/servis test (latencija, packet loss, throughput) kad je moguće.",
-        "<b>Uporedi:</b> merenje na tap portu i kod modema (da li se pogoršava nizvodno).",
-      ],
-      ""
-    ));
-  }
-}
 
   function evaluate() {
     const pointKey = $("measurePoint").value;
@@ -725,6 +806,20 @@ function renderTrainingCards(state) {
       $("statusBar").innerHTML = "";
       $("statusBar").appendChild(badge("DS: FAIL", "fail"));
       $("resultText").textContent = "Popuni DS frekvencije i nivoe (Low/High).";
+
+      // render training (minimal)
+      renderTrainingCards({
+        dsStatus: "fail",
+        tiltStatus: "info",
+        usStatus: "info",
+        tilt: 0,
+        avgAdj: 0,
+        okMin: 0,
+        okMax: 0,
+        returnMax,
+        usPeakF: null,
+        suggestionNeedDb: null,
+      });
       return;
     }
 
@@ -802,6 +897,20 @@ function renderTrainingCards(state) {
 
     $("resultText").textContent = lines.join("\n");
     $("hint").textContent = "Tip: pragove možeš menjati u CONFIG.targets.";
+
+    // ===== Training state (ispravno: unutar evaluate) =====
+    renderTrainingCards({
+      dsStatus,
+      tiltStatus,
+      usStatus,
+      tilt,
+      avgAdj,
+      okMin: t.okMin,
+      okMax: t.okMax,
+      returnMax,
+      usPeakF,
+      suggestionNeedDb: suggestion ? suggestion.needDb : null,
+    });
   }
 
   function buildAsBuiltText() {
@@ -812,23 +921,118 @@ function renderTrainingCards(state) {
     return `AS-BUILT ZAPIS (${stamp})\n\n${res}\n`;
   }
 
-  $("btnEval").addEventListener("click", evaluate);
-  $("homePassive").addEventListener("change", () => { syncSp3UnbalUI(); evaluate(); });
-  $("measurePoint").addEventListener("change", evaluate);
-  $("attenuator").addEventListener("change", evaluate);
-  $("dropCable").addEventListener("change", evaluate);
-  $("returnMax").addEventListener("change", evaluate);
-  $("sp3Out35").addEventListener("change", evaluate);
-  $("sp3Out70").addEventListener("change", evaluate);
+  /* ===== AI COPILOT HELPERS ===== */
+  function getCaseContext() {
+    return {
+      ts: new Date().toISOString(),
+      measurePoint: $("measurePoint").value,
+      tapValue: $("tapValue").value || null,
+      tapPorts: $("tapPorts").value || null,
+      dropCable: $("dropCable").value,
+      dropLenM: num($("dropLen").value) || 0,
+      homePassive: $("homePassive").value,
+      sp3UnbalOutDb: ($("homePassive").value === "sp3_unbal") ? getSp3UnbalSelectedLoss() : null,
+      attenuatorDb: parseFloat($("attenuator").value || "0") || 0,
 
-  $("btnCopy").addEventListener("click", async () => {
+      ds: {
+        fLowMHz: num($("fLow").value),
+        lLowDbuv: num($("lLow").value),
+        fHighMHz: num($("fHigh").value),
+        lHighDbuv: num($("lHigh").value),
+      },
+
+      us: {
+        returnMaxMHz: parseFloat($("returnMax").value),
+        peakFreqMHz: num($("usPeakF").value),
+        peakLevelDbuv: num($("usPeakL").value),
+      },
+
+      notes: ($("notes").value || "").trim(),
+      asBuiltText: ($("resultText").textContent || "").trim(),
+    };
+  }
+
+  function renderAiBadges(items) {
+    const el = $("aiBadges");
+    if (!el) return;
+    el.innerHTML = "";
+    (items || []).forEach(b => el.appendChild(badge(b.t, b.c)));
+  }
+
+  function localCoach(ctx, userQuestion = "") {
+    const out = [];
+    const badges = [];
+
+    const lLow = ctx.ds.lLowDbuv, lHigh = ctx.ds.lHighDbuv;
+    const tilt = (lHigh !== null && lLow !== null) ? (lHigh - lLow) : null;
+
+    if (tilt !== null) {
+      const abs = Math.abs(tilt);
+      if (abs >= CONFIG.tiltFailAbs) badges.push({ t: `Tilt FAIL (${clampRound(tilt,1)} dB)`, c: "fail" });
+      else if (abs >= CONFIG.tiltWarnAbs) badges.push({ t: `Tilt WARN (${clampRound(tilt,1)} dB)`, c: "warn" });
+      else badges.push({ t: `Tilt OK (${clampRound(tilt,1)} dB)`, c: "ok" });
+    } else {
+      badges.push({ t: "Tilt: n/a", c: "info" });
+    }
+
+    if (ctx.us.peakFreqMHz !== null) {
+      if (ctx.us.peakFreqMHz > ctx.us.returnMaxMHz + 0.5) {
+        badges.push({ t: "US peak van opsega", c: "warn" });
+        out.push("### Povrat (US) – nalaz");
+        out.push("- **Uzrok (verovatno):** pogrešan split / ingress / leak / artefakt merenja.");
+        out.push("- **Potvrdi:** proveri split (65/85) + ponovi return spectrum scan sa stop na tom max MHz.");
+        out.push("- **Akcija:** izoluj grane (odspoji po jednu) i traži gde šum/pik nestaje.");
+      } else {
+        badges.push({ t: "US peak u opsegu", c: "ok" });
+        out.push("### Povrat (US) – nalaz");
+        out.push("- **Uzrok (moguće):** bursty ingress u opsegu ili loš balans upstream-a.");
+        out.push("- **Potvrdi:** gledaj noise floor + pojavu pikova kroz vreme (1–2 min), zatim izoluj grane.");
+        out.push("- **Akcija:** zatvori otvorene portove 75Ω, popravi konektore, proveri splittere u stanu.");
+      }
+    } else {
+      badges.push({ t: "US peak nije unet", c: "info" });
+      out.push("### Povrat (US) – preporuka");
+      out.push("- **Potvrdi:** uradi Return Spectrum scan (Stop=65 ili 85) i upiši peak freq/level ako postoji.");
+    }
+
+    out.push("");
+    out.push("### Sledeći koraci (teren) – standard");
+    out.push("1) **Forward check:** DS nivo + tilt (low/high).");
+    out.push("2) **Return clean:** return spectrum (šiljci / visok noise floor).");
+    out.push("3) **Unity gain / balans:** tek kad je return čist.");
+    out.push("4) **Validacija:** modem/servis test (ako dostupno) + upis u as-built.");
+
+    const q = (userQuestion || "").toLowerCase();
+    if (q.includes("objasni") || q.includes("training")) {
+      out.push("");
+      out.push("### Objašnjenje (training)");
+      out.push("- **Level (dBµV):** jačina signala. Previsok → greške; prenizak → šum dominira.");
+      out.push("- **Tilt:** razlika high vs low. Velik tilt = gubici/konektori/pasiva/kablovi.");
+      out.push("- **Return spectrum:** ingress/šiljci ubijaju upload/VoIP i prave seckanje.");
+    }
+
+    return { text: out.join("\n"), badges };
+  }
+
+  async function askAiApi(payload) {
+    const resp = await fetch("/api/tech-ai", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) throw new Error("AI API error");
+    return await resp.json();
+  }
+
+  /* ===== EVENTS ===== */
+  $("btnEval")?.addEventListener("click", evaluate);
+  $("btnCopy")?.addEventListener("click", async () => {
     const txt = buildAsBuiltText();
     try {
       await navigator.clipboard.writeText(txt);
       $("hint").textContent = "As-built zapis kopiran u clipboard.";
       setTimeout(() => ($("hint").textContent = ""), 2000);
     } catch (e) {
-      // fallback
       const ta = document.createElement("textarea");
       ta.value = txt;
       document.body.appendChild(ta);
@@ -839,205 +1043,88 @@ function renderTrainingCards(state) {
       setTimeout(() => ($("hint").textContent = ""), 2000);
     }
   });
-  // ===== AI COPILOT HELPERS =====
-function getCaseContext() {
-  return {
-    ts: new Date().toISOString(),
-    measurePoint: $("measurePoint").value,
-    tapValue: $("tapValue").value || null,
-    tapPorts: $("tapPorts").value || null,
-    dropCable: $("dropCable").value,
-    dropLenM: num($("dropLen").value) || 0,
-    homePassive: $("homePassive").value,
-    sp3UnbalOutDb: ($("homePassive").value === "sp3_unbal") ? getSp3UnbalSelectedLoss() : null,
-    attenuatorDb: parseFloat($("attenuator").value || "0") || 0,
 
-    ds: {
-      fLowMHz: num($("fLow").value),
-      lLowDbuv: num($("lLow").value),
-      fHighMHz: num($("fHigh").value),
-      lHighDbuv: num($("lHigh").value),
-    },
+  $("homePassive")?.addEventListener("change", () => { syncSp3UnbalUI(); evaluate(); });
+  $("sp3Out35")?.addEventListener("change", evaluate);
+  $("sp3Out70")?.addEventListener("change", evaluate);
 
-    us: {
-      returnMaxMHz: parseFloat($("returnMax").value),
-      peakFreqMHz: num($("usPeakF").value),
-      peakLevelDbuv: num($("usPeakL").value),
-    },
+  // UX: auto-evaluate na promene
+  ["measurePoint","tapValue","tapPorts","dropCable","dropLen","attenuator","returnMax","usPeakF","usPeakL","notes","fLow","lLow","fHigh","lHigh"]
+    .forEach(id => $(id)?.addEventListener("change", evaluate));
 
-    notes: ($("notes").value || "").trim(),
-    asBuiltText: ($("resultText").textContent || "").trim(),
-  };
-}
-
-function renderAiBadges(items) {
-  const el = $("aiBadges");
-  if (!el) return;
-  el.innerHTML = "";
-  (items || []).forEach(b => el.appendChild(badge(b.t, b.c)));
-}
-
-function localCoach(ctx, userQuestion = "") {
-  const out = [];
-  const badges = [];
-
-  const lLow = ctx.ds.lLowDbuv, lHigh = ctx.ds.lHighDbuv;
-  const tilt = (lHigh !== null && lLow !== null) ? (lHigh - lLow) : null;
-
-  // 1) Tilt interpretacija
-  if (tilt !== null) {
-    const abs = Math.abs(tilt);
-    if (abs >= CONFIG.tiltFailAbs) badges.push({ t: `Tilt FAIL (${clampRound(tilt,1)} dB)`, c: "fail" });
-    else if (abs >= CONFIG.tiltWarnAbs) badges.push({ t: `Tilt WARN (${clampRound(tilt,1)} dB)`, c: "warn" });
-    else badges.push({ t: `Tilt OK (${clampRound(tilt,1)} dB)`, c: "ok" });
-  } else {
-    badges.push({ t: "Tilt: n/a", c: "info" });
-  }
-
-  // 2) Return peak sanity
-  if (ctx.us.peakFreqMHz !== null) {
-    if (ctx.us.peakFreqMHz > ctx.us.returnMaxMHz + 0.5) {
-      badges.push({ t: "US peak van opsega", c: "warn" });
-      out.push("### Povrat (US) – nalaz");
-      out.push("- **Uzrok (verovatno):** pogrešan split podešaj / ingress / leak / artefakt merenja.");
-      out.push("- **Potvrdi:** proveri koji je split (65/85) + ponovi return spectrum scan sa stop na tom max MHz.");
-      out.push("- **Akcija:** izoluj grane (odspoji po jednu) i traži gde šum/pik nestaje (terminacija, F konektor, drop).");
-    } else {
-      badges.push({ t: "US peak u opsegu", c: "ok" });
-      out.push("### Povrat (US) – nalaz");
-      out.push("- **Uzrok (moguće):** bursty ingress u opsegu (ako vidiš šiljke) ili prejak/loš balans upstream-a.");
-      out.push("- **Potvrdi:** gledaj noise floor + pojavu pikova kroz vreme (1–2 min), zatim izoluj grane.");
-      out.push("- **Akcija:** zatvori otvorene portove 75Ω, popravi konektore, proveri splittere u stanu.");
-    }
-  } else {
-    badges.push({ t: "US peak nije unet", c: "info" });
-    out.push("### Povrat (US) – preporuka");
-    out.push("- **Potvrdi:** uradi Return Spectrum scan (Stop=65 ili 85) i upiši peak freq/level ako postoji.");
-  }
-
-  // 3) DS heuristike iz teksta (asBuilt) – lagana logika
-  const asBuilt = (ctx.asBuiltText || "").toLowerCase();
-  if (asBuilt.includes("prejako") || asBuilt.includes("potrebno prigušenje")) {
-    badges.push({ t: "DS: moguće prejako", c: "warn" });
-    out.push("");
-    out.push("### Downstream (DS) – nalaz");
-    out.push("- **Uzrok:** previsok DS nivo (posle tapa/utičnice).");
-    out.push("- **Potvrdi:** proveri DS nivo na 2 tačke (low/high) i uporedi sa target opsegom.");
-    out.push("- **Akcija:** preferiraj SP3 unbalanced 7 dB ili atenuator 6/8 dB, ali posle proveri US (TX/ingress).");
-  }
-
-  // 4) Always: format “Next steps”
-  out.push("");
-  out.push("### Sledeći koraci (teren) – standard");
-  out.push("1) **Forward check:** DS nivo + tilt (low/high).");
-  out.push("2) **Return clean:** return spectrum (da li ima šiljaka / visok noise floor).");
-  out.push("3) **Unity gain / balans:** tek kad je return čist.");
-  out.push("4) **Validacija:** modem/servis test (ako dostupno) + upis u as-built.");
-
-  // 5) Training mode
-  const q = (userQuestion || "").toLowerCase();
-  if (q.includes("objasni") || q.includes("training")) {
-    out.push("");
-    out.push("### Objašnjenje (training)");
-    out.push("- **Level (dBµV):** jačina signala. Previsok → saturacija/greške; prenizak → šum dominira.");
-    out.push("- **Tilt:** razlika između high i low. Velik tilt često znači problem gubitaka, konektora, pasive ili kablova.");
-    out.push("- **Return spectrum:** “uploader” je najosetljiviji – ingress/šiljci prave seckanje interneta/VoIP.");
-  }
-
-  return { text: out.join("\n"), badges };
-}
-
-// (Opcija za sutra) Pravi AI endpoint
-async function askAiApi(payload) {
-  const resp = await fetch("/api/tech-ai", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
+  // Training toggle
+  $("btnTrainingToggle")?.addEventListener("click", () => {
+    const enabled = getTrainingEnabled();
+    setTrainingEnabled(!enabled);
+    // re-render na osnovu trenutnog rezultata
+    evaluate();
   });
-  if (!resp.ok) throw new Error("AI API error");
-  return await resp.json();
-}
 
-// ===== AI COPILOT EVENTS =====
-$("btnSendContext")?.addEventListener("click", () => {
-  const ctx = getCaseContext();
-  $("aiQuestion").value =
+  // AI Copilot
+  $("btnSendContext")?.addEventListener("click", () => {
+    const ctx = getCaseContext();
+    $("aiQuestion").value =
 `Analiziraj ovaj slučaj i daj:
 (1) verovatni uzrok,
 (2) test za potvrdu,
 (3) akciju (teren).
-\n---\n${ctx.asBuiltText || "(nema as-built teksta)"}`;
-  $("aiHint").textContent = "Kontekst ubačen u pitanje.";
-  setTimeout(()=> $("aiHint").textContent="", 1600);
-});
 
-$("btnExplain")?.addEventListener("click", () => {
-  const ctx = getCaseContext();
-  const r = localCoach(ctx, "training objasni");
-  renderAiBadges(r.badges);
-  $("aiAnswer").textContent = r.text;
-});
+--- 
+${ctx.asBuiltText || "(nema as-built teksta)"}`;
+    $("aiHint").textContent = "Kontekst ubačen u pitanje.";
+    setTimeout(()=> $("aiHint").textContent="", 1600);
+  });
 
-$("btnMakeReport")?.addEventListener("click", async () => {
-  const ctx = getCaseContext();
-  const txt = JSON.stringify(ctx, null, 2);
-  try {
-    await navigator.clipboard.writeText(txt);
-    $("aiHint").textContent = "JSON izveštaj kopiran u clipboard.";
-    setTimeout(()=> $("aiHint").textContent="", 1800);
-  } catch(e) {
-    $("aiHint").textContent = "Clipboard blokiran. (Možemo dodati Download JSON dugme.)";
-  }
-});
-
-$("btnAskAI")?.addEventListener("click", async () => {
-  const ctx = getCaseContext();
-  const q = ($("aiQuestion").value || "").trim();
-  if (!q) { $("aiHint").textContent = "Unesi pitanje / simptom."; return; }
-
-  $("aiHint").textContent = "Obrada...";
-  $("aiAnswer").textContent = "";
-  renderAiBadges([]);
-
-  try {
-    // MVP: local coach (radi odmah, offline)
-    const r = localCoach(ctx, q);
+  $("btnExplain")?.addEventListener("click", () => {
+    const ctx = getCaseContext();
+    const r = localCoach(ctx, "training objasni");
     renderAiBadges(r.badges);
     $("aiAnswer").textContent = r.text;
+  });
 
-    // Kad bude backend:
-    // const apiRes = await askAiApi({ question: q, context: ctx });
-    // renderAiBadges(apiRes.badges || []);
-    // $("aiAnswer").textContent = apiRes.answer || "";
+  $("btnMakeReport")?.addEventListener("click", async () => {
+    const ctx = getCaseContext();
+    const txt = JSON.stringify(ctx, null, 2);
+    try {
+      await navigator.clipboard.writeText(txt);
+      $("aiHint").textContent = "JSON izveštaj kopiran u clipboard.";
+      setTimeout(()=> $("aiHint").textContent="", 1800);
+    } catch(e) {
+      $("aiHint").textContent = "Clipboard blokiran. (Možemo dodati Download JSON dugme.)";
+    }
+  });
 
-    $("aiHint").textContent = "OK";
-    setTimeout(()=> $("aiHint").textContent="", 800);
-  } catch (e) {
-    $("aiHint").textContent = "Greška. Pokušaj ponovo.";
-  }
-});
+  $("btnAskAI")?.addEventListener("click", async () => {
+    const ctx = getCaseContext();
+    const q = ($("aiQuestion").value || "").trim();
+    if (!q) { $("aiHint").textContent = "Unesi pitanje / simptom."; return; }
+
+    $("aiHint").textContent = "Obrada...";
+    $("aiAnswer").textContent = "";
+    renderAiBadges([]);
+
+    try {
+      // MVP: local coach (offline)
+      const r = localCoach(ctx, q);
+      renderAiBadges(r.badges);
+      $("aiAnswer").textContent = r.text;
+
+      // Kad bude backend:
+      // const apiRes = await askAiApi({ question: q, context: ctx });
+      // renderAiBadges(apiRes.badges || []);
+      // $("aiAnswer").textContent = apiRes.answer || "";
+
+      $("aiHint").textContent = "OK";
+      setTimeout(()=> $("aiHint").textContent="", 800);
+    } catch (e) {
+      $("aiHint").textContent = "Greška. Pokušaj ponovo.";
+    }
+  });
 
   // init
+  applyTrainingToggleUI();
   syncSp3UnbalUI();
   evaluate();
-  $("resultText").textContent = lines.join("\n");
-  $("hint").textContent = "Tip: pragove možeš menjati u CONFIG.targets.";
-  // ===== TRAINING STATE + CARDS (mora biti unutar evaluate) =====
-  const tCfg = CONFIG.targets[pointKey];
-  const state = {
-    dsStatus,
-    tiltStatus,
-    usStatus,
-    tilt,
-    avgAdj,
-    okMin: tCfg.okMin,
-    okMax: tCfg.okMax,
-    returnMax,
-    usPeakF,
-    suggestionNeedDb: suggestion ? suggestion.needDb : null,
-  };
-  renderTrainingCards(state);
-
 })();
 </script>
 
