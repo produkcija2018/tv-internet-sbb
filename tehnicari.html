@@ -407,6 +407,30 @@
               <div class="badges" id="statusBar"></div>
               <pre id="resultText"></pre>
             </div>
+            <!-- ===== AI COPILOT ===== -->
+            <div class="col-12 panel">
+              <h3 style="margin:0 0 8px;font-size:16px;">🤖 AI Copilot (teren)</h3>
+              <p class="hint" style="margin:0 0 12px;">
+                Unesi simptom ili klikni “Pošalji trenutne rezultate” da dobiješ uzrok → potvrdu → akciju.
+              </p>
+
+              <div class="badges" style="margin-bottom:10px;">
+                <button class="btn-ghost" id="btnSendContext" type="button">📨 Pošalji trenutne rezultate</button>
+                <button class="btn-ghost" id="btnExplain" type="button">📚 Objasni rezultat (training)</button>
+                <button class="btn-ghost" id="btnMakeReport" type="button">🧾 Napravi izveštaj (JSON)</button>
+              </div>
+
+              <label>Pitanje / simptom</label>
+              <textarea id="aiQuestion" placeholder="npr. Internet secka uveče, return peak na 35 MHz, DS ok ali tilt 6 dB..."></textarea>
+
+              <div class="actions" style="margin-top:12px;">
+                <button class="btn-primary" id="btnAskAI" type="button">Pitaj AI</button>
+                <span class="hint" id="aiHint"></span>
+              </div>
+
+              <div class="badges" id="aiBadges" style="margin-top:12px;"></div>
+              <pre id="aiAnswer" style="margin-top:10px;"></pre>
+            </div>
 
           </div>
         </div>
@@ -660,6 +684,183 @@
       setTimeout(() => ($("hint").textContent = ""), 2000);
     }
   });
+  // ===== AI COPILOT HELPERS =====
+function getCaseContext() {
+  return {
+    ts: new Date().toISOString(),
+    measurePoint: $("measurePoint").value,
+    tapValue: $("tapValue").value || null,
+    tapPorts: $("tapPorts").value || null,
+    dropCable: $("dropCable").value,
+    dropLenM: num($("dropLen").value) || 0,
+    homePassive: $("homePassive").value,
+    sp3UnbalOutDb: ($("homePassive").value === "sp3_unbal") ? getSp3UnbalSelectedLoss() : null,
+    attenuatorDb: parseFloat($("attenuator").value || "0") || 0,
+
+    ds: {
+      fLowMHz: num($("fLow").value),
+      lLowDbuv: num($("lLow").value),
+      fHighMHz: num($("fHigh").value),
+      lHighDbuv: num($("lHigh").value),
+    },
+
+    us: {
+      returnMaxMHz: parseFloat($("returnMax").value),
+      peakFreqMHz: num($("usPeakF").value),
+      peakLevelDbuv: num($("usPeakL").value),
+    },
+
+    notes: ($("notes").value || "").trim(),
+    asBuiltText: ($("resultText").textContent || "").trim(),
+  };
+}
+
+function renderAiBadges(items) {
+  const el = $("aiBadges");
+  if (!el) return;
+  el.innerHTML = "";
+  (items || []).forEach(b => el.appendChild(badge(b.t, b.c)));
+}
+
+function localCoach(ctx, userQuestion = "") {
+  const out = [];
+  const badges = [];
+
+  const lLow = ctx.ds.lLowDbuv, lHigh = ctx.ds.lHighDbuv;
+  const tilt = (lHigh !== null && lLow !== null) ? (lHigh - lLow) : null;
+
+  // 1) Tilt interpretacija
+  if (tilt !== null) {
+    const abs = Math.abs(tilt);
+    if (abs >= CONFIG.tiltFailAbs) badges.push({ t: `Tilt FAIL (${clampRound(tilt,1)} dB)`, c: "fail" });
+    else if (abs >= CONFIG.tiltWarnAbs) badges.push({ t: `Tilt WARN (${clampRound(tilt,1)} dB)`, c: "warn" });
+    else badges.push({ t: `Tilt OK (${clampRound(tilt,1)} dB)`, c: "ok" });
+  } else {
+    badges.push({ t: "Tilt: n/a", c: "info" });
+  }
+
+  // 2) Return peak sanity
+  if (ctx.us.peakFreqMHz !== null) {
+    if (ctx.us.peakFreqMHz > ctx.us.returnMaxMHz + 0.5) {
+      badges.push({ t: "US peak van opsega", c: "warn" });
+      out.push("### Povrat (US) – nalaz");
+      out.push("- **Uzrok (verovatno):** pogrešan split podešaj / ingress / leak / artefakt merenja.");
+      out.push("- **Potvrdi:** proveri koji je split (65/85) + ponovi return spectrum scan sa stop na tom max MHz.");
+      out.push("- **Akcija:** izoluj grane (odspoji po jednu) i traži gde šum/pik nestaje (terminacija, F konektor, drop).");
+    } else {
+      badges.push({ t: "US peak u opsegu", c: "ok" });
+      out.push("### Povrat (US) – nalaz");
+      out.push("- **Uzrok (moguće):** bursty ingress u opsegu (ako vidiš šiljke) ili prejak/loš balans upstream-a.");
+      out.push("- **Potvrdi:** gledaj noise floor + pojavu pikova kroz vreme (1–2 min), zatim izoluj grane.");
+      out.push("- **Akcija:** zatvori otvorene portove 75Ω, popravi konektore, proveri splittere u stanu.");
+    }
+  } else {
+    badges.push({ t: "US peak nije unet", c: "info" });
+    out.push("### Povrat (US) – preporuka");
+    out.push("- **Potvrdi:** uradi Return Spectrum scan (Stop=65 ili 85) i upiši peak freq/level ako postoji.");
+  }
+
+  // 3) DS heuristike iz teksta (asBuilt) – lagana logika
+  const asBuilt = (ctx.asBuiltText || "").toLowerCase();
+  if (asBuilt.includes("prejako") || asBuilt.includes("potrebno prigušenje")) {
+    badges.push({ t: "DS: moguće prejako", c: "warn" });
+    out.push("");
+    out.push("### Downstream (DS) – nalaz");
+    out.push("- **Uzrok:** previsok DS nivo (posle tapa/utičnice).");
+    out.push("- **Potvrdi:** proveri DS nivo na 2 tačke (low/high) i uporedi sa target opsegom.");
+    out.push("- **Akcija:** preferiraj SP3 unbalanced 7 dB ili atenuator 6/8 dB, ali posle proveri US (TX/ingress).");
+  }
+
+  // 4) Always: format “Next steps”
+  out.push("");
+  out.push("### Sledeći koraci (teren) – standard");
+  out.push("1) **Forward check:** DS nivo + tilt (low/high).");
+  out.push("2) **Return clean:** return spectrum (da li ima šiljaka / visok noise floor).");
+  out.push("3) **Unity gain / balans:** tek kad je return čist.");
+  out.push("4) **Validacija:** modem/servis test (ako dostupno) + upis u as-built.");
+
+  // 5) Training mode
+  const q = (userQuestion || "").toLowerCase();
+  if (q.includes("objasni") || q.includes("training")) {
+    out.push("");
+    out.push("### Objašnjenje (training)");
+    out.push("- **Level (dBµV):** jačina signala. Previsok → saturacija/greške; prenizak → šum dominira.");
+    out.push("- **Tilt:** razlika između high i low. Velik tilt često znači problem gubitaka, konektora, pasive ili kablova.");
+    out.push("- **Return spectrum:** “uploader” je najosetljiviji – ingress/šiljci prave seckanje interneta/VoIP.");
+  }
+
+  return { text: out.join("\n"), badges };
+}
+
+// (Opcija za sutra) Pravi AI endpoint
+async function askAiApi(payload) {
+  const resp = await fetch("/api/tech-ai", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  if (!resp.ok) throw new Error("AI API error");
+  return await resp.json();
+}
+
+// ===== AI COPILOT EVENTS =====
+$("btnSendContext")?.addEventListener("click", () => {
+  const ctx = getCaseContext();
+  $("aiQuestion").value =
+`Analiziraj ovaj slučaj i daj:
+(1) verovatni uzrok,
+(2) test za potvrdu,
+(3) akciju (teren).
+\n---\n${ctx.asBuiltText || "(nema as-built teksta)"}`;
+  $("aiHint").textContent = "Kontekst ubačen u pitanje.";
+  setTimeout(()=> $("aiHint").textContent="", 1600);
+});
+
+$("btnExplain")?.addEventListener("click", () => {
+  const ctx = getCaseContext();
+  const r = localCoach(ctx, "training objasni");
+  renderAiBadges(r.badges);
+  $("aiAnswer").textContent = r.text;
+});
+
+$("btnMakeReport")?.addEventListener("click", async () => {
+  const ctx = getCaseContext();
+  const txt = JSON.stringify(ctx, null, 2);
+  try {
+    await navigator.clipboard.writeText(txt);
+    $("aiHint").textContent = "JSON izveštaj kopiran u clipboard.";
+    setTimeout(()=> $("aiHint").textContent="", 1800);
+  } catch(e) {
+    $("aiHint").textContent = "Clipboard blokiran. (Možemo dodati Download JSON dugme.)";
+  }
+});
+
+$("btnAskAI")?.addEventListener("click", async () => {
+  const ctx = getCaseContext();
+  const q = ($("aiQuestion").value || "").trim();
+  if (!q) { $("aiHint").textContent = "Unesi pitanje / simptom."; return; }
+
+  $("aiHint").textContent = "Obrada...";
+  $("aiAnswer").textContent = "";
+  renderAiBadges([]);
+
+  try {
+    // MVP: local coach (radi odmah, offline)
+    const r = localCoach(ctx, q);
+    renderAiBadges(r.badges);
+    $("aiAnswer").textContent = r.text;
+
+    // Kad bude backend:
+    // const apiRes = await askAiApi({ question: q, context: ctx });
+    // renderAiBadges(apiRes.badges || []);
+    // $("aiAnswer").textContent = apiRes.answer || "";
+
+    $("aiHint").textContent = "OK";
+    setTimeout(()=> $("aiHint").textContent="", 800);
+  } catch (e) {
+    $("aiHint").textContent = "Greška. Pokušaj ponovo.";
+  }
+});
 
   // init
   syncSp3UnbalUI();
