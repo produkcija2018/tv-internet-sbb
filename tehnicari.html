@@ -42,7 +42,7 @@
     Unesi merenja sa Trilithic-a (dBµV) + osnovne elemente (tap, SP2/SP3, RG11). Widget daje brzu procenu i predlog pasive.
   </p>
 
-  <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:12px;">
+  <div class="grid12" style="display:grid;grid-template-columns:repeat(12,1fr);gap:12px;">
     <!-- Context -->
     <div style="grid-column:span 12;background:#2a2a2a;padding:12px;border:1px solid #3a3a3a;border-radius:10px;">
       <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:12px;align-items:end;">
@@ -56,7 +56,7 @@
           </select>
         </div>
 
-        <div style="grid-column:span 2;">
+        <div class="col" style="grid-column:span 2;">
           <label style="display:block;font-size:12px;color:#cfcfcf;margin-bottom:6px;">Tap (dB)</label>
           <select id="tapValue" style="width:100%;padding:10px;border:1px solid #555;background:#111;color:#f2f2f2;border-radius:8px;">
             <option value="">—</option>
@@ -67,7 +67,7 @@
           </select>
         </div>
 
-        <div style="grid-column:span 2;">
+        <div class="col" style="grid-column:span 2;">
           <label style="display:block;font-size:12px;color:#cfcfcf;margin-bottom:6px;">Tap tip</label>
           <select id="tapPorts" style="width:100%;padding:10px;border:1px solid #555;background:#111;color:#f2f2f2;border-radius:8px;">
             <option value="">—</option>
@@ -76,7 +76,7 @@
           </select>
         </div>
 
-        <div style="grid-column:span 2;">
+       <div class="col" style="grid-column:span 2;">
           <label style="display:block;font-size:12px;color:#cfcfcf;margin-bottom:6px;">Drop kabl</label>
           <select id="dropCable" style="width:100%;padding:10px;border:1px solid #555;background:#111;color:#f2f2f2;border-radius:8px;">
             <option value="RG6">RG6</option>
@@ -84,7 +84,7 @@
           </select>
         </div>
 
-        <div style="grid-column:span 2;">
+        <div class="col" style="grid-column:span 2;">
           <label style="display:block;font-size:12px;color:#cfcfcf;margin-bottom:6px;">Dužina drop (m)</label>
           <input id="dropLen" type="number" min="0" step="1" value="0" style="width:100%;padding:10px;border:1px solid #555;background:#111;color:#f2f2f2;border-radius:8px;">
         </div>
@@ -96,26 +96,26 @@
       <h3 style="margin:0 0 10px;color:#f2f2f2;">Downstream (Forward path) – Unos</h3>
 
       <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:12px;align-items:end;">
-        <div style="grid-column:span 2;">
+        <div class="col" style="grid-column:span 2;">
           <label style="display:block;font-size:12px;color:#cfcfcf;margin-bottom:6px;">Low freq (MHz)</label>
           <input id="fLow" type="number" value="119.25" step="0.01" style="width:100%;padding:10px;border:1px solid #555;background:#111;color:#f2f2f2;border-radius:8px;">
         </div>
-        <div style="grid-column:span 2;">
+        <div class="col" style="grid-column:span 2;">
           <label style="display:block;font-size:12px;color:#cfcfcf;margin-bottom:6px;">Low nivo (dBµV)</label>
           <input id="lLow" type="number" value="72.2" step="0.1" style="width:100%;padding:10px;border:1px solid #555;background:#111;color:#f2f2f2;border-radius:8px;">
         </div>
 
-        <div style="grid-column:span 2;">
+        <div class="col" style="grid-column:span 2;">
           <label style="display:block;font-size:12px;color:#cfcfcf;margin-bottom:6px;">High freq (MHz)</label>
           <input id="fHigh" type="number" value="498.0" step="0.01" style="width:100%;padding:10px;border:1px solid #555;background:#111;color:#f2f2f2;border-radius:8px;">
         </div>
-        <div style="grid-column:span 2;">
+        <div class="col" style="grid-column:span 2;">
           <label style="display:block;font-size:12px;color:#cfcfcf;margin-bottom:6px;">High nivo (dBµV)</label>
           <input id="lHigh" type="number" value="71.1" step="0.1" style="width:100%;padding:10px;border:1px solid #555;background:#111;color:#f2f2f2;border-radius:8px;">
         </div>
 
         <!-- Kućna pasiva + SP3 unbalanced radio -->
-        <div style="grid-column:span 2;">
+        <div class="col" style="grid-column:span 2;">
           <label style="display:block;font-size:12px;color:#cfcfcf;margin-bottom:6px;">Kućna pasiva</label>
           <select id="homePassive" style="width:100%;padding:10px;border:1px solid #555;background:#111;color:#f2f2f2;border-radius:8px;">
             <option value="none">Bez</option>
@@ -137,7 +137,7 @@
           </div>
         </div>
 
-        <div style="grid-column:span 2;">
+        <div class="col" style="grid-column:span 2;">
           <label style="display:block;font-size:12px;color:#cfcfcf;margin-bottom:6px;">Atenuator (dB)</label>
           <select id="attenuator" style="width:100%;padding:10px;border:1px solid #555;background:#111;color:#f2f2f2;border-radius:8px;">
             <option value="0">0</option>
@@ -183,7 +183,7 @@
     </div>
 
     <!-- Actions -->
-    <div style="grid-column:span 12;display:flex;gap:10px;align-items:center;">
+    <div class="actions" style="grid-column:span 12;display:flex;gap:10px;align-items:center;">
       <button id="btnEval" type="button" style="padding:10px 14px;border:0;border-radius:10px;background:#f2f2f2;color:#111;cursor:pointer;font-weight:700;">
         Izračunaj / Proceni
       </button>
