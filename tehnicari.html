@@ -209,6 +209,50 @@
       color:var(--txt);
       font-size:14px;
     }
+    .training-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:12px;
+    }
+
+    .tcard{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      padding:14px;
+    }
+
+    .tcard h4{
+      margin:0 0 8px;
+      font-size:14px;
+      letter-spacing:.2px;
+    }
+
+    .tcard p{
+      margin:0 0 10px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .tcard ul{
+      margin:10px 0 0;
+      padding-left:18px;
+      color:var(--txt);
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .tcard .mini{
+      color:var(--muted2);
+      font-size:12px;
+      margin-top:10px;
+    }
+
+    .tcard.ok{ border-color:rgba(34,197,94,.25); background:rgba(34,197,94,.07); }
+    .tcard.warn{ border-color:rgba(245,158,11,.25); background:rgba(245,158,11,.06); }
+    .tcard.fail{ border-color:rgba(239,68,68,.25); background:rgba(239,68,68,.06); }
+    .tcard.info{ border-color:rgba(6,182,212,.25); background:rgba(6,182,212,.05); }
 
     /* MOBILE: sve u 1 kolonu + još veći input */
     @media (max-width: 680px){
@@ -406,6 +450,7 @@
               <h3 style="margin:0 0 8px;font-size:16px;">Rezultat</h3>
               <div class="badges" id="statusBar"></div>
               <pre id="resultText"></pre>
+              <div id="trainingCards" class="training-grid" style="margin-top:12px;"></div>
             </div>
             <!-- ===== AI COPILOT ===== -->
             <div class="col-12 panel">
@@ -547,6 +592,128 @@
     const isUnbal = $("homePassive").value === "sp3_unbal";
     $("sp3UnbalWrap").style.display = isUnbal ? "block" : "none";
   }
+  function createTrainingCard(tone, title, desc, bullets, footer) {
+  const el = document.createElement("div");
+  el.className = `tcard ${tone || "info"}`;
+
+  const ul = (bullets || []).map(x => `<li>${x}</li>`).join("");
+  el.innerHTML = `
+    <h4>${title}</h4>
+    ${desc ? `<p>${desc}</p>` : ""}
+    ${bullets && bullets.length ? `<ul>${ul}</ul>` : ""}
+    ${footer ? `<div class="mini">${footer}</div>` : ""}
+  `;
+  return el;
+}
+    // ===== TRAINING STATE + CARDS =====
+    const tCfg = CONFIG.targets[pointKey];
+    const state = {
+      dsStatus,
+      tiltStatus,
+      usStatus,
+      tilt,
+      avgAdj,
+      okMin: tCfg.okMin,
+      okMax: tCfg.okMax,
+      returnMax,
+      usPeakF,
+      suggestionNeedDb: suggestion ? suggestion.needDb : null,
+    };
+    renderTrainingCards(state);
+
+function renderTrainingCards(state) {
+  const wrap = document.getElementById("trainingCards");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+
+  // Uvek: standardni workflow (teren)
+  wrap.appendChild(createTrainingCard(
+    "info",
+    "Standard workflow (teren)",
+    "Drži redosled uvek isti da ne preskočiš povrat ili tilt problem.",
+    [
+      "<b>Forward check</b> → DS nivo + tilt (low/high).",
+      "<b>Return clean check</b> → return spectrum (šiljci / noise floor).",
+      "<b>Unity gain adjust</b> → tek kad je return čist (balans).",
+      "<b>Validate via modem</b> → servis test / TX (ako imaš).",
+      "<b>Zapis u as-built</b> → rezultat + šta je menjano (SP2/SP3, atenuator, drop).",
+    ],
+    "Tip: Ako dodaješ pasivu da spustiš DS, proveri da li US/TX raste."
+  ));
+
+  // Tilt kartica
+  if (state.tiltStatus === "warn" || state.tiltStatus === "fail") {
+    const tone = state.tiltStatus;
+    wrap.appendChild(createTrainingCard(
+      tone,
+      `Tilt ${state.tiltStatus.toUpperCase()} — šta znači`,
+      `Tilt je razlika nivoa između high i low frekvencija. Velik tilt često znači gubitke/loš kontakt na high opsegu.`,
+      [
+        "<b>Tipični uzroci:</b> loš F konektor, korozija, loš splitter/pasiva, predugačak drop, RG6 na velikoj dužini, loš tap port kontakt.",
+        "<b>Potvrdi:</b> izmeri low/high na 2 tačke (posle tapa vs kod modema). Ako se tilt pogorša “nizvodno”, problem je u drop/pasivi/konektorima.",
+        "<b>Akcija:</b> zameni/ponovo uradi konektore, ukloni nepotrebnu pasivu, razmisli o RG11 za duže drop-ove.",
+      ],
+      `Trenutni tilt: ${clampRound(state.tilt,1)} dB`
+    ));
+  }
+
+  // DS prejako / prenisko
+  if (state.dsStatus === "warn" || state.dsStatus === "fail") {
+    if (state.avgAdj > state.okMax) {
+      wrap.appendChild(createTrainingCard(
+        "warn",
+        "Prejak DS — kako rešiti bez haosa",
+        "Prejak nivo može izazvati greške/overload. Bolje je ciljano prigušenje nego nagomilavanje splittera.",
+        [
+          "<b>Potvrdi:</b> izmeri DS low/high na istoj tački, proveri da li je preko OK opsega.",
+          "<b>Akcija 1:</b> SP3 unbalanced koristi <b>7 dB</b> izlaz (ako je dostupan).",
+          "<b>Akcija 2:</b> atenuator 6/8 dB (po potrebi).",
+          "<b>Pazi:</b> dodato prigušenje često podiže upstream/TX modema ~ približno isti dB → posle obavezno US proveri.",
+        ],
+        state.suggestionNeedDb !== null ? `Procena potrebnog prigušenja: ~ ${clampRound(state.suggestionNeedDb,1)} dB` : ""
+      ));
+    } else if (state.avgAdj < state.okMin) {
+      wrap.appendChild(createTrainingCard(
+        "warn",
+        "Prenizak DS — gde prvo tražiti",
+        "Nizak DS pravi slab SNR i greške, posebno na višim frekvencijama.",
+        [
+          "<b>Tipični uzroci:</b> loš kontakt (F), voda u konektoru, previše pasive, pogrešan tap/izlaz, predugačak drop, loš kabl.",
+          "<b>Potvrdi:</b> uporedi nivo na tap portu i kod modema. Ako je veliki pad, problem je u drop/pasivi/stanu.",
+          "<b>Akcija:</b> ukloni nepotrebnu pasivu/atenuator, sredi konektore, skrati ili zameni drop (RG11 za duže trase).",
+        ],
+        `Procena avg posle pasive/drop: ${clampRound(state.avgAdj,1)} dBµV`
+      ));
+    }
+  }
+
+  // US (return) kartica
+  if (state.usStatus === "warn") {
+    wrap.appendChild(createTrainingCard(
+      "warn",
+      "Return/Ingress — izolacija problema",
+      "Ako peak ili šum nije “normalan”, fokus je na ingress/leak i otvorenim portovima.",
+      [
+        "<b>Potvrdi:</b> proveri da li je mreža low-split (65) ili mid-split (85) i skeniraj samo taj opseg.",
+        "<b>Izoluj:</b> odspoji grane jednu po jednu (ako procedura dozvoljava) i gledaj da li šum/pik nestaje.",
+        "<b>Najčešće:</b> otvoren port bez 75Ω terminatora, loš konektor, loš splitter u stanu, oštećen drop, korozija.",
+      ],
+      state.usPeakF !== null ? `Peak: ${clampRound(state.usPeakF,2)} MHz | Return max: ${state.returnMax} MHz` : ""
+    ));
+  } else if (state.usStatus === "ok") {
+    wrap.appendChild(createTrainingCard(
+      "ok",
+      "Return “čist” — šta još proveriti",
+      "Ako je return u opsegu, traži bursty probleme (intermittent) i validiraj servis.",
+      [
+        "<b>Posmatraj 60–120s:</b> da li se pojavljuju povremeni šiljci.",
+        "<b>Validiraj:</b> modem/servis test (latencija, packet loss, throughput) kad je moguće.",
+        "<b>Uporedi:</b> merenje na tap portu i kod modema (da li se pogoršava nizvodno).",
+      ],
+      ""
+    ));
+  }
+}
 
   function evaluate() {
     const pointKey = $("measurePoint").value;
