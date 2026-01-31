@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Optika | PON Checker (FCP / ONT)</title>
 
-  <meta name="description" content="Interni alati za tehničare: PON checker (FCP/ONT), dijagnostika, as-built, training library, export JSON." />
+  <meta name="description" content="Interni alati za tehničare: PON checker (FCP/ONT), dijagnostika, as-built, training library, export/import JSON." />
   <meta name="robots" content="noindex,nofollow" />
 
   <style>
@@ -45,7 +45,7 @@
       backdrop-filter: blur(10px);
     }
     .top h1{margin:0;font-size:26px}
-    .top p{margin:8px 0 0;color:var(--muted);max-width:75ch}
+    .top p{margin:8px 0 0;color:var(--muted);max-width:85ch}
 
     .btn{
       display:inline-flex;
@@ -63,7 +63,7 @@
 
     .section{padding:28px 0}
     .section h2{margin:0 0 10px;font-size:20px}
-    .section p{margin:0 0 14px;color:var(--muted);max-width:85ch}
+    .section p{margin:0 0 14px;color:var(--muted);max-width:92ch}
 
     .card{
       background:var(--card);
@@ -108,7 +108,7 @@
       color:var(--txt);
       outline:none;
       box-shadow: inset 0 0 0 1px rgba(0,0,0,.0);
-      font-size:16px; /* iOS: bez zoom-a */
+      font-size:16px;
       min-height:52px;
     }
     textarea{min-height:110px; resize:vertical}
@@ -189,6 +189,14 @@
       font-size:14px;
     }
 
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      font-size:12px;font-weight:800;color:var(--txt);
+    }
+
     /* ===== Training Library ===== */
     #training-library .lib-top{
       display:flex;
@@ -244,12 +252,33 @@
     #training-library .muted{color:var(--muted)}
     #training-library .hint{color:var(--muted2);font-size:12px}
 
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
+    /* ===== Case list ===== */
+    .caseList{
+      margin-top:12px;
+      display:grid;
+      gap:10px;
+    }
+    .caseItem{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .caseItem b{display:block}
+    .caseItem small{color:var(--muted2)}
+    .caseItem .caseBtns{display:flex;gap:8px;flex-wrap:wrap}
+    .caseItem .miniBtn{
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.16);
       background:rgba(255,255,255,.06);
-      font-size:12px;font-weight:800;color:var(--txt);
+      cursor:pointer;
+      font-weight:800;
+      font-size:12px;
     }
 
     /* MOBILE */
@@ -288,12 +317,13 @@
       <h1>Optika – PON Checker (FCP / ONT)</h1>
       <p>
         Unesi referencu sa FCP-a i merenje na ONT-u (1490/1550). Dobijaš status nivoa, delta (FCP→ONT),
-        brzu dijagnostiku, as-built zapis i training library.
+        brzu dijagnostiku, as-built zapis, training library i čuvanje slučajeva.
       </p>
 
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <a class="btn" href="tehnicari.html">⬅ Nazad (Tehničari)</a>
         <a class="btn" href="#training">📚 Priručnik</a>
+        <button class="btn" id="btnLoadExample" type="button">🧪 Učitaj primer (realni slučaj)</button>
       </div>
     </div>
   </header>
@@ -334,6 +364,7 @@
                     <option value="1:32" selected>1:32</option>
                     <option value="1:64">1:64</option>
                   </select>
+                  <div class="hint" id="splitHint"></div>
                 </div>
 
                 <div class="col-4">
@@ -363,19 +394,19 @@
               <div class="tool-grid">
                 <div class="col-4">
                   <label>FCP ref @1490nm (dBm)</label>
-                  <input id="fcpRef1490" type="number" step="0.01" placeholder="-17.64" />
+                  <input id="fcpRef1490" type="text" inputmode="decimal" placeholder="-17.64 ili -17,64" />
                   <div class="hint">Ako imaš “prosečan nivo u FCP-u pri puštanju”, unesi ga ovde.</div>
                 </div>
 
                 <div class="col-4">
                   <label>FCP ref @1550nm (dBm) (opciono)</label>
-                  <input id="fcpRef1550" type="number" step="0.01" placeholder="-3.00" />
+                  <input id="fcpRef1550" type="text" inputmode="decimal" placeholder="-3.00" />
                   <div class="hint">Unesi samo ako postoji overlay i imaš referencu.</div>
                 </div>
 
                 <div class="col-4">
                   <label>Stabilnost (opciono): ranije @1490 (dBm)</label>
-                  <input id="prev1490" type="number" step="0.01" placeholder="-18.50" />
+                  <input id="prev1490" type="text" inputmode="decimal" placeholder="-18.50" />
                   <div class="hint">Ako nivo “šeta”, uporedi drift (npr. pre 5 min).</div>
                 </div>
               </div>
@@ -391,11 +422,11 @@
                 </div>
                 <div class="col-3">
                   <label>@1490nm (dBm)</label>
-                  <input id="ontA1490" type="number" step="0.01" placeholder="-18.76" />
+                  <input id="ontA1490" type="text" inputmode="decimal" placeholder="-18.76" />
                 </div>
                 <div class="col-3">
                   <label>@1550nm (dBm) (opciono)</label>
-                  <input id="ontA1550" type="number" step="0.01" placeholder="" />
+                  <input id="ontA1550" type="text" inputmode="decimal" placeholder="" />
                 </div>
                 <div class="col-3">
                   <label>1550 status</label>
@@ -417,11 +448,11 @@
                 </div>
                 <div class="col-3">
                   <label>@1490nm (dBm)</label>
-                  <input id="ontB1490" type="number" step="0.01" placeholder="-23.28" />
+                  <input id="ontB1490" type="text" inputmode="decimal" placeholder="-23.28" />
                 </div>
                 <div class="col-3">
                   <label>@1550nm (dBm) (opciono)</label>
-                  <input id="ontB1550" type="number" step="0.01" placeholder="" />
+                  <input id="ontB1550" type="text" inputmode="decimal" placeholder="" />
                 </div>
                 <div class="col-3">
                   <label>1550 status</label>
@@ -438,11 +469,14 @@
               <div class="actions">
                 <button class="btn-primary" id="ponEval" type="button">Izračunaj / Proceni</button>
                 <button class="btn-ghost" id="ponCopy" type="button">Kopiraj as-built</button>
+                <button class="btn-ghost" id="ponCopyEmail" type="button">Kopiraj email tekst</button>
                 <button class="btn-ghost" id="ponSave" type="button">Sačuvaj slučaj (lokalno)</button>
-                <button class="btn-ghost" id="ponExport" type="button">Export JSON (svi slučajevi)</button>
+                <button class="btn-ghost" id="ponImport" type="button">Import JSON</button>
+                <button class="btn-ghost" id="ponExport" type="button">Export JSON (svi)</button>
                 <button class="btn-ghost" id="ponExportOne" type="button">Export JSON (trenutni)</button>
                 <span class="hint" id="ponHint"></span>
               </div>
+              <input id="ponImportFile" type="file" accept="application/json" style="display:none" />
             </div>
 
             <!-- Output -->
@@ -461,6 +495,13 @@
 
               <div class="badges" id="ponStatusBar"></div>
               <pre id="ponResultText"></pre>
+            </div>
+
+            <!-- Saved cases -->
+            <div class="col-12 panel">
+              <h3 style="margin:0 0 8px;font-size:16px;">Sačuvani slučajevi (lokalno)</h3>
+              <div class="hint">Čuva se u browseru (localStorage). Idealno kasnije prebaciti na server/API.</div>
+              <div class="caseList" id="caseList"></div>
             </div>
 
           </div>
@@ -662,7 +703,8 @@
           </div>
 
           <div class="hint" style="margin-top:12px;">
-            Interno: razmisli o zaštiti ove stranice (login / IP allowlist / basic auth) pre objave.
+            Interno: zaštiti stranicu (login / IP allowlist / basic auth) pre objave. <br/>
+            noindex/nofollow je već uključen, ali to nije zaštita pristupa.
           </div>
         </div>
       </div>
@@ -680,7 +722,7 @@
 (() => {
   // === PON CONFIG (podesi po mrežnom planu) ===
   const CONFIG_PON = {
-    // Rx opseg za 1490 (GPON DS) – konzervativan default, prilagodi realnim standardima mreže
+    // Rx opseg za 1490 (GPON DS) – konzervativan default; obavezno prilagoditi realnim limitima mreže
     rx1490: {
       okMin: -24.0,
       okMax: -12.0,
@@ -691,6 +733,7 @@
     },
 
     // delta FCP->ONT (višak gubitka posle FCP-a / posle tačke reference)
+    // tipično: 0–2 dB OK (patch+konektor), 2–4 WARN, >4 FAIL
     delta: {
       okMax: 2.0,
       warnMax: 4.0,
@@ -703,7 +746,7 @@
       failAbs: 3.0
     },
 
-    // 1550 overlay (ako se koristi)
+    // 1550 overlay (ako se koristi) – pragovi su "safe default"
     rx1550: {
       okMin: -18.0,
       warnLow: -22.0,
@@ -716,15 +759,29 @@
       failAbs: 4.0
     },
 
-    storageKey: "pon_cases_v1",
+    // procena gubitka splittera (grubo, za brzu kontrolu) – koristi se samo kao "hint"
+    splitterLossDbEstimate: {
+      "1:8":  10.5,
+      "1:16": 13.7,
+      "1:32": 16.9,
+      "1:64": 20.0
+    },
+
+    storageKey: "pon_cases_v2",
     storageMax: 80
   };
 
   const $ = (id) => document.getElementById(id);
+
+  // ---- tolerant parsing: allows "-17,64" and "-17.64" ----
   const num = (v) => {
-    const n = parseFloat(v);
+    if (v === null || v === undefined) return null;
+    const s = String(v).trim().replace(",", ".");
+    if (!s) return null;
+    const n = parseFloat(s);
     return Number.isFinite(n) ? n : null;
   };
+
   const clampRound = (n, d=2) => {
     const p = Math.pow(10,d);
     return Math.round(n*p)/p;
@@ -764,7 +821,6 @@
   }
 
   function classify1550(overlay, state, dbm) {
-    // overlay: yes/no/unknown; state: measured/na
     if (overlay === "no") return {tone:"info", label:"(IPTV-only)"};
     if (state === "na") {
       if (overlay === "yes") return {tone:"warn", label:"N/A (check overlay)"};
@@ -772,6 +828,7 @@
     }
     if (dbm === null) {
       if (overlay === "yes") return {tone:"warn", label:"Missing 1550"};
+      // overlay unknown -> keep as info, not warn
       return {tone:"info", label:"n/a"};
     }
     const t = CONFIG_PON.rx1550;
@@ -813,12 +870,25 @@
     const out = [];
     out.push("### Dijagnostika (teren)");
 
-    // Delta FAIL – fokus posle FCP-a
+    // Sanity: delta negative
+    if (calc.deltaA !== null && calc.deltaA < -0.5) {
+      out.push(`- ${ctx.ontA.name}: Δ(FCP→ONT) je negativan (${clampRound(calc.deltaA,2)} dB) → proveri da li su reference/tačke merenja iste (FCP ref vs ONT merenje), ili da li je u pitanju drugi port/split.`)
+    }
+    if (calc.deltaB !== null && calc.deltaB < -0.5) {
+      out.push(`- ${ctx.ontB.name}: Δ(FCP→ONT) je negativan (${clampRound(calc.deltaB,2)} dB) → proveri tačke merenja / port / split.`)
+    }
+
+    // Delta FAIL/WARN
     if (calc.deltaA !== null && calc.deltaACls.tone === "fail") {
       out.push(`- ${ctx.ontA.name}: **Δ(FCP→ONT) = ${clampRound(calc.deltaA,2)} dB (FAIL)** → vrlo verovatno problem posle FCP-a (patch/konektor/bend/splice/adapter).`);
+    } else if (calc.deltaA !== null && calc.deltaACls.tone === "warn") {
+      out.push(`- ${ctx.ontA.name}: **Δ(FCP→ONT) = ${clampRound(calc.deltaA,2)} dB (WARN)** → sumnja na dodatni gubitak posle FCP-a (često patch/konektor).`);
     }
+
     if (calc.deltaB !== null && calc.deltaBCls.tone === "fail") {
       out.push(`- ${ctx.ontB.name}: **Δ(FCP→ONT) = ${clampRound(calc.deltaB,2)} dB (FAIL)** → vrlo verovatno problem posle FCP-a (patch/konektor/bend/splice/adapter).`);
+    } else if (calc.deltaB !== null && calc.deltaBCls.tone === "warn") {
+      out.push(`- ${ctx.ontB.name}: **Δ(FCP→ONT) = ${clampRound(calc.deltaB,2)} dB (WARN)** → sumnja na dodatni gubitak posle FCP-a.`);
     }
 
     // Razlika A/B
@@ -846,13 +916,19 @@
       }
     }
 
+    // Budget hint
+    const splitLoss = CONFIG_PON.splitterLossDbEstimate[ctx.split];
+    if (splitLoss) {
+      out.push(`- Split ${ctx.split} (procena gubitka ~${splitLoss} dB) → koristi kao orijentir, nije zamena za realan budžet mreže.`);
+    }
+
     out.push("");
     out.push("### Najbrži testovi (redosled)");
     out.push("1) **Swap patch na FCP-u** (zameni ONT A ↔ ONT B na FCP strani) → da li problem prati port/patch ili ostaje u stanu.");
     out.push("2) **Očisti konektore** (FCP + stan/ONT) i ponovi merenje (1490 pa 1550).");
     out.push("3) **Bend check**: proveri radijuse savijanja i “mikro-bend” u ormanu i iza ONT-a.");
     out.push("4) Ako i dalje FAIL: **VFL/OTDR** da locira tačku gubitka (splice/adapter/patch panel).");
-    out.push("5) Ako su svi ONT-ovi na tom splitteru loši: meri **pre splittera** (feeder/OLT/attenuation budget).");
+    out.push("5) Ako su svi ONT-ovi na tom splitteru loši: meri **pre splittera** (feeder/OLT/budžet).");
 
     return out.join("\n");
   }
@@ -860,13 +936,17 @@
   function evaluate() {
     const ctx = getCase();
 
+    // Split hint
+    const splitLoss = CONFIG_PON.splitterLossDbEstimate[ctx.split];
+    $("splitHint").textContent = splitLoss ? `Procena splitter loss: ~${splitLoss} dB (orijentir)` : "";
+
     // Validacija minimuma: bar jedan ONT 1490
     if (ctx.ontA.rx1490 === null && ctx.ontB.rx1490 === null) {
       $("ponStatusBar").innerHTML = "";
       $("ponStatusBar").appendChild(badge("PON: FAIL (nema 1490)", "fail"));
       $("ponResultText").textContent = "Unesi bar jedan 1490 nivo (ONT A ili ONT B).";
       $("ponHint").textContent = "Unesi 1490 pa ponovi.";
-      return getLastCalcState(null);
+      return setLast(null);
     }
 
     const rxA = classifyRx1490(ctx.ontA.rx1490);
@@ -910,7 +990,8 @@
 
     // Text report
     const lines = [];
-    lines.push(`PON CHECK (${new Date().toISOString().slice(0,19).replace("T"," ")})`);
+    const ts = new Date().toISOString().slice(0,19).replace("T"," ");
+    lines.push(`PON CHECK (${ts})`);
     if (ctx.location) lines.push(`Lokacija: ${ctx.location}`);
     lines.push(`Mesto merenja: ${ctx.measurePoint} | Split: ${ctx.split} | Overlay: ${ctx.overlay}`);
 
@@ -945,23 +1026,13 @@
 
     $("ponResultText").textContent = lines.join("\n");
     $("ponHint").textContent = "OK. (Pragove menjaš u CONFIG_PON.)";
-
-    // Save last calc state for “open manual from result”
-    return getLastCalcState({
-      ctx, rxA, rxB,
-      deltaA, deltaB, deltaACls, deltaBCls,
-      drift, driftCls,
-      ontA1550Cls, ontB1550Cls,
-      diffOnt1490
-    });
+    return setLast({ ctx, rxA, rxB, deltaA, deltaB, deltaACls, deltaBCls, drift, driftCls, ontA1550Cls, ontB1550Cls, diffOnt1490 });
   }
 
-  // ---- Persist last calc state in-memory (for manual auto-open) ----
+  // ---- last calc state (for manual auto-open) ----
   let LAST = null;
-  function getLastCalcState(next) {
-    if (next !== undefined) LAST = next;
-    return LAST;
-  }
+  function setLast(v){ LAST = v; return LAST; }
+  function getLast(){ return LAST; }
 
   function buildAsBuilt() {
     const res = ($("ponResultText").textContent || "").trim();
@@ -970,17 +1041,58 @@
     return `AS-BUILT PON (${stamp})\n\n${res}\n`;
   }
 
+  function buildEmailText() {
+    const st = getLast();
+    const ctx = st?.ctx || getCase();
+    const a = ctx.ontA;
+    const b = ctx.ontB;
+
+    // email-friendly summary (as you used in the real message)
+    let out = [];
+    out.push("Zdravo,");
+    out.push("");
+    if (ctx.location) out.push(`Lokacija: ${ctx.location}`);
+    out.push(`Na ovom FCP-u trenutno postoje 2 ONT-a:`);
+
+    if (a.rx1490 !== null) out.push(`- ${a.name}: prijemni signal @1490 = ${a.rx1490} dBm`);
+    if (a.rx1550State === "na") out.push(`  ${a.name}: nema video/overlay signal @1550 (N/A)`);
+    else if (a.rx1550 !== null) out.push(`  ${a.name}: @1550 = ${a.rx1550} dBm`);
+
+    if (b.rx1490 !== null) out.push(`- ${b.name}: prijemni signal @1490 = ${b.rx1490} dBm`);
+    if (b.rx1550State === "na") out.push(`  ${b.name}: 1550 N/A`);
+    else if (b.rx1550 !== null) out.push(`  ${b.name}: @1550 = ${b.rx1550} dBm`);
+
+    if (ctx.fcpRef1490 !== null && a.rx1490 !== null) {
+      const dA = clampRound(ctx.fcpRef1490 - a.rx1490, 2);
+      out.push(`Delta FCP→${a.name} @1490: ~${dA} dB`);
+    }
+    if (ctx.fcpRef1490 !== null && b.rx1490 !== null) {
+      const dB = clampRound(ctx.fcpRef1490 - b.rx1490, 2);
+      out.push(`Delta FCP→${b.name} @1490: ~${dB} dB`);
+    }
+
+    out.push("");
+    out.push("Slike očitavanja nivoa su u prilogu. Predlog: swap patch u FCP-u + cleaning konektora, zatim ponoviti merenje.");
+    out.push("");
+    out.push("Pozdrav.");
+    return out.join("\n");
+  }
+
   function loadCases() {
     try {
       return JSON.parse(localStorage.getItem(CONFIG_PON.storageKey) || "[]");
     } catch { return []; }
   }
 
+  function writeCases(arr) {
+    localStorage.setItem(CONFIG_PON.storageKey, JSON.stringify(arr));
+  }
+
   function saveCaseToLocal(caseObj) {
     const arr = loadCases();
     arr.unshift(caseObj);
     while (arr.length > CONFIG_PON.storageMax) arr.pop();
-    localStorage.setItem(CONFIG_PON.storageKey, JSON.stringify(arr));
+    writeCases(arr);
   }
 
   async function copyText(txt, hintEl) {
@@ -1015,7 +1127,6 @@
   function setActiveTab(tabId) {
     const tabs = document.querySelectorAll("#training-library .tab-btn");
     const panels = document.querySelectorAll("#training-library .tab-panel");
-
     tabs.forEach(b => b.classList.toggle("active", b.dataset.tab === tabId));
     panels.forEach(p => p.classList.toggle("active", p.id === tabId));
   }
@@ -1032,13 +1143,11 @@
     const query = normalize(q);
     const panels = document.querySelectorAll("#training-library .tab-panel");
     if (!query) {
-      // show current tab only
-      const active = document.querySelector("#training-library .tab-panel.active");
       panels.forEach(p => p.style.display = "");
+      const active = document.querySelector("#training-library .tab-panel.active");
+      if (active) active.style.display = "";
       return;
     }
-
-    // When searching: show panels that match + hide others (but keep tab selection intact)
     panels.forEach(p => {
       const txt = normalize(p.textContent);
       p.style.display = txt.includes(query) ? "" : "none";
@@ -1048,26 +1157,16 @@
   function clearSearch() {
     $("libSearch").value = "";
     document.querySelectorAll("#training-library .tab-panel").forEach(p => p.style.display = "");
-    // keep active tab visible
     const active = document.querySelector("#training-library .tab-panel.active");
     if (active) active.style.display = "";
   }
 
   // ===== Auto-open manual based on last result =====
   function openManualFromResult() {
-    // Ensure user sees library
     location.hash = "#training";
-
-    const st = getLastCalcState();
+    const st = getLast();
     if (!st) { setActiveTab("tab-overview"); return; }
 
-    // Priority logic:
-    // 1) Delta FAIL/WARN -> tab-delta
-    // 2) Drift WARN/FAIL -> tab-drift
-    // 3) Overlay issues -> tab-1550
-    // 4) Diff A/B WARN/FAIL -> tab-isolation
-    // 5) 1490 FAIL/WARN -> tab-1490
-    // else overview
     const { deltaACls, deltaBCls, driftCls, ontA1550Cls, ontB1550Cls, diffOnt1490, rxA, rxB } = st;
 
     const deltaBad = (deltaACls && (deltaACls.tone==="fail" || deltaACls.tone==="warn")) ||
@@ -1092,6 +1191,132 @@
     setActiveTab("tab-overview");
   }
 
+  // ===== Saved cases UI =====
+  function renderCaseList() {
+    const list = $("caseList");
+    const arr = loadCases();
+    list.innerHTML = "";
+
+    if (!arr.length) {
+      const div = document.createElement("div");
+      div.className = "hint";
+      div.textContent = "Nema sačuvanih slučajeva.";
+      list.appendChild(div);
+      return;
+    }
+
+    arr.slice(0, 12).forEach((c, idx) => {
+      const item = document.createElement("div");
+      item.className = "caseItem";
+
+      const left = document.createElement("div");
+      const loc = c.location ? c.location : "(bez lokacije)";
+      const t = (c.ts || "").replace("T"," ").slice(0,19);
+      left.innerHTML = `<b>${loc}</b><small>${t} • split ${c.split || "?"} • overlay ${c.overlay || "?"}</small>`;
+
+      const btns = document.createElement("div");
+      btns.className = "caseBtns";
+
+      const bLoad = document.createElement("button");
+      bLoad.className = "miniBtn";
+      bLoad.textContent = "Load";
+      bLoad.addEventListener("click", () => {
+        applyCase(c);
+        $("ponHint").textContent = "Slučaj učitan.";
+        setTimeout(()=> $("ponHint").textContent="", 1200);
+        evaluate();
+        window.scrollTo({top:0, behavior:"smooth"});
+      });
+
+      const bDel = document.createElement("button");
+      bDel.className = "miniBtn";
+      bDel.textContent = "Delete";
+      bDel.addEventListener("click", () => {
+        const all = loadCases();
+        all.splice(idx, 1);
+        writeCases(all);
+        renderCaseList();
+      });
+
+      btns.appendChild(bLoad);
+      btns.appendChild(bDel);
+
+      item.appendChild(left);
+      item.appendChild(btns);
+      list.appendChild(item);
+    });
+  }
+
+  function applyCase(c) {
+    $("ponMeasurePoint").value = c.measurePoint || "ont";
+    $("ponSplit").value = c.split || "1:32";
+    $("ponOverlay").value = c.overlay || "unknown";
+    $("ponLocation").value = c.location || "";
+    $("ponNotes").value = c.notes || "";
+
+    $("fcpRef1490").value = c.fcpRef1490 ?? "";
+    $("fcpRef1550").value = c.fcpRef1550 ?? "";
+    $("prev1490").value = c.prev1490 ?? "";
+
+    $("ontAName").value = c.ontA?.name ?? "ONT A";
+    $("ontA1490").value = c.ontA?.rx1490 ?? "";
+    $("ontA1550").value = c.ontA?.rx1550 ?? "";
+    $("ontA1550State").value = c.ontA?.rx1550State ?? "measured";
+
+    $("ontBName").value = c.ontB?.name ?? "ONT B";
+    $("ontB1490").value = c.ontB?.rx1490 ?? "";
+    $("ontB1550").value = c.ontB?.rx1550 ?? "";
+    $("ontB1550State").value = c.ontB?.rx1550State ?? "measured";
+  }
+
+  // ===== Example loader (your real case) =====
+  function loadExampleCase() {
+    applyCase({
+      ts: new Date().toISOString(),
+      measurePoint: "ont",
+      split: "1:32",
+      overlay: "unknown",
+      location: "Primer: FCP DR46G0S-32-1 (realni case)",
+      notes: "ONT0 OK, ONT1 nizak. Fokus: delta i izolacija (swap patch + cleaning).",
+      fcpRef1490: -17.64,
+      fcpRef1550: null,
+      prev1490: null,
+      ontA: { name: "ONT0", rx1490: -18.76, rx1550: null, rx1550State: "na" },
+      ontB: { name: "ONT1", rx1490: -23.28, rx1550: null, rx1550State: "measured" }
+    });
+    evaluate();
+    $("ponHint").textContent = "Učitan primer (realni slučaj).";
+    setTimeout(()=> $("ponHint").textContent="", 1400);
+  }
+
+  // ===== Import JSON =====
+  function importJSONFile(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const obj = JSON.parse(reader.result);
+        // Accept: array (cases) or single case
+        if (Array.isArray(obj)) {
+          const existing = loadCases();
+          const merged = [...obj, ...existing].slice(0, CONFIG_PON.storageMax);
+          writeCases(merged);
+          renderCaseList();
+          $("ponHint").textContent = "Import OK (više slučajeva).";
+        } else {
+          // single
+          applyCase(obj);
+          evaluate();
+          $("ponHint").textContent = "Import OK (trenutni slučaj).";
+        }
+        setTimeout(()=> $("ponHint").textContent="", 1400);
+      } catch(e) {
+        $("ponHint").textContent = "Import FAIL (neispravan JSON).";
+        setTimeout(()=> $("ponHint").textContent="", 1600);
+      }
+    };
+    reader.readAsText(file);
+  }
+
   // ===== Events =====
   $("ponEval").addEventListener("click", () => evaluate());
 
@@ -1099,11 +1324,16 @@
     await copyText(buildAsBuilt(), $("ponHint"));
   });
 
+  $("ponCopyEmail").addEventListener("click", async () => {
+    await copyText(buildEmailText(), $("ponHint"));
+  });
+
   $("ponSave").addEventListener("click", () => {
     const ctx = getCase();
     const report = ($("ponResultText").textContent || "").trim();
     const payload = { ...ctx, report };
     saveCaseToLocal(payload);
+    renderCaseList();
     $("ponHint").textContent = "Slučaj sačuvan lokalno (localStorage).";
     setTimeout(()=> $("ponHint").textContent="", 1400);
   });
@@ -1111,7 +1341,7 @@
   $("ponExport").addEventListener("click", () => {
     const arr = loadCases();
     downloadJSON(`pon_cases_${new Date().toISOString().slice(0,10)}.json`, arr);
-    $("ponHint").textContent = "Exportovan JSON (download) – svi slučajevi.";
+    $("ponHint").textContent = "Exportovan JSON – svi slučajevi.";
     setTimeout(()=> $("ponHint").textContent="", 1400);
   });
 
@@ -1119,11 +1349,19 @@
     const ctx = getCase();
     const report = ($("ponResultText").textContent || "").trim();
     downloadJSON(`pon_case_${new Date().toISOString().slice(0,19).replaceAll(":","-")}.json`, { ...ctx, report });
-    $("ponHint").textContent = "Exportovan JSON (download) – trenutni slučaj.";
+    $("ponHint").textContent = "Exportovan JSON – trenutni slučaj.";
     setTimeout(()=> $("ponHint").textContent="", 1400);
   });
 
+  $("ponImport").addEventListener("click", () => $("ponImportFile").click());
+  $("ponImportFile").addEventListener("change", (e) => {
+    const f = e.target.files?.[0];
+    if (f) importJSONFile(f);
+    e.target.value = "";
+  });
+
   $("btnOpenManualFromResult").addEventListener("click", openManualFromResult);
+  $("btnLoadExample").addEventListener("click", loadExampleCase);
 
   // auto-evaluate on relevant input changes (lightweight)
   const autoIds = [
@@ -1137,8 +1375,8 @@
     if (!el) return;
     el.addEventListener("change", () => evaluate());
     el.addEventListener("input", () => {
-      // avoid too many runs for text; still fine
-      if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") evaluate();
+      // ok i za teren (ne previše skupo)
+      evaluate();
     });
   });
 
@@ -1149,6 +1387,7 @@
 
   // init
   evaluate();
+  renderCaseList();
 })();
 </script>
 
