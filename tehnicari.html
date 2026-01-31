@@ -280,6 +280,91 @@
     }
     .toggle.on .dot{ background:rgba(34,197,94,.9); box-shadow:0 0 0 3px rgba(34,197,94,.18); }
     .toggle.off .dot{ background:rgba(239,68,68,.85); box-shadow:0 0 0 3px rgba(239,68,68,.14); }
+     /* ===== Training Library ===== */
+#training-library .lib-top{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-bottom:14px;
+}
+#training-library .lib-top input{
+  flex:1;
+}
+#training-library .lib-grid{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:14px;
+}
+#training-library .lib-tabs{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+#training-library .tab-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);
+  color:var(--txt);
+  cursor:pointer;
+  font-weight:800;
+  text-align:left;
+}
+#training-library .tab-btn.active{
+  border-color:rgba(124,58,237,.55);
+  box-shadow:0 0 0 3px rgba(124,58,237,.18);
+  background:rgba(124,58,237,.10);
+}
+#training-library .lib-panels{
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  border-radius:18px;
+  padding:16px;
+}
+#training-library .tab-panel{
+  display:none;
+}
+#training-library .tab-panel.active{
+  display:block;
+}
+#training-library h3{
+  margin:0 0 10px;
+  font-size:16px;
+}
+#training-library h4{
+  margin:14px 0 8px;
+  font-size:14px;
+}
+#training-library p, #training-library li{
+  color:var(--txt);
+  font-size:14px;
+  line-height:1.55;
+}
+#training-library .hint{
+  color:var(--muted2);
+  font-size:12px;
+}
+
+/* Mobile: tabs iznad panela */
+@media (max-width: 680px){
+  #training-library .lib-top{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  #training-library .lib-grid{
+    grid-template-columns:1fr;
+  }
+  #training-library .lib-tabs{
+    flex-direction:row;
+    flex-wrap:wrap;
+  }
+  #training-library .tab-btn{
+    flex:1 1 auto;
+  }
+}
 
     /* MOBILE: sve u 1 kolonu + još veći input */
     @media (max-width: 680px){
@@ -382,6 +467,176 @@
                 </div>
               </div>
             </div>
+            <!-- ===== TRAINING LIBRARY ===== -->
+<section class="section">
+  <div class="wrap">
+    <h2>📚 Training Library (interni priručnik)</h2>
+    <p>
+      Brzi “field guide” za obuku: pojmovi, uzroci, potvrde i akcije.
+      Koristi Search da nađeš temu u 2 sekunde.
+    </p>
+
+    <div class="card" id="training-library">
+      <div class="lib-top">
+        <input id="libSearch" type="text" placeholder="Search: ingress, tilt, splitter, tap, return, konektor..." />
+        <span class="hint" id="libHint"></span>
+      </div>
+
+      <div class="lib-grid">
+        <!-- Tabs (left) -->
+        <div class="lib-tabs" role="tablist" aria-label="Training topics">
+          <button class="tab-btn active" data-tab="lib-quick" role="tab" aria-selected="true">✅ Brzi SOP</button>
+          <button class="tab-btn" data-tab="lib-tilt" role="tab" aria-selected="false">📈 Tilt</button>
+          <button class="tab-btn" data-tab="lib-ingress" role="tab" aria-selected="false">📡 Ingress/Leak (Return)</button>
+          <button class="tab-btn" data-tab="lib-passive" role="tab" aria-selected="false">🔀 Splitteri / Tap / Pasiva</button>
+          <button class="tab-btn" data-tab="lib-connectors" role="tab" aria-selected="false">🔧 Konektori / Drop</button>
+          <button class="tab-btn" data-tab="lib-docs" role="tab" aria-selected="false">🧾 As-built & evidencija</button>
+        </div>
+
+        <!-- Panels (right) -->
+        <div class="lib-panels">
+          <div class="tab-panel active" id="lib-quick" role="tabpanel">
+            <h3>Brzi SOP – teren (standard)</h3>
+            <p class="hint">Cilj: isti redosled svaki put → manje grešaka.</p>
+            <ol>
+              <li><b>Forward check</b>: DS low/high + tilt (uporedi sa target opsegom).</li>
+              <li><b>Return clean check</b>: return spectrum (noise floor + pikovi) u tačnom split opsegu.</li>
+              <li><b>Unity gain / balans</b>: tek kad je return “čist”. Ne maskiraj ingress pojačanjem.</li>
+              <li><b>Validacija</b>: servis test / modem (ako je moguće) + proveri da li se simptomi ponavljaju.</li>
+              <li><b>As-built</b>: upiši merenje + šta si menjao (SP2/SP3, atenuator, drop, konektori).</li>
+            </ol>
+
+            <div class="panel" style="margin-top:12px;">
+              <h4 style="margin:0 0 6px;">Mini checklist (najčešće greške)</h4>
+              <ul style="margin:8px 0 0;padding-left:18px;">
+                <li>Otvoren port bez 75Ω terminatora</li>
+                <li>Loš/olabavljen F konektor (mikro prekidi)</li>
+                <li>Previše pasive “naslagano” (DS rešen, US ubijen)</li>
+                <li>Neupoređen nivo na 2 tačke (tap vs modem)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="lib-tilt" role="tabpanel">
+            <h3>Tilt – šta je i kako ga “uhvatiti”</h3>
+            <p>
+              <b>Tilt</b> = razlika između high i low nivoa (npr. 500 MHz vs 120 MHz).
+              Veći tilt često znači da high frekvencije više “trpe” (kabl/pasiva/konektori).
+            </p>
+            <h4>Uzrok → Potvrdi → Akcija</h4>
+            <ul>
+              <li><b>Uzrok:</b> loš F konektor, oksidacija, loš splitter/pasiva, predugačak drop, loš kabl.</li>
+              <li><b>Potvrdi:</b> izmeri low/high na 2 tačke (posle tapa i kod modema). Ako se tilt pogorša nizvodno → drop/pasiva.</li>
+              <li><b>Akcija:</b> uradi konektore ponovo, ukloni nepotrebnu pasivu, razmisli o RG11 za duže drop-ove.</li>
+            </ul>
+            <div class="panel" style="margin-top:12px;">
+              <h4 style="margin:0 0 6px;">Tip</h4>
+              <p class="hint" style="margin:0;">
+                Tilt se često “maskira” ako gledaš samo jedan kanal. Uvek radi low + high.
+              </p>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="lib-ingress" role="tabpanel">
+            <h3>Ingress / Leak (Return path)</h3>
+            <p>
+              Povrat je najosetljiviji. Ingress (spoljašnji šum) se najčešće vidi kao pikovi ili podignut noise floor u return spektru.
+            </p>
+
+            <h4>Uzrok → Potvrdi → Akcija</h4>
+            <ul>
+              <li><b>Uzrok:</b> otvoren port bez 75Ω, loš F konektor, loš splitter u stanu, oštećen drop, korozija.</li>
+              <li><b>Potvrdi:</b> radi return scan u tačnom opsegu (npr. stop 65 ili 85). Posmatraj 60–120s (bursty šum).</li>
+              <li><b>Akcija:</b> terminatori na otvorene portove, zamena/ponovno krimpovanje konektora, izolacija grane (po proceduri).</li>
+            </ul>
+
+            <div class="panel" style="margin-top:12px;">
+              <h4 style="margin:0 0 6px;">Izolacija (brza)</h4>
+              <ol>
+                <li>Proveri da li je svaki neiskorišćen port terminisan 75Ω.</li>
+                <li>Vizuelno + rukom proveri F konektore (mikro pomeranje = mikro prekid).</li>
+                <li>Ako procedure dozvoljavaju: odspoji grane jednu po jednu i prati da li šum nestaje.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="lib-passive" role="tabpanel">
+            <h3>Splitteri / Tap / Pasiva</h3>
+            <p class="hint">
+              Pravilo: rešavaj DS ciljano, ali pazi da US ne ode previsoko (dodato prigušenje često “gura” modem da jače šalje).
+            </p>
+
+            <h4>Praktična logika (teren)</h4>
+            <ul>
+              <li><b>Prejak DS</b>: bolje atenuator ili SP3 unbalanced 7 dB nego 2–3 splittera “u nizu”.</li>
+              <li><b>Nejednak nivo na izlazima</b>: unbalanced splitter koristi “high-loss” izlaz za jaču granu.</li>
+              <li><b>Tap izbor</b>: veći dB tap = manji nivo prema korisniku (ali trunk mora biti zdrav).</li>
+            </ul>
+
+            <div class="panel" style="margin-top:12px;">
+              <h4 style="margin:0 0 6px;">Mini “šta upisati” u as-built</h4>
+              <ul style="margin:8px 0 0;padding-left:18px;">
+                <li>Tap tip + vrednost (npr. 8w17)</li>
+                <li>Pasiva (SP2 / SP3 balanced / SP3 unbal 7dB)</li>
+                <li>Atenuator (npr. 6 dB)</li>
+                <li>Drop (RG6/RG11 + dužina)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="lib-connectors" role="tabpanel">
+            <h3>Konektori / Drop kabl</h3>
+            <p>
+              80% “misterioznih” problema su konektori + voda/oksidacija + mikro prekidi.
+            </p>
+
+            <h4>Uzrok → Potvrdi → Akcija</h4>
+            <ul>
+              <li><b>Uzrok:</b> loše pripremljen dielektrik, kratko/dugo oklopljenje, labav spoj, voda u F-u.</li>
+              <li><b>Potvrdi:</b> “wiggle test” (vrlo blago), vizuelno: da li je pletenica uredna, da li “šeta” konektor.</li>
+              <li><b>Akcija:</b> odseci i uradi konektor ponovo; zaštiti spoljašnje spojeve (po vašem standardu).</li>
+            </ul>
+
+            <div class="panel" style="margin-top:12px;">
+              <h4 style="margin:0 0 6px;">RG6 vs RG11</h4>
+              <p class="hint" style="margin:0;">
+                Za duže drop-ove, RG11 obično daje manji gubitak (posebno ka višim frekvencijama) — ali je teži za rad i konektore.
+              </p>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="lib-docs" role="tabpanel">
+            <h3>As-built & evidencija</h3>
+            <p class="hint">
+              Dobar as-built = manje ponovnih izlazaka i brže rešavanje “ponavlja se”.
+            </p>
+
+            <h4>Šta mora da stoji</h4>
+            <ul>
+              <li>Datum/vreme, lokacija (interno), ime tehničara</li>
+              <li>Mesto merenja (posle tapa / outlet / modem)</li>
+              <li>DS low/high + tilt + status</li>
+              <li>Return opseg + nalaz (peak/noise) + status</li>
+              <li>Šta je menjano: pasiva/attenuator/konektori/drop</li>
+              <li>Validacija: rezultat posle intervencije</li>
+            </ul>
+
+            <div class="panel" style="margin-top:12px;">
+              <h4 style="margin:0 0 6px;">Tip</h4>
+              <p class="hint" style="margin:0;">
+                Uvek upiši “pre” i “posle”. To je razlika između slučaja i dokaza.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hint" style="margin-top:12px;">
+        Napomena: Ovaj priručnik je “field guide”. Pragove i detaljne procedure uskladi sa vašim internim standardom.
+      </div>
+    </div>
+  </div>
+</section>
 
             <!-- Downstream -->
             <div class="col-12 panel">
@@ -1120,11 +1375,61 @@ ${ctx.asBuiltText || "(nema as-built teksta)"}`;
       $("aiHint").textContent = "Greška. Pokušaj ponovo.";
     }
   });
+  function initTrainingLibrary() {
+  const root = document.getElementById("training-library");
+  if (!root) return;
+
+  const buttons = root.querySelectorAll(".tab-btn");
+  const panels = root.querySelectorAll(".tab-panel");
+  const search = document.getElementById("libSearch");
+  const hint = document.getElementById("libHint");
+
+  function openTab(tabId) {
+    buttons.forEach(b => {
+      const isActive = b.dataset.tab === tabId;
+      b.classList.toggle("active", isActive);
+      b.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+    panels.forEach(p => p.classList.toggle("active", p.id === tabId));
+  }
+
+  // tab click
+  buttons.forEach(b => b.addEventListener("click", () => openTab(b.dataset.tab)));
+
+  // search: traži u svim panelima; ako nađe match, otvori taj panel
+  function doSearch(q) {
+    const query = (q || "").trim().toLowerCase();
+    if (!query) {
+      hint.textContent = "";
+      return;
+    }
+
+    let foundPanelId = null;
+    panels.forEach(p => {
+      const txt = (p.textContent || "").toLowerCase();
+      if (!foundPanelId && txt.includes(query)) foundPanelId = p.id;
+    });
+
+    if (foundPanelId) {
+      openTab(foundPanelId);
+      hint.textContent = `Nađeno u: ${foundPanelId.replace("lib-","")}`;
+      setTimeout(() => (hint.textContent = ""), 1400);
+    } else {
+      hint.textContent = "Nema rezultata (probaj: ingress, tilt, splitter, tap...)";
+    }
+  }
+
+  search?.addEventListener("input", (e) => doSearch(e.target.value));
+
+  // default
+  openTab("lib-quick");
+}
 
   // init
   applyTrainingToggleUI();
   syncSp3UnbalUI();
   evaluate();
+  initTrainingLibrary();
 })();
 </script>
 
