@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Optika | PON Checker (FCP / ONT)</title>
+
+  <meta name="description" content="Interni alati za tehničare: PON checker (FCP/ONT), dijagnostika, as-built, training library, export JSON." />
+  <meta name="robots" content="noindex,nofollow" />
+
+  <style>
+    :root{
+      --bg0:#070914;
+      --bg1:#0b1024;
+      --card:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.14);
+      --txt:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+      --muted2:rgba(255,255,255,.55);
+      --accent:#7c3aed;
+      --accent2:#22c55e;
+      --accent3:#06b6d4;
+      --radius:22px;
+      --max:1100px;
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--txt);
+      background:
+        radial-gradient(900px 400px at 10% 0%, rgba(124,58,237,.25), transparent 55%),
+        radial-gradient(900px 400px at 90% 10%, rgba(6,182,212,.20), transparent 55%),
+        linear-gradient(180deg,var(--bg0),var(--bg1));
+    }
+
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+
+    .top{
+      padding:26px 0 18px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(10px);
+    }
+    .top h1{margin:0;font-size:26px}
+    .top p{margin:8px 0 0;color:var(--muted);max-width:75ch}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);
+      font-size:13px;
+      margin-top:14px;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .section{padding:28px 0}
+    .section h2{margin:0 0 10px;font-size:20px}
+    .section p{margin:0 0 14px;color:var(--muted);max-width:85ch}
+
+    .card{
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    /* === TOOL GRID === */
+    .tool-grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:14px;
+    }
+    .col-12{grid-column:span 12}
+    .col-6{grid-column:span 6}
+    .col-4{grid-column:span 4}
+    .col-3{grid-column:span 3}
+    .col-2{grid-column:span 2}
+
+    .panel{
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+    }
+
+    label{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+
+    input, select, textarea{
+      width:100%;
+      padding:14px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(10,14,30,.55);
+      color:var(--txt);
+      outline:none;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.0);
+      font-size:16px; /* iOS: bez zoom-a */
+      min-height:52px;
+    }
+    textarea{min-height:110px; resize:vertical}
+    input::placeholder, textarea::placeholder{color:rgba(255,255,255,.45)}
+
+    input:focus, select:focus, textarea:focus{
+      border-color:rgba(124,58,237,.55);
+      box-shadow:0 0 0 3px rgba(124,58,237,.20);
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn-primary{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.92);
+      color:#0b1024;
+      font-weight:800;
+      cursor:pointer;
+      min-height:54px;
+      font-size:16px;
+    }
+
+    .btn-ghost{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);
+      color:var(--txt);
+      font-weight:700;
+      cursor:pointer;
+      min-height:54px;
+      font-size:16px;
+    }
+
+    .hint{color:var(--muted2);font-size:12px}
+
+    .badges{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:10px 0 10px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      font-size:12px;
+      font-weight:800;
+      color:var(--txt);
+    }
+    .badge.ok{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.35)}
+    .badge.warn{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.35)}
+    .badge.fail{background:rgba(239,68,68,.14);border-color:rgba(239,68,68,.35)}
+    .badge.info{background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.35)}
+
+    pre{
+      margin:0;
+      white-space:pre-wrap;
+      line-height:1.45;
+      color:var(--txt);
+      font-size:14px;
+    }
+
+    /* ===== Training Library ===== */
+    #training-library .lib-top{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:14px;
+    }
+    #training-library .lib-top input{flex:1}
+    #training-library .lib-grid{
+      display:grid;
+      grid-template-columns:260px 1fr;
+      gap:14px;
+    }
+    #training-library .lib-tabs{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    #training-library .tab-btn{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:var(--txt);
+      cursor:pointer;
+      font-weight:800;
+      text-align:left;
+    }
+    #training-library .tab-btn small{color:var(--muted2);font-weight:700}
+    #training-library .tab-btn.active{
+      border-color:rgba(124,58,237,.55);
+      box-shadow:0 0 0 3px rgba(124,58,237,.18);
+      background:rgba(124,58,237,.10);
+    }
+    #training-library .lib-panels{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+      border-radius:18px;
+      padding:16px;
+    }
+    #training-library .tab-panel{display:none}
+    #training-library .tab-panel.active{display:block}
+    #training-library h3{margin:0 0 10px;font-size:16px}
+    #training-library h4{margin:14px 0 8px;font-size:14px}
+    #training-library p, #training-library li{
+      color:var(--txt);
+      font-size:14px;
+      line-height:1.55;
+    }
+    #training-library .muted{color:var(--muted)}
+    #training-library .hint{color:var(--muted2);font-size:12px}
+
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      font-size:12px;font-weight:800;color:var(--txt);
+    }
+
+    /* MOBILE */
+    @media (max-width: 680px){
+      .wrap{padding:0 14px}
+      .tool-grid{grid-template-columns:1fr}
+      .col-12,.col-6,.col-4,.col-3,.col-2{grid-column:1 / -1}
+      input, select, textarea{
+        font-size:18px;
+        min-height:58px;
+        padding:16px 14px;
+        border-radius:16px;
+      }
+      .btn-primary,.btn-ghost{width:100%}
+      .actions{flex-direction:column;align-items:stretch}
+
+      #training-library .lib-top{flex-direction:column;align-items:stretch}
+      #training-library .lib-grid{grid-template-columns:1fr}
+      #training-library .lib-tabs{flex-direction:row;flex-wrap:wrap}
+      #training-library .tab-btn{flex:1 1 auto}
+    }
+
+    footer{
+      padding:24px 0 30px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:var(--muted2);
+      font-size:12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="top">
+    <div class="wrap">
+      <h1>Optika – PON Checker (FCP / ONT)</h1>
+      <p>
+        Unesi referencu sa FCP-a i merenje na ONT-u (1490/1550). Dobijaš status nivoa, delta (FCP→ONT),
+        brzu dijagnostiku, as-built zapis i training library.
+      </p>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="tehnicari.html">⬅ Nazad (Tehničari)</a>
+        <a class="btn" href="#training">📚 Priručnik</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== PON CHECKER ===================== -->
+    <section class="section" id="pon">
+      <div class="wrap">
+        <h2>🟩 PON Checker (FCP / ONT)</h2>
+        <p>
+          Unesi baseline sa FCP-a (1490nm), zatim merenje na ONT-u (1490/1550). Dobijaš:
+          status nivoa, delta FCP→ONT, drift (ako uneseš ranije merenje), poređenje ONT A/B,
+          plus standardnu listu brzih testova (swap patch, čišćenje, bend-check, OTDR/VFL).
+        </p>
+
+        <div class="card" id="sbb-pon-checker">
+          <div class="tool-grid">
+
+            <!-- Context -->
+            <div class="col-12 panel">
+              <div class="tool-grid">
+                <div class="col-4">
+                  <label>Mesto merenja</label>
+                  <select id="ponMeasurePoint">
+                    <option value="fcp">FCP (u ormanu)</option>
+                    <option value="apartment">U stanu (utičnica / drop)</option>
+                    <option value="ont" selected>Na ONT-u (pre ONT ulaza)</option>
+                    <option value="pre_split">Pre splittera (trunk PON)</option>
+                  </select>
+                </div>
+
+                <div class="col-4">
+                  <label>Split ratio</label>
+                  <select id="ponSplit">
+                    <option value="1:8">1:8</option>
+                    <option value="1:16">1:16</option>
+                    <option value="1:32" selected>1:32</option>
+                    <option value="1:64">1:64</option>
+                  </select>
+                </div>
+
+                <div class="col-4">
+                  <label>Video overlay (1550)</label>
+                  <select id="ponOverlay">
+                    <option value="unknown" selected>Ne znam</option>
+                    <option value="yes">Da</option>
+                    <option value="no">Ne (IPTV-only)</option>
+                  </select>
+                </div>
+
+                <div class="col-6">
+                  <label>Lokacija / oznaka (opciono)</label>
+                  <input id="ponLocation" type="text" placeholder="npr. Zgrada DR46, FCP 32-1, sprat 3..." />
+                </div>
+
+                <div class="col-6">
+                  <label>Napomena (opciono)</label>
+                  <input id="ponNotes" type="text" placeholder="npr. sumnja na konektor, bend u ormanu..." />
+                </div>
+              </div>
+            </div>
+
+            <!-- Reference -->
+            <div class="col-12 panel">
+              <h3 style="margin:0 0 10px;font-size:16px;">Referenca u FCP-u (baseline)</h3>
+              <div class="tool-grid">
+                <div class="col-4">
+                  <label>FCP ref @1490nm (dBm)</label>
+                  <input id="fcpRef1490" type="number" step="0.01" placeholder="-17.64" />
+                  <div class="hint">Ako imaš “prosečan nivo u FCP-u pri puštanju”, unesi ga ovde.</div>
+                </div>
+
+                <div class="col-4">
+                  <label>FCP ref @1550nm (dBm) (opciono)</label>
+                  <input id="fcpRef1550" type="number" step="0.01" placeholder="-3.00" />
+                  <div class="hint">Unesi samo ako postoji overlay i imaš referencu.</div>
+                </div>
+
+                <div class="col-4">
+                  <label>Stabilnost (opciono): ranije @1490 (dBm)</label>
+                  <input id="prev1490" type="number" step="0.01" placeholder="-18.50" />
+                  <div class="hint">Ako nivo “šeta”, uporedi drift (npr. pre 5 min).</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ONT A -->
+            <div class="col-12 panel">
+              <h3 style="margin:0 0 10px;font-size:16px;">ONT A</h3>
+              <div class="tool-grid">
+                <div class="col-3">
+                  <label>Naziv (opciono)</label>
+                  <input id="ontAName" type="text" placeholder="ONT0" />
+                </div>
+                <div class="col-3">
+                  <label>@1490nm (dBm)</label>
+                  <input id="ontA1490" type="number" step="0.01" placeholder="-18.76" />
+                </div>
+                <div class="col-3">
+                  <label>@1550nm (dBm) (opciono)</label>
+                  <input id="ontA1550" type="number" step="0.01" placeholder="" />
+                </div>
+                <div class="col-3">
+                  <label>1550 status</label>
+                  <select id="ontA1550State">
+                    <option value="measured" selected>Merio / imam broj</option>
+                    <option value="na">N/A (nema signala / nema overlay)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- ONT B -->
+            <div class="col-12 panel">
+              <h3 style="margin:0 0 10px;font-size:16px;">ONT B (poređenje)</h3>
+              <div class="tool-grid">
+                <div class="col-3">
+                  <label>Naziv (opciono)</label>
+                  <input id="ontBName" type="text" placeholder="ONT1" />
+                </div>
+                <div class="col-3">
+                  <label>@1490nm (dBm)</label>
+                  <input id="ontB1490" type="number" step="0.01" placeholder="-23.28" />
+                </div>
+                <div class="col-3">
+                  <label>@1550nm (dBm) (opciono)</label>
+                  <input id="ontB1550" type="number" step="0.01" placeholder="" />
+                </div>
+                <div class="col-3">
+                  <label>1550 status</label>
+                  <select id="ontB1550State">
+                    <option value="measured" selected>Merio / imam broj</option>
+                    <option value="na">N/A (nema signala / nema overlay)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="col-12">
+              <div class="actions">
+                <button class="btn-primary" id="ponEval" type="button">Izračunaj / Proceni</button>
+                <button class="btn-ghost" id="ponCopy" type="button">Kopiraj as-built</button>
+                <button class="btn-ghost" id="ponSave" type="button">Sačuvaj slučaj (lokalno)</button>
+                <button class="btn-ghost" id="ponExport" type="button">Export JSON (svi slučajevi)</button>
+                <button class="btn-ghost" id="ponExportOne" type="button">Export JSON (trenutni)</button>
+                <span class="hint" id="ponHint"></span>
+              </div>
+            </div>
+
+            <!-- Output -->
+            <div class="col-12 panel">
+              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+                <div>
+                  <h3 style="margin:0 0 6px;font-size:16px;">Rezultat</h3>
+                  <div class="hint">Pragovi su u <span class="pill">CONFIG_PON</span> (menjaš po mrežnom planu).</div>
+                </div>
+
+                <div style="display:flex;gap:10px;flex-wrap:wrap">
+                  <button class="btn-ghost" id="btnOpenManualFromResult" type="button">📚 Otvori priručnik (iz rezultata)</button>
+                  <a class="btn-ghost" href="#training" style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;">↓ Priručnik</a>
+                </div>
+              </div>
+
+              <div class="badges" id="ponStatusBar"></div>
+              <pre id="ponResultText"></pre>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TRAINING LIBRARY ===================== -->
+    <section class="section" id="training">
+      <div class="wrap">
+        <h2>📚 Training Library (interni priručnik)</h2>
+        <p>
+          Brzi podsjetnik za teren: nivo (1490), delta FCP→ONT, drift, overlay 1550, izolacija (swap patch),
+          kao i kada OTDR/VFL ima smisla.
+        </p>
+
+        <div class="card" id="training-library">
+          <div class="lib-top">
+            <input id="libSearch" type="text" placeholder="Pretraga: npr. delta, drift, 1550, bend, otdr..." />
+            <button class="btn-ghost" id="libClear" type="button">Očisti</button>
+          </div>
+
+          <div class="lib-grid">
+            <div class="lib-tabs" id="libTabs">
+              <button class="tab-btn active" data-tab="tab-overview" type="button">🧭 Overview <small>šta prvo</small></button>
+              <button class="tab-btn" data-tab="tab-1490" type="button">📶 1490 nivo <small>OK/WARN/FAIL</small></button>
+              <button class="tab-btn" data-tab="tab-delta" type="button">Δ FCP→ONT <small>dodatni gubitak</small></button>
+              <button class="tab-btn" data-tab="tab-drift" type="button">↕ Drift <small>nestabilnost</small></button>
+              <button class="tab-btn" data-tab="tab-1550" type="button">📺 1550 overlay <small>WDM/video</small></button>
+              <button class="tab-btn" data-tab="tab-isolation" type="button">🔁 Izolacija <small>swap/clean/bend</small></button>
+              <button class="tab-btn" data-tab="tab-otdr" type="button">🧪 OTDR / VFL <small>kada & kako</small></button>
+              <button class="tab-btn" data-tab="tab-asbuilt" type="button">🧾 As-built <small>šta upisati</small></button>
+            </div>
+
+            <div class="lib-panels" id="libPanels">
+
+              <div class="tab-panel active" id="tab-overview">
+                <h3>Overview – najkraći workflow na terenu</h3>
+                <p class="muted">
+                  PON kvarovi najčešće nisu “misterija” – najbrže se rešavaju standardnim redosledom testova.
+                </p>
+
+                <h4>Standard redosled</h4>
+                <ul>
+                  <li><b>Level check (1490):</b> da li si u opsegu i da li je jedan ONT “slab” u odnosu na drugi.</li>
+                  <li><b>Delta check (FCP→ONT):</b> ako imaš FCP ref, gledaj da li postoji “višak” gubitka posle FCP-a.</li>
+                  <li><b>Stability / drift:</b> ako nivo šeta, to je često konektor/bend/intermittent.</li>
+                  <li><b>Isolation:</b> swap patch, cleaning, bend check – pre OTDR-a.</li>
+                  <li><b>OTDR/VFL:</b> kad osnovno nije dovoljno ili treba “tačka kvara”.</li>
+                </ul>
+
+                <h4>Najčešći uzroci (realno)</h4>
+                <ul>
+                  <li>Prljav konektor (FCP ili ONT patch).</li>
+                  <li>Mikro-bend / loš radijus savijanja (ormani, iza ONT-a).</li>
+                  <li>Loš adapter / spojka (SC/APC) ili loš patch.</li>
+                  <li>Loš splice / oštećen drop.</li>
+                </ul>
+
+                <p class="hint">Tip: dugme “Otvori priručnik (iz rezultata)” automatski otvara relevantan tab.</p>
+              </div>
+
+              <div class="tab-panel" id="tab-1490">
+                <h3>1490 (GPON DS) – interpretacija nivoa</h3>
+                <p class="muted">
+                  1490nm je downstream talasna dužina (OLT → ONT). Ako je prenisko, ONT gubi marginu; ako je previsoko (retko),
+                  može doći do overpower/saturacije.
+                </p>
+
+                <h4>Šta znači kada je prenisko</h4>
+                <ul>
+                  <li>Najčešće: prljav konektor, loš patch, bend, splice loss, loš adapter.</li>
+                  <li>Ako je na više ONT-ova na istom splitteru: problem može biti <b>pre splittera</b> (feeder/OLT budžet).</li>
+                </ul>
+
+                <h4>Brzi test</h4>
+                <ul>
+                  <li>Izmeri 1490 na FCP-u (ako može), pa na ONT-u – uporedi.</li>
+                  <li>Ako imaš 2 ONT-a: uporedi razliku A–B.</li>
+                </ul>
+              </div>
+
+              <div class="tab-panel" id="tab-delta">
+                <h3>Δ(FCP→ONT) – “višak gubitka” posle FCP-a</h3>
+                <p class="muted">
+                  Ako uneseš FCP ref @1490 i ONT @1490, aplikacija računa delta kao (FCP - ONT).
+                  Delta je praktično dodatni gubitak posle tačke gde meriš u FCP-u.
+                </p>
+
+                <h4>Kad je delta velika</h4>
+                <ul>
+                  <li>Problem najčešće u <b>patch-u / konektoru / adapteru</b> između FCP i stana.</li>
+                  <li>Moguće: mikro-bend u ormanu, loš splice, loš drop.</li>
+                </ul>
+
+                <h4>Najbrži dokaz</h4>
+                <ul>
+                  <li><b>Swap patch u FCP-u</b> (ONT A ↔ ONT B) → da li problem prati port/patch ili ostaje u stanu.</li>
+                  <li>Cleaning konektora pa ponovi merenje.</li>
+                </ul>
+
+                <p class="hint">Ako delta “FAIL”, obično nema smisla odmah “čarati” — prvo izoluj patch/konektor/bend.</p>
+              </div>
+
+              <div class="tab-panel" id="tab-drift">
+                <h3>Drift – nestabilan nivo (intermittent)</h3>
+                <p class="muted">
+                  Drift = promena nivoa kroz kratko vreme. Ako nivo “šetka”, često je problem mehanički (kontakt/bend/vlaga).
+                </p>
+
+                <h4>Tipični uzroci</h4>
+                <ul>
+                  <li>Loš ili prljav konektor (mikro prekid).</li>
+                  <li>Prejak bend (pomeriš kabl – nivo se menja).</li>
+                  <li>Vlaga / oksidacija u ormanu.</li>
+                </ul>
+
+                <h4>Test</h4>
+                <ul>
+                  <li>Lagano pomeri patch iza FCP-a i iza ONT-a (bez cimanja) i gledaj da li nivo menja.</li>
+                  <li>Ponovi merenje posle cleaning-a.</li>
+                </ul>
+              </div>
+
+              <div class="tab-panel" id="tab-1550">
+                <h3>1550 overlay – WDM / video putanja</h3>
+                <p class="muted">
+                  Ako mreža koristi 1550 za RF overlay, ONT ili optička utičnica može imati dodatnu putanju (WDM filtere).
+                  Ako overlay “DA”, a 1550 je N/A ili ekstremno nisko, fokus je na overlay putanji.
+                </p>
+
+                <h4>Šta proveriti</h4>
+                <ul>
+                  <li>Da li je overlay zaista aktivan na toj lokaciji (provisioning).</li>
+                  <li>Da li postoji WDM element u FCP/utičnici.</li>
+                  <li>Konektori/patch specifični za overlay putanju.</li>
+                </ul>
+
+                <p class="hint">Ako overlay nije siguran, ostavi “Ne znam” i fokusiraj se prvo na 1490.</p>
+              </div>
+
+              <div class="tab-panel" id="tab-isolation">
+                <h3>Izolacija problema – swap / cleaning / bend</h3>
+
+                <h4>1) Swap patch test</h4>
+                <ul>
+                  <li>U FCP-u zameni ONT A ↔ ONT B patch (ako procedura dozvoljava).</li>
+                  <li>Ako problem “pređe” na drugi ONT → kriv je patch/port u ormanu.</li>
+                  <li>Ako problem ostane u istom stanu → kriv je drop / konektor u stanu / unutrašnja trasa.</li>
+                </ul>
+
+                <h4>2) Cleaning</h4>
+                <ul>
+                  <li>Očisti SC/APC konektore (FCP + ONT) odgovarajućim cleaning kit-om.</li>
+                  <li>Tek posle cleaning-a ima smisla zaključiti “loš splice”.</li>
+                </ul>
+
+                <h4>3) Bend check</h4>
+                <ul>
+                  <li>Proveri radijus savijanja u ormanu (mikro-bendovi su česti).</li>
+                  <li>Proveri iza ONT-a (kabl često “presavijen”).</li>
+                </ul>
+              </div>
+
+              <div class="tab-panel" id="tab-otdr">
+                <h3>OTDR / VFL – kada i kako</h3>
+                <p class="muted">
+                  OTDR je odličan kad treba “tačka gubitka”, ali nije prva stvar. VFL je brz za prekide i grube probleme.
+                </p>
+
+                <h4>VFL (Visual Fault Locator)</h4>
+                <ul>
+                  <li>Koristi kad sumnjaš na prekid / loš konektor / loš bend (vidi “curenje” svetla).</li>
+                  <li>Ne radi dobro kroz splittere (može biti zbunjujuće), ali pomaže na drop-u.</li>
+                </ul>
+
+                <h4>OTDR</h4>
+                <ul>
+                  <li>Koristi kad delta FAIL i izolacija (swap/clean/bend) nije dala rezultat.</li>
+                  <li>Traži događaje: konektor / splice / bend / refleksija.</li>
+                  <li>Uvek dokumentuj: udaljenost do događaja + procenjeni gubitak.</li>
+                </ul>
+
+                <p class="hint">Ako je više ONT-ova loše na istom splitteru → meri pre splittera (feeder/OLT budget).</p>
+              </div>
+
+              <div class="tab-panel" id="tab-asbuilt">
+                <h3>As-built – šta upisati</h3>
+                <ul>
+                  <li>Lokacija, FCP oznaka, split ratio.</li>
+                  <li>FCP ref @1490 (ako postoji) + ONT @1490 (A/B).</li>
+                  <li>Delta FCP→ONT + razlika A–B.</li>
+                  <li>Šta je menjano: patch swap, cleaning, zamena adaptera, korekcija bend-a.</li>
+                  <li>Ako je rađen OTDR: udaljenost do događaja + gubitak.</li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="hint" style="margin-top:12px;">
+            Interno: razmisli o zaštiti ove stranice (login / IP allowlist / basic auth) pre objave.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>Interno. Pre objave obavezno ograniči pristup + noindex je već uključen.</p>
+    </div>
+  </footer>
+
+<script>
+(() => {
+  // === PON CONFIG (podesi po mrežnom planu) ===
+  const CONFIG_PON = {
+    // Rx opseg za 1490 (GPON DS) – konzervativan default, prilagodi realnim standardima mreže
+    rx1490: {
+      okMin: -24.0,
+      okMax: -12.0,
+      warnLow: -27.0,
+      failLow: -29.0,
+      warnHigh: -10.0,
+      failHigh: -6.0
+    },
+
+    // delta FCP->ONT (višak gubitka posle FCP-a / posle tačke reference)
+    delta: {
+      okMax: 2.0,
+      warnMax: 4.0,
+      failOver: 4.0
+    },
+
+    // stabilnost / drift (ako uneseš prev1490)
+    drift: {
+      warnAbs: 1.5,
+      failAbs: 3.0
+    },
+
+    // 1550 overlay (ako se koristi)
+    rx1550: {
+      okMin: -18.0,
+      warnLow: -22.0,
+      failLow: -25.0
+    },
+
+    // razlika između ONT A i ONT B (detekcija “jedan drop loš”)
+    diffBetweenOnts: {
+      warnAbs: 2.5,
+      failAbs: 4.0
+    },
+
+    storageKey: "pon_cases_v1",
+    storageMax: 80
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const num = (v) => {
+    const n = parseFloat(v);
+    return Number.isFinite(n) ? n : null;
+  };
+  const clampRound = (n, d=2) => {
+    const p = Math.pow(10,d);
+    return Math.round(n*p)/p;
+  };
+
+  function badge(text, tone) {
+    const el = document.createElement("span");
+    el.className = `badge ${tone || "info"}`;
+    el.textContent = text;
+    return el;
+  }
+
+  function classifyRx1490(dbm) {
+    if (dbm === null) return {tone:"fail", label:"n/a"};
+    const t = CONFIG_PON.rx1490;
+    if (dbm <= t.failLow || dbm >= t.failHigh) return {tone:"fail", label:"FAIL"};
+    if (dbm < t.warnLow || dbm > t.warnHigh) return {tone:"warn", label:"WARN"};
+    if (dbm >= t.okMin && dbm <= t.okMax) return {tone:"ok", label:"OK"};
+    return {tone:"warn", label:"WARN"};
+  }
+
+  function classifyDelta(d) {
+    if (d === null) return {tone:"info", label:"n/a"};
+    const t = CONFIG_PON.delta;
+    if (d > t.failOver) return {tone:"fail", label:"FAIL"};
+    if (d > t.okMax && d <= t.warnMax) return {tone:"warn", label:"WARN"};
+    return {tone:"ok", label:"OK"};
+  }
+
+  function classifyDrift(d) {
+    if (d === null) return {tone:"info", label:"n/a"};
+    const a = Math.abs(d);
+    const t = CONFIG_PON.drift;
+    if (a >= t.failAbs) return {tone:"fail", label:"FAIL"};
+    if (a >= t.warnAbs) return {tone:"warn", label:"WARN"};
+    return {tone:"ok", label:"OK"};
+  }
+
+  function classify1550(overlay, state, dbm) {
+    // overlay: yes/no/unknown; state: measured/na
+    if (overlay === "no") return {tone:"info", label:"(IPTV-only)"};
+    if (state === "na") {
+      if (overlay === "yes") return {tone:"warn", label:"N/A (check overlay)"};
+      return {tone:"info", label:"N/A"};
+    }
+    if (dbm === null) {
+      if (overlay === "yes") return {tone:"warn", label:"Missing 1550"};
+      return {tone:"info", label:"n/a"};
+    }
+    const t = CONFIG_PON.rx1550;
+    if (dbm <= t.failLow) return {tone:"fail", label:"FAIL"};
+    if (dbm < t.warnLow) return {tone:"warn", label:"WARN"};
+    if (dbm >= t.okMin) return {tone:"ok", label:"OK"};
+    return {tone:"warn", label:"WARN"};
+  }
+
+  function getCase() {
+    return {
+      ts: new Date().toISOString(),
+      measurePoint: $("ponMeasurePoint").value,
+      split: $("ponSplit").value,
+      overlay: $("ponOverlay").value,
+      location: ($("ponLocation").value || "").trim(),
+      notes: ($("ponNotes").value || "").trim(),
+
+      fcpRef1490: num($("fcpRef1490").value),
+      fcpRef1550: num($("fcpRef1550").value),
+      prev1490: num($("prev1490").value),
+
+      ontA: {
+        name: ($("ontAName").value || "ONT A").trim(),
+        rx1490: num($("ontA1490").value),
+        rx1550: num($("ontA1550").value),
+        rx1550State: $("ontA1550State").value
+      },
+      ontB: {
+        name: ($("ontBName").value || "ONT B").trim(),
+        rx1490: num($("ontB1490").value),
+        rx1550: num($("ontB1550").value),
+        rx1550State: $("ontB1550State").value
+      }
+    };
+  }
+
+  function buildTroubleshoot(ctx, calc) {
+    const out = [];
+    out.push("### Dijagnostika (teren)");
+
+    // Delta FAIL – fokus posle FCP-a
+    if (calc.deltaA !== null && calc.deltaACls.tone === "fail") {
+      out.push(`- ${ctx.ontA.name}: **Δ(FCP→ONT) = ${clampRound(calc.deltaA,2)} dB (FAIL)** → vrlo verovatno problem posle FCP-a (patch/konektor/bend/splice/adapter).`);
+    }
+    if (calc.deltaB !== null && calc.deltaBCls.tone === "fail") {
+      out.push(`- ${ctx.ontB.name}: **Δ(FCP→ONT) = ${clampRound(calc.deltaB,2)} dB (FAIL)** → vrlo verovatno problem posle FCP-a (patch/konektor/bend/splice/adapter).`);
+    }
+
+    // Razlika A/B
+    if (calc.diffOnt1490 !== null) {
+      const abs = Math.abs(calc.diffOnt1490);
+      if (abs >= CONFIG_PON.diffBetweenOnts.failAbs) {
+        out.push(`- Razlika ONT A vs ONT B na 1490 je **${clampRound(abs,2)} dB (FAIL)** → jedan drop je loš (često konektor/bend u stanu ili u ormanu).`);
+      } else if (abs >= CONFIG_PON.diffBetweenOnts.warnAbs) {
+        out.push(`- Razlika ONT A vs ONT B na 1490 je **${clampRound(abs,2)} dB (WARN)** → proveri drop na slabijem ONT-u.`);
+      }
+    }
+
+    // Drift
+    if (calc.drift !== null && calc.driftCls.tone !== "ok") {
+      out.push(`- Drift @1490 je **${clampRound(calc.drift,2)} dB (${calc.driftCls.label})** → sumnja na intermittent konektor/bend/vlažan spoj.`);
+    }
+
+    // Overlay
+    if (ctx.overlay === "yes") {
+      if (calc.ontA1550Cls.tone === "warn" || calc.ontA1550Cls.tone === "fail") {
+        out.push(`- ${ctx.ontA.name}: 1550 **${calc.ontA1550Cls.label}** → proveri overlay/WDM/putanju.`);
+      }
+      if (calc.ontB1550Cls.tone === "warn" || calc.ontB1550Cls.tone === "fail") {
+        out.push(`- ${ctx.ontB.name}: 1550 **${calc.ontB1550Cls.label}** → proveri overlay/WDM/putanju.`);
+      }
+    }
+
+    out.push("");
+    out.push("### Najbrži testovi (redosled)");
+    out.push("1) **Swap patch na FCP-u** (zameni ONT A ↔ ONT B na FCP strani) → da li problem prati port/patch ili ostaje u stanu.");
+    out.push("2) **Očisti konektore** (FCP + stan/ONT) i ponovi merenje (1490 pa 1550).");
+    out.push("3) **Bend check**: proveri radijuse savijanja i “mikro-bend” u ormanu i iza ONT-a.");
+    out.push("4) Ako i dalje FAIL: **VFL/OTDR** da locira tačku gubitka (splice/adapter/patch panel).");
+    out.push("5) Ako su svi ONT-ovi na tom splitteru loši: meri **pre splittera** (feeder/OLT/attenuation budget).");
+
+    return out.join("\n");
+  }
+
+  function evaluate() {
+    const ctx = getCase();
+
+    // Validacija minimuma: bar jedan ONT 1490
+    if (ctx.ontA.rx1490 === null && ctx.ontB.rx1490 === null) {
+      $("ponStatusBar").innerHTML = "";
+      $("ponStatusBar").appendChild(badge("PON: FAIL (nema 1490)", "fail"));
+      $("ponResultText").textContent = "Unesi bar jedan 1490 nivo (ONT A ili ONT B).";
+      $("ponHint").textContent = "Unesi 1490 pa ponovi.";
+      return getLastCalcState(null);
+    }
+
+    const rxA = classifyRx1490(ctx.ontA.rx1490);
+    const rxB = classifyRx1490(ctx.ontB.rx1490);
+
+    const deltaA = (ctx.fcpRef1490 !== null && ctx.ontA.rx1490 !== null) ? (ctx.fcpRef1490 - ctx.ontA.rx1490) : null;
+    const deltaB = (ctx.fcpRef1490 !== null && ctx.ontB.rx1490 !== null) ? (ctx.fcpRef1490 - ctx.ontB.rx1490) : null;
+
+    const deltaACls = classifyDelta(deltaA);
+    const deltaBCls = classifyDelta(deltaB);
+
+    const drift = (ctx.prev1490 !== null && ctx.ontA.rx1490 !== null) ? (ctx.ontA.rx1490 - ctx.prev1490) : null;
+    const driftCls = classifyDrift(drift);
+
+    const ontA1550Cls = classify1550(ctx.overlay, ctx.ontA.rx1550State, ctx.ontA.rx1550);
+    const ontB1550Cls = classify1550(ctx.overlay, ctx.ontB.rx1550State, ctx.ontB.rx1550);
+
+    const diffOnt1490 = (ctx.ontA.rx1490 !== null && ctx.ontB.rx1490 !== null) ? (ctx.ontA.rx1490 - ctx.ontB.rx1490) : null;
+
+    // Badges
+    const bar = $("ponStatusBar");
+    bar.innerHTML = "";
+
+    bar.appendChild(badge(`${ctx.ontA.name} 1490: ${ctx.ontA.rx1490 ?? "n/a"} dBm (${rxA.label})`, rxA.tone));
+    if (ctx.fcpRef1490 !== null && deltaA !== null) bar.appendChild(badge(`Δ FCP→${ctx.ontA.name}: ${clampRound(deltaA,2)} dB (${deltaACls.label})`, deltaACls.tone));
+    bar.appendChild(badge(`${ctx.ontA.name} 1550: ${ctx.ontA.rx1550State==="na" ? "N/A" : (ctx.ontA.rx1550 ?? "n/a")} (${ontA1550Cls.label})`, ontA1550Cls.tone));
+
+    bar.appendChild(badge(`${ctx.ontB.name} 1490: ${ctx.ontB.rx1490 ?? "n/a"} dBm (${rxB.label})`, rxB.tone));
+    if (ctx.fcpRef1490 !== null && deltaB !== null) bar.appendChild(badge(`Δ FCP→${ctx.ontB.name}: ${clampRound(deltaB,2)} dB (${deltaBCls.label})`, deltaBCls.tone));
+    bar.appendChild(badge(`${ctx.ontB.name} 1550: ${ctx.ontB.rx1550State==="na" ? "N/A" : (ctx.ontB.rx1550 ?? "n/a")} (${ontB1550Cls.label})`, ontB1550Cls.tone));
+
+    if (diffOnt1490 !== null) {
+      const abs = Math.abs(diffOnt1490);
+      const tone = abs >= CONFIG_PON.diffBetweenOnts.failAbs ? "fail" : (abs >= CONFIG_PON.diffBetweenOnts.warnAbs ? "warn" : "ok");
+      bar.appendChild(badge(`Razlika A–B @1490: ${clampRound(abs,2)} dB`, tone));
+    }
+
+    if (drift !== null) bar.appendChild(badge(`Drift @1490 (A): ${clampRound(drift,2)} dB (${driftCls.label})`, driftCls.tone));
+    bar.appendChild(badge(`Split: ${ctx.split}`, "info"));
+    bar.appendChild(badge(`Mesto: ${ctx.measurePoint}`, "info"));
+
+    // Text report
+    const lines = [];
+    lines.push(`PON CHECK (${new Date().toISOString().slice(0,19).replace("T"," ")})`);
+    if (ctx.location) lines.push(`Lokacija: ${ctx.location}`);
+    lines.push(`Mesto merenja: ${ctx.measurePoint} | Split: ${ctx.split} | Overlay: ${ctx.overlay}`);
+
+    if (ctx.fcpRef1490 !== null) lines.push(`FCP ref @1490: ${ctx.fcpRef1490} dBm`);
+    if (ctx.fcpRef1550 !== null) lines.push(`FCP ref @1550: ${ctx.fcpRef1550} dBm`);
+    if (ctx.prev1490 !== null) lines.push(`Prethodno @1490 (A): ${ctx.prev1490} dBm`);
+
+    lines.push("");
+    lines.push(`${ctx.ontA.name}: @1490 ${ctx.ontA.rx1490 ?? "n/a"} dBm | status ${rxA.label}`);
+    if (deltaA !== null) lines.push(`${ctx.ontA.name}: Δ(FCP→ONT) = ${clampRound(deltaA,2)} dB | status ${deltaACls.label}`);
+    lines.push(`${ctx.ontA.name}: @1550 ${ctx.ontA.rx1550State==="na" ? "N/A" : (ctx.ontA.rx1550 ?? "n/a")} | status ${ontA1550Cls.label}`);
+
+    lines.push("");
+    lines.push(`${ctx.ontB.name}: @1490 ${ctx.ontB.rx1490 ?? "n/a"} dBm | status ${rxB.label}`);
+    if (deltaB !== null) lines.push(`${ctx.ontB.name}: Δ(FCP→ONT) = ${clampRound(deltaB,2)} dB | status ${deltaBCls.label}`);
+    lines.push(`${ctx.ontB.name}: @1550 ${ctx.ontB.rx1550State==="na" ? "N/A" : (ctx.ontB.rx1550 ?? "n/a")} | status ${ontB1550Cls.label}`);
+
+    if (diffOnt1490 !== null) lines.push(`Razlika A–B @1490: ${clampRound(Math.abs(diffOnt1490),2)} dB`);
+    if (drift !== null) lines.push(`Drift @1490 (A): ${clampRound(drift,2)} dB`);
+
+    lines.push("");
+    lines.push(buildTroubleshoot(ctx, {
+      deltaA, deltaB, deltaACls, deltaBCls,
+      diffOnt1490, drift, driftCls,
+      ontA1550Cls, ontB1550Cls
+    }));
+
+    if (ctx.notes) {
+      lines.push("");
+      lines.push(`Napomena: ${ctx.notes}`);
+    }
+
+    $("ponResultText").textContent = lines.join("\n");
+    $("ponHint").textContent = "OK. (Pragove menjaš u CONFIG_PON.)";
+
+    // Save last calc state for “open manual from result”
+    return getLastCalcState({
+      ctx, rxA, rxB,
+      deltaA, deltaB, deltaACls, deltaBCls,
+      drift, driftCls,
+      ontA1550Cls, ontB1550Cls,
+      diffOnt1490
+    });
+  }
+
+  // ---- Persist last calc state in-memory (for manual auto-open) ----
+  let LAST = null;
+  function getLastCalcState(next) {
+    if (next !== undefined) LAST = next;
+    return LAST;
+  }
+
+  function buildAsBuilt() {
+    const res = ($("ponResultText").textContent || "").trim();
+    if (!res) return "Nema rezultata. Klikni 'Izračunaj / Proceni'.";
+    const stamp = new Date().toISOString().slice(0,10);
+    return `AS-BUILT PON (${stamp})\n\n${res}\n`;
+  }
+
+  function loadCases() {
+    try {
+      return JSON.parse(localStorage.getItem(CONFIG_PON.storageKey) || "[]");
+    } catch { return []; }
+  }
+
+  function saveCaseToLocal(caseObj) {
+    const arr = loadCases();
+    arr.unshift(caseObj);
+    while (arr.length > CONFIG_PON.storageMax) arr.pop();
+    localStorage.setItem(CONFIG_PON.storageKey, JSON.stringify(arr));
+  }
+
+  async function copyText(txt, hintEl) {
+    try {
+      await navigator.clipboard.writeText(txt);
+      hintEl.textContent = "Kopirano u clipboard.";
+      setTimeout(()=> hintEl.textContent="", 1400);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = txt;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      hintEl.textContent = "Kopirano (fallback).";
+      setTimeout(()=> hintEl.textContent="", 1400);
+    }
+  }
+
+  function downloadJSON(filename, obj) {
+    const blob = new Blob([JSON.stringify(obj, null, 2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  // ===== Training Library: tabs + search =====
+  function setActiveTab(tabId) {
+    const tabs = document.querySelectorAll("#training-library .tab-btn");
+    const panels = document.querySelectorAll("#training-library .tab-panel");
+
+    tabs.forEach(b => b.classList.toggle("active", b.dataset.tab === tabId));
+    panels.forEach(p => p.classList.toggle("active", p.id === tabId));
+  }
+
+  function wireTabs() {
+    document.querySelectorAll("#training-library .tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
+    });
+  }
+
+  function normalize(s){ return (s||"").toLowerCase().trim(); }
+
+  function librarySearch(q) {
+    const query = normalize(q);
+    const panels = document.querySelectorAll("#training-library .tab-panel");
+    if (!query) {
+      // show current tab only
+      const active = document.querySelector("#training-library .tab-panel.active");
+      panels.forEach(p => p.style.display = "");
+      return;
+    }
+
+    // When searching: show panels that match + hide others (but keep tab selection intact)
+    panels.forEach(p => {
+      const txt = normalize(p.textContent);
+      p.style.display = txt.includes(query) ? "" : "none";
+    });
+  }
+
+  function clearSearch() {
+    $("libSearch").value = "";
+    document.querySelectorAll("#training-library .tab-panel").forEach(p => p.style.display = "");
+    // keep active tab visible
+    const active = document.querySelector("#training-library .tab-panel.active");
+    if (active) active.style.display = "";
+  }
+
+  // ===== Auto-open manual based on last result =====
+  function openManualFromResult() {
+    // Ensure user sees library
+    location.hash = "#training";
+
+    const st = getLastCalcState();
+    if (!st) { setActiveTab("tab-overview"); return; }
+
+    // Priority logic:
+    // 1) Delta FAIL/WARN -> tab-delta
+    // 2) Drift WARN/FAIL -> tab-drift
+    // 3) Overlay issues -> tab-1550
+    // 4) Diff A/B WARN/FAIL -> tab-isolation
+    // 5) 1490 FAIL/WARN -> tab-1490
+    // else overview
+    const { deltaACls, deltaBCls, driftCls, ontA1550Cls, ontB1550Cls, diffOnt1490, rxA, rxB } = st;
+
+    const deltaBad = (deltaACls && (deltaACls.tone==="fail" || deltaACls.tone==="warn")) ||
+                     (deltaBCls && (deltaBCls.tone==="fail" || deltaBCls.tone==="warn"));
+    if (deltaBad) { setActiveTab("tab-delta"); return; }
+
+    if (driftCls && (driftCls.tone==="fail" || driftCls.tone==="warn")) { setActiveTab("tab-drift"); return; }
+
+    const overlayBad = (ontA1550Cls && (ontA1550Cls.tone==="fail" || ontA1550Cls.tone==="warn")) ||
+                       (ontB1550Cls && (ontB1550Cls.tone==="fail" || ontB1550Cls.tone==="warn"));
+    if (overlayBad) { setActiveTab("tab-1550"); return; }
+
+    if (diffOnt1490 !== null) {
+      const abs = Math.abs(diffOnt1490);
+      if (abs >= CONFIG_PON.diffBetweenOnts.warnAbs) { setActiveTab("tab-isolation"); return; }
+    }
+
+    const levelBad = (rxA && (rxA.tone==="fail" || rxA.tone==="warn")) ||
+                     (rxB && (rxB.tone==="fail" || rxB.tone==="warn"));
+    if (levelBad) { setActiveTab("tab-1490"); return; }
+
+    setActiveTab("tab-overview");
+  }
+
+  // ===== Events =====
+  $("ponEval").addEventListener("click", () => evaluate());
+
+  $("ponCopy").addEventListener("click", async () => {
+    await copyText(buildAsBuilt(), $("ponHint"));
+  });
+
+  $("ponSave").addEventListener("click", () => {
+    const ctx = getCase();
+    const report = ($("ponResultText").textContent || "").trim();
+    const payload = { ...ctx, report };
+    saveCaseToLocal(payload);
+    $("ponHint").textContent = "Slučaj sačuvan lokalno (localStorage).";
+    setTimeout(()=> $("ponHint").textContent="", 1400);
+  });
+
+  $("ponExport").addEventListener("click", () => {
+    const arr = loadCases();
+    downloadJSON(`pon_cases_${new Date().toISOString().slice(0,10)}.json`, arr);
+    $("ponHint").textContent = "Exportovan JSON (download) – svi slučajevi.";
+    setTimeout(()=> $("ponHint").textContent="", 1400);
+  });
+
+  $("ponExportOne").addEventListener("click", () => {
+    const ctx = getCase();
+    const report = ($("ponResultText").textContent || "").trim();
+    downloadJSON(`pon_case_${new Date().toISOString().slice(0,19).replaceAll(":","-")}.json`, { ...ctx, report });
+    $("ponHint").textContent = "Exportovan JSON (download) – trenutni slučaj.";
+    setTimeout(()=> $("ponHint").textContent="", 1400);
+  });
+
+  $("btnOpenManualFromResult").addEventListener("click", openManualFromResult);
+
+  // auto-evaluate on relevant input changes (lightweight)
+  const autoIds = [
+    "ponMeasurePoint","ponSplit","ponOverlay","ponLocation","ponNotes",
+    "fcpRef1490","fcpRef1550","prev1490",
+    "ontAName","ontA1490","ontA1550","ontA1550State",
+    "ontBName","ontB1490","ontB1550","ontB1550State"
+  ];
+  autoIds.forEach(id => {
+    const el = $(id);
+    if (!el) return;
+    el.addEventListener("change", () => evaluate());
+    el.addEventListener("input", () => {
+      // avoid too many runs for text; still fine
+      if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") evaluate();
+    });
+  });
+
+  // Library tabs & search
+  wireTabs();
+  $("libSearch").addEventListener("input", (e) => librarySearch(e.target.value));
+  $("libClear").addEventListener("click", () => { clearSearch(); });
+
+  // init
+  evaluate();
+})();
+</script>
+
+</body>
+</html>
