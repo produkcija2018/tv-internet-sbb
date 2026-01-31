@@ -1,37 +1,53 @@
 <style>
-  /* Mobilno: veći prozori za unos + 1 kolona */
+  /* Mobilno: veći prozori za unos + 1 kolona SVUDA unutar widgeta */
   @media (max-width: 640px) {
+
+    /* 1) Svi input/select/textarea veći */
     #sbb-coax-checker input,
-    #sbb-coax-checker select {
-      font-size: 16px !important;   /* sprečava iOS zoom + čitljivo */
-      padding: 14px 12px !important;
-      min-height: 48px !important;  /* “thumb-friendly” */
-      border-radius: 10px !important;
+    #sbb-coax-checker select,
+    #sbb-coax-checker textarea {
+      font-size: 18px !important;      /* 16 je minimum, 18 još bolje */
+      padding: 16px 14px !important;
+      min-height: 54px !important;
+      line-height: 1.2 !important;
+      border-radius: 12px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
 
+    /* 2) Label malo veći */
     #sbb-coax-checker label {
-      font-size: 13px !important;
+      font-size: 14px !important;
+      margin-bottom: 8px !important;
     }
 
-    /* Grid: sve na 1 kolonu */
-    #sbb-coax-checker .grid12 {
+    /* 3) SVAKI grid u widgetu prebaci na 1 kolonu
+          (hvata i nested gridove koji nemaju class="grid12") */
+    #sbb-coax-checker [style*="display:grid"] {
       grid-template-columns: 1fr !important;
     }
 
-    /* Svaki “span” da postane full width */
-    #sbb-coax-checker .col {
+    /* 4) SVAKI element koji ima grid-column span -> full width */
+    #sbb-coax-checker [style*="grid-column:span"] {
       grid-column: 1 / -1 !important;
     }
 
-    /* Dugmad da budu full width */
+    /* 5) Dugmad full width */
     #sbb-coax-checker .actions {
       flex-direction: column !important;
       align-items: stretch !important;
     }
     #sbb-coax-checker .actions button {
       width: 100% !important;
-      padding: 14px 12px !important;
-      font-size: 16px !important;
+      padding: 16px 14px !important;
+      font-size: 18px !important;
+      min-height: 54px !important;
+    }
+
+    /* 6) Malo više razmaka */
+    #sbb-coax-checker {
+      padding: 14px !important;
+      margin: 10px auto !important;
     }
   }
 </style>
