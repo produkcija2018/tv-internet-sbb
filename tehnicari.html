@@ -1,0 +1,396 @@
+<div id="sbb-coax-checker" style="max-width:980px;margin:18px auto;padding:16px;border:1px solid #ddd;border-radius:12px;font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;">
+  <h2 style="margin:0 0 10px;">Koaks Checker (DS/US) – Interno</h2>
+  <p style="margin:0 0 14px;color:#444;">
+    Unesi merenja sa Trilithic-a (dBµV) + osnovne elemente (tap, SP2/SP3, RG11). Widget daje brzu procenu i predlog pasive.
+  </p>
+
+  <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:12px;">
+    <!-- Context -->
+    <div style="grid-column:span 12;background:#fafafa;padding:12px;border:1px solid #eee;border-radius:10px;">
+      <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:12px;align-items:end;">
+        <div style="grid-column:span 4;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Mesto merenja</label>
+          <select id="measurePoint" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+            <option value="afterTap">Posle tapa (tap port → korisnik)</option>
+            <option value="outlet">Utičnica (u stanu)</option>
+            <option value="modem">Kod modema (pre CPE)</option>
+            <option value="trunk">Trunk/feeder (linija)</option>
+          </select>
+        </div>
+
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Tap (dB)</label>
+          <select id="tapValue" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+            <option value="">—</option>
+            <option value="8">8</option>
+            <option value="11">11</option>
+            <option value="14">14</option>
+            <option value="17">17</option>
+          </select>
+        </div>
+
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Tap tip</label>
+          <select id="tapPorts" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+            <option value="">—</option>
+            <option value="4w">4w</option>
+            <option value="8w">8w</option>
+          </select>
+        </div>
+
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Drop kabl</label>
+          <select id="dropCable" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+            <option value="RG6">RG6</option>
+            <option value="RG11">RG11</option>
+          </select>
+        </div>
+
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Dužina drop (m)</label>
+          <input id="dropLen" type="number" min="0" step="1" value="0" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Downstream -->
+    <div style="grid-column:span 12;padding:12px;border:1px solid #eee;border-radius:10px;">
+      <h3 style="margin:0 0 10px;">Downstream (Forward path) – Unos</h3>
+
+      <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:12px;align-items:end;">
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Low freq (MHz)</label>
+          <input id="fLow" type="number" value="119.25" step="0.01" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+        </div>
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Low nivo (dBµV)</label>
+          <input id="lLow" type="number" value="72.2" step="0.1" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+        </div>
+
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">High freq (MHz)</label>
+          <input id="fHigh" type="number" value="498.0" step="0.01" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+        </div>
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">High nivo (dBµV)</label>
+          <input id="lHigh" type="number" value="71.1" step="0.1" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+        </div>
+
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Kućna pasiva</label>
+          <select id="homePassive" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+            <option value="none">Bez</option>
+            <option value="sp2">SP2 (~3.5 dB)</option>
+            <option value="sp3_bal">SP3 balanced (~5.5 dB)</option>
+            <option value="sp3_unbal_7">SP3 unbalanced (7 dB izlaz)</option>
+          </select>
+        </div>
+
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Atenuator (dB)</label>
+          <select id="attenuator" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+            <option value="0">0</option>
+            <option value="3">3</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+            <option value="12">12</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Return -->
+    <div style="grid-column:span 12;padding:12px;border:1px solid #eee;border-radius:10px;">
+      <h3 style="margin:0 0 10px;">Return (Upstream) – Brza procena “čistoće”</h3>
+
+      <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:12px;align-items:end;">
+        <div style="grid-column:span 3;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Return profil (max MHz)</label>
+          <select id="returnMax" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+            <option value="65">Low-split 5–65</option>
+            <option value="85">Mid-split 5–85</option>
+            <option value="204">High-split 5–204</option>
+          </select>
+        </div>
+
+        <div style="grid-column:span 3;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Peak freq (MHz) – opcionalno</label>
+          <input id="usPeakF" type="number" value="" placeholder="npr. 97" step="0.01" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+        </div>
+
+        <div style="grid-column:span 3;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Peak nivo (dBµV) – opcionalno</label>
+          <input id="usPeakL" type="number" value="" placeholder="npr. 15" step="0.1" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+        </div>
+
+        <div style="grid-column:span 3;">
+          <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Napomena</label>
+          <input id="notes" type="text" value="" placeholder="npr. SP3 high-loss, RG11 30m..." style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div style="grid-column:span 12;display:flex;gap:10px;align-items:center;">
+      <button id="btnEval" type="button" style="padding:10px 14px;border:0;border-radius:10px;background:#111;color:#fff;cursor:pointer;">
+        Izračunaj / Proceni
+      </button>
+      <button id="btnCopy" type="button" style="padding:10px 14px;border:1px solid #ccc;border-radius:10px;background:#fff;cursor:pointer;">
+        Kopiraj as-built zapis
+      </button>
+      <span id="hint" style="color:#666;font-size:12px;"></span>
+    </div>
+
+    <!-- Output -->
+    <div style="grid-column:span 12;padding:12px;border:1px solid #eee;border-radius:10px;">
+      <h3 style="margin:0 0 10px;">Rezultat</h3>
+      <div id="statusBar" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px;"></div>
+      <div id="resultText" style="white-space:pre-wrap;line-height:1.35;color:#222;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // ==== CONFIG: podešavanja pragova (slobodno menjaj) ====
+  const CONFIG = {
+    // Targeti po mestu merenja (dBµV). Ovo su INTERNI default-i.
+    targets: {
+      afterTap: { target: 66, okMin: 64, okMax: 68, warnHigh: 70, warnLow: 60, failHigh: 75, failLow: 55 },
+      outlet:   { target: 64, okMin: 60, okMax: 68, warnHigh: 70, warnLow: 56, failHigh: 75, failLow: 50 },
+      modem:    { target: 64, okMin: 60, okMax: 68, warnHigh: 70, warnLow: 56, failHigh: 75, failLow: 50 },
+      trunk:    { target: 75, okMin: 72, okMax: 78, warnHigh: 80, warnLow: 68, failHigh: 85, failLow: 65 },
+    },
+    // Loss modeli (aproksimacije, dovoljno za terenski “quick check”)
+    losses: {
+      sp2: 3.5,
+      sp3_bal: 5.5,
+      sp3_unbal_7: 7.0,
+    },
+    // Kabl gubici (dB/100m) – gruba tabela; prilagodi prema vašem datasheet-u
+    cableLossDbPer100m: {
+      RG6:  { at120: 6.0, at500: 12.0 },
+      RG11: { at120: 4.0, at500: 8.0 },
+    },
+    // Tilt pragovi (opšti sanity)
+    tiltWarnAbs: 4.0,   // >4 dB razlike low-high = upozorenje
+    tiltFailAbs: 8.0,   // >8 dB = fail
+  };
+
+  // ==== Helpers ====
+  const $ = (id) => document.getElementById(id);
+  const num = (v) => {
+    const n = parseFloat(v);
+    return Number.isFinite(n) ? n : null;
+  };
+
+  function badge(text, tone) {
+    const colors = {
+      ok:   { bg:"#e8f7ee", bd:"#bfe7cf", fg:"#145a32" },
+      warn: { bg:"#fff7e6", bd:"#ffe0a3", fg:"#7a4b00" },
+      fail: { bg:"#ffecec", bd:"#ffc2c2", fg:"#7a0b0b" },
+      info: { bg:"#eef3ff", bd:"#cfe0ff", fg:"#133a7a" },
+    }[tone] || { bg:"#f3f3f3", bd:"#ddd", fg:"#333" };
+
+    const el = document.createElement("span");
+    el.textContent = text;
+    el.style.cssText = `display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:${colors.bg};border:1px solid ${colors.bd};color:${colors.fg};font-size:12px;font-weight:600;`;
+    return el;
+  }
+
+  function clampRound(n, d=1) {
+    const p = Math.pow(10,d);
+    return Math.round(n*p)/p;
+  }
+
+  function classifyLevel(pointKey, avgLevel) {
+    const t = CONFIG.targets[pointKey];
+    if (avgLevel >= t.failHigh || avgLevel <= t.failLow) return "fail";
+    if (avgLevel > t.warnHigh || avgLevel < t.warnLow) return "warn";
+    if (avgLevel >= t.okMin && avgLevel <= t.okMax) return "ok";
+    return "warn";
+  }
+
+  // Simple estimate of drop loss using 2-point cable model
+  function estimateDropLoss(cable, lenM, fLowMHz, fHighMHz) {
+    if (!lenM || lenM <= 0) return { low:0, high:0 };
+    const m = CONFIG.cableLossDbPer100m[cable] || CONFIG.cableLossDbPer100m.RG6;
+
+    // crude mapping: if freq below 250 MHz => use at120, else at500
+    const pick = (f) => (f < 250 ? m.at120 : m.at500);
+    const lossLow = (pick(fLowMHz) * (lenM/100));
+    const lossHigh = (pick(fHighMHz) * (lenM/100));
+    return { low: lossLow, high: lossHigh };
+  }
+
+  function suggestAttenuation(pointKey, avgLevel) {
+    const t = CONFIG.targets[pointKey];
+    const need = avgLevel - t.target; // positive => too strong
+    if (need <= 1.5) return { needDb: clampRound(need,1), suggestion: "Nema potrebe za prigušenjem (ili max 3 dB ako želiš finije)." };
+
+    // pick best option buckets
+    let s = [];
+    if (need >= 5.5 && need <= 8.5) {
+      s.push("Predlog: SP3 unbalanced (7 dB izlaz) ili atenuator 6/8 dB.");
+    } else if (need >= 2.5 && need < 5.5) {
+      s.push("Predlog: SP2 (~3.5 dB) ili atenuator 3/6 dB (zavisi koliko tačno treba).");
+    } else if (need > 8.5) {
+      s.push("Predlog: fiksni atenuator 10/12 dB (bolje nego nagomilavanje splittera).");
+    }
+    s.push("Napomena: dodata pasiva može podići upstream TX modema ~ približno za isti dB.");
+    return { needDb: clampRound(need,1), suggestion: s.join(" ") };
+  }
+
+  function evaluate() {
+    const pointKey = $("measurePoint").value;
+
+    const fLow = num($("fLow").value);
+    const fHigh = num($("fHigh").value);
+    const lLow = num($("lLow").value);
+    const lHigh = num($("lHigh").value);
+
+    const tapValue = $("tapValue").value ? parseFloat($("tapValue").value) : null;
+    const tapPorts = $("tapPorts").value || null;
+
+    const cable = $("dropCable").value;
+    const dropLen = num($("dropLen").value) || 0;
+
+    const homePassiveKey = $("homePassive").value;
+    const homePassiveLoss = CONFIG.losses[homePassiveKey] || 0;
+
+    const attDb = parseFloat($("attenuator").value || "0") || 0;
+
+    const returnMax = parseFloat($("returnMax").value);
+    const usPeakF = num($("usPeakF").value);
+    const usPeakL = num($("usPeakL").value);
+    const notes = $("notes").value || "";
+
+    if (fLow === null || fHigh === null || lLow === null || lHigh === null) {
+      renderFail("Popuni DS frekvencije i nivoe (Low/High).");
+      return;
+    }
+
+    // Tilt: high - low (negativan znači pad ka višim frekvencijama)
+    const tilt = lHigh - lLow;
+
+    // Optional: estimate what user sees AFTER home passive + attenuator + drop (if measurement point is afterTap/outlet/modem)
+    const dropLoss = estimateDropLoss(cable, dropLen, fLow, fHigh);
+    const adjLow = lLow - homePassiveLoss - attDb - dropLoss.low;
+    const adjHigh = lHigh - homePassiveLoss - attDb - dropLoss.high;
+    const avgAdj = (adjLow + adjHigh) / 2;
+
+    // Classify based on adjusted level (more practical for “CPE feed”)
+    const dsStatus = classifyLevel(pointKey, avgAdj);
+
+    // Tilt sanity
+    const tiltAbs = Math.abs(tilt);
+    let tiltStatus = "ok";
+    if (tiltAbs >= CONFIG.tiltFailAbs) tiltStatus = "fail";
+    else if (tiltAbs >= CONFIG.tiltWarnAbs) tiltStatus = "warn";
+
+    // Return sanity: if peak provided and above returnMax => ingress suspicion
+    let usStatus = "info";
+    let usText = "US: Nije unet peak (opciono).";
+    if (usPeakF !== null) {
+      if (usPeakF > returnMax + 0.5) {
+        usStatus = "warn";
+        usText = `US: Peak ${clampRound(usPeakF,2)} MHz je VAN return opsega (max ${returnMax} MHz) → sumnja na ingress/leak/artefakt.`;
+      } else {
+        usStatus = "ok";
+        usText = `US: Peak ${clampRound(usPeakF,2)} MHz je u opsegu (≤ ${returnMax} MHz). Proveri da li je “čisto” bez jakih pikova.`;
+      }
+      if (usPeakL !== null) usText += ` Nivo peak: ${clampRound(usPeakL,1)} dBµV.`;
+    }
+
+    // Suggestion if too strong
+    const t = CONFIG.targets[pointKey];
+    const suggestion = avgAdj > t.okMax ? suggestAttenuation(pointKey, avgAdj) : null;
+
+    // Render
+    const statusBar = $("statusBar");
+    statusBar.innerHTML = "";
+    statusBar.appendChild(badge(`DS: ${dsStatus.toUpperCase()}`, dsStatus));
+    statusBar.appendChild(badge(`Tilt: ${clampRound(tilt,1)} dB`, tiltStatus));
+    statusBar.appendChild(badge(`Return max: ${returnMax} MHz`, "info"));
+    statusBar.appendChild(badge(usText.split("→")[0].trim(), usStatus));
+
+    // Compose report text
+    let lines = [];
+    lines.push(`Mesto merenja: ${pointKey}`);
+    if (tapValue !== null && tapPorts) lines.push(`Tap: ${tapPorts}${tapValue}`);
+    else if (tapValue !== null) lines.push(`Tap: ${tapValue} dB`);
+    else if (tapPorts) lines.push(`Tap tip: ${tapPorts}`);
+
+    lines.push(`DS Low:  ${fLow} MHz = ${lLow} dBµV`);
+    lines.push(`DS High: ${fHigh} MHz = ${lHigh} dBµV`);
+    lines.push(`Tilt (High-Low): ${clampRound(tilt,1)} dB`);
+
+    if (dropLen > 0) lines.push(`Drop: ${cable} ${dropLen} m (procena gubitka: low ${clampRound(dropLoss.low,1)} dB / high ${clampRound(dropLoss.high,1)} dB)`);
+    if (homePassiveLoss > 0) lines.push(`Kućna pasiva: ${homePassiveKey} (~${homePassiveLoss} dB)`);
+    if (attDb > 0) lines.push(`Atenuator: ${attDb} dB`);
+
+    lines.push(`Procena nivoa posle pasive/drop (avg): ${clampRound(avgAdj,1)} dBµV`);
+    lines.push(`Target (${pointKey}): ${t.target} dBµV | OK opseg: ${t.okMin}-${t.okMax} dBµV`);
+    lines.push(`Status DS: ${dsStatus.toUpperCase()}`);
+
+    if (suggestion) {
+      lines.push("");
+      lines.push(`Preporuka (prejako): potrebno prigušenje ~ ${suggestion.needDb} dB.`);
+      lines.push(suggestion.suggestion);
+    }
+
+    lines.push("");
+    lines.push(`Return profil: 5–${returnMax} MHz`);
+    lines.push(usText);
+
+    if (notes.trim()) {
+      lines.push("");
+      lines.push(`Napomena: ${notes.trim()}`);
+    }
+
+    $("resultText").textContent = lines.join("\n");
+    $("hint").textContent = "Tip: promeni pragove u CONFIG.targets da odgovara vašoj praksi.";
+  }
+
+  function renderFail(msg) {
+    const statusBar = $("statusBar");
+    statusBar.innerHTML = "";
+    statusBar.appendChild(badge("FAIL", "fail"));
+    $("resultText").textContent = msg;
+  }
+
+  function buildAsBuiltText() {
+    const res = $("resultText").textContent.trim();
+    if (!res) return "Nema rezultata. Klikni 'Izračunaj / Proceni'.";
+    const dt = new Date();
+    const stamp = dt.toISOString().slice(0,10);
+    return `AS-BUILT ZAPIS (${stamp})\n\n${res}\n`;
+  }
+
+  // Wire up
+  $("btnEval").addEventListener("click", evaluate);
+
+  $("btnCopy").addEventListener("click", async () => {
+    const txt = buildAsBuiltText();
+    try {
+      await navigator.clipboard.writeText(txt);
+      $("hint").textContent = "As-built zapis kopiran u clipboard.";
+      setTimeout(() => ($("hint").textContent = ""), 2200);
+    } catch (e) {
+      // fallback
+      const ta = document.createElement("textarea");
+      ta.value = txt;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      $("hint").textContent = "As-built kopiran (fallback).";
+      setTimeout(() => ($("hint").textContent = ""), 2200);
+    }
+  });
+
+  // Auto-evaluate on load
+  evaluate();
+})();
+</script>
