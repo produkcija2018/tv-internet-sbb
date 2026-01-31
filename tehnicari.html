@@ -76,14 +76,27 @@
           <input id="lHigh" type="number" value="71.1" step="0.1" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
         </div>
 
+        <!-- Kućna pasiva + SP3 unbalanced radio -->
         <div style="grid-column:span 2;">
           <label style="display:block;font-size:12px;color:#555;margin-bottom:6px;">Kućna pasiva</label>
           <select id="homePassive" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;">
             <option value="none">Bez</option>
             <option value="sp2">SP2 (~3.5 dB)</option>
             <option value="sp3_bal">SP3 balanced (~5.5 dB)</option>
-            <option value="sp3_unbal_7">SP3 unbalanced (7 dB izlaz)</option>
+            <option value="sp3_unbal">SP3 unbalanced</option>
           </select>
+
+          <div id="sp3UnbalWrap" style="display:none;margin-top:8px;padding:10px;border:1px dashed #ccc;border-radius:8px;background:#fafafa;">
+            <div style="font-size:12px;color:#555;margin-bottom:6px;">Izlaz SP3 unbalanced</div>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#222;margin:6px 0;cursor:pointer;">
+              <input type="radio" name="sp3UnbalOut" id="sp3Out35" value="3.5">
+              3.5 dB (low-loss izlaz)
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#222;margin:6px 0;cursor:pointer;">
+              <input type="radio" name="sp3UnbalOut" id="sp3Out70" value="7.0" checked>
+              7 dB (high-loss izlaz)
+            </label>
+          </div>
         </div>
 
         <div style="grid-column:span 2;">
@@ -155,30 +168,25 @@
 (() => {
   // ==== CONFIG: podešavanja pragova (slobodno menjaj) ====
   const CONFIG = {
-    // Targeti po mestu merenja (dBµV). Ovo su INTERNI default-i.
     targets: {
       afterTap: { target: 66, okMin: 64, okMax: 68, warnHigh: 70, warnLow: 60, failHigh: 75, failLow: 55 },
       outlet:   { target: 64, okMin: 60, okMax: 68, warnHigh: 70, warnLow: 56, failHigh: 75, failLow: 50 },
       modem:    { target: 64, okMin: 60, okMax: 68, warnHigh: 70, warnLow: 56, failHigh: 75, failLow: 50 },
       trunk:    { target: 75, okMin: 72, okMax: 78, warnHigh: 80, warnLow: 68, failHigh: 85, failLow: 65 },
     },
-    // Loss modeli (aproksimacije, dovoljno za terenski “quick check”)
     losses: {
       sp2: 3.5,
       sp3_bal: 5.5,
-      sp3_unbal_7: 7.0,
+      // sp3_unbal se računa iz radio dugmadi (3.5 ili 7)
     },
-    // Kabl gubici (dB/100m) – gruba tabela; prilagodi prema vašem datasheet-u
     cableLossDbPer100m: {
       RG6:  { at120: 6.0, at500: 12.0 },
       RG11: { at120: 4.0, at500: 8.0 },
     },
-    // Tilt pragovi (opšti sanity)
-    tiltWarnAbs: 4.0,   // >4 dB razlike low-high = upozorenje
-    tiltFailAbs: 8.0,   // >8 dB = fail
+    tiltWarnAbs: 4.0,
+    tiltFailAbs: 8.0,
   };
 
-  // ==== Helpers ====
   const $ = (id) => document.getElementById(id);
   const num = (v) => {
     const n = parseFloat(v);
@@ -195,13 +203,16 @@
 
     const el = document.createElement("span");
     el.textContent = text;
-    el.style.cssText = `display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:${colors.bg};border:1px solid ${colors.bd};color:${colors.fg};font-size:12px;font-weight:600;`;
+    el.style.cssText =
+      `display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;` +
+      `background:${colors.bg};border:1px solid ${colors.bd};color:${colors.fg};` +
+      `font-size:12px;font-weight:600;`;
     return el;
   }
 
   function clampRound(n, d=1) {
-    const p = Math.pow(10,d);
-    return Math.round(n*p)/p;
+    const p = Math.pow(10, d);
+    return Math.round(n * p) / p;
   }
 
   function classifyLevel(pointKey, avgLevel) {
@@ -212,24 +223,44 @@
     return "warn";
   }
 
-  // Simple estimate of drop loss using 2-point cable model
   function estimateDropLoss(cable, lenM, fLowMHz, fHighMHz) {
-    if (!lenM || lenM <= 0) return { low:0, high:0 };
+    if (!lenM || lenM <= 0) return { low: 0, high: 0 };
     const m = CONFIG.cableLossDbPer100m[cable] || CONFIG.cableLossDbPer100m.RG6;
-
-    // crude mapping: if freq below 250 MHz => use at120, else at500
     const pick = (f) => (f < 250 ? m.at120 : m.at500);
-    const lossLow = (pick(fLowMHz) * (lenM/100));
-    const lossHigh = (pick(fHighMHz) * (lenM/100));
-    return { low: lossLow, high: lossHigh };
+    return {
+      low: pick(fLowMHz) * (lenM / 100),
+      high: pick(fHighMHz) * (lenM / 100),
+    };
+  }
+
+  function getSp3UnbalSelectedLoss() {
+    const r35 = $("sp3Out35");
+    const r70 = $("sp3Out70");
+    if (r35 && r35.checked) return 3.5;
+    if (r70 && r70.checked) return 7.0;
+    return 7.0; // default (high-loss)
+  }
+
+  function getHomePassiveLossAndLabel() {
+    const key = $("homePassive").value;
+    if (key === "none") return { loss: 0, label: "Bez" };
+    if (key === "sp2") return { loss: CONFIG.losses.sp2, label: "SP2 (~3.5 dB)" };
+    if (key === "sp3_bal") return { loss: CONFIG.losses.sp3_bal, label: "SP3 balanced (~5.5 dB)" };
+    if (key === "sp3_unbal") {
+      const L = getSp3UnbalSelectedLoss();
+      return { loss: L, label: `SP3 unbalanced (${L} dB izlaz)` };
+    }
+    return { loss: 0, label: "Bez" };
   }
 
   function suggestAttenuation(pointKey, avgLevel) {
     const t = CONFIG.targets[pointKey];
     const need = avgLevel - t.target; // positive => too strong
-    if (need <= 1.5) return { needDb: clampRound(need,1), suggestion: "Nema potrebe za prigušenjem (ili max 3 dB ako želiš finije)." };
 
-    // pick best option buckets
+    if (need <= 1.5) {
+      return { needDb: clampRound(need, 1), suggestion: "Nema potrebe za prigušenjem (ili max 3 dB ako želiš finije)." };
+    }
+
     let s = [];
     if (need >= 5.5 && need <= 8.5) {
       s.push("Predlog: SP3 unbalanced (7 dB izlaz) ili atenuator 6/8 dB.");
@@ -239,7 +270,14 @@
       s.push("Predlog: fiksni atenuator 10/12 dB (bolje nego nagomilavanje splittera).");
     }
     s.push("Napomena: dodata pasiva može podići upstream TX modema ~ približno za isti dB.");
-    return { needDb: clampRound(need,1), suggestion: s.join(" ") };
+    return { needDb: clampRound(need, 1), suggestion: s.join(" ") };
+  }
+
+  function renderFail(msg) {
+    const statusBar = $("statusBar");
+    statusBar.innerHTML = "";
+    statusBar.appendChild(badge("FAIL", "fail"));
+    $("resultText").textContent = msg;
   }
 
   function evaluate() {
@@ -256,8 +294,7 @@
     const cable = $("dropCable").value;
     const dropLen = num($("dropLen").value) || 0;
 
-    const homePassiveKey = $("homePassive").value;
-    const homePassiveLoss = CONFIG.losses[homePassiveKey] || 0;
+    const { loss: homePassiveLoss, label: homePassiveLabel } = getHomePassiveLossAndLabel();
 
     const attDb = parseFloat($("attenuator").value || "0") || 0;
 
@@ -271,51 +308,43 @@
       return;
     }
 
-    // Tilt: high - low (negativan znači pad ka višim frekvencijama)
     const tilt = lHigh - lLow;
 
-    // Optional: estimate what user sees AFTER home passive + attenuator + drop (if measurement point is afterTap/outlet/modem)
     const dropLoss = estimateDropLoss(cable, dropLen, fLow, fHigh);
     const adjLow = lLow - homePassiveLoss - attDb - dropLoss.low;
     const adjHigh = lHigh - homePassiveLoss - attDb - dropLoss.high;
     const avgAdj = (adjLow + adjHigh) / 2;
 
-    // Classify based on adjusted level (more practical for “CPE feed”)
     const dsStatus = classifyLevel(pointKey, avgAdj);
 
-    // Tilt sanity
     const tiltAbs = Math.abs(tilt);
     let tiltStatus = "ok";
     if (tiltAbs >= CONFIG.tiltFailAbs) tiltStatus = "fail";
     else if (tiltAbs >= CONFIG.tiltWarnAbs) tiltStatus = "warn";
 
-    // Return sanity: if peak provided and above returnMax => ingress suspicion
     let usStatus = "info";
     let usText = "US: Nije unet peak (opciono).";
     if (usPeakF !== null) {
       if (usPeakF > returnMax + 0.5) {
         usStatus = "warn";
-        usText = `US: Peak ${clampRound(usPeakF,2)} MHz je VAN return opsega (max ${returnMax} MHz) → sumnja na ingress/leak/artefakt.`;
+        usText = `US: Peak ${clampRound(usPeakF, 2)} MHz je VAN return opsega (max ${returnMax} MHz) → sumnja na ingress/leak/artefakt.`;
       } else {
         usStatus = "ok";
-        usText = `US: Peak ${clampRound(usPeakF,2)} MHz je u opsegu (≤ ${returnMax} MHz). Proveri da li je “čisto” bez jakih pikova.`;
+        usText = `US: Peak ${clampRound(usPeakF, 2)} MHz je u opsegu (≤ ${returnMax} MHz). Proveri da li je “čisto” bez jakih pikova.`;
       }
-      if (usPeakL !== null) usText += ` Nivo peak: ${clampRound(usPeakL,1)} dBµV.`;
+      if (usPeakL !== null) usText += ` Nivo peak: ${clampRound(usPeakL, 1)} dBµV.`;
     }
 
-    // Suggestion if too strong
     const t = CONFIG.targets[pointKey];
     const suggestion = avgAdj > t.okMax ? suggestAttenuation(pointKey, avgAdj) : null;
 
-    // Render
     const statusBar = $("statusBar");
     statusBar.innerHTML = "";
     statusBar.appendChild(badge(`DS: ${dsStatus.toUpperCase()}`, dsStatus));
-    statusBar.appendChild(badge(`Tilt: ${clampRound(tilt,1)} dB`, tiltStatus));
+    statusBar.appendChild(badge(`Tilt: ${clampRound(tilt, 1)} dB`, tiltStatus));
     statusBar.appendChild(badge(`Return max: ${returnMax} MHz`, "info"));
     statusBar.appendChild(badge(usText.split("→")[0].trim(), usStatus));
 
-    // Compose report text
     let lines = [];
     lines.push(`Mesto merenja: ${pointKey}`);
     if (tapValue !== null && tapPorts) lines.push(`Tap: ${tapPorts}${tapValue}`);
@@ -324,13 +353,15 @@
 
     lines.push(`DS Low:  ${fLow} MHz = ${lLow} dBµV`);
     lines.push(`DS High: ${fHigh} MHz = ${lHigh} dBµV`);
-    lines.push(`Tilt (High-Low): ${clampRound(tilt,1)} dB`);
+    lines.push(`Tilt (High-Low): ${clampRound(tilt, 1)} dB`);
 
-    if (dropLen > 0) lines.push(`Drop: ${cable} ${dropLen} m (procena gubitka: low ${clampRound(dropLoss.low,1)} dB / high ${clampRound(dropLoss.high,1)} dB)`);
-    if (homePassiveLoss > 0) lines.push(`Kućna pasiva: ${homePassiveKey} (~${homePassiveLoss} dB)`);
+    if (dropLen > 0) {
+      lines.push(`Drop: ${cable} ${dropLen} m (procena gubitka: low ${clampRound(dropLoss.low, 1)} dB / high ${clampRound(dropLoss.high, 1)} dB)`);
+    }
+    if (homePassiveLoss > 0) lines.push(`Kućna pasiva: ${homePassiveLabel}`);
     if (attDb > 0) lines.push(`Atenuator: ${attDb} dB`);
 
-    lines.push(`Procena nivoa posle pasive/drop (avg): ${clampRound(avgAdj,1)} dBµV`);
+    lines.push(`Procena nivoa posle pasive/drop (avg): ${clampRound(avgAdj, 1)} dBµV`);
     lines.push(`Target (${pointKey}): ${t.target} dBµV | OK opseg: ${t.okMin}-${t.okMax} dBµV`);
     lines.push(`Status DS: ${dsStatus.toUpperCase()}`);
 
@@ -353,23 +384,25 @@
     $("hint").textContent = "Tip: promeni pragove u CONFIG.targets da odgovara vašoj praksi.";
   }
 
-  function renderFail(msg) {
-    const statusBar = $("statusBar");
-    statusBar.innerHTML = "";
-    statusBar.appendChild(badge("FAIL", "fail"));
-    $("resultText").textContent = msg;
-  }
-
   function buildAsBuiltText() {
     const res = $("resultText").textContent.trim();
     if (!res) return "Nema rezultata. Klikni 'Izračunaj / Proceni'.";
     const dt = new Date();
-    const stamp = dt.toISOString().slice(0,10);
+    const stamp = dt.toISOString().slice(0, 10);
     return `AS-BUILT ZAPIS (${stamp})\n\n${res}\n`;
+  }
+
+  // UI behavior: show/hide SP3 unbalanced radios
+  function syncSp3UnbalUI() {
+    const isUnbal = $("homePassive").value === "sp3_unbal";
+    $("sp3UnbalWrap").style.display = isUnbal ? "block" : "none";
   }
 
   // Wire up
   $("btnEval").addEventListener("click", evaluate);
+  $("homePassive").addEventListener("change", () => { syncSp3UnbalUI(); evaluate(); });
+  $("sp3Out35").addEventListener("change", evaluate);
+  $("sp3Out70").addEventListener("change", evaluate);
 
   $("btnCopy").addEventListener("click", async () => {
     const txt = buildAsBuiltText();
@@ -378,7 +411,6 @@
       $("hint").textContent = "As-built zapis kopiran u clipboard.";
       setTimeout(() => ($("hint").textContent = ""), 2200);
     } catch (e) {
-      // fallback
       const ta = document.createElement("textarea");
       ta.value = txt;
       document.body.appendChild(ta);
@@ -390,7 +422,8 @@
     }
   });
 
-  // Auto-evaluate on load
+  // Init
+  syncSp3UnbalUI();
   evaluate();
 })();
 </script>
