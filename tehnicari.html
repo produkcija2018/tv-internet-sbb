@@ -605,22 +605,6 @@
   `;
   return el;
 }
-    // ===== TRAINING STATE + CARDS =====
-    const tCfg = CONFIG.targets[pointKey];
-    const state = {
-      dsStatus,
-      tiltStatus,
-      usStatus,
-      tilt,
-      avgAdj,
-      okMin: tCfg.okMin,
-      okMax: tCfg.okMax,
-      returnMax,
-      usPeakF,
-      suggestionNeedDb: suggestion ? suggestion.needDb : null,
-    };
-    renderTrainingCards(state);
-
 function renderTrainingCards(state) {
   const wrap = document.getElementById("trainingCards");
   if (!wrap) return;
@@ -830,6 +814,10 @@ function renderTrainingCards(state) {
 
   $("btnEval").addEventListener("click", evaluate);
   $("homePassive").addEventListener("change", () => { syncSp3UnbalUI(); evaluate(); });
+  $("measurePoint").addEventListener("change", evaluate);
+  $("attenuator").addEventListener("change", evaluate);
+  $("dropCable").addEventListener("change", evaluate);
+  $("returnMax").addEventListener("change", evaluate);
   $("sp3Out35").addEventListener("change", evaluate);
   $("sp3Out70").addEventListener("change", evaluate);
 
@@ -1032,6 +1020,24 @@ $("btnAskAI")?.addEventListener("click", async () => {
   // init
   syncSp3UnbalUI();
   evaluate();
+  $("resultText").textContent = lines.join("\n");
+  $("hint").textContent = "Tip: pragove možeš menjati u CONFIG.targets.";
+  // ===== TRAINING STATE + CARDS (mora biti unutar evaluate) =====
+  const tCfg = CONFIG.targets[pointKey];
+  const state = {
+    dsStatus,
+    tiltStatus,
+    usStatus,
+    tilt,
+    avgAdj,
+    okMin: tCfg.okMin,
+    okMax: tCfg.okMax,
+    returnMax,
+    usPeakF,
+    suggestionNeedDb: suggestion ? suggestion.needDb : null,
+  };
+  renderTrainingCards(state);
+
 })();
 </script>
 
