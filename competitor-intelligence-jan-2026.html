@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SATVISION — Competitor Intelligence (Jan 2026)</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Chart.js (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1020;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.04);
+      --stroke:rgba(255,255,255,.10);
+      --text:#E7ECFF;
+      --muted:rgba(231,236,255,.70);
+      --muted2:rgba(231,236,255,.52);
+      --good:#4ADE80;
+      --warn:#FBBF24;
+      --bad:#FB7185;
+      --cyan:#22D3EE;
+      --violet:#A78BFA;
+      --blue:#60A5FA;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(34,211,238,.18), transparent 60%),
+        radial-gradient(1000px 600px at 80% 20%, rgba(167,139,250,.14), transparent 55%),
+        radial-gradient(1200px 800px at 60% 90%, rgba(96,165,250,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+    a{color:var(--cyan); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1180px; margin:0 auto; padding:26px 18px 60px}
+    .topbar{
+      display:flex; gap:14px; align-items:center; justify-content:space-between;
+      position:sticky; top:0; z-index:50;
+      padding:14px 12px; margin:0 -12px 18px;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,10,18,.82), rgba(7,10,18,.35));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(34,211,238,.85), transparent 60%),
+        radial-gradient(16px 16px at 70% 60%, rgba(167,139,250,.75), transparent 65%),
+        linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 10px 40px rgba(0,0,0,.55);
+    }
+    .title h1{font-size:14px; margin:0; letter-spacing:.2px}
+    .title .sub{font-size:12px; margin-top:2px; color:var(--muted2)}
+    .controls{display:flex; gap:10px; align-items:center}
+    .pill{
+      padding:8px 10px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      border-radius:999px;
+      color:var(--muted);
+      font-size:12px;
+      display:flex; gap:8px; align-items:center;
+    }
+    .pill b{color:var(--text); font-weight:600}
+    .search{
+      width:min(380px, 54vw);
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      outline:none;
+    }
+    .search::placeholder{color:rgba(231,236,255,.45)}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+      .controls{flex-wrap:wrap; justify-content:flex-end}
+      .search{width:100%}
+    }
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .card .hd .kicker{
+      font-size:12px; color:var(--muted2); letter-spacing:.2px;
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    .card .hd h2{
+      margin:6px 0 0;
+      font-size:16px;
+      letter-spacing:.2px;
+    }
+    .card .bd{padding:14px 16px}
+    .badge{
+      font-size:11px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--muted);
+      background: rgba(255,255,255,.04);
+      display:inline-flex; gap:8px; align-items:center;
+      white-space:nowrap;
+    }
+    .dot{width:7px; height:7px; border-radius:50%}
+    .dot.good{background:var(--good)}
+    .dot.warn{background:var(--warn)}
+    .dot.bad{background:var(--bad)}
+    .metricRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .metric{
+      flex:1;
+      min-width:220px;
+      padding:12px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius:14px;
+    }
+    .metric .lbl{font-size:12px; color:var(--muted2)}
+    .metric .val{font-size:18px; font-weight:700; margin-top:6px}
+    .metric .hint{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.35}
+    .mono{font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace}
+    .list{
+      margin:0; padding:0; list-style:none;
+      display:grid; gap:10px;
+    }
+    .li{
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .li .t{font-size:13px; font-weight:600}
+    .li .d{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.45}
+    .section{
+      margin-top:14px;
+    }
+
+    /* Tables */
+    table{width:100%; border-collapse:separate; border-spacing:0}
+    th,td{padding:10px 10px; border-bottom:1px solid rgba(255,255,255,.08); vertical-align:top}
+    th{
+      font-size:12px; text-align:left; color:rgba(231,236,255,.85);
+      background: rgba(255,255,255,.04);
+      position:sticky; top:72px; z-index:2;
+    }
+    td{font-size:12.5px; color:var(--muted); line-height:1.35}
+    tr:hover td{background:rgba(255,255,255,.03)}
+    .tblWrap{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      overflow:auto;
+      background: rgba(255,255,255,.02);
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:11px;
+      padding:5px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color:rgba(231,236,255,.82);
+      margin-right:6px;
+      margin-top:6px;
+    }
+    .tag .s{opacity:.8}
+    .prio{
+      font-weight:700;
+      font-family:"JetBrains Mono", monospace;
+      letter-spacing:.2px;
+    }
+    .p0{color:var(--bad)}
+    .p1{color:var(--warn)}
+    .p2{color:var(--good)}
+
+    /* Accordion */
+    details{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+    }
+    details + details{margin-top:10px}
+    summary{
+      cursor:pointer;
+      padding:12px 14px;
+      list-style:none;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    summary::-webkit-details-marker{display:none}
+    .sumLeft{display:flex; flex-direction:column; gap:4px}
+    .sumTitle{font-size:13px; font-weight:700}
+    .sumMeta{font-size:12px; color:var(--muted2)}
+    .chev{
+      width:34px; height:34px;
+      border-radius:12px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      transition: transform .18s ease;
+    }
+    details[open] .chev{transform: rotate(180deg)}
+    .inner{padding:12px 14px}
+    .inner p{margin:0 0 10px; color:var(--muted); font-size:12.5px; line-height:1.55}
+    .inner .mini{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 860px){
+      .inner .mini{grid-template-columns:1fr}
+    }
+
+    /* Footer */
+    .foot{
+      margin-top:18px;
+      padding:14px 16px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+      color:var(--muted2);
+      font-size:12px;
+      line-height:1.5;
+    }
+    .kbd{
+      font-family:"JetBrains Mono", monospace;
+      font-size:11px;
+      padding:2px 6px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color:rgba(231,236,255,.82);
+    }
+    .hl{
+      color:rgba(231,236,255,.95);
+      font-weight:600;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title">
+          <h1>SATVISION — Competitor Intelligence</h1>
+          <div class="sub">Period: <span class="mono">01.01.2026 – 31.01.2026</span> • Kanal: Google (SEO) • Fokus: leads/instalacije</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="pill"><span class="dot warn"></span><b>Napomena</b> Nema javnog GSC za konkurenciju — koristimo SERP + sajt signale.</div>
+        <input id="search" class="search" placeholder="Pretraga po pojmovima (npr. 'CTA', 'lokalno', 'FAQ', 'OTT')…  (tip: Ctrl/⌘ + K)" />
+      </div>
+    </div>
+
+    <!-- HERO GRID -->
+    <div class="grid">
+      <div class="card" data-filter="rezime leads share-of-leads eon ott tabela">
+        <div class="hd">
+          <div>
+            <div class="kicker">EXEC SUMMARY</div>
+            <h2>Root cause: konkurencija dobija leadove kroz više ulaza + jači CTA funnel</h2>
+          </div>
+          <span class="badge"><span class="dot bad"></span>Problem je sistemski (ponavlja se cele godine)</span>
+        </div>
+        <div class="bd">
+          <div class="metricRow">
+            <div class="metric">
+              <div class="lbl">Signal iz interne tabele (Jan 2026)</div>
+              <div class="val">18 leadova • “Eon ott-1”</div>
+              <div class="hint">Share-of-leads: Ember <b class="hl">44%</b> (8/18), Euro <b class="hl">17%</b> (3/18), SATVISION <b class="hl">17%</b> (3/18).</div>
+            </div>
+            <div class="metric">
+              <div class="lbl">Zašto gubimo (javna analiza)</div>
+              <div class="val">CTR + Funnel</div>
+              <div class="hint">Konkurenti “zatvaraju” lead brže (telefon-first, “zakaži poziv”) i imaju više ulaznih landing-a (lokalni long-tail, novi/postojeći korisnici).</div>
+            </div>
+            <div class="metric">
+              <div class="lbl">Najmanji potez koji menja tabelu</div>
+              <div class="val">P0: EON OTT hub + sticky call</div>
+              <div class="hint">Napraviti fokusiran <span class="mono">/eon-ott/</span> landing + mobilni sticky “Pozovi” + “Zakaži poziv” micro-CTA na money stranicama.</div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px" class="tblWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="min-width:210px">Kanal / Partner (iz tabele)</th>
+                  <th>Broj leadova</th>
+                  <th>Udeo</th>
+                  <th>Operativna implikacija</th>
+                </tr>
+              </thead>
+              <tbody id="leadTableBody">
+                <!-- Filled by JS -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card" data-filter="grafikon chart share-of-leads januar 2026">
+        <div class="hd">
+          <div>
+            <div class="kicker">VISUAL</div>
+            <h2>Share-of-leads (Jan 2026)</h2>
+          </div>
+          <span class="badge"><span class="dot warn"></span>Input: interna tabela (ne SERP)</span>
+        </div>
+        <div class="bd">
+          <canvas id="leadChart" height="220" aria-label="Share of leads chart"></canvas>
+          <div style="margin-top:10px; color:var(--muted2); font-size:12px; line-height:1.45">
+            Cilj: pomeriti SATVISION sa <span class="hl">17%</span> na <span class="hl">33%</span> (npr. 6/18) kroz:
+            <span class="tag"><span class="s">P0</span> EON OTT hub</span>
+            <span class="tag"><span class="s">P0</span> sticky call</span>
+            <span class="tag"><span class="s">P1</span> FAQ schema</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPETITOR MAP -->
+    <div class="section card" data-filter="konkurentska mapa ember connect vizija euro connection competitive map">
+      <div class="hd">
+        <div>
+          <div class="kicker">COMPETITIVE MAP</div>
+          <h2>Ember vs Connect Vizija vs Euroconnection — gde SATVISION gubi</h2>
+        </div>
+        <span class="badge"><span class="dot good"></span>Javno proverljivo: struktura + CTA + sadržaj</span>
+      </div>
+      <div class="bd">
+        <div class="tblWrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="min-width:180px">Konkurent</th>
+                <th style="min-width:260px">Kako hvata intent (ulazi)</th>
+                <th style="min-width:260px">Kako zatvara lead (CTA)</th>
+                <th style="min-width:260px">Šta SATVISION treba da “kontrira”</th>
+                <th style="min-width:220px">Kako merimo (na SATVISION)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="hl">kablovska.info</span><br><span class="mono">EMBER MEDIA</span></td>
+                <td>
+                  Segmentacija “Novi” / “Postojeći” korisnici + paket landing-i kao hubovi.<br>
+                  <span class="tag">intent split</span><span class="tag">više ulaza</span>
+                </td>
+                <td>
+                  Telefon-first (“brza linija”), kratki put do poziva/forme.<br>
+                  <span class="tag">call-first</span><span class="tag">low friction</span>
+                </td>
+                <td>
+                  Napraviti iste intent hubove (Novi/Postojeći) + na money stranicama micro-CTA “Zakaži poziv” pored “Poruči”.
+                </td>
+                <td>
+                  GSC: CTR na money upitima + događaji: click-to-call, form_submit, schedule_call.
+                </td>
+              </tr>
+
+              <tr>
+                <td><span class="hl">kablovskainfo.rs</span><br><span class="mono">Connect Vizija</span></td>
+                <td>
+                  Lokalni long-tail članci po gradovima + “ponude” (više lokalnih landing ulaza).<br>
+                  <span class="tag">local long-tail</span><span class="tag">content farm</span>
+                </td>
+                <td>
+                  Urgency (timer/ponuda ističe) + agresivan call CTA.<br>
+                  <span class="tag">urgency</span><span class="tag">call CTA</span>
+                </td>
+                <td>
+                  Kontrolisan set lokalnih landing stranica (Beograd + top gradovi) + “ponuda” blok u snippetu + sticky call.
+                </td>
+                <td>
+                  GSC: upiti “+ grad” (Beograd/Srbija) + porast poziva iz lokalnih landing-a.
+                </td>
+              </tr>
+
+              <tr>
+                <td><span class="hl">euroconnection.rs</span><br><span class="mono">EURO CONNECTION</span></td>
+                <td>
+                  Čista navigacija paketa (TV/NET TV/van mreže) + jasni landing-i po kategorijama.<br>
+                  <span class="tag">paketi-first</span><span class="tag">clear IA</span>
+                </td>
+                <td>
+                  CTA “Zakaži poziv” i više kontakt tačaka (više brojeva + kontakt forma).<br>
+                  <span class="tag">schedule</span><span class="tag">multi-contact</span>
+                </td>
+                <td>
+                  U meniju SATVISION: paket klasteri izvučeni napred + interni linkovi da generišu sitelinks. CTA: “Zakaži poziv”.
+                </td>
+                <td>
+                  GSC: rast impresija/CTR na klaster landing-ima + rast navigacionih klikova (sitelinks signal).
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+          <span class="badge"><span class="dot bad"></span>Gubitak #1: manje ulaznih landing-a (posebno lokalno)</span>
+          <span class="badge"><span class="dot warn"></span>Gubitak #2: CTA je “veći commit” (Poruči) vs “Zakaži poziv”</span>
+          <span class="badge"><span class="dot warn"></span>Gubitak #3: nema sistemske intent segmentacije (novi/postojeći)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPETITOR DOSSIERS -->
+    <div class="section" data-filter="dossier ember kablovska.info euroconnection connect vizija kablovskainfo.rs">
+      <details open class="dossier" data-filter="ember media kablovska.info">
+        <summary>
+          <div class="sumLeft">
+            <div class="sumTitle">Dossier: kablovska.info (EMBER MEDIA)</div>
+            <div class="sumMeta">SBB partner • Intent split (novi/postojeći) • Call-first funnel</div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="inner">
+          <p><span class="hl">Šta je javno vidljivo:</span> imaju jasno odvojene tokove “Novi” i “Postojeći korisnici” + fokus na telefonske konverzije (“brza linija”).</p>
+          <div class="mini">
+            <div class="li">
+              <div class="t">Kako uzimaju klikove</div>
+              <div class="d">Više ulaza po intentu → Google lakše mapira “koja strana rešava koji upit”.</div>
+              <div class="d">
+                Izvori:
+                <a href="https://kablovska.info/" target="_blank" rel="noreferrer">kablovska.info</a>,
+                <a href="https://kablovska.info/o-nama" target="_blank" rel="noreferrer">O nama</a>
+              </div>
+            </div>
+            <div class="li">
+              <div class="t">Kako zatvaraju lead</div>
+              <div class="d">Telefon-first + kratke forme = niža frikcija nego “Poruči odmah” kao jedini CTA.</div>
+              <div class="d">
+                Primer: <a href="https://kablovska.info/sbb-novi-korisnici" target="_blank" rel="noreferrer">/sbb-novi-korisnici</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="dossier" data-filter="connect vizija kablovskainfo.rs total extra 034 lokalno">
+        <summary>
+          <div class="sumLeft">
+            <div class="sumTitle">Dossier: kablovskainfo.rs (Connect Vizija)</div>
+            <div class="sumMeta">Ovlašćeni partner • Local long-tail • Urgency + call CTA</div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="inner">
+          <p><span class="hl">Šta je javno vidljivo:</span> sajt koristi “ponuda ističe” (urgency) + mnogo lokalnih članka/landing-a po gradovima. To sistemski širi broj ulaznih stranica iz Google-a.</p>
+          <div class="mini">
+            <div class="li">
+              <div class="t">Zašto ulaze u tabele (hipoteza)</div>
+              <div class="d">“Total extra 034” verovatno označava prodajni kanal/tim (034 region + D2D/call), a web front može biti ovaj domen (javna veza: Connect Vizija).</div>
+              <div class="d">
+                Izvori:
+                <a href="https://kablovskainfo.rs/" target="_blank" rel="noreferrer">kablovskainfo.rs</a>,
+                <a href="https://connectvizija.rs/" target="_blank" rel="noreferrer">connectvizija.rs</a>
+              </div>
+            </div>
+            <div class="li">
+              <div class="t">Long-tail primer</div>
+              <div class="d">Lokalni članci tipa “SBB + grad” hvataju pretrage pre nego što korisnik dođe do partnera.</div>
+              <div class="d">
+                Primer:
+                <a href="https://kablovskainfo.rs/vesti/sbb-pan-evo-kako-do-najpovoljnijeg-net-tv-paketa" target="_blank" rel="noreferrer">lokalni članak</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="dossier" data-filter="euro connection euroconnection.rs tv paketi net tv eon">
+        <summary>
+          <div class="sumLeft">
+            <div class="sumTitle">Dossier: euroconnection.rs (EURO CONNECTION)</div>
+            <div class="sumMeta">Paketi-first IA • Više kontakt tačaka • “Zakaži poziv” CTA</div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="inner">
+          <p><span class="hl">Šta je javno vidljivo:</span> čista struktura paketa u meniju i landing-ima. CTA “Zakaži poziv” smanjuje frikciju i podiže konverziju na mobilnom.</p>
+          <div class="mini">
+            <div class="li">
+              <div class="t">Struktura ponude</div>
+              <div class="d">Odvojene kategorije (TV/NET TV/van mreže) → jasna informacijska arhitektura (IA).</div>
+              <div class="d">
+                Izvori:
+                <a href="https://euroconnection.rs/" target="_blank" rel="noreferrer">euroconnection.rs</a>,
+                <a href="https://euroconnection.rs/eon-tv/" target="_blank" rel="noreferrer">/eon-tv</a>,
+                <a href="https://euroconnection.rs/tv-paketi/" target="_blank" rel="noreferrer">/tv-paketi</a>
+              </div>
+            </div>
+            <div class="li">
+              <div class="t">Konverzioni dizajn</div>
+              <div class="d">Više telefona + email + forma + “Zakaži poziv” kao micro-commit.</div>
+              <div class="d">To je šablon koji SATVISION treba da kopira (operativno, ne sadržajno).</div>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ACTION BACKLOG -->
+    <div class="section card" data-filter="plan backlog p0 p1 p2 wordpress kako merimo gsc ctr pozivi forme">
+      <div class="hd">
+        <div>
+          <div class="kicker">EXECUTION BACKLOG</div>
+          <h2>Plan koji direktno menja lead share (WordPress + merljivo)</h2>
+        </div>
+        <span class="badge"><span class="dot good"></span>Bez obećanja pozicija — fokus na klik + lead</span>
+      </div>
+      <div class="bd">
+        <div class="tblWrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="min-width:120px">Prioritet</th>
+                <th style="min-width:260px">Zadatak</th>
+                <th style="min-width:260px">Zašto (konkurentski razlog)</th>
+                <th style="min-width:260px">Gde u WP</th>
+                <th style="min-width:220px">Kako merimo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="prio p0">P0</td>
+                <td><span class="hl">EON OTT hub</span>: napraviti fokusiran landing <span class="mono">/eon-ott/</span> + FAQ blok + “Zakaži poziv”.</td>
+                <td>U tvojoj tabeli leadovi se vrte oko “Eon ott-1”. Treba 1 stranica koja dominira intentom i zatvara poziv.</td>
+                <td>WP Pages + šablon (Gutenberg/Elementor) + FAQ schema (RankMath/Yoast) + sticky call.</td>
+                <td>GSC: klikovi/CTR za “eon ott” upite + eventi: click-to-call i form_submit.</td>
+              </tr>
+              <tr>
+                <td class="prio p0">P0</td>
+                <td><span class="hl">Sticky call</span> na svim money stranicama (mobilno): “Pozovi” + “Zakaži poziv”.</td>
+                <td>Konkurencija zatvara lead brže jer CTA nije “Poruči” kao jedini put.</td>
+                <td>Theme header/footer + custom CTA bar (JS/CSS) ili plugin.</td>
+                <td>Stopa poziva: call_click / sessions po landing-u.</td>
+              </tr>
+              <tr>
+                <td class="prio p0">P0</td>
+                <td><span class="hl">Intent hubovi</span>: “Novi korisnici” i “Postojeći korisnici” (2 strane) + linkuju na pakete.</td>
+                <td>Ember pokriva oba toka i dobija više upita.</td>
+                <td>WP Pages + menu + interne veze (block “povezane stranice”).</td>
+                <td>GSC: rast impresija na upitima “novi/postojeći” + navigacioni klikovi.</td>
+              </tr>
+              <tr>
+                <td class="prio p1">P1</td>
+                <td><span class="hl">Local landing set</span> (kontrolisano): Beograd + top gradovi za 3 money proizvoda.</td>
+                <td>Connect Vizija uzima lokalni long-tail (gradovi) i “seče” put do partnera.</td>
+                <td>WP Pages + lokalni blokovi (naselja, vreme instalacije, kontakt).</td>
+                <td>GSC: upiti “+ grad” + rast poziva iz lokalnih strana.</td>
+              </tr>
+              <tr>
+                <td class="prio p1">P1</td>
+                <td><span class="hl">FAQ schema</span> samo gde FAQ realno postoji (EON/NET TV/van mreže).</td>
+                <td>Veći snippet = veći CTR bez #1 pozicije.</td>
+                <td>SEO plugin schema + validacija Rich Results Test.</td>
+                <td>GSC CTR rast po URL-u + rich result detekcija.</td>
+              </tr>
+              <tr>
+                <td class="prio p2">P2</td>
+                <td><span class="hl">SERP dossier</span> (ručno): 20 upita × Top10 (domen, title/meta, feature).</td>
+                <td>Da prestane nagađanje i da se vidi ko uzima prostor.</td>
+                <td>Google Sheet + mesečno ažuriranje.</td>
+                <td>Share-of-voice trend + identifikacija novih satelit domena.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="foot">
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center">
+            <span class="badge"><span class="dot warn"></span><span class="hl">Granica javnog:</span> Ne postoji javno “koliko imaju klikova” iz Google-a. Ovo je zato “proof-driven” plan: <span class="hl">SERP share-of-voice</span> + <span class="hl">GSC na SATVISION</span> + <span class="hl">event konverzije</span>.</span>
+            <span class="badge"><span class="dot good"></span>Tip: fokus na “EON OTT” jer je signal u tabeli konstantan.</span>
+          </div>
+          <div style="margin-top:10px">
+            Pretraga stranice: <span class="kbd">Ctrl</span> / <span class="kbd">⌘</span> + <span class="kbd">K</span>.
+            Filter radi nad sekcijama i “dossier” karticama.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOURCES -->
+    <div class="section card" data-filter="izvori sources linkovi javno proverljivo">
+      <div class="hd">
+        <div>
+          <div class="kicker">SOURCES</div>
+          <h2>Javni izvori korišćeni u ovoj strani</h2>
+        </div>
+        <span class="badge"><span class="dot good"></span>klikni za proveru</span>
+      </div>
+      <div class="bd">
+        <ul class="list">
+          <li class="li">
+            <div class="t">kablovska.info (EMBER MEDIA)</div>
+            <div class="d">
+              <a href="https://kablovska.info/" target="_blank" rel="noreferrer">Home</a> •
+              <a href="https://kablovska.info/o-nama" target="_blank" rel="noreferrer">O nama</a> •
+              <a href="https://kablovska.info/sbb-novi-korisnici" target="_blank" rel="noreferrer">SBB novi korisnici</a>
+            </div>
+          </li>
+          <li class="li">
+            <div class="t">kablovskainfo.rs (Connect Vizija)</div>
+            <div class="d">
+              <a href="https://kablovskainfo.rs/" target="_blank" rel="noreferrer">Home</a> •
+              <a href="https://kablovskainfo.rs/vesti/sbb-pan-evo-kako-do-najpovoljnijeg-net-tv-paketa" target="_blank" rel="noreferrer">Lokalni članak (primer)</a> •
+              <a href="https://connectvizija.rs/" target="_blank" rel="noreferrer">connectvizija.rs</a>
+            </div>
+          </li>
+          <li class="li">
+            <div class="t">euroconnection.rs</div>
+            <div class="d">
+              <a href="https://euroconnection.rs/" target="_blank" rel="noreferrer">Home</a> •
+              <a href="https://euroconnection.rs/eon-tv/" target="_blank" rel="noreferrer">EON TV</a> •
+              <a href="https://euroconnection.rs/tv-paketi/" target="_blank" rel="noreferrer">TV paketi</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // --------------------------
+    // Input data (from your screenshot table)
+    // --------------------------
+    const leadData = [
+      { name: "EMBER MEDIA (kablovska.info)", count: 8, note: "Telefon-first + intent split (novi/postojeći)." },
+      { name: "EURO CONNECTION (euroconnection.rs)", count: 3, note: "Paketi-first IA + ‘Zakaži poziv’ CTA." },
+      { name: "SATVISION", count: 3, note: "Trenutno izjednačeno sa Euro, ali bez sistemske prednosti." },
+      { name: "USD CABLE", count: 2, note: "Dodatni partner u lead raspodeli." },
+      { name: "M2D2 PARTNER DOO", count: 1, note: "Manji kanal u raspodeli." },
+      { name: "Total Extra 034 (D2D CS)", count: 1, note: "Najverovatnije interni naziv kanala/tima; domen nije potvrđen." },
+    ];
+
+    const total = leadData.reduce((s,x)=>s+x.count,0);
+
+    // Fill lead table
+    const tbody = document.getElementById("leadTableBody");
+    leadData.forEach(row => {
+      const share = total ? Math.round((row.count / total) * 100) : 0;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><span class="hl">${escapeHtml(row.name)}</span></td>
+        <td><span class="mono">${row.count}</span></td>
+        <td><span class="mono">${share}%</span></td>
+        <td>${escapeHtml(row.note)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // Chart
+    const ctx = document.getElementById("leadChart");
+    const labels = leadData.map(d => d.name.replace(/\s*\(.+?\)\s*/g,""));
+    const counts = leadData.map(d => d.count);
+
+    const colors = [
+      "rgba(34,211,238,.85)",   // Ember
+      "rgba(167,139,250,.82)",  // Euro
+      "rgba(96,165,250,.80)",   // SATVISION
+      "rgba(251,191,36,.80)",   // USD
+      "rgba(74,222,128,.78)",   // M2D2
+      "rgba(251,113,133,.78)",  // Total Extra
+    ];
+
+    new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels,
+        datasets: [{
+          data: counts,
+          backgroundColor: colors,
+          borderColor: "rgba(255,255,255,.10)",
+          borderWidth: 1.2,
+          hoverOffset: 8,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "bottom",
+            labels: {
+              color: "rgba(231,236,255,.78)",
+              padding: 14,
+              boxWidth: 12,
+              font: { size: 11, family: "Inter" }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const val = ctx.parsed;
+                const pct = total ? Math.round((val / total) * 100) : 0;
+                return ` ${val} leadova (${pct}%)`;
+              }
+            }
+          }
+        },
+        cutout: "62%"
+      }
+    });
+
+    // --------------------------
+    // Search filter
+    // Filters blocks that contain data-filter tokens
+    // --------------------------
+    const searchEl = document.getElementById("search");
+    const filterables = Array.from(document.querySelectorAll("[data-filter]"));
+
+    function applyFilter(q){
+      const query = (q || "").trim().toLowerCase();
+      if(!query){
+        filterables.forEach(el => el.style.display = "");
+        return;
+      }
+      filterables.forEach(el => {
+        const hay = (el.getAttribute("data-filter") || "").toLowerCase();
+        const ok = hay.includes(query);
+        el.style.display = ok ? "" : "none";
+      });
+    }
+
+    searchEl.addEventListener("input", e => applyFilter(e.target.value));
+
+    // Ctrl/⌘ + K focus search
+    document.addEventListener("keydown", (e) => {
+      const isMac = navigator.platform.toUpperCase().includes("MAC");
+      if ((isMac ? e.metaKey : e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        searchEl.focus();
+      }
+    });
+
+    // --------------------------
+    // Helpers
+    // --------------------------
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+  </script>
+</body>
+</html>
