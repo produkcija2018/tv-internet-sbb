@@ -44,16 +44,6 @@
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 18px;}
 
-    /* Canvas background */
-    ##meshBg{
-       position:fixed;
-       inset:0;
-       z-index:0;             /* BITNO: više nije -1 */
-       pointer-events:none;
-       opacity:1;
-       mix-blend-mode:multiply; /* lepše na svetlom */
-     }
-
     /* Top nav */
     header.nav{
       position:sticky;
@@ -522,6 +512,7 @@
 </head>
 
 <body>
+  <div id="top"></div>
   <!-- Interactive lines background -->
   <canvas id="meshBg"></canvas>
 
