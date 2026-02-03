@@ -978,7 +978,7 @@
         const p = pts[i];
         p.x += p.vx; p.y += p.vy;
         // draw point
-        ctx.fillStyle = "rgba(14,165,233,.25)";
+        ctx.fillStyle = "rgba(14,165,233,.35)";
         ctx.beginPath();
         ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
         ctx.fill();
@@ -999,7 +999,7 @@
             const g = Math.round(95 + (165-95)*0.6);
             const b = Math.round(255 + (233-255)*0.6);
 
-            ctx.strokeStyle = `rgba(11,95,255,${0.22*t})`;  // jače
+            ctx.strokeStyle = `rgba(11,95,255,${0.35*t})`;
             ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(p.x,p.y);
