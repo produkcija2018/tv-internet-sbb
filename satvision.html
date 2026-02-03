@@ -3,150 +3,118 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Strukturno kabliranje (SKS) za firme | Fluke sertifikacija + izveštaj | SATVISION</title>
+  <title>Strukturno kabliranje (SKS) za firme | Fluke sertifikacija (izveštaj) | SATVISION</title>
   <meta name="description" content="SKS strukturno kabliranje za firme u celoj Srbiji: projektovanje, ugradnja, testiranje i Fluke sertifikacija (izveštaj), obeležavanje i dokumentacija. Pozovite 063/374-210." />
   <meta name="theme-color" content="#0B5FFF" />
 
   <style>
     :root{
-      /* Neutral enterprise (mid-tone), Commscope-like */
       --bg0:#F2F5FA;
       --bg1:#EEF2F7;
       --card:#FFFFFF;
-      --card2:rgba(255,255,255,.76);
       --text:#0B1220;
       --muted:#5A6A82;
       --muted2:#71839D;
       --line:rgba(12,24,45,.10);
-      --line2:rgba(12,24,45,.14);
       --brand:#0B5FFF;
       --brand2:#0EA5E9;
       --ok:#16A34A;
-      --shadow: 0 16px 40px rgba(12,24,45,.10);
-      --shadow2: 0 10px 24px rgba(12,24,45,.08);
+      --shadow: 0 18px 50px rgba(12,24,45,.12);
+      --shadow2: 0 12px 26px rgba(12,24,45,.10);
       --radius: 18px;
       --radius2: 24px;
-      --max: 1160px;
+      --max: 1180px;
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
+
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth; font-size:16px;}
     body{
       margin:0;
       font-family:var(--font);
       color:var(--text);
       background:
-        radial-gradient(1100px 500px at 15% -10%, rgba(11,95,255,.12), transparent 60%),
-        radial-gradient(1000px 500px at 90% -15%, rgba(14,165,233,.10), transparent 55%),
+        radial-gradient(1200px 520px at 15% -10%, rgba(11,95,255,.12), transparent 60%),
+        radial-gradient(1000px 520px at 90% -15%, rgba(14,165,233,.10), transparent 55%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
+      font-size:16px;
+      line-height:1.65;
     }
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 18px;}
 
-    /* Top nav */
+    /* animated background */
+    #meshBg{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      opacity:1;
+      mix-blend-mode:multiply;
+    }
+    header.nav, main, footer, .sticky { position:relative; z-index:1; }
+
+    /* top nav */
     header.nav{
       position:sticky;
       top:0;
       z-index:50;
-      background: rgba(242,245,250,.82);
+      background: rgba(242,245,250,.84);
       backdrop-filter: blur(12px);
       border-bottom:1px solid var(--line);
     }
-    .navin{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      padding:12px 0;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
+    .navin{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:12px 0;}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.2px;}
     .logo{
-      width:38px;
-      height:38px;
-      border-radius:12px;
+      width:40px;height:40px;border-radius:14px;
       background: linear-gradient(135deg, var(--brand), var(--brand2));
-      box-shadow: 0 14px 30px rgba(11,95,255,.20);
+      box-shadow: 0 16px 34px rgba(11,95,255,.20);
       border:1px solid rgba(255,255,255,.65);
       flex:0 0 auto;
     }
-    .brand small{
-      display:block;
-      font-weight:700;
-      color:var(--muted2);
-      letter-spacing:0;
-      font-size:12px;
-      margin-top:2px;
-    }
-    nav.menu{
-      display:flex;
-      gap:6px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    nav.menu a{
-      font-size:13px;
-      color:var(--muted);
-      padding:8px 10px;
-      border-radius:12px;
-    }
-    nav.menu a:hover{
-      background:rgba(12,24,45,.05);
-      color:var(--text);
-    }
+    .brand small{display:block; font-weight:750; color:var(--muted2); font-size:12px; margin-top:2px; letter-spacing:0;}
+    nav.menu{display:flex; gap:6px; flex-wrap:wrap; align-items:center;}
+    nav.menu a{font-size:14px; color:var(--muted); padding:8px 10px; border-radius:12px;}
+    nav.menu a:hover{background:rgba(12,24,45,.05); color:var(--text);}
 
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:12px 14px;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:13px 16px;
       border-radius:14px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.85);
+      background: rgba(255,255,255,.90);
       color:var(--text);
-      font-weight:850;
-      font-size:13px;
+      font-weight:900;
+      font-size:14px;
       box-shadow: var(--shadow2);
       transition: transform .08s ease, box-shadow .15s ease;
       white-space:nowrap;
       cursor:pointer;
     }
-    .btn:hover{ transform: translateY(-1px); box-shadow: 0 16px 34px rgba(12,24,45,.12); }
+    .btn:hover{transform: translateY(-1px); box-shadow: 0 18px 42px rgba(12,24,45,.14);}
     .btn.primary{
       color:#fff;
       background: linear-gradient(135deg, rgba(11,95,255,1), rgba(14,165,233,1));
       border-color: rgba(11,95,255,.35);
-      box-shadow: 0 18px 42px rgba(11,95,255,.18);
+      box-shadow: 0 22px 56px rgba(11,95,255,.18);
     }
-    .btn.primary:hover{ box-shadow: 0 22px 50px rgba(11,95,255,.22); }
+    .btn.primary:hover{box-shadow: 0 26px 66px rgba(11,95,255,.22);}
 
     .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 13px;
       border-radius:999px;
-      background: rgba(255,255,255,.82);
+      background: rgba(255,255,255,.88);
       border:1px solid var(--line);
       color:var(--muted);
-      font-size:12px;
+      font-size:13px;
       box-shadow: 0 10px 18px rgba(12,24,45,.05);
     }
-    .dot{
-      width:8px;height:8px;border-radius:999px;
-      background: var(--ok);
-      box-shadow: 0 0 16px rgba(22,163,74,.28);
-    }
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--ok); box-shadow:0 0 16px rgba(22,163,74,.25);}
 
-    /* Hero */
-    .hero{ padding:44px 0 18px; }
+    /* hero */
+    .hero{padding:46px 0 18px;}
     .heroGrid{
       display:grid;
       grid-template-columns: 1.05fr .95fr;
@@ -154,7 +122,7 @@
       align-items:stretch;
     }
     .card{
-      background: rgba(255,255,255,.92);
+      background: rgba(255,255,255,.93);
       border:1px solid var(--line);
       border-radius: var(--radius2);
       box-shadow: var(--shadow);
@@ -166,18 +134,18 @@
       position:absolute;
       inset:-1px;
       background:
-        radial-gradient(900px 260px at 10% 0%, rgba(11,95,255,.10), transparent 55%),
-        radial-gradient(700px 240px at 100% 0%, rgba(14,165,233,.08), transparent 55%);
+        radial-gradient(900px 280px at 10% 0%, rgba(11,95,255,.10), transparent 55%),
+        radial-gradient(700px 260px at 100% 0%, rgba(14,165,233,.08), transparent 55%);
       pointer-events:none;
       opacity:.95;
     }
-    .heroLeft{ padding:22px 22px 18px; min-height: 420px; }
+    .heroLeft{padding:24px 24px 18px; min-height: 460px;}
     h1.heroTitle{
       position:relative;
-      margin:12px 0 10px;
-      font-size: clamp(28px, 4.1vw, 44px);
-      line-height:1.06;
-      letter-spacing:-.7px;
+      margin:14px 0 12px;
+      font-size: clamp(36px, 4.7vw, 58px);
+      line-height:1.05;
+      letter-spacing:-1px;
       z-index:1;
     }
     .grad{
@@ -186,34 +154,25 @@
       background-clip:text;
       color:transparent;
     }
-    .heroDesc{
-      position:relative;
-      z-index:1;
-      margin:0;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.65;
-      max-width:64ch;
-    }
-    .heroMeta{ position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 12px; }
-    .statRow{ position:relative; z-index:1; display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    .heroDesc{position:relative; z-index:1; margin:0; color:var(--muted); font-size:16px; line-height:1.75; max-width:70ch;}
+    .heroMeta{position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 12px;}
+    .statRow{position:relative; z-index:1; display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
     .stat{
-      flex: 1 1 160px;
-      background: rgba(255,255,255,.80);
+      flex:1 1 180px;
+      background: rgba(255,255,255,.86);
       border:1px solid var(--line);
       border-radius: 18px;
-      padding:12px;
+      padding:14px;
       box-shadow: 0 10px 18px rgba(12,24,45,.06);
     }
-    .stat b{ font-size:16px; }
-    .stat span{ display:block; margin-top:6px; color:var(--muted2); font-size:12px; line-height:1.35; }
+    .stat b{font-size:16px;}
+    .stat span{display:block; margin-top:6px; color:var(--muted2); font-size:13px; line-height:1.4;}
+    .heroBtns{position:relative; z-index:1; display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
 
-    .heroBtns{ position:relative; z-index:1; display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
-
-    /* Quick form */
-    .heroRight{ display:grid; gap:12px; }
+    /* right side */
+    .heroRight{display:grid; gap:12px;}
     .panel{
-      background: rgba(255,255,255,.92);
+      background: rgba(255,255,255,.93);
       border:1px solid var(--line);
       border-radius: var(--radius2);
       box-shadow: var(--shadow);
@@ -223,17 +182,82 @@
     }
     .panel::before{
       content:"";
-      position:absolute;
-      inset:-1px;
-      background: radial-gradient(700px 250px at 80% 0%, rgba(11,95,255,.08), transparent 55%);
+      position:absolute; inset:-1px;
+      background: radial-gradient(700px 260px at 80% 0%, rgba(11,95,255,.08), transparent 55%);
       pointer-events:none;
-      opacity:.9;
+      opacity:.95;
     }
-    .panel > *{ position:relative; z-index:1; }
-    .panel h3{ margin:0 0 6px; font-size:15px; letter-spacing:.2px; }
-    .panel p{ margin:0; color:var(--muted); font-size:13px; line-height:1.55; }
+    .panel > *{position:relative; z-index:1;}
+    .panel h3{margin:0 0 6px; font-size:16px; letter-spacing:.2px;}
+    .panel p{margin:0; color:var(--muted); font-size:14px; line-height:1.65;}
 
-    label{ font-size:12px; color:var(--muted2); }
+    /* HERO carousel (uses 1 collage image in 4 crops) */
+    .heroMedia{
+      position: relative;
+      margin-top: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(12,24,45,.14);
+      overflow: hidden;
+      height: 340px;
+      background: #fff;
+      box-shadow: 0 18px 44px rgba(12,24,45,.14);
+    }
+    .heroMedia .slide{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      transform: scale(1.02);
+      transition: opacity 900ms ease, transform 1200ms ease;
+    }
+    .heroMedia .slide.active{
+      opacity:1;
+      transform: scale(1.00);
+    }
+    .heroMedia .slide img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      /* IMPORTANT: each slide sets object-position via data-pos */
+      object-position: 50% 50%;
+      filter: contrast(1.02) saturate(1.02);
+    }
+    .mediaBadge{
+      position:absolute;
+      left:12px;
+      bottom:12px;
+      padding:9px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(12,24,45,.14);
+      font-size: 12px;
+      font-weight: 900;
+      color: rgba(12,24,45,.86);
+      backdrop-filter: blur(8px);
+    }
+    .dots{
+      position:absolute;
+      right:12px;
+      bottom:12px;
+      display:flex;
+      gap:6px;
+      align-items:center;
+      padding:8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.80);
+      border: 1px solid rgba(12,24,45,.12);
+      backdrop-filter: blur(8px);
+    }
+    .dots button{
+      width:9px;height:9px;border-radius:99px;
+      border:0;
+      background: rgba(12,24,45,.18);
+      cursor:pointer;
+      padding:0;
+    }
+    .dots button.active{ background: rgba(11,95,255,.85); }
+
+    /* form */
+    label{font-size:12px; color:var(--muted2);}
     input, textarea{
       width:100%;
       padding:12px;
@@ -242,36 +266,30 @@
       background:#fff;
       outline:none;
       color:var(--text);
+      font-size:14px;
     }
     input:focus, textarea:focus{
       border-color: rgba(11,95,255,.40);
       box-shadow: 0 0 0 4px rgba(11,95,255,.12);
     }
-    textarea{ min-height:92px; resize:vertical; }
-    .form{ display:grid; gap:10px; margin-top:10px; }
-    .hint{ margin-top:8px; font-size:12px; color:var(--muted2); }
+    textarea{min-height:92px; resize:vertical;}
+    .form{display:grid; gap:10px; margin-top:10px;}
+    .hint{margin-top:8px; font-size:12px; color:var(--muted2);}
 
-    /* Sections */
-    main .section{ padding:18px 0; }
-    .secTitle{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:14px;
-      margin:10px 0 14px;
-      flex-wrap:wrap;
-    }
-    .secTitle h2{ margin:0; font-size:22px; letter-spacing:-.25px; }
-    .secTitle p{ margin:0; color:var(--muted2); font-size:13px; max-width:74ch; }
+    /* sections */
+    .section{padding:18px 0;}
+    .secTitle{display:flex; align-items:flex-end; justify-content:space-between; gap:14px; margin:10px 0 14px; flex-wrap:wrap;}
+    .secTitle h2{margin:0; font-size:28px; letter-spacing:-.35px;}
+    .secTitle p{margin:0; color:var(--muted2); font-size:14px; max-width:78ch;}
 
-    .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-    .grid2{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+    .grid2{display:grid; grid-template-columns:repeat(2,1fr); gap:12px;}
 
     .feature{
       padding:16px;
       border-radius: var(--radius);
       border:1px solid var(--line);
-      background: rgba(255,255,255,.90);
+      background: rgba(255,255,255,.92);
       box-shadow: var(--shadow2);
       position:relative;
       overflow:hidden;
@@ -282,123 +300,37 @@
       position:absolute; inset:auto -70px -70px auto;
       width:240px; height:240px; border-radius:999px;
       background: radial-gradient(circle at 30% 30%, rgba(14,165,233,.14), transparent 60%);
-      opacity:.9;
+      opacity:.95;
       pointer-events:none;
     }
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      margin-bottom:10px;
-      color:var(--muted2);
-      font-size:12px;
-    }
-    .tag i{
-      width:10px;height:10px;border-radius:999px;
-      background: var(--brand2);
-      display:inline-block;
-      box-shadow: 0 0 12px rgba(14,165,233,.20);
-    }
-    .feature h3{ margin:0 0 8px; font-size:14px; }
-    .feature p{ margin:0; color:var(--muted); font-size:13px; line-height:1.6; }
+    .tag{display:inline-flex; align-items:center; gap:8px; margin-bottom:10px; color:var(--muted2); font-size:12px;}
+    .tag i{width:10px;height:10px;border-radius:999px;background:var(--brand2); display:inline-block; box-shadow: 0 0 12px rgba(14,165,233,.18);}
+    .feature h3{margin:0 0 8px; font-size:15px;}
+    .feature p{margin:0; color:var(--muted); font-size:14px; line-height:1.7;}
 
-    /* Deliverables list */
-    .list{ margin:0; padding:0; list-style:none; display:grid; gap:8px; }
-    .list li{
-      display:flex; gap:10px; align-items:flex-start;
-      color:var(--muted);
-      font-size:13px; line-height:1.55;
-    }
+    .list{margin:0; padding:0; list-style:none; display:grid; gap:9px;}
+    .list li{display:flex; gap:10px; align-items:flex-start; color:var(--muted); font-size:14px; line-height:1.7;}
     .check{
       width:18px;height:18px;border-radius:8px;
       background: rgba(22,163,74,.12);
       border:1px solid rgba(22,163,74,.22);
       display:grid; place-items:center;
       flex:0 0 auto;
-      margin-top:1px;
+      margin-top:2px;
     }
-    .check svg{ width:12px;height:12px; fill: rgba(22,163,74,.95); }
+    .check svg{width:12px;height:12px; fill: rgba(22,163,74,.95);}
 
-    /* Steps */
-    .steps{ display:grid; gap:10px; }
-    .step{
-      display:flex; gap:12px; align-items:flex-start;
-      padding:14px;
-      border-radius: var(--radius);
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.90);
-      box-shadow: var(--shadow2);
-    }
-    .num{
-      width:30px;height:30px;border-radius:12px;
-      display:grid; place-items:center;
-      background: rgba(11,95,255,.10);
-      border:1px solid rgba(11,95,255,.18);
-      font-weight:900;
-      flex:0 0 auto;
-    }
-
-    /* Proof / gallery */
-    .gallery{
-      display:grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap:10px;
-    }
-    .ph{
-      height:110px;
-      border-radius: 16px;
-      border:1px solid var(--line);
-      background:
-        linear-gradient(135deg, rgba(11,95,255,.08), rgba(14,165,233,.05)),
-        rgba(255,255,255,.92);
-      box-shadow: var(--shadow2);
-      position:relative;
-      overflow:hidden;
-    }
-    .ph:after{
-      content:"Dodajte realnu fotografiju";
-      position:absolute; left:12px; bottom:10px;
-      font-size:12px; color: rgba(90,106,130,.95);
-    }
-
-    /* Resources */
-    .resource{
-      display:flex; gap:12px; align-items:flex-start;
-      padding:14px;
-      border-radius: var(--radius);
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.90);
-      box-shadow: var(--shadow2);
-    }
-    .icon{
-      width:36px;height:36px;border-radius:14px;
-      display:grid; place-items:center;
-      background: rgba(11,95,255,.10);
-      border:1px solid rgba(11,95,255,.18);
-      flex:0 0 auto;
-      font-weight:900;
-      color: rgba(11,95,255,1);
-    }
-    .resource b{ display:block; font-size:13px; }
-    .resource span{ display:block; margin-top:4px; color:var(--muted); font-size:13px; line-height:1.55; }
-
-    /* FAQ */
     details{
       padding:12px 14px;
       border-radius: var(--radius);
       border:1px solid var(--line);
-      background: rgba(255,255,255,.90);
+      background: rgba(255,255,255,.92);
       box-shadow: var(--shadow2);
     }
-    summary{
-      cursor:pointer;
-      font-weight:900;
-      list-style:none;
-    }
-    summary::-webkit-details-marker{ display:none; }
-    details p{ margin:10px 0 0; color:var(--muted); font-size:13px; line-height:1.6; }
+    summary{cursor:pointer; font-weight:900; list-style:none; font-size:14px;}
+    summary::-webkit-details-marker{display:none;}
+    details p{margin:10px 0 0; color:var(--muted); font-size:14px; line-height:1.7;}
 
-    /* CTA block */
     .cta{
       padding:18px;
       border-radius: var(--radius2);
@@ -406,7 +338,7 @@
       background:
         radial-gradient(900px 260px at 10% 0%, rgba(11,95,255,.10), transparent 55%),
         radial-gradient(700px 240px at 100% 0%, rgba(14,165,233,.08), transparent 55%),
-        rgba(255,255,255,.92);
+        rgba(255,255,255,.93);
       box-shadow: var(--shadow);
       display:flex;
       align-items:center;
@@ -414,15 +346,15 @@
       gap:14px;
       flex-wrap:wrap;
     }
-    .cta h3{ margin:0; font-size:16px; }
-    .cta p{ margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.55; }
+    .cta h3{margin:0; font-size:17px;}
+    .cta p{margin:6px 0 0; color:var(--muted); font-size:14px; line-height:1.7;}
     .kbd{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       padding:3px 7px;
       border-radius: 10px;
       border:1px solid rgba(12,24,45,.14);
-      background: rgba(255,255,255,.75);
-      color: rgba(12,24,45,.80);
+      background: rgba(255,255,255,.78);
+      color: rgba(12,24,45,.82);
       font-size:12px;
     }
 
@@ -434,78 +366,38 @@
       margin-top:12px;
     }
 
-    /* reveal */
     .fadeUp{opacity:0; transform: translateY(12px); transition: .65s ease}
     .fadeUp.show{opacity:1; transform:none}
 
-    /* Mobile sticky */
     .sticky{
-      position:fixed;
-      left:0; right:0; bottom:0;
-      z-index:60;
+      position:fixed; left:0; right:0; bottom:0; z-index:60;
       padding:10px 12px;
       background: rgba(242,245,250,.92);
       backdrop-filter: blur(12px);
       border-top:1px solid var(--line);
       display:none;
     }
-    .sticky .inner{ max-width:var(--max); margin:0 auto; display:flex; gap:10px; }
-    .sticky .btn{ flex:1; }
+    .sticky .inner{max-width:var(--max); margin:0 auto; display:flex; gap:10px;}
+    .sticky .btn{flex:1;}
 
     @media (max-width: 980px){
-      .heroGrid{ grid-template-columns:1fr; }
-      nav.menu{ display:none; }
-      .grid3{ grid-template-columns:1fr; }
-      .grid2{ grid-template-columns:1fr; }
-      .gallery{ grid-template-columns:repeat(3,1fr); }
-      .sticky{ display:block; }
+      .heroGrid{grid-template-columns:1fr;}
+      nav.menu{display:none;}
+      .grid3{grid-template-columns:1fr;}
+      .grid2{grid-template-columns:1fr;}
+      .sticky{display:block;}
+      .heroMedia{height: 280px;}
     }
-    @media (max-width: 420px){
-      .gallery{ grid-template-columns:repeat(2,1fr); }
-    }
-      /* FIX: sadržaj iznad canvasa */
-      header.nav, main, footer, .sticky { 
-        position: relative; 
-        z-index: 1; 
-      }
-
-  /* FIX: canvas ispod sadržaja ali iznad body pozadine */
-      #meshBg{
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        pointer-events: none;
-        opacity: 1;
-        mix-blend-mode: multiply;
-      }
   </style>
 
-  <!-- FAQ Schema -->
+  <!-- FAQ schema (optional) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"FAQPage",
     "mainEntity":[
-      {
-        "@type":"Question",
-        "name":"Da li radite strukturno kabliranje (SKS) u celoj Srbiji?",
-        "acceptedAnswer":{"@type":"Answer","text":"Da. SKS projekte izvodimo širom Srbije. Region je plan za budućnost i realizuje se po dogovoru u zavisnosti od obima i logistike."}
-      },
-      {
-        "@type":"Question",
-        "name":"Da li dobijamo Fluke sertifikaciju i izveštaj?",
-        "acceptedAnswer":{"@type":"Answer","text":"Da. Po završetku radova isporučujemo Fluke sertifikaciju (izveštaj), obeležavanje portova i kompletnu dokumentaciju za održavanje."}
-      },
-      {
-        "@type":"Question",
-        "name":"Šta uključuje primopredaja?",
-        "acceptedAnswer":{"@type":"Answer","text":"Primopredaja uključuje zapisnike/test izveštaje, obeležavanje, mapu portova, sheme i as-built dokumentaciju (u dogovorenom obimu)."}
-      },
-      {
-        "@type":"Question",
-        "name":"Možete li raditi bez prekida poslovanja?",
-        "acceptedAnswer":{"@type":"Answer","text":"Da. Po dogovoru radimo fazno (po zonama/spratovima) i u terminima koji najmanje smetaju, kako kritične funkcije firme ne bi stale."}
-      }
+      {"@type":"Question","name":"Da li radite SKS u celoj Srbiji?","acceptedAnswer":{"@type":"Answer","text":"Da. SKS projekte izvodimo širom Srbije. Region je plan za budućnost i realizuje se po dogovoru."}},
+      {"@type":"Question","name":"Da li dobijamo Fluke sertifikaciju i izveštaj?","acceptedAnswer":{"@type":"Answer","text":"Da. Po završetku radova isporučujemo Fluke sertifikaciju (izveštaj), obeležavanje portova i dokumentaciju."}}
     ]
   }
   </script>
@@ -513,16 +405,15 @@
 
 <body>
   <div id="top"></div>
-  <!-- Interactive lines background -->
   <canvas id="meshBg"></canvas>
 
   <header class="nav">
     <div class="wrap navin">
-      <a class="brand" href="#">
+      <a class="brand" href="#top">
         <span class="logo" aria-hidden="true"></span>
         <div>
           SATVISION • Biznis infrastruktura
-          <small>SKS • Optika • Rek/organizacija • Sertifikacija</small>
+          <small>SKS • Optika • Rek/organizacija • Fluke sertifikacija</small>
         </div>
       </a>
 
@@ -530,8 +421,6 @@
         <a href="#zasto">Zašto mi</a>
         <a href="#isporuka">Šta dobijate</a>
         <a href="#proces">Proces</a>
-        <a href="#dokaz">Radovi</a>
-        <a href="#resursi">Resursi</a>
         <a href="#faq">FAQ</a>
         <a href="#kontakt">Kontakt</a>
       </nav>
@@ -553,9 +442,8 @@
             </h1>
 
             <p class="heroDesc">
-              Ako želite stabilnu mrežu bez improvizacije, isporučujemo komplet:
-              <b>projektovanje → ugradnja → testiranje → Fluke sertifikacija (izveštaj) → obeležavanje → dokumentacija</b>.
-              Radimo projekte u <b>celoj Srbiji</b>. Region je plan za budućnost (po dogovoru).
+              Isporučujemo komplet: <b>projektovanje → ugradnja → testiranje → Fluke sertifikacija (izveštaj) → obeležavanje → dokumentacija</b>.
+              Fokus je da mreža bude stabilna i da održavanje bude brzo i jeftino.
             </p>
 
             <div class="heroMeta">
@@ -568,15 +456,15 @@
             <div class="statRow">
               <div class="stat">
                 <b>Fluke sertifikacija</b>
-                <span>Izveštaj po linku/portu (dogovoreni obim) + zapisnici i mapa portova.</span>
+                <span>Izveštaj po linku/portu (dogovoreni obim) + mapa portova.</span>
               </div>
               <div class="stat">
                 <b>Uredno izvođenje</b>
-                <span>Labeling, cable management, rek logika — brži servis i nadogradnje.</span>
+                <span>Labeling i cable management — brži servis i nadogradnje.</span>
               </div>
               <div class="stat">
                 <b>Fazni rad</b>
-                <span>Po zonama/spratovima, termini po dogovoru (minimalan prekid rada).</span>
+                <span>Po zonama/spratovima, termini po dogovoru (minimalan prekid).</span>
               </div>
             </div>
 
@@ -585,18 +473,54 @@
               <a class="btn" href="#kontakt">Tražite ponudu</a>
               <a class="btn" href="#isporuka">Šta dobijate</a>
             </div>
-
-            <p class="hint" style="margin:12px 0 0;">
-              Tipično: najbrže do ponude je nacrt + broj portova + rok. Ako nemate nacrt, radimo obilazak.
-            </p>
           </div>
         </section>
 
-        <!-- QUICK FORM -->
+        <!-- RIGHT: carousel + quick form -->
         <aside class="heroRight">
           <div class="panel fadeUp" style="transition-delay:.08s">
+            <h3>Kako to izgleda u praksi</h3>
+            <p>Uredan rek + labeling + QA (Fluke) = sistem koji može da se održava.</p>
+
+            <div class="heroMedia" aria-label="Rotirajuće fotografije radova">
+              <!--
+                KORISTI SE JEDNA KOLAZ SLIKA (4 u 1)
+                Sačuvaj je kao: assets/hero-collage.png
+              -->
+              <div class="slide active" data-pos="50% 10%">
+                <img src="assets/hero-collage.png" alt="Rek orman i uredan patch panel (hero)" />
+              </div>
+              <div class="slide" data-pos="25% 92%">
+                <img src="assets/hero-collage.png" alt="Close-up patch panel i označavanje portova" />
+              </div>
+              <div class="slide" data-pos="50% 92%">
+                <img src="assets/hero-collage.png" alt="Instalacija kablova u plafonskoj kanalici" />
+              </div>
+              <div class="slide" data-pos="85% 92%">
+                <img src="assets/hero-collage.png" alt="Mrežno testiranje i PASS rezultat" />
+              </div>
+
+              <div class="mediaBadge">Fluke sertifikacija • izveštaj</div>
+
+              <div class="dots" aria-label="Kontrole slajdera">
+                <button type="button" class="active" data-i="0" aria-label="Slajd 1"></button>
+                <button type="button" data-i="1" aria-label="Slajd 2"></button>
+                <button type="button" data-i="2" aria-label="Slajd 3"></button>
+                <button type="button" data-i="3" aria-label="Slajd 4"></button>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+              <a class="btn primary" href="tel:063374210">Pozovi</a>
+              <a class="btn" href="#kontakt">Traži ponudu</a>
+            </div>
+
+            <div class="hint">Ako kasnije dobiješ 4 odvojene fotke, samo zameni src u svakom slajdu.</div>
+          </div>
+
+          <div class="panel fadeUp" style="transition-delay:.14s">
             <h3>Brza ponuda (1 minut)</h3>
-            <p>Pošaljite osnovne podatke — vraćamo se sa predlogom rešenja i planom izvođenja.</p>
+            <p>Lokacija + broj portova + rok. Ako nema nacrta, radimo obilazak.</p>
 
             <form class="form" action="#" method="post">
               <div>
@@ -604,41 +528,24 @@
                 <input id="firma" name="firma" placeholder="Npr. ABC d.o.o." required />
               </div>
               <div>
-                <label for="telefon">Telefon</label>
-                <input id="telefon" name="telefon" placeholder="063/..." required />
+                <label for="tel">Telefon</label>
+                <input id="tel" name="tel" placeholder="063/..." required />
               </div>
               <div>
-                <label for="lokacija">Lokacija (grad)</label>
-                <input id="lokacija" name="lokacija" placeholder="Npr. Beograd / Novi Sad" required />
+                <label for="lok">Lokacija (grad)</label>
+                <input id="lok" name="lok" placeholder="Npr. Beograd" required />
               </div>
               <div>
-                <label for="portovi">Broj radnih mesta / portova</label>
-                <input id="portovi" name="portovi" placeholder="Npr. 48" />
+                <label for="port">Broj portova</label>
+                <input id="port" name="port" placeholder="Npr. 48" />
               </div>
               <div>
-                <label for="rok">Rok (opciono)</label>
-                <input id="rok" name="rok" placeholder="Npr. 14 dana" />
+                <label for="note">Napomena</label>
+                <textarea id="note" name="note" placeholder="Tip objekta, rok, posebni zahtevi"></textarea>
               </div>
-              <div>
-                <label for="napomena">Napomena (tip objekta, spratnost, posebni zahtevi)</label>
-                <textarea id="napomena" name="napomena" placeholder="Npr. kancelarija 2 sprata, rad van špica"></textarea>
-              </div>
-
               <button class="btn primary" type="submit" style="width:100%;">Pošalji upit</button>
               <div class="hint">* Test mod: forma ne šalje podatke (action="#").</div>
             </form>
-          </div>
-
-          <div class="panel fadeUp" style="transition-delay:.14s">
-            <h3>Brzi kontakt</h3>
-            <p>
-              Telefon: <b><a href="tel:063374210">063/374-210</a></b><br/>
-              Pokriće: <b>Srbija</b> (region po dogovoru u budućnosti)
-            </p>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-              <a class="btn primary" href="tel:063374210">Pozovi</a>
-              <a class="btn" href="#resursi">Resursi</a>
-            </div>
           </div>
         </aside>
       </div>
@@ -649,8 +556,8 @@
       <div class="wrap">
         <div class="secTitle fadeUp">
           <div>
-            <h2>Zašto SATVISION (B2B logika, bez floskula)</h2>
-            <p>Ovo je ono što kupac i Google “vide”: isporuka, dokaz i kontrola kvaliteta.</p>
+            <h2>Zašto SATVISION</h2>
+            <p>Ono što klijent “kupuje”: kvalitet, dokumentaciju i sistem koji može da se održava.</p>
           </div>
         </div>
 
@@ -658,29 +565,17 @@
           <div class="feature fadeUp">
             <div class="tag"><i></i> Quality control</div>
             <h3>Fluke sertifikacija + izveštaj</h3>
-            <p>Ne “verujemo” da radi — merimo i dokumentujemo. Dobijate izveštaj po dogovorenom obimu.</p>
+            <p>Merimo i dokumentujemo. Dobijate izveštaj po dogovorenom obimu i jasnu primopredaju.</p>
           </div>
           <div class="feature fadeUp" style="transition-delay:.08s">
             <div class="tag"><i></i> Delivery</div>
             <h3>Uredno izvođenje (as-built)</h3>
-            <p>Labeling, mapa portova, sheme i primopredaja — da održavanje bude brzo i jeftino.</p>
+            <p>Labeling, mapa portova, sheme — da održavanje bude brzo, a izmene bez haosa.</p>
           </div>
           <div class="feature fadeUp" style="transition-delay:.14s">
             <div class="tag"><i></i> Operations</div>
             <h3>Fazni rad bez zastoja</h3>
             <p>Po zonama/spratovima i u terminima po dogovoru, da kritične funkcije ne stanu.</p>
-          </div>
-        </div>
-
-        <div class="cta fadeUp" style="margin-top:14px;">
-          <div>
-            <h3>Želite ponudu koja je “čitljiva” i za IT i za finansije?</h3>
-            <p>Pošaljite nacrt + broj portova + rok. Ako nemate nacrt, radimo obilazak i predlog trasa.</p>
-            <p style="margin-top:10px;">Brzi kontakt: <span class="kbd">063/374-210</span></p>
-          </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn primary" href="tel:063374210">Pozovite</a>
-            <a class="btn" href="#kontakt">Upit</a>
           </div>
         </div>
       </div>
@@ -692,7 +587,7 @@
         <div class="secTitle fadeUp">
           <div>
             <h2>Šta dobijate (deliverables)</h2>
-            <p>Usluga je “komplet”, ne samo kablovi. Ovo je razlog zašto klijenti biraju izvođača.</p>
+            <p>Kompletna usluga — ne samo kablovi.</p>
           </div>
         </div>
 
@@ -710,33 +605,17 @@
           </div>
 
           <div class="feature fadeUp" style="transition-delay:.08s; min-height:auto;">
-            <div class="tag"><i></i> Usluge klaster (linkujte sa /biznis/)</div>
-            <p style="margin-bottom:12px;">
-              Da Google i klijenti jasno razumeju ponudu, razdvojite usluge:
-            </p>
-
-            <div class="grid2" style="gap:10px;">
-              <div class="feature" style="box-shadow:none; background:rgba(255,255,255,.70); min-height:auto;">
-                <h3 style="margin:0 0 6px;">SKS (bakar)</h3>
-                <p>Cat6/Cat6A, portovi, patch panel, uredan rek, Fluke report.</p>
+            <div class="tag"><i></i> Najbrže do ponude</div>
+            <p>Pošaljite: <b>lokacija + broj portova + rok</b>. Ako imate nacrt, super. Ako ne — obilazak i predlog trasa.</p>
+            <div class="cta" style="margin-top:12px;">
+              <div>
+                <h3>Brzi kontakt</h3>
+                <p>Pozovite: <span class="kbd">063/374-210</span></p>
               </div>
-              <div class="feature" style="box-shadow:none; background:rgba(255,255,255,.70); min-height:auto;">
-                <h3 style="margin:0 0 6px;">Optika</h3>
-                <p>Backbone, povezivanje objekata, merenja i dokumentacija.</p>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <a class="btn primary" href="tel:063374210">Pozovi</a>
+                <a class="btn" href="#kontakt">Upit</a>
               </div>
-              <div class="feature" style="box-shadow:none; background:rgba(255,255,255,.70); min-height:auto;">
-                <h3 style="margin:0 0 6px;">Rek / organizacija</h3>
-                <p>Sređivanje, patch logika, labeling, mapa portova.</p>
-              </div>
-              <div class="feature" style="box-shadow:none; background:rgba(255,255,255,.70); min-height:auto;">
-                <h3 style="margin:0 0 6px;">Održavanje</h3>
-                <p>Preventiva, intervencije, SLA modeli (po dogovoru).</p>
-              </div>
-            </div>
-
-            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-              <a class="btn primary" href="tel:063374210">Pozovi</a>
-              <a class="btn" href="#proces">Proces</a>
             </div>
           </div>
         </div>
@@ -748,101 +627,27 @@
       <div class="wrap">
         <div class="secTitle fadeUp">
           <div>
-            <h2>Kako radimo (4 koraka)</h2>
-            <p>Proces koji smanjuje rizik i ubrzava isporuku: plan → izvedba → sertifikacija → primopredaja.</p>
+            <h2>Proces (4 koraka)</h2>
+            <p>Plan → izvedba → sertifikacija → primopredaja.</p>
           </div>
         </div>
 
-        <div class="steps fadeUp">
-          <div class="step">
-            <div class="num">1</div>
-            <div><b>Uvod i scope</b><div style="color:var(--muted); font-size:13px;">Broj portova, tip objekta, rok i očekivanja (WiFi/VoIP/PoE).</div></div>
+        <div class="grid2 fadeUp">
+          <div class="feature" style="min-height:auto;">
+            <div class="tag"><i></i> 1) Scope</div>
+            <p>Broj portova, tip objekta, rok i očekivanja (WiFi/VoIP/PoE).</p>
           </div>
-          <div class="step">
-            <div class="num">2</div>
-            <div><b>Obilazak ili nacrt</b><div style="color:var(--muted); font-size:13px;">Plan trasa, predlog Cat6/Cat6A/optika, rek i označavanje.</div></div>
+          <div class="feature" style="min-height:auto;">
+            <div class="tag"><i></i> 2) Nacrt / obilazak</div>
+            <p>Plan trasa + predlog Cat6/Cat6A/optika + rek logika.</p>
           </div>
-          <div class="step">
-            <div class="num">3</div>
-            <div><b>Izvođenje (faze)</b><div style="color:var(--muted); font-size:13px;">Po zonama/spratovima, termini po dogovoru, uredan završetak.</div></div>
+          <div class="feature" style="min-height:auto;">
+            <div class="tag"><i></i> 3) Izvođenje</div>
+            <p>Fazno, uredno, sa označavanjem i kontrolom kvaliteta.</p>
           </div>
-          <div class="step">
-            <div class="num">4</div>
-            <div><b>Fluke sertifikacija + dokumentacija</b><div style="color:var(--muted); font-size:13px;">Izveštaji, mapa portova, as-built i primopredaja.</div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROOF -->
-    <section id="dokaz" class="section">
-      <div class="wrap">
-        <div class="secTitle fadeUp">
-          <div>
-            <h2>Radovi i reference (ubacite realne fotografije)</h2>
-            <p>Ovo najviše diže odziv kod B2B: uredan rek, obeležavanje, trase, primopredaja.</p>
-          </div>
-        </div>
-
-        <div class="gallery fadeUp" aria-label="Galerija radova (placeholder)">
-          <div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div>
-          <div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div>
-        </div>
-
-        <div class="grid3" style="margin-top:12px;">
-          <div class="feature fadeUp">
-            <div class="tag"><i></i> Case</div>
-            <h3>Kancelarija (48 portova)</h3>
-            <p>Problem: prekidi i haos u kablovima. Rešenje: SKS + uredan rek + labeling + Fluke report. Rezultat: stabilno i održivo.</p>
-          </div>
-          <div class="feature fadeUp" style="transition-delay:.08s">
-            <div class="tag"><i></i> Case</div>
-            <h3>Objekat sa više zona</h3>
-            <p>Problem: nadogradnje su prekidale rad. Rešenje: fazni rad + rezerva portova + dokumentacija. Rezultat: brze izmene bez zastoja.</p>
-          </div>
-          <div class="feature fadeUp" style="transition-delay:.14s">
-            <div class="tag"><i></i> Case</div>
-            <h3>Hala / kompleks</h3>
-            <p>Problem: nestabilna veza i održavanje. Rešenje: backbone + uredan rek + merenja. Rezultat: pouzdan prenos i jasna primopredaja.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- RESOURCES -->
-    <section id="resursi" class="section">
-      <div class="wrap">
-        <div class="secTitle fadeUp">
-          <div>
-            <h2>Resursi (za bržu ponudu i manje pitanja)</h2>
-            <p>Ovo je “vendor” logika prevedena na izvođača: jasnoća + poverenje + SEO.</p>
-          </div>
-        </div>
-
-        <div class="grid3">
-          <div class="resource fadeUp">
-            <div class="icon">PDF</div>
-            <div>
-              <b>Checklist za ponudu</b>
-              <span>Šta nam pošaljete da dobijete brzu i tačnu ponudu (nacrt, portovi, rok).</span>
-              <span class="hint">Link: dodajte vaš PDF kada bude spreman.</span>
-            </div>
-          </div>
-          <div class="resource fadeUp" style="transition-delay:.08s">
-            <div class="icon">C6</div>
-            <div>
-              <b>Cat6 vs Cat6A</b>
-              <span>Kada se isplati Cat6A, a kada je Cat6 dovoljan — kratko i praktično.</span>
-              <span class="hint">Link: dodajte stranicu/članak.</span>
-            </div>
-          </div>
-          <div class="resource fadeUp" style="transition-delay:.14s">
-            <div class="icon">QC</div>
-            <div>
-              <b>Primopredaja (Fluke + as-built)</b>
-              <span>Šta dobijate na kraju: izveštaji, mapa portova, sheme i obeležavanje.</span>
-              <span class="hint">Link: dodajte “primopredaja” stranicu/članak.</span>
-            </div>
+          <div class="feature" style="min-height:auto;">
+            <div class="tag"><i></i> 4) Fluke + dokumentacija</div>
+            <p>Izveštaji, mapa portova, as-built i primopredaja.</p>
           </div>
         </div>
       </div>
@@ -854,26 +659,26 @@
         <div class="secTitle fadeUp">
           <div>
             <h2>FAQ</h2>
-            <p>Najčešće prepreke pre poziva — rešene na stranici.</p>
+            <p>Najčešća pitanja pre poziva.</p>
           </div>
         </div>
 
         <div class="grid2 fadeUp">
           <details>
             <summary>Da li je Fluke sertifikacija obavezna?</summary>
-            <p>Za ozbiljne B2B sisteme, sertifikacija i izveštaj su najbolja zaštita od “skrivenih” problema i olakšavaju održavanje. Kod nas je standard u dogovorenom obimu.</p>
+            <p>Za B2B sisteme je najbolja zaštita od skrivenih problema i olakšava održavanje. Kod nas je standard u dogovorenom obimu.</p>
           </details>
           <details>
-            <summary>Da li radite širom Srbije?</summary>
-            <p>Da. SKS projekte izvodimo u celoj Srbiji. Region je plan za budućnost i radi se po dogovoru.</p>
+            <summary>Radite li širom Srbije?</summary>
+            <p>Da. SKS projekte izvodimo širom Srbije.</p>
           </details>
           <details>
             <summary>Šta utiče na cenu?</summary>
-            <p>Broj portova, tip kabla (Cat6/Cat6A), dužine trasa, rek/oprema, građevinski uslovi, rok i nivo dokumentacije/sertifikacije.</p>
+            <p>Broj portova, tip kabla (Cat6/Cat6A), dužine trasa, rek/oprema, uslovi na objektu i nivo dokumentacije/sertifikacije.</p>
           </details>
           <details>
             <summary>Možete li raditi bez prekida poslovanja?</summary>
-            <p>Da. Organizujemo fazni rad i termine po dogovoru, da kritične funkcije ostanu operativne.</p>
+            <p>Da. Organizujemo fazni rad i termine po dogovoru.</p>
           </details>
         </div>
       </div>
@@ -885,10 +690,7 @@
         <div class="cta fadeUp">
           <div>
             <h3>Tražite ponudu za SKS sa Fluke sertifikacijom?</h3>
-            <p>
-              Najbrže: nacrt + broj portova + lokacija + rok.  
-              Pozovite: <span class="kbd">063/374-210</span>
-            </p>
+            <p>Najbrže: lokacija + portovi + rok. Pozovite: <span class="kbd">063/374-210</span></p>
           </div>
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <a class="btn primary" href="tel:063374210">📞 Pozovi 063/374-210</a>
@@ -906,7 +708,6 @@
     </section>
   </main>
 
-  <!-- Mobile sticky CTA -->
   <div class="sticky" role="region" aria-label="Brzi kontakt">
     <div class="inner">
       <a class="btn primary" href="tel:063374210">Pozovi</a>
@@ -915,7 +716,7 @@
   </div>
 
   <script>
-    // smooth scroll (safe)
+    // smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', e=>{
         const id = a.getAttribute('href');
@@ -926,34 +727,80 @@
       });
     });
 
-    // reveal on scroll
+    // reveal
     const io = new IntersectionObserver((entries)=>{
-      entries.forEach(en=>{
-        if(en.isIntersecting) en.target.classList.add('show');
-      });
+      entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('show'); });
     }, {threshold: 0.12});
     document.querySelectorAll('.fadeUp').forEach(el=>io.observe(el));
   </script>
 
   <script>
-    /* === INTERACTIVE LINES BACKGROUND (CANVAS MESH) ===
-       Adapted for light enterprise background: subtle strokes + low CPU.
-       Includes reduced-motion support.
-    */
+    // Hero carousel: rotates slides and sets crop positions from data-pos
+    (function(){
+      const slides = Array.from(document.querySelectorAll('.heroMedia .slide'));
+      const dots = Array.from(document.querySelectorAll('.heroMedia .dots button'));
+      if(slides.length < 2) return;
+
+      // apply object-position from data-pos
+      slides.forEach(s=>{
+        const pos = s.getAttribute('data-pos') || '50% 50%';
+        const img = s.querySelector('img');
+        if(img) img.style.objectPosition = pos;
+      });
+
+      let i = 0;
+      let timer = null;
+
+      function setActive(idx){
+        slides[i].classList.remove('active');
+        dots[i]?.classList.remove('active');
+
+        i = idx;
+
+        slides[i].classList.add('active');
+        dots[i]?.classList.add('active');
+      }
+
+      function next(){ setActive((i+1) % slides.length); }
+
+      function start(){
+        stop();
+        timer = setInterval(next, 3400);
+      }
+      function stop(){
+        if(timer) clearInterval(timer);
+        timer = null;
+      }
+
+      dots.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const idx = Number(btn.getAttribute('data-i') || 0);
+          setActive(idx);
+          start();
+        });
+      });
+
+      // pause on hover (desktop)
+      const media = document.querySelector('.heroMedia');
+      media?.addEventListener('mouseenter', stop);
+      media?.addEventListener('mouseleave', start);
+
+      start();
+    })();
+  </script>
+
+  <script>
+    /* Animated mesh background (moving lines) */
     const canvas = document.getElementById('meshBg');
     const ctx = canvas.getContext('2d', { alpha: true });
 
     let w=0,h=0,pts=[];
-    let rafId=null;
-
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function resize(){
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
-
-      // Density scales with screen size (keeps it light)
-      const base = Math.min(92, Math.max(52, Math.floor((w*h)/26000)));
+      const base = Math.min(90, Math.max(52, Math.floor((w*h)/26000)));
       const count = prefersReducedMotion ? Math.floor(base*0.45) : base;
 
       pts = Array.from({length: count}, ()=>({
@@ -963,43 +810,32 @@
         vy:(Math.random()-.5)*(prefersReducedMotion ? 0.08 : 0.22)
       }));
     }
-
     window.addEventListener('resize', resize, {passive:true});
     resize();
 
     function draw(){
-      // Clear with slight alpha for softer trails (but keep subtle on light bg)
       ctx.clearRect(0,0,w,h);
-
-      // Colors: brand blue + cyan, low opacity
-      const maxDist = prefersReducedMotion ? 120 : 150;
+      const maxDist = prefersReducedMotion ? 120 : 160;
 
       for(let i=0;i<pts.length;i++){
         const p = pts[i];
         p.x += p.vx; p.y += p.vy;
-        // draw point
-        ctx.fillStyle = "rgba(14,165,233,.35)";
+
+        // dots
+        ctx.fillStyle = "rgba(14,165,233,.32)";
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, 1.25, 0, Math.PI * 2);
         ctx.fill();
+
         if(p.x < 0 || p.x > w) p.vx *= -1;
         if(p.y < 0 || p.y > h) p.vy *= -1;
 
         for(let j=i+1;j<pts.length;j++){
           const q = pts[j];
-          const dx = p.x-q.x;
-          const dy = p.y-q.y;
-          const d = Math.hypot(dx,dy);
+          const d = Math.hypot(p.x-q.x, p.y-q.y);
           if(d < maxDist){
             const t = 1 - (d/maxDist);
-
-            // Interpolate between brand and cyan
-            // rgba(11,95,255) and rgba(14,165,233)
-            const r = Math.round(11 + (14-11)*0.2);
-            const g = Math.round(95 + (165-95)*0.6);
-            const b = Math.round(255 + (233-255)*0.6);
-
-            ctx.strokeStyle = `rgba(11,95,255,${0.35*t})`;
+            ctx.strokeStyle = `rgba(11,95,255,${0.32*t})`;
             ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(p.x,p.y);
@@ -1008,17 +844,11 @@
           }
         }
       }
-
-      rafId = requestAnimationFrame(draw);
+      requestAnimationFrame(draw);
     }
 
-    if(!prefersReducedMotion){
-      draw();
-    } else {
-      // Reduced motion: draw once (static mesh)
-      draw();
-      cancelAnimationFrame(rafId);
-    }
+    if(!prefersReducedMotion) draw();
+    else draw(); // draw once
   </script>
 </body>
 </html>
