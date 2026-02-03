@@ -521,6 +521,57 @@
       {"@type":"Question","name":"Da li dobijamo Fluke sertifikaciju i izveštaj?","acceptedAnswer":{"@type":"Answer","text":"Da. Po završetku radova isporučujemo Fluke sertifikaciju (izveštaj), obeležavanje portova i dokumentaciju."}}
     ]
   }
+    <script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.heroBg .bgSlide'));
+  const dots = Array.from(document.querySelectorAll('.heroDots button'));
+  if(slides.length < 2) return;
+
+  // apply object-position per slide
+  slides.forEach(s=>{
+    const pos = s.getAttribute('data-pos') || '70% 50%';
+    const img = s.querySelector('img');
+    if(img) img.style.objectPosition = pos;
+  });
+
+  let i = 0;
+  let t = null;
+
+  function setActive(idx){
+    slides[i].classList.remove('active');
+    dots[i]?.classList.remove('active');
+    i = idx;
+    slides[i].classList.add('active');
+    dots[i]?.classList.add('active');
+  }
+
+  function next(){ setActive((i+1) % slides.length); }
+
+  function start(){
+    stop();
+    t = setInterval(next, 3800);
+  }
+  function stop(){
+    if(t) clearInterval(t);
+    t = null;
+  }
+
+  dots.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const idx = Number(btn.getAttribute('data-i') || 0);
+      setActive(idx);
+      start();
+    });
+  });
+
+  const hero = document.querySelector('.heroFull');
+  hero?.addEventListener('mouseenter', stop);
+  hero?.addEventListener('mouseleave', start);
+
+  start();
+})();
+</script>
+
   </script>
 </head>
 
@@ -552,50 +603,54 @@
 
   <main>
     <!-- HERO -->
-    <section class="hero">
-      <div class="wrap heroGrid">
-        <section class="card heroLeft fadeUp">
-          <div style="position:relative; z-index:1;">
-            <div class="pill"><span class="dot"></span> Enterprise kvalitet • Srbija • Fluke sertifikacija (izveštaj)</div>
+    <section class="heroFull" id="hero">
+  <div class="heroBg" aria-hidden="true">
+    <!-- Koristi istu kolaz sliku, ali menja “kadar” kroz object-position -->
+    <div class="bgSlide active" data-pos="70% 15%">
+      <img src="assets/hero-collage.png" alt="">
+    </div>
+    <div class="bgSlide" data-pos="25% 92%">
+      <img src="assets/hero-collage.png" alt="">
+    </div>
+    <div class="bgSlide" data-pos="50% 92%">
+      <img src="assets/hero-collage.png" alt="">
+    </div>
+    <div class="bgSlide" data-pos="85% 92%">
+      <img src="assets/hero-collage.png" alt="">
+    </div>
+  </div>
 
-            <h1 class="heroTitle">
-              Strukturno kabliranje (SKS) za firme — <span class="grad">uredno, testirano, dokumentovano</span>
-            </h1>
+  <div class="heroOverlay" aria-hidden="true"></div>
 
-            <p class="heroDesc">
-              Isporučujemo komplet: <b>projektovanje → ugradnja → testiranje → Fluke sertifikacija (izveštaj) → obeležavanje → dokumentacija</b>.
-              Fokus je da mreža bude stabilna i da održavanje bude brzo i jeftino.
-            </p>
+  <div class="heroInner">
+    <div class="wrap">
+      <div class="pill" style="background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.14); color:rgba(255,255,255,.82);">
+        <span class="dot"></span> SKS za firme • Srbija • Fluke sertifikacija (izveštaj)
+      </div>
 
-            <div class="heroMeta">
-              <span class="pill">✅ UTP/FTP Cat6 / Cat6A</span>
-              <span class="pill">✅ Optika (backbone po potrebi)</span>
-              <span class="pill">✅ Rek/patch panel organizacija</span>
-              <span class="pill">✅ Fluke report + as-built</span>
-            </div>
+      <h1>Strukturno kabliranje (SKS)<br/>koje se <span style="color:#7dd3fc;">meri, predaje i održava</span></h1>
 
-            <div class="statRow">
-              <div class="stat">
-                <b>Fluke sertifikacija</b>
-                <span>Izveštaj po linku/portu (dogovoreni obim) + mapa portova.</span>
-              </div>
-              <div class="stat">
-                <b>Uredno izvođenje</b>
-                <span>Labeling i cable management — brži servis i nadogradnje.</span>
-              </div>
-              <div class="stat">
-                <b>Fazni rad</b>
-                <span>Po zonama/spratovima, termini po dogovoru (minimalan prekid).</span>
-              </div>
-            </div>
+      <p>
+        Projektovanje → ugradnja → testiranje → <b>Fluke sertifikacija (izveštaj)</b> → obeležavanje → dokumentacija.
+        Cilj: stabilna mreža bez improvizacije.
+      </p>
 
-            <div class="heroBtns">
-              <a class="btn primary" href="tel:063374210">📞 Pozovite 063/374-210</a>
-              <a class="btn" href="#kontakt">Tražite ponudu</a>
-              <a class="btn" href="#isporuka">Šta dobijate</a>
-            </div>
-          </div>
-        </section>
+      <div class="heroCtas">
+        <a class="btn primary" href="tel:063374210">📞 Pozovi 063/374-210</a>
+        <a class="btn" href="#kontakt">Traži ponudu</a>
+        <a class="btn" href="#isporuka">Šta dobijate</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="heroDots" aria-label="Hero slajder kontrole">
+    <button type="button" class="active" data-i="0"></button>
+    <button type="button" data-i="1"></button>
+    <button type="button" data-i="2"></button>
+    <button type="button" data-i="3"></button>
+  </div>
+</section>
+
 
         <!-- RIGHT: carousel + quick form -->
         <aside class="heroRight">
