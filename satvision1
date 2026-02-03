@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Strukturno kabliranje (SKS) za firme | Projektovanje + instalacija + testiranje</title>
+  <meta name="description" content="Kompletno strukturno kabliranje (SKS) za firme: projektovanje, ugradnja, testiranje/sertifikacija i dokumentacija. Uredno, brzo i bez improvizacije. Pozovite SATVISION." />
+  <meta name="theme-color" content="#0B1220" />
+
+  <style>
+    :root{
+      --bg:#0B1220;
+      --panel:#0F1A33;
+      --card:#101C3A;
+      --text:#EAF0FF;
+      --muted:#B7C2E6;
+      --line:rgba(255,255,255,.10);
+      --brand:#4F8CFF;
+      --brand2:#34D399;
+      --danger:#FB7185;
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1120px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background: radial-gradient(1200px 500px at 15% -10%, rgba(79,140,255,.30), transparent 60%),
+                  radial-gradient(900px 500px at 90% 0%, rgba(52,211,153,.22), transparent 55%),
+                  var(--bg);
+      line-height:1.45;
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px;}
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(12px);
+      background: rgba(11,18,32,.70);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0;
+      gap:10px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; text-decoration:none;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:36px; height:36px; border-radius:10px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: 0 10px 25px rgba(79,140,255,.25);
+    }
+    .nav{
+      display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .nav a{ text-decoration:none; padding:8px 10px; border-radius:12px;}
+    .nav a:hover{ background: rgba(255,255,255,.06); color: var(--text); }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px; padding:12px 14px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none; font-weight:700;
+      transition: transform .08s ease, background .15s ease, border-color .15s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22); }
+    .btn-primary{
+      background: linear-gradient(135deg, rgba(79,140,255,.95), rgba(79,140,255,.70));
+      border-color: rgba(79,140,255,.65);
+      box-shadow: 0 14px 36px rgba(79,140,255,.20);
+    }
+    .btn-primary:hover{ background: linear-gradient(135deg, rgba(79,140,255,1), rgba(79,140,255,.78)); }
+    .btn-success{
+      background: linear-gradient(135deg, rgba(52,211,153,.92), rgba(52,211,153,.62));
+      border-color: rgba(52,211,153,.55);
+      box-shadow: 0 14px 36px rgba(52,211,153,.18);
+      color:#071216;
+    }
+    .btn-success:hover{ background: linear-gradient(135deg, rgba(52,211,153,1), rgba(52,211,153,.70)); }
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      font-size:13px;
+    }
+    .hero{
+      padding:54px 0 26px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .hero h1{
+      margin:14px 0 10px;
+      font-size: clamp(28px, 4.1vw, 44px);
+      line-height:1.08;
+      letter-spacing:-.6px;
+    }
+    .lead{
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 62ch;
+    }
+    .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
+    .microproof{
+      margin-top:16px;
+      display:flex; gap:10px; flex-wrap:wrap;
+      color: var(--muted);
+      font-size:13px;
+    }
+    .microproof span{
+      border:1px dashed rgba(255,255,255,.18);
+      padding:8px 10px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+    }
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:18px;
+    }
+    .panel h3{ margin:0 0 10px; font-size:16px; }
+    .form{
+      display:grid;
+      gap:10px;
+      margin-top:8px;
+    }
+    .field{
+      display:grid;
+      gap:6px;
+    }
+    label{ font-size:12px; color: var(--muted); }
+    input, textarea, select{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(15,26,51,.55);
+      color: var(--text);
+      outline:none;
+    }
+    input:focus, textarea:focus{
+      border-color: rgba(79,140,255,.55);
+      box-shadow: 0 0 0 4px rgba(79,140,255,.16);
+    }
+    textarea{ min-height: 92px; resize: vertical; }
+    .hint{ font-size:12px; color: var(--muted); }
+
+    section{ padding:26px 0; }
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size: 22px;
+      letter-spacing:-.2px;
+    }
+    .section-title p{
+      margin:0;
+      color: var(--muted);
+      max-width: 70ch;
+      font-size: 14px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    .grid-2{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:12px;
+    }
+    .card{
+      background: rgba(16,28,58,.62);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      padding:16px;
+    }
+    .card h4{ margin:0 0 6px; font-size:15px; }
+    .card p{ margin:0; color: var(--muted); font-size: 14px; }
+
+    ul.check{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display:grid;
+      gap:10px;
+    }
+    ul.check li{
+      display:flex; gap:10px; align-items:flex-start;
+      color: var(--text);
+    }
+    .tick{
+      width:18px; height:18px; margin-top:2px;
+      border-radius: 6px;
+      background: rgba(52,211,153,.20);
+      border:1px solid rgba(52,211,153,.35);
+      position:relative;
+      flex:0 0 auto;
+    }
+    .tick:after{
+      content:"";
+      position:absolute;
+      left:5px; top:3px;
+      width:6px; height:9px;
+      border-right:2px solid rgba(52,211,153,1);
+      border-bottom:2px solid rgba(52,211,153,1);
+      transform: rotate(40deg);
+    }
+    .muted{ color: var(--muted); }
+    .kpis{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .kpi{
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .kpi b{ color: var(--text); }
+
+    .packages .card{ position:relative; overflow:hidden; }
+    .badge{
+      position:absolute; top:12px; right:12px;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+    }
+
+    .timeline{
+      display:grid; gap:10px;
+    }
+    .step{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:14px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+    }
+    .num{
+      width:30px; height:30px;
+      border-radius: 12px;
+      display:grid; place-items:center;
+      background: rgba(79,140,255,.18);
+      border:1px solid rgba(79,140,255,.35);
+      color: var(--text);
+      font-weight:800;
+      flex:0 0 auto;
+    }
+
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap:10px;
+    }
+    .ph{
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
+        radial-gradient(500px 180px at 10% 10%, rgba(79,140,255,.22), transparent 60%),
+        rgba(255,255,255,.04);
+      height: 108px;
+      position:relative;
+      overflow:hidden;
+    }
+    .ph:after{
+      content:"Dodajte realnu fotografiju";
+      position:absolute; left:12px; bottom:10px;
+      font-size:12px; color: rgba(234,240,255,.75);
+    }
+
+    .faq{
+      display:grid; gap:10px;
+    }
+    details{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.04);
+      padding: 12px 14px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:700;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    details p{ color: var(--muted); margin:10px 0 0; }
+
+    .cta{
+      background: linear-gradient(135deg, rgba(79,140,255,.18), rgba(52,211,153,.12));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius2);
+      padding: 18px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+
+    footer{
+      padding: 22px 0 80px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top:1px solid rgba(255,255,255,.10);
+      margin-top: 20px;
+    }
+
+    /* Mobile sticky call bar */
+    .sticky-call{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      padding:10px 12px;
+      background: rgba(11,18,32,.82);
+      border-top:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(12px);
+      display:none;
+      z-index:60;
+    }
+    .sticky-call .inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      display:flex;
+      gap:10px;
+    }
+    .sticky-call .btn{ flex:1; }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .grid-3{ grid-template-columns: 1fr; }
+      .grid-2{ grid-template-columns: 1fr; }
+      .gallery{ grid-template-columns: repeat(3, 1fr); }
+      .nav{ display:none; }
+      .sticky-call{ display:block; }
+    }
+    @media (max-width: 420px){
+      .gallery{ grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+
+  <!-- FAQ Schema (edit phone/email/location placeholders) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"Koliko traje ugradnja SKS-a za kancelariju?",
+        "acceptedAnswer":{"@type":"Answer","text":"Zavisi od broja portova, trasa i dostupnosti plafona/zidova. U praksi se radi fazno (po zonama ili spratovima) kako bi posao mogao da teče bez prekida rada, kada je potrebno."}
+      },
+      {
+        "@type":"Question",
+        "name":"Da li dobijamo testiranje i dokumentaciju?",
+        "acceptedAnswer":{"@type":"Answer","text":"Da. Standardno isporučujemo obeležavanje, zapisnik testiranja i dokumentaciju (sheme/oznake/raspored portova), kako bi održavanje i nadogradnje bile brze i jasne."}
+      },
+      {
+        "@type":"Question",
+        "name":"Cat6 ili Cat6A — šta uzeti?",
+        "acceptedAnswer":{"@type":"Answer","text":"Cat6 je najčešći izbor za standardne kancelarijske potrebe. Cat6A ima više rezerve za veće brzine i okruženja sa većim smetnjama. Predlog zavisi od dužina trasa, planiranih brzina i buduće nadogradnje."}
+      },
+      {
+        "@type":"Question",
+        "name":"Možete li raditi bez prekida poslovanja?",
+        "acceptedAnswer":{"@type":"Answer","text":"Da, po dogovoru radimo fazno i/ili van špica (večernji termini, vikend), kako bi kritične funkcije firme nastavile da rade."}
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="topbar-inner">
+        <a class="brand" href="#">
+          <span class="logo" aria-hidden="true"></span>
+          <span>SATVISION • B2B mrežna infrastruktura</span>
+        </a>
+        <nav class="nav" aria-label="Navigacija">
+          <a href="#deliverables">Šta dobijate</a>
+          <a href="#paketi">Paketi</a>
+          <a href="#proces">Proces</a>
+          <a href="#radovi">Radovi</a>
+          <a href="#faq">FAQ</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+        <a class="btn btn-primary" href="tel:+381XXXXXXXXX">Pozovite: +381 XX XXX XXXX</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="pill">Strukturno kabliranje (SKS) • UTP/FTP • Optika • Testiranje • Dokumentacija</span>
+          <h1>Strukturno kabliranje i SKS sistemi za firme — projektovanje, ugradnja, testiranje</h1>
+          <p class="lead">
+            Pouzdana mrežna infrastruktura počinje od pravilno izvedenog SKS-a. SATVISION isporučuje komplet:
+            <b>planiranje + instalacija + merenje/testiranje + dokumentacija</b>, uredno i bez improvizacije.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-success" href="tel:+381XXXXXXXXX">Pozovite odmah</a>
+            <a class="btn" href="#kontakt">Pošaljite nacrt / tražite ponudu</a>
+          </div>
+
+          <div class="microproof">
+            <span>Ponuda nakon uvida u objekat/nacrt</span>
+            <span>Dokumentacija uključena</span>
+            <span>Rad bez prekida (po dogovoru)</span>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi"><b>Za koga:</b> kancelarije, hale, ustanove, retail</div>
+            <div class="kpi"><b>Fokus:</b> stabilnost + urednost + održavanje</div>
+            <div class="kpi"><b>Rezultat:</b> manje zastoja i brže servisiranje</div>
+          </div>
+        </div>
+
+        <aside class="panel" id="kontakt-brzo">
+          <h3>Brza ponuda (1 minut)</h3>
+          <p class="muted" style="margin:0 0 10px;">
+            Pošaljite osnovne podatke — vraćamo se sa predlogom rešenja i planom izvođenja.
+          </p>
+          <form class="form" action="#" method="post">
+            <div class="field">
+              <label for="firma">Firma / Ime</label>
+              <input id="firma" name="firma" placeholder="Npr. ABC d.o.o." required />
+            </div>
+            <div class="field">
+              <label for="telefon">Telefon</label>
+              <input id="telefon" name="telefon" placeholder="+381..." required />
+            </div>
+            <div class="field">
+              <label for="lokacija">Lokacija</label>
+              <input id="lokacija" name="lokacija" placeholder="Grad / opština" required />
+            </div>
+            <div class="field">
+              <label for="portovi">Broj radnih mesta / portova</label>
+              <input id="portovi" name="portovi" placeholder="Npr. 24" />
+            </div>
+            <div class="field">
+              <label for="napomena">Napomena (rok, objekat, spratnost)</label>
+              <textarea id="napomena" name="napomena" placeholder="Kratko opišite potrebu"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Pošalji upit</button>
+            <div class="hint">* Za testiranje: forma ne šalje podatke (action="#").</div>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <section id="deliverables">
+      <div class="section-title">
+        <div>
+          <h2>Šta tačno dobijate (bez skrivenih stavki)</h2>
+          <p>Ovo je “B2B paket” koji smanjuje rizik: jasno, dokumentovano i spremno za održavanje/nadogradnju.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>Standardna isporuka</h4>
+          <ul class="check">
+            <li><span class="tick"></span><span>Plan trasa i predlog rešenja (po objektu i broju radnih mesta)</span></li>
+            <li><span class="tick"></span><span>Ugradnja UTP/FTP kablova (Cat5e/Cat6/Cat6A) i/ili optike po potrebi</span></li>
+            <li><span class="tick"></span><span>Terminisanje: keystone/utičnice, patch panel, rek orman (postojeći ili nov)</span></li>
+            <li><span class="tick"></span><span>Obeležavanje i organizacija (da se sve lako održava)</span></li>
+            <li><span class="tick"></span><span>Testiranje/mjerenje i zapisnik</span></li>
+            <li><span class="tick"></span><span>Dokumentacija (shema, portovi, oznake)</span></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>Zašto investirati u SKS</h4>
+          <div class="grid-2" style="margin-top:10px;">
+            <div class="card" style="background:rgba(255,255,255,.03);">
+              <h4>Manje troškova</h4>
+              <p>Jedna infrastruktura za više sistema (računari, telefonija, video nadzor, alarmi…).</p>
+            </div>
+            <div class="card" style="background:rgba(255,255,255,.03);">
+              <h4>Manje zastoja</h4>
+              <p>Stabilna i organizovana mreža znači manje prekida i bržu dijagnostiku.</p>
+            </div>
+            <div class="card" style="background:rgba(255,255,255,.03);">
+              <h4>Spremno za rast</h4>
+              <p>Podržava savremene brzine, optiku i buduće nadogradnje bez dodatnog bušenja.</p>
+            </div>
+            <div class="card" style="background:rgba(255,255,255,.03);">
+              <h4>Profesionalan utisak</h4>
+              <p>Uredno kabliranje i rek orman ostavljaju dobar utisak na klijente i tim.</p>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <a class="btn btn-success" href="tel:+381XXXXXXXXX">Pozovite za procenu</a>
+            <a class="btn" href="#kontakt">Pošaljite nacrt</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="paketi" class="packages">
+      <div class="section-title">
+        <div>
+          <h2>Paketi usluge (brže donošenje odluke)</h2>
+          <p>Bez komplikacija: izaberite okvir, a mi prilagodimo detalje objektu i vašem budžetu.</p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <span class="badge">SKS Basic</span>
+          <h4>Za standardne kancelarije</h4>
+          <p class="muted">Kabliranje + terminisanje + osnovno testiranje + obeležavanje.</p>
+          <div style="height:10px"></div>
+          <ul class="check">
+            <li><span class="tick"></span><span>Horizontalno kabliranje (UTP/FTP)</span></li>
+            <li><span class="tick"></span><span>Keystone/utičnice + patch panel</span></li>
+            <li><span class="tick"></span><span>Osnovni zapisnik</span></li>
+          </ul>
+        </div>
+
+        <div class="card" style="border-color: rgba(79,140,255,.35);">
+          <span class="badge" style="border-color: rgba(79,140,255,.35); color:rgba(234,240,255,.9);">SKS Pro</span>
+          <h4>Za firme koje žele “posle nema glavobolje”</h4>
+          <p class="muted">Sve iz Basic + uredan rek + detaljna dokumentacija + priprema za managed WiFi.</p>
+          <div style="height:10px"></div>
+          <ul class="check">
+            <li><span class="tick"></span><span>Sređivanje rek ormara i organizacija kablova</span></li>
+            <li><span class="tick"></span><span>Detaljna dokumentacija (sheme/oznake)</span></li>
+            <li><span class="tick"></span><span>Priprema infrastrukture za WiFi pokrivenost</span></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="badge">SKS + Optika</span>
+          <h4>Za hale, komplekse i više lokacija</h4>
+          <p class="muted">Optička okosnica + završeci + merenje + dokumentacija + povezivanje opreme.</p>
+          <div style="height:10px"></div>
+          <ul class="check">
+            <li><span class="tick"></span><span>Povezivanje zgrada/hala optikom</span></li>
+            <li><span class="tick"></span><span>Centralizovan nadzor i bolja stabilnost</span></li>
+            <li><span class="tick"></span><span>Dokumentovano i spremno za rast</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="cena">
+      <div class="section-title">
+        <div>
+          <h2>Šta utiče na cenu (transparentno)</h2>
+          <p>Da bismo dali tačnu ponudu, potrebne su osnovne informacije. Ovo su glavne stavke koje utiču na cenu.</p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card"><h4>Broj portova</h4><p>Raspored radnih mesta i prostorija, spratnost i dostupnost trasa.</p></div>
+        <div class="card"><h4>Tip kabla</h4><p>Cat6 vs Cat6A, potreba za optikom, dužine trasa i smetnje.</p></div>
+        <div class="card"><h4>Rek i oprema</h4><p>Patch panel, organizatori, switch, UPS i kvalitet materijala.</p></div>
+        <div class="card"><h4>Građevinski uslovi</h4><p>Spušteni plafoni, bušenje, kanali, pristupnost i estetika.</p></div>
+        <div class="card"><h4>Rok i termini</h4><p>Standardno ili hitno, rad van radnog vremena / vikendom.</p></div>
+        <div class="card"><h4>Dokumentacija</h4><p>Nivo dokumentacije, obeležavanje, zapisnici i primopredaja.</p></div>
+      </div>
+
+      <div class="cta" style="margin-top:14px;">
+        <div>
+          <b style="font-size:16px;">Najbrži put do ponude:</b>
+          <div class="muted">Pošaljite nacrt + broj radnih mesta + lokaciju.</div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn btn-success" href="tel:+381XXXXXXXXX">Pozovite</a>
+          <a class="btn btn-primary" href="#kontakt">Pošaljite upit</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="proces">
+      <div class="section-title">
+        <div>
+          <h2>Kako radimo (4 koraka)</h2>
+          <p>Proces je napravljen da bude brz i bez iznenađenja — planiranje, izvođenje i primopredaja.</p>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="step">
+          <div class="num">1</div>
+          <div>
+            <b>Kratak razgovor</b>
+            <div class="muted">Broj korisnika, lokacija, rok i tip objekta.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div>
+            <b>Obilazak ili nacrt</b>
+            <div class="muted">Najbrži put do tačne ponude i plana trasa.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div>
+            <b>Izvođenje (faze po zonama)</b>
+            <div class="muted">Po potrebi radimo van špica da posao firme ne stane.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <div>
+            <b>Testiranje + dokumentacija</b>
+            <div class="muted">Zapisnik, obeležavanje, sheme i primopredaja.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="radovi">
+      <div class="section-title">
+        <div>
+          <h2>Radovi i reference (dodajte realne fotografije)</h2>
+          <p>Ovo je najjači “trust” blok za B2B: urednost, rek, trase, primopredaja.</p>
+        </div>
+      </div>
+
+      <div class="gallery" aria-label="Galerija radova (placeholder)">
+        <div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div>
+        <div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div><div class="ph"></div>
+      </div>
+
+      <div class="grid-3" style="margin-top:12px;">
+        <div class="card">
+          <h4>Case #1: Kancelarija (24 radna mesta)</h4>
+          <p class="muted">Problem: česta pucanja veze i haos u kablovima. Rešenje: novi SKS + uredan rek + obeležavanje. Rezultat: stabilna mreža i brža dijagnostika.</p>
+        </div>
+        <div class="card">
+          <h4>Case #2: Objekat sa više zona</h4>
+          <p class="muted">Problem: nadogradnje tražile stalno bušenje. Rešenje: plan trasa + rezerva portova + dokumentacija. Rezultat: brže buduće proširenje bez prekida rada.</p>
+        </div>
+        <div class="card">
+          <h4>Case #3: Hala / kompleks</h4>
+          <p class="muted">Problem: nestabilna komunikacija između objekata. Rešenje: optička okosnica + povezivanje opreme. Rezultat: pouzdan prenos i centralizovan nadzor.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="section-title">
+        <div>
+          <h2>FAQ (najčešća pitanja)</h2>
+          <p>Odgovori koji skraćuju prodaju i pomažu SEO-u.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>Koliko traje ugradnja SKS-a?</summary>
+          <p>Zavisi od broja portova, trasa i uslova u objektu. U praksi radimo fazno (po zonama/spratovima) i po dogovoru možemo raditi van špica kako biste imali minimalan prekid.</p>
+        </details>
+        <details>
+          <summary>Da li dobijamo testiranje i dokumentaciju?</summary>
+          <p>Da. Standardno isporučujemo obeležavanje, zapisnik testiranja i dokumentaciju (raspored portova/oznake/sheme), kako bi održavanje i nadogradnje bile brze i jasne.</p>
+        </details>
+        <details>
+          <summary>Cat6 ili Cat6A — šta izabrati?</summary>
+          <p>Cat6 je čest izbor za standardne kancelarije. Cat6A je bolji kada želite veću rezervu za veće brzine i zahtevnije okruženje. Predlog zavisi od dužina, planiranih brzina i budućeg rasta.</p>
+        </details>
+        <details>
+          <summary>Možete li raditi bez prekida poslovanja?</summary>
+          <p>Da. Po dogovoru radimo fazno i/ili u terminima koji najmanje smetaju (večernji/vikend), da kritične funkcije firme nastave da rade.</p>
+        </details>
+        <details>
+          <summary>Da li radite i WiFi pokrivenost?</summary>
+          <p>Da, možemo isplanirati infrastrukturu i pozicije pristupnih tačaka (managed AP) kako biste imali stabilnu pokrivenost bez “mrtvih zona”.</p>
+        </details>
+      </div>
+    </section>
+
+    <section id="kontakt">
+      <div class="section-title">
+        <div>
+          <h2>Tražite ponudu za SKS?</h2>
+          <p>Pošaljite nacrt i broj radnih mesta — dobićete predlog rešenja i plan izvođenja.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>Kontakt</h4>
+          <p class="muted" style="margin-top:6px;">
+            Telefon: <b><a href="tel:+381XXXXXXXXX">+381 XX XXX XXXX</a></b><br/>
+            Email: <b><a href="mailto:office@example.com">office@example.com</a></b><br/>
+            Servisna zona: <b>Vaš grad/opštine</b><br/>
+            Adresa: <b>Ulica i broj, Grad</b>
+          </p>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn btn-success" href="tel:+381XXXXXXXXX">Pozovite</a>
+            <a class="btn btn-primary" href="#kontakt-brzo">Brza forma</a>
+          </div>
+          <p class="hint" style="margin-top:10px;">
+            Savet: povežite Google Business Profile link ka ovoj stranici (sa UTM) da merite koliko upita dolazi iz GBP.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4>Forma za ponudu</h4>
+          <form class="form" action="#" method="post">
+            <div class="field">
+              <label for="firma2">Firma / Ime</label>
+              <input id="firma2" name="firma2" placeholder="Npr. ABC d.o.o." required />
+            </div>
+            <div class="field">
+              <label for="telefon2">Telefon</label>
+              <input id="telefon2" name="telefon2" placeholder="+381..." required />
+            </div>
+            <div class="field">
+              <label for="lok2">Lokacija</label>
+              <input id="lok2" name="lok2" placeholder="Grad / opština" required />
+            </div>
+            <div class="field">
+              <label for="radna2">Broj radnih mesta / portova</label>
+              <input id="radna2" name="radna2" placeholder="Npr. 48" />
+            </div>
+            <div class="field">
+              <label for="nap2">Kratak opis (rok, objekat, spratnost)</label>
+              <textarea id="nap2" name="nap2" placeholder="Npr. kancelarija 2 sprata, rok 10 dana"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Pošalji upit</button>
+            <div class="hint">* Za test: forma ne šalje podatke (action="#").</div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div><b>SATVISION</b> — Strukturno kabliranje (SKS) • Optika • Rek i organizacija • Održavanje</div>
+        <div class="muted">Bez više izvođača. Bez komplikacija, kašnjenja i dodatnih troškova. Bez improvizacija.</div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Mobile sticky CTA -->
+  <div class="sticky-call" role="region" aria-label="Brzi kontakt">
+    <div class="inner">
+      <a class="btn btn-success" href="tel:+381XXXXXXXXX">Pozovite</a>
+      <a class="btn btn-primary" href="#kontakt">Upit</a>
+    </div>
+  </div>
+</body>
+</html>
