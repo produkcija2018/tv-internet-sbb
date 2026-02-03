@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Povezivanje objekata optikom | Brzo i pouzdano (B2B)</title>
+  <meta name="description" content="Povezivanje zgrada, hala i kompleksa optikom: planiranje, ugradnja, završeci, merenje i dokumentacija. Stabilna veza bez gubitaka. Pozovite SATVISION." />
+  <style>
+    body{margin:0;font-family:ui-sans-serif,system-ui;background:#0B1220;color:#EAF0FF;line-height:1.45}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 18px}
+    header{position:sticky;top:0;background:rgba(11,18,32,.78);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.10)}
+    .top{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:10px}
+    .brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:inherit;font-weight:800}
+    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#4F8CFF,#34D399)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#EAF0FF;text-decoration:none;font-weight:800}
+    .btnp{background:linear-gradient(135deg,rgba(79,140,255,.95),rgba(79,140,255,.70));border-color:rgba(79,140,255,.60)}
+    .bts{background:linear-gradient(135deg,rgba(52,211,153,.92),rgba(52,211,153,.62));border-color:rgba(52,211,153,.50);color:#071216}
+    .hero{padding:42px 0 14px;background:
+      radial-gradient(900px 380px at 15% -10%, rgba(79,140,255,.30), transparent 60%),
+      radial-gradient(900px 380px at 90% 0%, rgba(52,211,153,.18), transparent 55%)}
+    h1{margin:12px 0 10px;font-size:clamp(28px,4vw,42px);line-height:1.08}
+    .lead{color:#B7C2E6;max-width:70ch}
+    section{padding:18px 0}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:16px}
+    .card h3{margin:0 0 6px;font-size:15px}
+    .card p{margin:0;color:#B7C2E6;font-size:14px}
+    ul{margin:0;padding-left:18px;color:#B7C2E6}
+    .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .panel{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:16px}
+    label{font-size:12px;color:#B7C2E6}
+    input,textarea{width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(15,26,51,.55);color:#EAF0FF;outline:none}
+    textarea{min-height:92px;resize:vertical}
+    .form{display:grid;gap:10px}
+    footer{padding:20px 0 40px;color:#B7C2E6;border-top:1px solid rgba(255,255,255,.10);margin-top:18px;font-size:13px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="top">
+        <a class="brand" href="#"><span class="logo"></span><span>SATVISION • Optika (B2B)</span></a>
+        <a class="btn btnp" href="tel:+381XXXXXXXXX">Pozovite: +381 XX XXX XXXX</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Povezivanje više objekata optikom — pouzdano, brzo, dokumentovano</h1>
+      <p class="lead">
+        Ako imate više zgrada, hala ili lokacija, optička infrastruktura je najstabilniji način povezivanja bez gubitaka.
+        SATVISION radi komplet: <b>planiranje + ugradnja + završeci + merenje + dokumentacija</b>.
+      </p>
+      <div class="cta">
+        <a class="btn bts" href="tel:+381XXXXXXXXX">Pozovite</a>
+        <a class="btn btnp" href="#upit">Tražite ponudu</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid">
+        <div class="card"><h3>Za koga</h3><p>Kompleksi, industrijske zone, kampusi, skladišta, više poslovnica.</p></div>
+        <div class="card"><h3>Zašto optika</h3><p>Veća stabilnost, veće brzine, manji gubici na većim rastojanjima.</p></div>
+        <div class="card"><h3>Šta dobijate</h3><p>Završeci, merenje, obeležavanje i dokumentaciju za održavanje.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="panel">
+        <h2 style="margin:0 0 10px;font-size:20px;">Šta radimo (deliverables)</h2>
+        <ul>
+          <li>Plan trasa i predlog rešenja (topologija, rezerve, zaštita)</li>
+          <li>Ugradnja optičkih kablova (unutra/spolja, prema uslovima objekta)</li>
+          <li>Završeci, spajanje i terminisanje (po dogovorenom standardu)</li>
+          <li>Merenje/testiranje i zapisnik</li>
+          <li>Obeležavanje + dokumentacija (sheme i portovi)</li>
+          <li>Povezivanje mrežne opreme i puštanje u rad</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid">
+        <div class="card">
+          <h3>Tipični scenariji</h3>
+          <p>Povezivanje upravne zgrade i hale • Povezivanje dve zgrade preko dvorišta • Kompleks sa centralnim nadzorom</p>
+        </div>
+        <div class="card">
+          <h3>Šta utiče na cenu</h3>
+          <p>Rastojanje i trasa • uslovi terena/kanali • broj vlakana • završeci i oprema • rok</p>
+        </div>
+        <div class="card">
+          <h3>Način rada</h3>
+          <p>Fazno i planski, po dogovoru bez prekida kritičnih procesa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="upit">
+      <div class="grid">
+        <div class="panel" style="grid-column: span 2;">
+          <h2 style="margin:0 0 10px;font-size:20px;">Tražite ponudu za optiku?</h2>
+          <p style="margin:0 0 12px;color:#B7C2E6;">Pošaljite lokacije i okvirnu dužinu trase (ili nacrt) — predložićemo rešenje i plan izvođenja.</p>
+          <form class="form" action="#" method="post">
+            <div>
+              <label>Firma / Ime</label>
+              <input placeholder="Npr. ABC d.o.o." required />
+            </div>
+            <div>
+              <label>Telefon</label>
+              <input placeholder="+381..." required />
+            </div>
+            <div>
+              <label>Kratak opis (broj objekata, rastojanje, rok)</label>
+              <textarea placeholder="Npr. 2 objekta, ~120m, rok 14 dana"></textarea>
+            </div>
+            <button class="btn btnp" type="submit">Pošalji upit</button>
+            <div style="font-size:12px;color:#B7C2E6;">* Test mod: forma ne šalje podatke (action="#").</div>
+          </form>
+        </div>
+        <div class="panel">
+          <h2 style="margin:0 0 10px;font-size:20px;">Kontakt</h2>
+          <p style="margin:0;color:#B7C2E6;">
+            Telefon: <b><a href="tel:+381XXXXXXXXX">+381 XX XXX XXXX</a></b><br/>
+            Email: <b><a href="mailto:office@example.com">office@example.com</a></b><br/>
+            Servisna zona: <b>Vaš grad/opštine</b>
+          </p>
+          <div class="cta">
+            <a class="btn bts" href="tel:+381XXXXXXXXX">Pozovite</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      SATVISION — Optika i povezivanje objekata • Stabilno, brzo, dokumentovano.
+    </footer>
+  </main>
+</body>
+</html>
