@@ -45,13 +45,14 @@
     .wrap{max-width:var(--max); margin:0 auto; padding:0 18px;}
 
     /* Canvas background */
-    #meshBg{
-      position:fixed;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-      opacity:.65; /* keep subtle */
-    }
+    ##meshBg{
+       position:fixed;
+       inset:0;
+       z-index:0;             /* BITNO: više nije -1 */
+       pointer-events:none;
+       opacity:1;
+       mix-blend-mode:multiply; /* lepše na svetlom */
+     }
 
     /* Top nav */
     header.nav{
@@ -970,7 +971,11 @@
       for(let i=0;i<pts.length;i++){
         const p = pts[i];
         p.x += p.vx; p.y += p.vy;
-
+        // draw point
+        ctx.fillStyle = "rgba(14,165,233,.25)";
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
+        ctx.fill();
         if(p.x < 0 || p.x > w) p.vx *= -1;
         if(p.y < 0 || p.y > h) p.vy *= -1;
 
@@ -988,8 +993,8 @@
             const g = Math.round(95 + (165-95)*0.6);
             const b = Math.round(255 + (233-255)*0.6);
 
-            ctx.strokeStyle = `rgba(${r},${g},${b},${0.10*t})`;
-            ctx.lineWidth = 0.6;
+            ctx.strokeStyle = `rgba(11,95,255,${0.22*t})`;  // jače
+            ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(p.x,p.y);
             ctx.lineTo(q.x,q.y);
