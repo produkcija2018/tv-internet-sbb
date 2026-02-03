@@ -473,6 +473,21 @@
     @media (max-width: 420px){
       .gallery{ grid-template-columns:repeat(2,1fr); }
     }
+      /* FIX: sadržaj iznad canvasa */
+      header.nav, main, footer, .sticky { 
+        position: relative; 
+        z-index: 1; 
+      }
+
+  /* FIX: canvas ispod sadržaja ali iznad body pozadine */
+      #meshBg{
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 1;
+        mix-blend-mode: multiply;
+      }
   </style>
 
   <!-- FAQ Schema -->
