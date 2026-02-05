@@ -459,6 +459,125 @@
         </div>
       </div>
     </section>
+    <section id="tech-appendix" class="section">
+  <div class="secTitle">
+    <div>
+      <h3>📎 Dodatak A — Tehnička procedura migracije (IT Runbook)</h3>
+      <p>
+        Ova sekcija je namenjena IT realizaciji i dokumentaciji.
+        <b>Nije obavezno čitanje za menadžment.</b>
+        Služi kao precizan, proverljiv i ponovljiv postupak migracije.
+      </p>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:12px">
+    <h4>FAZA 0 — Preduslovi (P0 blokade)</h4>
+    <ul>
+      <li>✔ Google Workspace domen (npr. <b>@satvision.rs</b> ili novi)</li>
+      <li>✔ Admin pristup (<b>Super Administrator</b>)</li>
+      <li>✔ Aktivna SBB e-mail adresa: <b>satvision@sbb.rs</b></li>
+      <li>✔ SBB IMAP server i važeća lozinka</li>
+      <li>✔ Internet pristup (bez lokalnih klijenata)</li>
+    </ul>
+    <p style="margin-top:10px; color:#fca5a5; font-size:13px">
+      ⚠ Ako nešto od navedenog nedostaje → migracija se <b>NE pokreće</b> (P0 blokada).
+    </p>
+  </div>
+
+  <div class="box" style="margin-bottom:12px">
+    <h4>FAZA 1 — Priprema (30–45 min)</h4>
+    <ul>
+      <li>Prijava u Google Admin Console: <span class="kbd">https://admin.google.com</span></li>
+      <li>Kreiranje ciljnog mailbox-a (ako ne postoji)</li>
+      <li>Primer: <b>arhiva@satvision.rs</b> (preporučeno)</li>
+      <li>Alternativa: <b>satvision.office@gmail.com</b> (ako Workspace nije opcija)</li>
+      <li>Priprema SBB IMAP parametara:
+        <ul>
+          <li>IMAP server (od SBB-a)</li>
+          <li>Port: <b>993</b></li>
+          <li>Encryption: <b>SSL</b></li>
+          <li>Username: <b>satvision@sbb.rs</b></li>
+          <li>Password: važeća lozinka</li>
+        </ul>
+      </li>
+    </ul>
+    <p style="margin-top:10px; color:var(--muted2); font-size:12px">
+      📌 Preporuka: koristiti <b>Google Workspace mailbox</b> zbog audita, kontrole i evidencije.
+    </p>
+  </div>
+
+  <div class="box" style="margin-bottom:12px">
+    <h4>FAZA 2 — Pokretanje Google Data Migration Service</h4>
+    <ul>
+      <li>Admin Console → <b>Data → Data import & export → Data Migration</b></li>
+      <li>Source: <b>IMAP Server</b></li>
+      <li>Destination: <b>Gmail</b></li>
+      <li>Unos IMAP parametara (SBB)</li>
+      <li>Klik na <b>CONNECT</b></li>
+    </ul>
+    <p style="margin-top:8px; font-size:13px">
+      ✅ Ako je konekcija uspešna → nastaviti<br/>
+      ❌ Ako nije → kontaktirati SBB za proveru IMAP pristupa
+    </p>
+  </div>
+
+  <div class="box" style="margin-bottom:12px">
+    <h4>FAZA 3 — Migracija</h4>
+    <ul>
+      <li>Mapiranje naloga: <b>satvision@sbb.rs → arhiva@satvision.rs</b></li>
+      <li>Opcije:
+        <ul>
+          <li>✅ Email messages</li>
+          <li>✅ Include attachments</li>
+          <li>❌ Exclude spam (opciono)</li>
+          <li>❌ Calendar / Contacts (ako ne postoje)</li>
+        </ul>
+      </li>
+      <li>Pokretanje migracije: <b>START MIGRATION</b></li>
+    </ul>
+    <p style="margin-top:10px; font-size:13px; color:var(--muted)">
+      ⏱️ Trajanje: mali mailbox 15–60 min, veći mailbox nekoliko sati.<br/>
+      📌 Migracija je <b>read-only</b> za SBB nalog (bezbedno).
+    </p>
+  </div>
+
+  <div class="box" style="margin-bottom:12px">
+    <h4>FAZA 4 — Verifikacija (OBAVEZNO)</h4>
+    <ul>
+      <li>Provera statusa u Admin konzoli (Completed / Errors)</li>
+      <li>Pregled broja migriranih poruka</li>
+      <li>Ručna provera u Gmail-u:
+        <ul>
+          <li>Inbox</li>
+          <li>Sent</li>
+          <li>Custom foldere</li>
+          <li>Starije poruke (random sampling)</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h4>FAZA 5 — Arhiva i zatvaranje</h4>
+    <ul>
+      <li>Postavljanje mailbox-a u <b>read-only / archive-only</b> režim</li>
+      <li>Zabrana slanja (koristi se samo za istoriju)</li>
+      <li>Namena: pravne potrebe, ugovori, reference</li>
+      <li>Kreiranje dokumenta:
+        <ul>
+          <li><b>Email Migration Report</b></li>
+          <li>Source: SBB IMAP</li>
+          <li>Destination: Google Workspace</li>
+          <li>Date</li>
+          <li>Migrated mail count</li>
+          <li>Verified by</li>
+          <li>Status: <b>SUCCESS</b></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</section>
 
   </main>
 
