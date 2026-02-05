@@ -383,7 +383,7 @@
           </ul>
         </div>
         <div class="box">
-          <h4>Dokaz (za direktora)</h4>
+          <h4>Dokaz</h4>
           <ul>
             <li>Screenshot: Gmail folderi + primer starog maila</li>
             <li>Checklist “DONE” potpisan</li>
@@ -396,8 +396,8 @@
     <section id="rizici" class="section">
       <div class="secTitle">
         <div>
-          <h3>4) Rizici i mitigacije (profi deo)</h3>
-          <p>Ovo štiti firmu i pokazuje da postupak nije “na sreću”.</p>
+          <h3>4) Rizici i mitigacije </h3>
+          <p> Arhiva se čuva u read-only režimu.</p>
         </div>
       </div>
 
@@ -462,17 +462,17 @@
     <section id="tech-appendix" class="section">
   <div class="secTitle">
     <div>
-      <h3>📎 Dodatak A — Tehnička procedura migracije (IT Runbook)</h3>
+      <h3>📎 Dodatak A — Tehnička procedura migracije </h3>
       <p>
-        Ova sekcija je namenjena IT realizaciji i dokumentaciji.
-        <b>Nije obavezno čitanje za menadžment.</b>
-        Služi kao precizan, proverljiv i ponovljiv postupak migracije.
+        Realizaciji i dokumentacija.
+        <b>Validacija.</b>
+        Precizan, ponovljiv postupak migracije.
       </p>
     </div>
   </div>
 
   <div class="box" style="margin-bottom:12px">
-    <h4>FAZA 0 — Preduslovi (P0 blokade)</h4>
+    <h4>FAZA 0 — Preduslovi </h4>
     <ul>
       <li>✔ Google Workspace domen (npr. <b>@satvision.rs</b> ili novi)</li>
       <li>✔ Admin pristup (<b>Super Administrator</b>)</li>
@@ -481,12 +481,12 @@
       <li>✔ Internet pristup (bez lokalnih klijenata)</li>
     </ul>
     <p style="margin-top:10px; color:#fca5a5; font-size:13px">
-      ⚠ Ako nešto od navedenog nedostaje → migracija se <b>NE pokreće</b> (P0 blokada).
+      Ako nešto nedostaje - migracija se <b>NE pokreće</b>.
     </p>
   </div>
 
   <div class="box" style="margin-bottom:12px">
-    <h4>FAZA 1 — Priprema (30–45 min)</h4>
+    <h4>FAZA 1 — Priprema </h4>
     <ul>
       <li>Prijava u Google Admin Console: <span class="kbd">https://admin.google.com</span></li>
       <li>Kreiranje ciljnog mailbox-a (ako ne postoji)</li>
@@ -576,6 +576,149 @@
         </ul>
       </li>
     </ul>
+  </div>
+</section>
+<section id="cost-comparison" class="section">
+  <div class="secTitle">
+    <div>
+      <h3>📊 Uporedna analiza troškova — plaćeno vs besplatno</h3>
+      <p>
+        Ova tabela prikazuje realne troškove, dobitke i rizike za svaku opciju.
+        Namenjena je donošenju poslovne odluke, bez tehničkih detalja.
+      </p>
+    </div>
+  </div>
+
+  <table class="table">
+    <tr>
+      <th>Opcija</th>
+      <th>Cena</th>
+      <th>Šta se dobija</th>
+      <th>Šta je OK</th>
+      <th>Mane / Rizici</th>
+      <th>Kada je pametno</th>
+    </tr>
+
+    <tr>
+      <td><b>Google Workspace<br/>Business Starter</b></td>
+      <td><b>~7–8 € / mesečno</b><br/><span style="font-size:12px;color:var(--muted2)">~85–100 € godišnje</span></td>
+      <td>
+        ✔ Poslovni domen<br/>
+        ✔ Gmail interfejs<br/>
+        ✔ Admin kontrola<br/>
+        ✔ Audit & logovi<br/>
+        ✔ IMAP migracija<br/>
+        ✔ 30 GB prostora
+      </td>
+      <td class="ok">
+        Profesionalno<br/>
+        Pravna težina<br/>
+        Dugoročna stabilnost
+      </td>
+      <td class="warn">
+        Nije besplatno<br/>
+        Stalni mesečni trošak
+      </td>
+      <td>
+        Kada firma želi<br/>
+        <b>enterprise rešenje bez rizika</b>
+      </td>
+    </tr>
+
+    <tr>
+      <td><b>Google Workspace<br/>Business Standard</b></td>
+      <td><b>~14–17 € / mesečno</b></td>
+      <td>
+        Sve iz Starter plana<br/>
+        + više prostora i alata
+      </td>
+      <td class="ok">
+        Više storage-a<br/>
+        Spremno za rast
+      </td>
+      <td class="warn">
+        Preterano skupo<br/>
+        za “samo arhivu”
+      </td>
+      <td>
+        Ako postoji<br/>
+        više korisnika ili veliki mailbox
+      </td>
+    </tr>
+
+    <tr>
+      <td><b>Besplatan Gmail<br/>(@gmail.com)</b></td>
+      <td><b>0 €</b></td>
+      <td>
+        ✔ 15 GB prostora<br/>
+        ✔ Gmail interfejs<br/>
+        ✔ IMAP import
+      </td>
+      <td class="ok">
+        Besplatno<br/>
+        Brzo i jednostavno
+      </td>
+      <td class="warn">
+        Privatni nalog<br/>
+        Nema admin kontrole<br/>
+        Slaba pravna težina
+      </td>
+      <td>
+        Za brz pregled<br/>
+        stare pošte bez troška
+      </td>
+    </tr>
+
+    <tr>
+      <td><b>Thunderbird<br/>+ lokalna arhiva (MBOX)</b></td>
+      <td><b>0 €</b></td>
+      <td>
+        ✔ Kompletna offline arhiva<br/>
+        ✔ Podaci kod firme<br/>
+        ✔ Nezavisno od platforme
+      </td>
+      <td class="ok">
+        Najsigurnija arhiva<br/>
+        Pravno OK kao dokaz
+      </td>
+      <td class="warn">
+        Nema web pristupa<br/>
+        Ručno održavanje
+      </td>
+      <td>
+        Kao <b>source of truth</b><br/>
+        i dugoročni backup
+      </td>
+    </tr>
+
+    <tr>
+      <td><b>Besplatni mail hosting<br/>(Zoho Free i sl.)</b></td>
+      <td><b>0 €</b></td>
+      <td>
+        Mail adresa na domenu
+      </td>
+      <td class="ok">
+        Na papiru besplatno
+      </td>
+      <td class="warn">
+        Često nema IMAP<br/>
+        Strogi limiti<br/>
+        Promena uslova bez najave
+      </td>
+      <td>
+        <b>Ne preporučuje se</b><br/>
+        za poslovnu arhivu
+      </td>
+    </tr>
+  </table>
+
+  <div class="box" style="margin-top:14px">
+    <b>Kratak zaključak:</b>
+    <p style="margin:8px 0 0; font-size:13px; color:var(--muted)">
+      • Najprofesionalnije rešenje: <b>Google Workspace</b> (plaćeno, bez rizika)<br/>
+      • Najjeftinije i najsigurnije: <b>Thunderbird arhiva</b> (0 €, ali nije “živa”)<br/>
+      • Najbrže i besplatno: <b>Privatan Gmail</b> (radi, ali nije enterprise)
+    </p>
   </div>
 </section>
 
