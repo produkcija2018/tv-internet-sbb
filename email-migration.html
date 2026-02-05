@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Migracija e-maila: satvision@sbb.rs → Gmail (Arhiva + Kontinuitet)</title>
+  <meta name="description" content="Profesionalna migracija SBB mailbox-a na Gmail, sa arhivom (PST/MBOX), kontrolom rizika i definisanim koracima." />
+  <style>
+    :root{
+      --bg0:#070914; --bg1:#0b1024;
+      --card:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.14);
+      --txt:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+      --muted2:rgba(255,255,255,.55);
+      --accent:#7c3aed; --accent2:#22c55e; --accent3:#06b6d4;
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --radius:18px; --radius2:14px; --max:1120px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--txt);
+      background:
+        radial-gradient(1100px 600px at 12% 10%, rgba(124,58,237,.28), transparent 60%),
+        radial-gradient(900px 500px at 88% 12%, rgba(6,182,212,.18), transparent 60%),
+        radial-gradient(900px 520px at 50% 110%, rgba(34,197,94,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .nav{
+      position:sticky; top:0; z-index:999;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,9,20,.78), rgba(7,9,20,.32));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .navin{display:flex; gap:14px; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{
+      width:36px; height:36px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(124,58,237,1), rgba(6,182,212,1));
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 14px 40px rgba(124,58,237,.22);
+    }
+    .brand h1{margin:0; font-size:14px; letter-spacing:.2px}
+    .brand .sub{margin-top:2px; font-size:12px; color:var(--muted2)}
+    .menu{display:flex; gap:12px; align-items:center}
+    .menu a{font-size:13px; color:var(--muted); padding:8px 10px; border-radius:12px}
+    .menu a:hover{background:rgba(255,255,255,.06); color:var(--txt)}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);
+      color:var(--txt);
+      box-shadow: 0 10px 28px rgba(0,0,0,.25);
+      transition:.25s transform,.25s background,.25s border;
+      cursor:pointer; font-weight:650; font-size:13px;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.09); border-color:rgba(255,255,255,.26)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,58,237,1), rgba(6,182,212,1));
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 16px 44px rgba(124,58,237,.20);
+    }
+    .hero{padding:26px 0 10px}
+    .card{
+      background: var(--card);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-1px;
+      background:
+        radial-gradient(860px 240px at 20% 0%, rgba(124,58,237,.20), transparent 55%),
+        radial-gradient(700px 240px at 100% 10%, rgba(6,182,212,.14), transparent 55%);
+      pointer-events:none; opacity:.9;
+    }
+    .heroIn{padding:18px; position:relative; z-index:2}
+    h2{margin:8px 0 6px; font-size:24px; letter-spacing:-.3px}
+    .desc{margin:0; color:var(--muted); font-size:14px; line-height:1.65; max-width:88ch}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--muted); font-size:12px;
+    }
+    .dot{width:8px; height:8px; border-radius:999px; background:var(--accent2); box-shadow:0 0 18px rgba(34,197,94,.55)}
+    .section{padding:16px 0}
+    .secTitle{display:flex; align-items:flex-end; justify-content:space-between; gap:14px; margin:6px 0 12px}
+    .secTitle h3{margin:0; font-size:18px}
+    .secTitle p{margin:0; color:var(--muted2); font-size:13px; max-width:86ch; line-height:1.55}
+    .grid2{display:grid; grid-template-columns:1.1fr .9fr; gap:12px}
+    .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .box{
+      padding:14px; border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      min-height:140px;
+    }
+    .box h4{margin:0 0 8px; font-size:14px}
+    .box ul{margin:0; padding-left:18px; color:var(--muted); font-size:13px; line-height:1.6}
+    .box li{margin:6px 0}
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      padding:3px 7px; border-radius:10px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:rgba(255,255,255,.78);
+      font-size:12px;
+    }
+    .table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.14);
+    }
+    .table th,.table td{
+      padding:11px 12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      vertical-align:top;
+      font-size:13px;
+    }
+    .table th{color:rgba(255,255,255,.85); text-align:left; background:rgba(255,255,255,.04)}
+    .table tr:last-child td{border-bottom:none}
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:12px; color:rgba(255,255,255,.78);
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      margin-right:8px;
+    }
+    .ok{color:#9ae6b4}
+    .warn{color:#fca5a5}
+    .cta{
+      padding:16px; border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(780px 220px at 10% 0%, rgba(124,58,237,.16), transparent 55%),
+        radial-gradient(680px 220px at 100% 10%, rgba(6,182,212,.12), transparent 55%),
+        rgba(255,255,255,.05);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      box-shadow: var(--shadow);
+    }
+    .footer{padding:22px 0 28px; color:var(--muted2); font-size:12px; border-top:1px solid rgba(255,255,255,.08); margin-top:14px}
+    @media (max-width: 980px){
+      .menu{display:none}
+      .grid2{grid-template-columns:1fr}
+      .grid3{grid-template-columns:1fr}
+      h2{font-size:21px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <div class="wrap navin">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Migracija e-maila • SBB → Gmail</h1>
+          <div class="sub">satvision@sbb.rs • Arhiva • Kontinuitet • Profesionalni postupak</div>
+        </div>
+      </div>
+      <div class="menu">
+        <a href="#cilj">Cilj</a>
+        <a href="#preuslovi">Preuslovi</a>
+        <a href="#koraci">Koraci</a>
+        <a href="#arhiva">Arhiva</a>
+        <a href="#validacija">Validacija</a>
+        <a href="#rizici">Rizici</a>
+      </div>
+      <a class="btn primary" href="#koraci">✅ Kreni koracima</a>
+    </div>
+  </div>
+
+  <header class="hero" id="cilj">
+    <div class="wrap">
+      <section class="card">
+        <div class="heroIn">
+          <div class="pill"><span class="dot"></span> Cilj: trajni pristup starim mailovima i nakon gašenja platforme</div>
+          <h2>Profesionalna migracija mailbox-a <span class="kbd">satvision@sbb.rs</span> na <span class="kbd">Gmail</span></h2>
+          <p class="desc">
+            Gašenjem SBB e-mail platforme (domen <b>sbb.rs</b>) poslovna komunikacija ne sme da se izgubi.
+            Ovaj plan obezbeđuje: <b>(1) preuzimanje svih mailova</b>, <b>(2) izradu nezavisne arhive</b>,
+            <b>(3) migraciju u Gmail</b> i <b>(4) proveru da je sve kompletno</b>.
+          </p>
+          <div style="margin-top:12px">
+            <span class="tag">✅ Integritet podataka</span>
+            <span class="tag">✅ Backup (PST/MBOX)</span>
+            <span class="tag">✅ Kontinuitet poslovanja</span>
+            <span class="tag">✅ Dokumentovan postupak</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section id="preuslovi" class="section">
+      <div class="secTitle">
+        <div>
+          <h3>0) Preuslovi: šta nam treba od SBB-a i šta pripremamo u Gmail</h3>
+          <p>Bez ovih informacija ne možemo bezbedno pristupiti mailbox-u i uraditi migraciju.</p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="box">
+          <h4>✅ Šta nam treba od SBB-a (za pristup)</h4>
+          <ul>
+            <li><b>Korisničko ime:</b> satvision@sbb.rs</li>
+            <li><b>Lozinka</b> (ili reset procedure + kontakt osobe)</li>
+            <li><b>IMAP/POP parametri:</b> IMAP server, port, SSL/TLS, SMTP server, port</li>
+            <li><b>Webmail URL</b> (ako postoji) + potvrda da je IMAP omogućen</li>
+            <li><b>Veličina mailbox-a</b> (procena: npr. 2GB, 10GB...)</li>
+            <li><b>Da li postoje shared folderi</b> ili alias adrese</li>
+          </ul>
+          <p style="margin:10px 0 0; color:var(--muted2); font-size:12px; line-height:1.5">
+            Ako SBB ne želi da deli parametre, tražimo: “<b>IMAP settings for satvision@sbb.rs</b>” ili “<b>export mailbox</b>”.
+          </p>
+        </div>
+
+        <div class="box">
+          <h4>✅ Šta pripremamo u Gmail (destination)</h4>
+          <ul>
+            <li><b>Gmail nalog</b> koji će biti “vault” (npr. satvision.archive@gmail.com ili poslovni Google Workspace)</li>
+            <li><b>2FA</b> uključen (obavezno)</li>
+            <li><b>Folder/label struktura</b> (npr. Projekti, SBB, Ponude, Računi, Support...)</li>
+            <li><b>Prostor</b>: proveriti slobodan storage (Google Drive quota)</li>
+            <li>Definisati <b>ko ima pristup</b> (direktor + 1 admin)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="koraci" class="section">
+      <div class="secTitle">
+        <div>
+          <h3>1) Koraci migracije (profesionalni “runbook”)</h3>
+          <p>Koraci su dizajnirani tako da se prvo osigura arhiva, pa tek onda radi migracija u Gmail.</p>
+        </div>
+      </div>
+
+      <table class="table">
+        <tr>
+          <th>#</th>
+          <th>Korak</th>
+          <th>Šta radimo</th>
+          <th>Definition of Done</th>
+        </tr>
+        <tr>
+          <td><b>1</b></td>
+          <td><b>Pre-flight provera</b></td>
+          <td>
+            Proverimo pristup starom mailbox-u (webmail ili klijent). Utvrdimo da li je IMAP aktivan i da li postoje folderi/arhive.
+          </td>
+          <td>Login uspešan + evidentirani folderi + procena veličine.</td>
+        </tr>
+        <tr>
+          <td><b>2</b></td>
+          <td><b>Podešavanje klijenta</b></td>
+          <td>
+            U Outlook/Thunderbird dodamo <b>stari SBB (IMAP)</b> + <b>novi Gmail (IMAP)</b>.
+            Ako Gmail traži “app password”, omogućimo 2FA i generišemo app password.
+          </td>
+          <td>Oba naloga rade + vide se folderi + test mail send/receive.</td>
+        </tr>
+        <tr>
+          <td><b>3</b></td>
+          <td><b>Arhiva (offline backup)</b></td>
+          <td>
+            Izvozimo kompletnu arhivu: <b>PST</b> (Outlook) ili <b>MBOX</b> (Thunderbird).
+            Backup čuvamo na 2 lokacije (disk + cloud).
+          </td>
+          <td>Arhiva kreirana + checksum/veličina evidentirana + 2 kopije postoje.</td>
+        </tr>
+        <tr>
+          <td><b>4</b></td>
+          <td><b>Migracija u Gmail</b></td>
+          <td>
+            Kopiramo foldere/mailove sa SBB naloga na Gmail nalog (IMAP copy).
+            Radimo etapno (po folderima ili po godinama) da izbegnemo greške i throttling.
+          </td>
+          <td>Svi folderi preneti + broj poruka približno identičan.</td>
+        </tr>
+        <tr>
+          <td><b>5</b></td>
+          <td><b>Validacija</b></td>
+          <td>
+            Proverimo: ukupne poruke, najstariji mail, najnoviji mail, attachment-e, važni folderi.
+            Uporedimo “count by folder”.
+          </td>
+          <td>Potvrđeno da su ključni mailovi/attachment-i dostupni u Gmail-u.</td>
+        </tr>
+        <tr>
+          <td><b>6</b></td>
+          <td><b>Operativni prelaz</b></td>
+          <td>
+            Definišemo novu službenu adresu (npr. na domenu firme) i forward/obaveštenje korisnicima.
+            Ako je moguće, postavimo auto-reply na starom nalogu do gašenja.
+          </td>
+          <td>Nova adresa aktivna + obaveštenja/forward plan definisan.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section id="arhiva" class="section">
+      <div class="secTitle">
+        <div>
+          <h3>2) Arhiva (obavezno): kako čuvamo istoriju firme</h3>
+          <p>Arhiva mora biti nezavisna od SBB-a i nezavisna od jednog računara.</p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="box">
+          <h4>Format arhive</h4>
+          <ul>
+            <li>Outlook: <b>.PST</b> (Full mailbox export)</li>
+            <li>Thunderbird: <b>.MBOX</b> (folder export)</li>
+            <li>Napomena: čuvamo i “raw” strukturu foldera</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h4>Backup pravilo (2+1)</h4>
+          <ul>
+            <li><b>Kopija #1:</b> eksterni disk (offline)</li>
+            <li><b>Kopija #2:</b> cloud (Drive/OneDrive)</li>
+            <li><b>Kopija #3 (opciono):</b> drugi disk / druga lokacija</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h4>Evidencija (da bude “audit-ready”)</h4>
+          <ul>
+            <li>Datum izvoza + veličina arhive</li>
+            <li>Ko je radio migraciju</li>
+            <li>Gde se čuva arhiva + ko ima pristup</li>
+            <li>Napomena o zaštiti (2FA, šifre)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="validacija" class="section">
+      <div class="secTitle">
+        <div>
+          <h3>3) Validacija (kako dokazujemo da je migracija uspela)</h3>
+          <p>Ovo su “kontrolne tačke” koje eliminišu rizik da nešto fali.</p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="box">
+          <h4>Kontrolne tačke</h4>
+          <ul>
+            <li>Najstariji mail u inbox-u (npr. 2012)</li>
+            <li>Najnoviji mail (poslednjih 7 dana)</li>
+            <li>3 maila sa velikim attachment-om</li>
+            <li>Ključni folderi: Ponude / Ugovori / SBB / Računi</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h4>Upoređivanje količine</h4>
+          <ul>
+            <li>Broj poruka po folderu (SBB vs Gmail)</li>
+            <li>Ukupan broj poruka (približno isti)</li>
+            <li>Provera Sent / Drafts / Trash po dogovoru</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h4>Dokaz (za direktora)</h4>
+          <ul>
+            <li>Screenshot: Gmail folderi + primer starog maila</li>
+            <li>Checklist “DONE” potpisan</li>
+            <li>Lokacija arhive + ko ima pristup</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="rizici" class="section">
+      <div class="secTitle">
+        <div>
+          <h3>4) Rizici i mitigacije (profi deo)</h3>
+          <p>Ovo štiti firmu i pokazuje da postupak nije “na sreću”.</p>
+        </div>
+      </div>
+
+      <table class="table">
+        <tr>
+          <th>Rizik</th>
+          <th>Simptom</th>
+          <th>Mitigacija</th>
+        </tr>
+        <tr>
+          <td><b>IMAP nije omogućen</b></td>
+          <td>Ne može da se doda SBB nalog u klijent</td>
+          <td>Tražimo od SBB-a da omogući IMAP ili da uradi export mailbox-a.</td>
+        </tr>
+        <tr>
+          <td><b>Throttling / limit kopiranja</b></td>
+          <td>Kopiranje staje ili je sporo</td>
+          <td>Migracija u etapama (po folderu/godini), pauze, rad van špica.</td>
+        </tr>
+        <tr>
+          <td><b>Nedostaju attachment-i</b></td>
+          <td>Mail postoji, ali nema fajla</td>
+          <td>Test sa velikim attachment-ima + arhiva kao “source of truth”.</td>
+        </tr>
+        <tr>
+          <td><b>Gubitak pristupa (lozinka/2FA)</b></td>
+          <td>Nalog zaključan ili resetovan</td>
+          <td>Definisati 2 admin osobe + recovery opcije + dokumentovan pristup.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="cta">
+        <div>
+          <b style="color:rgba(255,255,255,.86)">Kratak rezime (za direktora)</b>
+          <div style="margin-top:6px; color:var(--muted); font-size:13px; line-height:1.55">
+            1) Uzimamo pristupne podatke od SBB-a → 2) pravimo arhivu (PST/MBOX) + 2 kopije →
+            3) migriramo u Gmail → 4) validiramo da je sve prebačeno → 5) dokumentujemo i predajemo pristupe.
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <a class="btn primary" href="#koraci">✅ Koraci</a>
+          <a class="btn" href="#preuslovi">📌 Preuslovi</a>
+          <a class="btn" href="#arhiva">🗄️ Arhiva</a>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap">
+          <div>
+            <b style="color:rgba(255,255,255,.85)">Email Migration Runbook v1</b><br/>
+            <span>SBB → Gmail • Arhiva • Validacija • Dokumentacija</span>
+          </div>
+          <div style="text-align:right">
+            <span>Format: single-file HTML</span><br/>
+            <span class="muted2">Napomena: parametri servera se unose nakon dobijanja IMAP/SMTP podataka od SBB-a.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+        history.replaceState(null,'',id);
+      });
+    });
+  </script>
+</body>
+</html>
