@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SATVISION — Competitor Intelligence (Jan 2026)</title>
+  <title>SATVISION — Competitor Intelligence (Monthly)</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,9 +56,7 @@
       background: linear-gradient(180deg, rgba(7,10,18,.82), rgba(7,10,18,.35));
       border-bottom:1px solid rgba(255,255,255,.08);
     }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-    }
+    .brand{display:flex; align-items:center; gap:12px}
     .logo{
       width:38px; height:38px; border-radius:12px;
       background:
@@ -91,11 +89,7 @@
       outline:none;
     }
     .search::placeholder{color:rgba(231,236,255,.45)}
-    .grid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:14px;
-    }
+    .grid{display:grid; grid-template-columns: 1.2fr .8fr; gap:14px}
     @media (max-width: 980px){
       .grid{grid-template-columns:1fr}
       .controls{flex-wrap:wrap; justify-content:flex-end}
@@ -117,11 +111,7 @@
       font-size:12px; color:var(--muted2); letter-spacing:.2px;
       font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
-    .card .hd h2{
-      margin:6px 0 0;
-      font-size:16px;
-      letter-spacing:.2px;
-    }
+    .card .hd h2{margin:6px 0 0; font-size:16px; letter-spacing:.2px}
     .card .bd{padding:14px 16px}
     .badge{
       font-size:11px;
@@ -150,10 +140,7 @@
     .metric .val{font-size:18px; font-weight:700; margin-top:6px}
     .metric .hint{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.35}
     .mono{font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace}
-    .list{
-      margin:0; padding:0; list-style:none;
-      display:grid; gap:10px;
-    }
+    .list{margin:0; padding:0; list-style:none; display:grid; gap:10px}
     .li{
       padding:12px 12px;
       border-radius:14px;
@@ -162,40 +149,36 @@
     }
     .li .t{font-size:13px; font-weight:600}
     .li .d{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.45}
-    .section{
-      margin-top:14px;
-    }
+    .section{margin-top:14px}
 
     /* Tables */
     table{width:100%; border-collapse:separate; border-spacing:0}
     th,td{padding:10px 10px; border-bottom:1px solid rgba(255,255,255,.08); vertical-align:top}
     th{
-  font-size:12px;
-  text-align:left;
-  color:rgba(231,236,255,.85);
-  background: rgba(255,255,255,.04);
-  /* uklanjamo sticky sa globalnog th */
-  position: static;
-}
-    /* Sticky header unutar .tblWrap scroll kontejnera */
-.tblWrap thead th{
-  position: sticky;
-  top: 0;                      /* ključno */
-  z-index: 5;
-  background: rgba(12,16,32,.92);  /* jača pozadina da se ne meša sa redovima */
-  backdrop-filter: blur(10px);
-  white-space: nowrap;
-}
-    td{font-size:12.5px; color:var(--muted); line-height:1.35}
+      font-size:12px; text-align:left; color:rgba(231,236,255,.85);
+      background: rgba(255,255,255,.04);
+      position: static; /* IMPORTANT: sticky se radi samo unutar .tblWrap */
+    }
+    td{font-size:12.5px; color:var(--muted); line-height:1.35; word-break: break-word;}
     tr:hover td{background:rgba(255,255,255,.03)}
-    /* TABLES */
-.tblWrap{
-  position: relative;           /* bitno za sticky u scroll kontejneru */
-  border:1px solid rgba(255,255,255,.10);
-  border-radius: 16px;
-  overflow:auto;
-  background: rgba(255,255,255,.02);
-}
+
+    /* table wrapper + sticky header FIX */
+    .tblWrap{
+      position: relative;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      overflow:auto;
+      background: rgba(255,255,255,.02);
+    }
+    .tblWrap thead th{
+      position: sticky;
+      top: 0;                 /* ključ: ne 72px */
+      z-index: 5;
+      background: rgba(12,16,32,.92);
+      backdrop-filter: blur(10px);
+      white-space: nowrap;
+    }
+
     .tag{
       display:inline-flex; align-items:center; gap:6px;
       font-size:11px;
@@ -208,11 +191,7 @@
       margin-top:6px;
     }
     .tag .s{opacity:.8}
-    .prio{
-      font-weight:700;
-      font-family:"JetBrains Mono", monospace;
-      letter-spacing:.2px;
-    }
+    .prio{font-weight:700; font-family:"JetBrains Mono", monospace; letter-spacing:.2px}
     .p0{color:var(--bad)}
     .p1{color:var(--warn)}
     .p2{color:var(--good)}
@@ -247,14 +226,8 @@
     details[open] .chev{transform: rotate(180deg)}
     .inner{padding:12px 14px}
     .inner p{margin:0 0 10px; color:var(--muted); font-size:12.5px; line-height:1.55}
-    .inner .mini{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    @media (max-width: 860px){
-      .inner .mini{grid-template-columns:1fr}
-    }
+    .inner .mini{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+    @media (max-width: 860px){ .inner .mini{grid-template-columns:1fr} }
 
     /* Footer */
     .foot{
@@ -276,10 +249,7 @@
       background: rgba(255,255,255,.04);
       color:rgba(231,236,255,.82);
     }
-    .hl{
-      color:rgba(231,236,255,.95);
-      font-weight:600;
-    }
+    .hl{color:rgba(231,236,255,.95); font-weight:600}
   </style>
 </head>
 <body>
@@ -290,32 +260,37 @@
         <div class="logo" aria-hidden="true"></div>
         <div class="title">
           <h1>SATVISION — Competitor Intelligence</h1>
-          <div class="sub">Period: <span class="mono">01.01.2026 – 31.01.2026</span> • Kanal: Google (SEO) • Fokus: leads/instalacije</div>
+          <div class="sub">
+            Period: <span class="mono" id="periodTxt">—</span> • Kanal: Google (SEO) • Fokus: leads/instalacije
+          </div>
         </div>
       </div>
 
       <div class="controls">
         <div class="pill"><span class="dot warn"></span><b>Napomena</b> Nema javnog GSC za konkurenciju — koristimo SERP + sajt signale.</div>
-        <input id="search" class="search" placeholder="Pretraga po pojmovima (npr. 'CTA', 'lokalno', 'FAQ', 'OTT')…  (tip: Ctrl/⌘ + K)" />
+        <input id="search" class="search" placeholder="Pretraga po pojmovima (npr. 'CTA', 'lokalno', 'FAQ', 'paketi')…  (tip: Ctrl/⌘ + K)" />
       </div>
     </div>
 
     <!-- HERO GRID -->
     <div class="grid">
-      <div class="card" data-filter="rezime leads share-of-leads eon ott tabela">
+      <div class="card" data-filter="rezime leads share-of-leads top offer tabela">
         <div class="hd">
           <div>
             <div class="kicker">EXEC SUMMARY</div>
             <h2>Root cause: konkurencija dobija leadove kroz više ulaza + jači CTA funnel</h2>
           </div>
-          <span class="badge"><span class="dot bad"></span>Problem je sistemski (ponavlja se cele godine)</span>
+          <span class="badge"><span class="dot bad"></span>Problem je sistemski (ponavlja se po mesecima)</span>
         </div>
         <div class="bd">
           <div class="metricRow">
             <div class="metric">
-              <div class="lbl">Signal iz interne tabele (Jan 2026)</div>
-              <div class="val">18 leadova • “Eon ott-1”</div>
-              <div class="hint">Share-of-leads: Ember <b class="hl">44%</b> (8/18), Euro <b class="hl">17%</b> (3/18), SATVISION <b class="hl">17%</b> (3/18).</div>
+              <div class="lbl">Signal iz interne tabele (mesečni izveštaj)</div>
+              <div class="val"><span id="totalLeads">—</span> leadova • TOP offer: “<span id="topOffer">—</span>”</div>
+              <div class="hint">
+                Share-of-leads se meri po partnerima u istom offer segmentu.
+                <br><span style="color:rgba(231,236,255,.60)">TOP offer se menja po mesecu (npr. “TV Van mreže-1”, “Eon ott-1”).</span>
+              </div>
             </div>
             <div class="metric">
               <div class="lbl">Zašto gubimo (javna analiza)</div>
@@ -324,8 +299,11 @@
             </div>
             <div class="metric">
               <div class="lbl">Najmanji potez koji menja tabelu</div>
-              <div class="val">P0: EON OTT hub + sticky call</div>
-              <div class="hint">Napraviti fokusiran <span class="mono">/eon-ott/</span> landing + mobilni sticky “Pozovi” + “Zakaži poziv” micro-CTA na money stranicama.</div>
+              <div class="val">P0: “TOP offer hub” + sticky call</div>
+              <div class="hint">
+                Za offer koji je TOP u izveštaju napraviti fokusiran landing (npr. <span class="mono">/tv-van-mreze/</span> ili <span class="mono">/eon-ott/</span>) +
+                mobilni sticky “Pozovi” + “Zakaži poziv” na svim money stranicama.
+              </div>
             </div>
           </div>
 
@@ -348,21 +326,21 @@
         </div>
       </div>
 
-      <div class="card" data-filter="grafikon chart share-of-leads januar 2026">
+      <div class="card" data-filter="grafikon chart share-of-leads mesecni izvestaj">
         <div class="hd">
           <div>
             <div class="kicker">VISUAL</div>
-            <h2>Share-of-leads (Jan 2026)</h2>
+            <h2>Share-of-leads (mesečni izveštaj)</h2>
           </div>
           <span class="badge"><span class="dot warn"></span>Input: interna tabela (ne SERP)</span>
         </div>
         <div class="bd">
           <canvas id="leadChart" height="220" aria-label="Share of leads chart"></canvas>
           <div style="margin-top:10px; color:var(--muted2); font-size:12px; line-height:1.45">
-            Cilj: pomeriti SATVISION sa <span class="hl">17%</span> na <span class="hl">33%</span> (npr. 6/18) kroz:
-            <span class="tag"><span class="s">P0</span> EON OTT hub</span>
+            Cilj: povećati udeo SATVISION-a kroz: <span class="tag"><span class="s">P0</span> hub za TOP offer</span>
             <span class="tag"><span class="s">P0</span> sticky call</span>
             <span class="tag"><span class="s">P1</span> FAQ schema</span>
+            <span class="tag"><span class="s">P1</span> local landing set</span>
           </div>
         </div>
       </div>
@@ -404,7 +382,7 @@
                   Napraviti iste intent hubove (Novi/Postojeći) + na money stranicama micro-CTA “Zakaži poziv” pored “Poruči”.
                 </td>
                 <td>
-                  GSC: CTR na money upitima + događaji: click-to-call, form_submit, schedule_call.
+                  GSC: CTR na money upitima + eventi: click-to-call, form_submit, schedule_call.
                 </td>
               </tr>
 
@@ -422,7 +400,7 @@
                   Kontrolisan set lokalnih landing stranica (Beograd + top gradovi) + “ponuda” blok u snippetu + sticky call.
                 </td>
                 <td>
-                  GSC: upiti “+ grad” (Beograd/Srbija) + porast poziva iz lokalnih landing-a.
+                  GSC: upiti “+ grad” + rast poziva sa lokalnih landing-a.
                 </td>
               </tr>
 
@@ -440,7 +418,7 @@
                   U meniju SATVISION: paket klasteri izvučeni napred + interni linkovi da generišu sitelinks. CTA: “Zakaži poziv”.
                 </td>
                 <td>
-                  GSC: rast impresija/CTR na klaster landing-ima + rast navigacionih klikova (sitelinks signal).
+                  GSC: rast impresija/CTR na klaster landing-ima + rast click-to-call.
                 </td>
               </tr>
             </tbody>
@@ -480,9 +458,6 @@
             <div class="li">
               <div class="t">Kako zatvaraju lead</div>
               <div class="d">Telefon-first + kratke forme = niža frikcija nego “Poruči odmah” kao jedini CTA.</div>
-              <div class="d">
-                Primer: <a href="https://kablovska.info/sbb-novi-korisnici" target="_blank" rel="noreferrer">/sbb-novi-korisnici</a>
-              </div>
             </div>
           </div>
         </div>
@@ -544,7 +519,6 @@
             <div class="li">
               <div class="t">Konverzioni dizajn</div>
               <div class="d">Više telefona + email + forma + “Zakaži poziv” kao micro-commit.</div>
-              <div class="d">To je šablon koji SATVISION treba da kopira (operativno, ne sadržajno).</div>
             </div>
           </div>
         </div>
@@ -575,10 +549,10 @@
             <tbody>
               <tr>
                 <td class="prio p0">P0</td>
-                <td><span class="hl">EON OTT hub</span>: napraviti fokusiran landing <span class="mono">/eon-ott/</span> + FAQ blok + “Zakaži poziv”.</td>
-                <td>U tvojoj tabeli leadovi se vrte oko “Eon ott-1”. Treba 1 stranica koja dominira intentom i zatvara poziv.</td>
+                <td><span class="hl">TOP offer hub</span>: fokusiran landing za TOP offer meseca + FAQ blok + “Zakaži poziv”.</td>
+                <td>Softver mesečno izbacuje TOP offer (npr. “TV Van mreže-1”, “Eon ott-1”). Treba landing koji dominira taj intent i zatvara lead.</td>
                 <td>WP Pages + šablon (Gutenberg/Elementor) + FAQ schema (RankMath/Yoast) + sticky call.</td>
-                <td>GSC: klikovi/CTR za “eon ott” upite + eventi: click-to-call i form_submit.</td>
+                <td>GSC: klikovi/CTR za TOP offer upite + eventi: click-to-call i form_submit.</td>
               </tr>
               <tr>
                 <td class="prio p0">P0</td>
@@ -599,11 +573,11 @@
                 <td><span class="hl">Local landing set</span> (kontrolisano): Beograd + top gradovi za 3 money proizvoda.</td>
                 <td>Connect Vizija uzima lokalni long-tail (gradovi) i “seče” put do partnera.</td>
                 <td>WP Pages + lokalni blokovi (naselja, vreme instalacije, kontakt).</td>
-                <td>GSC: upiti “+ grad” + rast poziva iz lokalnih strana.</td>
+                <td>GSC: upiti “+ grad” + rast poziva sa lokalnih strana.</td>
               </tr>
               <tr>
                 <td class="prio p1">P1</td>
-                <td><span class="hl">FAQ schema</span> samo gde FAQ realno postoji (EON/NET TV/van mreže).</td>
+                <td><span class="hl">FAQ schema</span> samo gde FAQ realno postoji (money stranice).</td>
                 <td>Veći snippet = veći CTR bez #1 pozicije.</td>
                 <td>SEO plugin schema + validacija Rich Results Test.</td>
                 <td>GSC CTR rast po URL-u + rich result detekcija.</td>
@@ -621,8 +595,8 @@
 
         <div class="foot">
           <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center">
-            <span class="badge"><span class="dot warn"></span><span class="hl">Granica javnog:</span> Ne postoji javno “koliko imaju klikova” iz Google-a. Ovo je zato “proof-driven” plan: <span class="hl">SERP share-of-voice</span> + <span class="hl">GSC na SATVISION</span> + <span class="hl">event konverzije</span>.</span>
-            <span class="badge"><span class="dot good"></span>Tip: fokus na “EON OTT” jer je signal u tabeli konstantan.</span>
+            <span class="badge"><span class="dot warn"></span><span class="hl">Granica javnog:</span> Ne postoji javno “koliko imaju klikova” iz Google-a. Plan je proof-driven: <span class="hl">SERP share-of-voice</span> + <span class="hl">GSC na SATVISION</span> + <span class="hl">event konverzije</span>.</span>
+            <span class="badge"><span class="dot good"></span>Pravilo: svaki mesec fokus = TOP offer + isti mehanizam preotimanja leadova.</span>
           </div>
           <div style="margin-top:10px">
             Pretraga stranice: <span class="kbd">Ctrl</span> / <span class="kbd">⌘</span> + <span class="kbd">K</span>.
@@ -675,18 +649,31 @@
 
   <script>
     // --------------------------
-    // Input data (from your screenshot table)
+    // Report context (menja se svakog meseca)
+    // --------------------------
+    const reportContext = {
+      period: "01.01.2026 – 31.01.2026",
+      topOffer: "Eon ott-1" // npr: "Tv Van mreže-1" za 05.12.2025
+    };
+
+    // --------------------------
+    // Input data (iz vašeg pivot/tabele)
     // --------------------------
     const leadData = [
       { name: "EMBER MEDIA (kablovska.info)", count: 8, note: "Telefon-first + intent split (novi/postojeći)." },
       { name: "EURO CONNECTION (euroconnection.rs)", count: 3, note: "Paketi-first IA + ‘Zakaži poziv’ CTA." },
-      { name: "SATVISION", count: 3, note: "Trenutno izjednačeno sa Euro, ali bez sistemske prednosti." },
+      { name: "SATVISION", count: 3, note: "Udeo varira po mesecu; cilj je stabilan rast." },
       { name: "USD CABLE", count: 2, note: "Dodatni partner u lead raspodeli." },
       { name: "M2D2 PARTNER DOO", count: 1, note: "Manji kanal u raspodeli." },
       { name: "Total Extra 034 (D2D CS)", count: 1, note: "Najverovatnije interni naziv kanala/tima; domen nije potvrđen." },
     ];
 
     const total = leadData.reduce((s,x)=>s+x.count,0);
+
+    // Fill report context into UI
+    document.getElementById("topOffer").textContent = reportContext.topOffer;
+    document.getElementById("totalLeads").textContent = total;
+    document.getElementById("periodTxt").textContent = reportContext.period;
 
     // Fill lead table
     const tbody = document.getElementById("leadTableBody");
@@ -755,8 +742,7 @@
     });
 
     // --------------------------
-    // Search filter
-    // Filters blocks that contain data-filter tokens
+    // Search filter (data-filter tokens)
     // --------------------------
     const searchEl = document.getElementById("search");
     const filterables = Array.from(document.querySelectorAll("[data-filter]"));
@@ -785,9 +771,7 @@
       }
     });
 
-    // --------------------------
     // Helpers
-    // --------------------------
     function escapeHtml(str){
       return String(str)
         .replaceAll("&","&amp;")
