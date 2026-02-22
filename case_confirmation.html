@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Case potvrda – AI → SAP</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f5f7;
+      color: #333;
+    }
+
+    .page-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background: #1f2933;
+      color: #fff;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    header .meta {
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    .content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Left: email preview */
+    .left-panel {
+      width: 35%;
+      border-right: 1px solid #d0d4da;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 8px 12px;
+      border-bottom: 1px solid #d0d4da;
+      background: #f8fafc;
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .email-meta,
+    .email-body {
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+
+    .email-meta div {
+      margin-bottom: 4px;
+    }
+
+    .email-body pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin: 0;
+      font-family: inherit;
+      font-size: 13px;
+    }
+
+    /* Right: case form */
+    .right-panel {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 16px 80px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .section {
+      background: #ffffff;
+      border-radius: 6px;
+      border: 1px solid #d0d4da;
+      padding: 10px 12px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      border-bottom: 1px solid #e0e4ea;
+      padding-bottom: 4px;
+    }
+
+    .field-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px 12px;
+      margin-top: 4px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+    }
+
+    .field label {
+      margin-bottom: 2px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      border: 1px solid #cbd2e1;
+      border-radius: 4px;
+      padding: 4px 6px;
+      font-size: 12px;
+      box-sizing: border-box;
+      background: #fff;
+    }
+
+    .field input[readonly],
+    .field textarea[readonly],
+    .field input[disabled],
+    .field textarea[disabled],
+    .field select[disabled] {
+      background: #f3f4f7;
+      color: #555;
+    }
+
+    .field textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    .required label::after {
+      content: " *";
+      color: #d92d20;
+      font-weight: bold;
+    }
+
+    .field small {
+      font-size: 10px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .lines-table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    th, td {
+      border: 1px solid #d0d4da;
+      padding: 4px 6px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: bold;
+    }
+
+    .validation-list {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+    }
+
+    .validation-list ul {
+      margin: 4px 0 0;
+      padding-left: 18px;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 11px;
+      background: #e5f3ff;
+      border: 1px solid #b5d1f0;
+      margin-right: 4px;
+      margin-top: 2px;
+    }
+
+    .chip.critical {
+      background: #ffe5e5;
+      border-color: #f5b5b5;
+    }
+
+    .chip.warning {
+      background: #fff7e0;
+      border-color: #f5df9b;
+    }
+
+    .chip.info {
+      background: #e2fbe8;
+      border-color: #a8e3b7;
+    }
+
+    .actions {
+      position: fixed;
+      bottom: 0;
+      left: 35%;
+      right: 0;
+      background: #ffffff;
+      border-top: 1px solid #d0d4da;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    button {
+      border-radius: 4px;
+      border: none;
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn-warning {
+      background: #f97316;
+      color: #fff;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .status-bar {
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-pill {
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      background: #fef9c3;
+      border: 1px solid #fbbf24;
+    }
+
+    .status-pill.pass {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+
+    .status-pill.fail {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+
+    .status-label {
+      font-weight: bold;
+    }
+
+    @media (max-width: 900px) {
+      .content {
+        flex-direction: column;
+      }
+      .left-panel {
+        width: 100%;
+        height: 40vh;
+      }
+      .actions {
+        left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+  <header>
+    <div>
+      <h1>Case potvrda – AI ekstrakcija &amp; SAP verifikacija</h1>
+      <div class="meta">
+        Case ID: <strong>20260222-T-20260222-001-01</strong> ·
+        Ticket ID: <strong>T-20260222-001</strong>
+      </div>
+    </div>
+    <div class="status-bar">
+      <div>
+        <span class="status-label">Status:</span>
+        <span class="status-pill">ČEKA POTVRDU OPERATERA</span>
+      </div>
+      <div>
+        Confidence score: <strong>0.82</strong>
+      </div>
+    </div>
+  </header>
+
+  <div class="content">
+    <!-- LEFT: EMAIL PREVIEW -->
+    <aside class="left-panel">
+      <div class="panel-header">Pregled emaila</div>
+      <div class="email-meta">
+        <div><strong>From:</strong> marko.markovic@sbb.rs</div>
+        <div><strong>To:</strong> vpr-intake@sbb.rs</div>
+        <div><strong>Subject:</strong> Aneks – ABC d.o.o. – Biz Net paket</div>
+        <div><strong>Primljeno:</strong> 22.02.2026 10:12</div>
+      </div>
+      <div class="panel-header">Telo emaila</div>
+      <div class="email-body">
+        <pre>Poštovani,
+
+Molim vas da pripremite aneks za kupca ABC d.o.o., PIB 12345678,
+sedište Nemanjina 4, Beograd.
+
+Paket: Biz Net 100/100 + 2 fiksne linije
+Cena: 2.000 RSD mesečno po liniji, ukupno 2 linije
+Trajanje ugovora: 24 meseca
+Račune slati na fakture@abc.rs
+
+Srdačno,
+Marko Marković
+marko.markovic@sbb.rs</pre>
+      </div>
+    </aside>
+
+    <!-- RIGHT: CASE FORM -->
+    <main class="right-panel">
+      <form>
+        <!-- CASE META -->
+        <section class="section">
+          <div class="section-title">1. Case i izvor (system-only, read-only)</div>
+          <div class="field-group">
+            <div class="field">
+              <label>Case ID</label>
+              <input type="text" value="20260222-T-20260222-001-01" readonly />
+            </div>
+            <div class="field">
+              <label>Ticket ID</label>
+              <input type="text" value="T-20260222-001" readonly />
+            </div>
+            <div class="field">
+              <label>Vreme obrade (timestamp)</label>
+              <input type="text" value="22.02.2026 10:15:00" readonly />
+            </div>
+            <div class="field">
+              <label>Prodavac (email)</label>
+              <input type="email" value="marko.markovic@sbb.rs" readonly />
+            </div>
+            <div class="field">
+              <label>Originalni subject</label>
+              <input type="text" value="Aneks – ABC d.o.o. – Biz Net paket" readonly />
+            </div>
+          </div>
+        </section>
+
+        <!-- CUSTOMER -->
+        <section class="section">
+          <div class="section-title">2. Podaci o kupcu</div>
+          <div class="field-group">
+            <div class="field required">
+              <label>Naziv kupca</label>
+              <input type="text" value="ABC d.o.o." />
+            </div>
+            <div class="field required">
+              <label>PIB</label>
+              <input type="text" value="12345678" />
+              <small>Obavezno za pravna lica (SEF).</small>
+            </div>
+            <div class="field">
+              <label>Matični broj</label>
+              <input type="text" value="" placeholder="Nije pronađeno u emailu" />
+            </div>
+            <div class="field required">
+              <label>Tip kupca</label>
+              <select>
+                <option selected>SEF – pravno lice</option>
+                <option>MP – fizičko lice</option>
+                <option>NE SEF – specijalni slučaj</option>
+              </select>
+            </div>
+            <div class="field required">
+              <label>Adresa sedišta</label>
+              <input type="text" value="Nemanjina 4" />
+            </div>
+            <div class="field required">
+              <label>Grad</label>
+              <input type="text" value="Beograd" />
+            </div>
+            <div class="field">
+              <label>Poštanski broj</label>
+              <input type="text" value="" placeholder="11000" />
+            </div>
+            <div class="field">
+              <label>Kontakt osoba</label>
+              <input type="text" value="Marko Marković" />
+            </div>
+            <div class="field">
+              <label>Telefon</label>
+              <input type="text" value="" placeholder="Nije pronađeno u emailu" />
+            </div>
+            <div class="field required">
+              <label>Email za fakture</label>
+              <input type="email" value="fakture@abc.rs" />
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTRACT / SAP -->
+        <section class="section">
+          <div class="section-title">3. Ugovor i SAP podaci</div>
+          <div class="field-group">
+            <div class="field required">
+              <label>PARTNER (SAP ID)</label>
+              <input type="text" value="4711" readonly />
+              <small>Popunjeno iz SAP-a na osnovu PIB.</small>
+            </div>
+            <div class="field">
+              <label>ACCOUNT (billing account)</label>
+              <input type="text" value="BA-100045" readonly />
+            </div>
+            <div class="field">
+              <label>Region</label>
+              <input type="text" value="Beograd" readonly />
+            </div>
+            <div class="field required">
+              <label>Broj ugovora (BROJ UGOVORA)</label>
+              <input type="text" value="90001234" readonly />
+            </div>
+            <div class="field required">
+              <label>Tip naloga (TIP NALOGA)</label>
+              <select>
+                <option selected>Aneks</option>
+                <option>Novi ugovor</option>
+                <option>Produženje</option>
+                <option>Raskid</option>
+              </select>
+            </div>
+            <div class="field required">
+              <label>Datum aktivacije / ugovora</label>
+              <input type="date" value="2026-02-22" />
+            </div>
+            <div class="field required">
+              <label>Trajanje ugovora (meseci)</label>
+              <input type="number" value="24" />
+            </div>
+            <div class="field">
+              <label>Datum isteka ugovorne obaveze</label>
+              <input type="date" value="2028-02-22" readonly />
+            </div>
+            <div class="field">
+              <label>CRF / centralni registar faktura</label>
+              <input type="text" value="CRF-2024-000123" readonly />
+            </div>
+          </div>
+        </section>
+
+        <!-- OFFER SUMMARY -->
+        <section class="section">
+          <div class="section-title">4. Rezime ponude (iz emaila)</div>
+          <div class="field-group">
+            <div class="field required">
+              <label>Paket (naziv ponude)</label>
+              <input type="text" value="Biz Net 100/100 + 2 fiksne linije" />
+            </div>
+            <div class="field">
+              <label>Promocija / kampanja</label>
+              <input type="text" value="" placeholder="Nije eksplicitno navedeno u emailu" />
+            </div>
+            <div class="field required">
+              <label>Trajanje ugovora (iz emaila)</label>
+              <input type="text" value="24 meseca" />
+            </div>
+            <div class="field required">
+              <label>Opis cene (iz emaila)</label>
+              <textarea>2.000 RSD mesečno po liniji, ukupno 2 linije</textarea>
+            </div>
+            <div class="field">
+              <label>Napomene iz emaila</label>
+              <textarea></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- LINES -->
+        <section class="section">
+          <div class="section-title">5. Stavke ugovora (LINES)</div>
+          <div class="lines-table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Line ID</th>
+                  <th>Broj naloga</th>
+                  <th>Šifra usluge</th>
+                  <th>Usluga</th>
+                  <th>Količina</th>
+                  <th>Jed. cena</th>
+                  <th>Valuta</th>
+                  <th>Popust %</th>
+                  <th>Neto iznos</th>
+                  <th>PDV</th>
+                  <th>Faktura</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><input type="text" value="50006789" readonly /></td>
+                  <td><input type="text" value="BIZNET100" readonly /></td>
+                  <td><input type="text" value="Biz Net 100/100 fiksna linija" /></td>
+                  <td><input type="number" value="2" /></td>
+                  <td><input type="number" value="2000" step="0.01" /></td>
+                  <td><input type="text" value="RSD" /></td>
+                  <td><input type="number" value="0" step="0.01" /></td>
+                  <td><input type="number" value="4000" step="0.01" readonly /></td>
+                  <td><input type="number" value="880" step="0.01" readonly /></td>
+                  <td><input type="text" value="INV-2026-000789" readonly /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <small>Operater uglavnom proverava da li se količina, cena i opis usluge poklapaju sa emailom i potpisanim aneksom.</small>
+        </section>
+
+        <!-- VALIDATION -->
+        <section class="section">
+          <div class="section-title">6. Validacija &amp; status</div>
+          <div class="validation-list">
+            <div>
+              <strong>Missing fields (pre obrade):</strong>
+              <ul>
+                <li>postal_code</li>
+                <li>maticni</li>
+                <li>phone</li>
+              </ul>
+            </div>
+            <div>
+              <strong>Invalid fields:</strong>
+              <ul>
+                <li>Nema (svi osnovni formati ispravni)</li>
+              </ul>
+            </div>
+            <div>
+              <strong>Ambiguous / ručna provera:</strong>
+              <ul>
+                <li>Nema (PIB je jednoznačno povezan sa PARTNER=4711)</li>
+              </ul>
+            </div>
+          </div>
+          <div style="margin-top: 8px;">
+            <span class="chip info">AI ekstrakcija OK</span>
+            <span class="chip warning">Nedostaju manje informacije</span>
+          </div>
+          <div style="margin-top: 8px;">
+            <label for="operator-comment" style="font-size: 12px; font-weight: bold;">Komentar operatera:</label>
+            <textarea id="operator-comment" style="width: 100%; margin-top: 4px;" placeholder="Ovde operater upisuje napomene (npr. ručno dopunjen poštanski broj, nepotreban maticni za ovaj tip kupca, itd.)"></textarea>
+          </div>
+        </section>
+      </form>
+    </main>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="actions">
+    <button type="button" class="btn-secondary">Sačuvaj kao nacrt</button>
+    <button type="button" class="btn-warning">Vrati prodavcu na dopunu</button>
+    <button type="button" class="btn-primary">Potvrdi &amp; Pošalji u SAP</button>
+  </div>
+</div>
+</body>
+</html>
