@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Procesni status bar – profesionalna verzija</title>
+  <style>
+    :root {
+      --bg: #f4f5f7;
+      --fg: #111827;
+      --card-bg: #ffffff;
+      --border: #d1d5db;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --muted: #6b7280;
+      --danger: #b91c1c;
+      --warn: #d97706;
+      --ok: #15803d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-bottom: 40px;
+    }
+
+    header.app-header {
+      padding: 16px 16px 8px;
+    }
+
+    header.app-header h1 {
+      margin: 0 0 4px;
+      font-size: 20px;
+    }
+
+    header.app-header p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* PROCESS STATUS BAR */
+
+    .process-bar-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #111827;
+      border-bottom: 1px solid #374151;
+      padding: 8px 12px;
+      margin: 0 -16px 12px;
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.4);
+    }
+
+    .process-bar-title {
+      color: #e5e7eb;
+      font-size: 11px;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .process-bar-title span.right {
+      color: #9ca3af;
+    }
+
+    .process-steps {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .process-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #1f2937;
+      color: #e5e7eb;
+      padding: 4px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+    }
+
+    .process-step:hover {
+      transform: translateY(-1px);
+      border-color: #6b7280;
+    }
+
+    .process-step-icon {
+      font-size: 13px;
+    }
+
+    .process-step-label {
+      font-weight: 500;
+    }
+
+    .process-step-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .process-arrow {
+      color: #6b7280;
+      font-size: 16px;
+      flex: 0 0 auto;
+    }
+
+    /* Active step */
+    .process-step.active {
+      background: var(--accent);
+      border-color: #60a5fa;
+      color: #f9fafb;
+    }
+
+    .process-step.active .process-step-status-dot {
+      border-color: #f9fafb;
+    }
+
+    /* Status colors */
+    .status-not_started .process-step-status-dot {
+      background: transparent;
+      border-color: #9ca3af;
+    }
+
+    .status-in_progress .process-step-status-dot {
+      background: #fbbf24;
+      border-color: #f59e0b;
+    }
+
+    .status-done .process-step-status-dot {
+      background: #22c55e;
+      border-color: #16a34a;
+    }
+
+    .status-error .process-step-status-dot {
+      background: #ef4444;
+      border-color: #b91c1c;
+    }
+
+    /* MAIN LAYOUT */
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+      gap: 12px;
+      padding: 0 16px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+    }
+
+    .card h2 {
+      margin: 0 0 4px;
+      font-size: 15px;
+    }
+
+    .card small {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .section-body {
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    .field-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+
+    .field-row span.label {
+      color: var(--muted);
+      min-width: 90px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      font-size: 11px;
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .pill.status-ok {
+      border-color: #22c55e;
+      background: #dcfce7;
+      color: var(--ok);
+    }
+
+    .pill.status-warn {
+      border-color: #f97316;
+      background: #ffedd5;
+      color: var(--warn);
+    }
+
+    .pill.status-error {
+      border-color: #ef4444;
+      background: #fee2e2;
+      color: var(--danger);
+    }
+
+    .pill.status-neutral {
+      border-color: #9ca3af;
+      background: #f3f4f6;
+      color: #4b5563;
+    }
+
+    ul {
+      margin: 4px 0 4px 18px;
+      padding: 0;
+      font-size: 12px;
+    }
+
+    li {
+      margin: 2px 0;
+    }
+
+    .mini-title {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 6px;
+      margin-bottom: 2px;
+    }
+
+    .highlight-box {
+      border-radius: 6px;
+      border: 1px dashed var(--border);
+      background: #f9fafb;
+      padding: 6px 8px;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+
+    .highlight-box strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .code-inline {
+      font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+      font-size: 11px;
+      background: #111827;
+      color: #e5e7eb;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+
+    .phase-log {
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 11px;
+      background: #0f172a;
+      color: #e5e7eb;
+      border-radius: 6px;
+      padding: 6px 8px;
+      margin-top: 6px;
+      font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+      white-space: pre-wrap;
+    }
+
+    .subtle {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="app-header">
+    <h1>Procesni status – Email → Excel</h1>
+    <p>Profesionalni pregled faza: Email → Ticketing → SAP CRM → Aneks PDF → Slanje → Potpis → Operativna verifikacija → Excel.</p>
+  </header>
+
+  <!-- PROCESS STATUS BAR -->
+  <div class="process-bar-wrapper">
+    <div class="process-bar-title">
+      <span>STATUS TOKA ZA CASE: <strong id="case-id-label">CASE-20260222-001</strong></span>
+      <span class="right">Klikom na fazu vidiš detalje i aktivnosti za tu fazu.</span>
+    </div>
+    <div class="process-steps" id="process-steps">
+      <!-- Popunjava JS -->
+    </div>
+  </div>
+
+  <main>
+    <!-- LEFT: ACTIVE PHASE DETAILS -->
+    <section class="card" id="phase-details-card">
+      <h2 id="phase-title">Faza: –</h2>
+      <small id="phase-subtitle">Izaberi fazu iz status bara iznad.</small>
+      <div class="section-body" id="phase-body" style="display:none;">
+        <div class="field-row">
+          <span class="label">Naziv faze:</span>
+          <span id="phase-name-val"></span>
+        </div>
+        <div class="field-row">
+          <span class="label">Status:</span>
+          <span id="phase-status-pill" class="pill status-neutral">NEPOZNATO</span>
+        </div>
+        <div class="field-row">
+          <span class="label">Vlasnik faze:</span>
+          <span id="phase-owner-val"></span>
+        </div>
+        <div class="field-row">
+          <span class="label">Svrha:</span>
+          <span id="phase-purpose-val"></span>
+        </div>
+
+        <div class="mini-title">Ključne aktivnosti u ovoj fazi</div>
+        <ul id="phase-activities-list">
+          <!-- punimo JS -->
+        </ul>
+
+        <div class="highlight-box" id="phase-metric-box">
+          <strong>Tipičan cilj automatizacije:</strong>
+          <span id="phase-metric-text"></span>
+        </div>
+
+        <div class="mini-title">Log (primer za ovaj case)</div>
+        <div class="phase-log" id="phase-log-box">
+          {/* log se puni u JS-u */}
+        </div>
+
+        <p class="subtle">
+          Napomena: u realnom sistemu log bi dolazio iz <span class="code-inline">audit_log</span> i servisnih logova,
+          ovde je samo simulacija kako bi to izgledalo.
+        </p>
+      </div>
+    </section>
+
+    <!-- RIGHT: SUMMARY CARD -->
+    <section class="card">
+      <h2>Sažetak statusa procesa</h2>
+      <small>Enterprise pogled – koliko je tok za ovaj case automatizovan i gde je trenutno “usko grlo”.</small>
+      <div class="section-body" id="summary-body">
+        <div class="field-row">
+          <span class="label">Trenutna aktivna faza:</span>
+          <span id="summary-active-phase">–</span>
+        </div>
+        <div class="field-row">
+          <span class="label">Automatski odrađeno:</span>
+          <span id="summary-auto-share">–</span>
+        </div>
+        <div class="field-row">
+          <span class="label">Ručno uključivanje:</span>
+          <span id="summary-manual-share">–</span>
+        </div>
+
+        <div class="mini-title">Brza interpretacija</div>
+        <ul id="summary-quick-notes">
+          <li>Izaberi fazu u status baru da vidiš detalje i log.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  // Definicija faza – ovo je “kanonska lista”, backend bi slao isto ovako.
+  const phases = [
+    {
+      id: "email",
+      label: "Email",
+      icon: "📧",
+      owner: "Prodaja / Administrativna podrška",
+      purpose: "Prijem podataka o korisniku i ponudi putem emaila prodavca.",
+      activities: [
+        "Prodavac priprema email sa podacima (naziv, PIB, adresa, paket, cena, trajanje).",
+        "Email stiže na definisani intake inbox.",
+        "Email se mapira na novi case uz dodelu case_id / ticket_id."
+      ],
+      autoGoal: "Automatski ingest svih emailova i mapiranje na case bez ručnog kopiranja teksta."
+    },
+    {
+      id: "ticket",
+      label: "Ticketing",
+      icon: "🎫",
+      owner: "Administrativna podrška",
+      purpose: "Otvaranje tiketa u ITSM (IT Service Management) sistemu i dodela odgovornosti.",
+      activities: [
+        "Automatsko kreiranje tiketa iz emaila.",
+        "Dodela case-a odgovarajućem timu.",
+        "Praćenje SLA (Service Level Agreement) vremena za obradu."
+      ],
+      autoGoal: "Automatsko kreiranje i rutiranje 95%+ tiketa na osnovu pravila i AI klasifikacije."
+    },
+    {
+      id: "sap",
+      label: "SAP CRM",
+      icon: "🧩",
+      owner: "SAP tim / Administrativna podrška",
+      purpose: "Validacija kupca i unosa ponude u SAP CRM (Customer Relationship Management).",
+      activities: [
+        "Validacija PIB i adrese kroz SAP CRM / master podatke.",
+        "Otvaranje ugovora / naloga na osnovu strukturisanih podataka.",
+        "Povezivanje sa postojećim account-om i partner-id."
+      ],
+      autoGoal: "80–90% unosa u SAP radi integracija (API/BAPI), minimalno ručno kucanje."
+    },
+    {
+      id: "aneks",
+      label: "Aneks PDF",
+      icon: "📄",
+      owner: "SAP tim / DMS (Document Management System)",
+      purpose: "Generisanje aneksa ugovora u PDF formatu iz SAP ili centralnog sistema.",
+      activities: [
+        "Korišćenje standardizovanog PDF templejta.",
+        "Popunjavanje podataka (kupac, usluge, cene, trajanje).",
+        "Arhiviranje generisanog aneksa u DMS / e-arhivu."
+      ],
+      autoGoal: "100% automatizovana generacija PDF aneksa (bez Word/ručne obrade)."
+    },
+    {
+      id: "slanje",
+      label: "Slanje",
+      icon: "📤",
+      owner: "Administrativna podrška",
+      purpose: "Distribucija aneksa ka korisniku ili partnerskoj firmi.",
+      activities: [
+        "Slanje PDF aneksa na email korisnika ili partnera.",
+        "Praćenje da li je dokument isporučen (bounce / delivery status).",
+        "Eventualna automatska podsećanja ako nema odgovora."
+      ],
+      autoGoal: "Automatsko slanje i praćenje statusa za sve generisane anekse."
+    },
+    {
+      id: "potpis",
+      label: "Potpis",
+      icon: "✍️",
+      owner: "Korisnik / Prodaja",
+      purpose: "Potpisivanje ponuđene ugovorne dokumentacije.",
+      activities: [
+        "Korisnik potpisuje aneks (fizički ili elektronski).",
+        "Prodavac vraća potpisani dokument administrativnoj podršci.",
+        "Potpisani dokument se skenira i/ili arhivira u DMS."
+      ],
+      autoGoal: "Orkestracija e-potpis procesa; sam čin potpisa je uvek ljudski."
+    },
+    {
+      id: "verif",
+      label: "Verifikacija",
+      icon: "✅",
+      owner: "Operativna podrška",
+      purpose: "Poređenje potpisane dokumentacije sa originalnom ponudom (PDF diff / logical diff).",
+      activities: [
+        "Parsiranje potpisanog PDF u strukturisani oblik.",
+        "Automatski diff protiv originalne ponude / SAP zapisa.",
+        "Označavanje CRITICAL / WARNING razlika i donošenje odluke PASS/FAIL."
+      ],
+      autoGoal: "90%+ slučajeva gde diff engine jasno daje PASS, ostalo ide ljudima."
+    },
+    {
+      id: "excel",
+      label: "Excel",
+      icon: "📊",
+      owner: "Operativna podrška / Reporting",
+      purpose: "Generisanje izvještaja (npr. vpr MART 20XX UKUPNO.xlsx) iz centralnih podataka.",
+      activities: [
+        "Noćni job vuče VERIFIED slučajeve iz baze.",
+        "Generiše Excel/CSV fajl po standardizovanom formatu.",
+        "Excel služi samo kao reporting layer, ne kao source of truth."
+      ],
+      autoGoal: "100% automatizovan export bez ručnog kopiranja podataka u Excel."
+    }
+  ];
+
+  // Simulacija backend statusa faza za jedan case
+  const phaseStatus = {
+    email:      { status: "done",        log: "Email primljen 22.02.2026 10:12\ncase_id dodeljen.\nPoruka mapirana na intake queue." },
+    ticket:     { status: "done",        log: "Ticket kreiran u ITSM: T-20260222-001\nDodeljen timu Administrativna podrška." },
+    sap:        { status: "in_progress", log: "Validacija PIB u toku...\nPARTNER pronađen (4711), čeka potvrdu operatera." },
+    aneks:      { status: "not_started", log: "Generisanje aneksa će se pokrenuti nakon SAP potvrde." },
+    slanje:     { status: "not_started", log: "Slanje aneksa čeka generisanje PDF dokumenta." },
+    potpis:     { status: "not_started", log: "Potpis čeka slanje i odgovor korisnika." },
+    verif:      { status: "not_started", log: "Verifikacija će se aktivirati nakon prijema potpisanog dokumenta." },
+    excel:      { status: "not_started", log: "Excel export čeka da case dobije status VERIFIED." }
+  };
+
+  // Mapiranje status -> tekst i klasa
+  function statusToLabel(status) {
+    switch (status) {
+      case "done":        return "ZAVRŠENO";
+      case "in_progress": return "U TOKU";
+      case "not_started": return "NIJE POKRENUTO";
+      case "error":       return "GREŠKA";
+      default:            return "NEPOZNATO";
+    }
+  }
+
+  function statusToPillClass(status) {
+    switch (status) {
+      case "done":        return "pill status-ok";
+      case "in_progress": return "pill status-warn";
+      case "error":       return "pill status-error";
+      case "not_started":
+      default:            return "pill status-neutral";
+    }
+  }
+
+  function computeAutomationSummary() {
+    // gruba simulacija: email, ticket, aneks, slanje, excel = visoka automatizacija,
+    // sap i verif = mešano, potpis = ljudski.
+    const totalSteps = phases.length;
+    let autoWeight = 0;
+
+    phases.forEach(p => {
+      if (p.id === "potpis") {
+        autoWeight += 0.1;     // potpis orkestriraš, ali ne "radiš"
+      } else if (p.id === "sap" || p.id === "verif") {
+        autoWeight += 0.6;     // deo posla je automatika, deo čovek
+      } else {
+        autoWeight += 1.0;     // može biti skoro kompletno automatizovano
+      }
+    });
+
+    const autoShare = autoWeight / totalSteps; // 0–1
+    const manualShare = 1 - autoShare;
+    return {
+      auto: (autoShare * 100).toFixed(0) + " %",
+      manual: (manualShare * 100).toFixed(0) + " %"
+    };
+  }
+
+  function renderProcessBar() {
+    const container = document.getElementById("process-steps");
+    container.innerHTML = "";
+
+    phases.forEach((phase, idx) => {
+      const statusInfo = phaseStatus[phase.id] || { status: "not_started" };
+      const step = document.createElement("button");
+      step.type = "button";
+      step.className = "process-step status-" + (statusInfo.status || "not_started");
+      step.setAttribute("data-phase-id", phase.id);
+      step.title = phase.purpose;
+
+      const statusDot = document.createElement("span");
+      statusDot.className = "process-step-status-dot";
+
+      const iconSpan = document.createElement("span");
+      iconSpan.className = "process-step-icon";
+      iconSpan.textContent = phase.icon;
+
+      const labelSpan = document.createElement("span");
+      labelSpan.className = "process-step-label";
+      labelSpan.textContent = phase.label;
+
+      step.appendChild(statusDot);
+      step.appendChild(iconSpan);
+      step.appendChild(labelSpan);
+
+      container.appendChild(step);
+
+      if (idx < phases.length - 1) {
+        const arrow = document.createElement("span");
+        arrow.className = "process-arrow";
+        arrow.textContent = "➜";
+        container.appendChild(arrow);
+      }
+    });
+  }
+
+  function setActivePhase(phaseId) {
+    const phase = phases.find(p => p.id === phaseId);
+    if (!phase) return;
+
+    const statusInfo = phaseStatus[phaseId] || { status: "not_started", log: "" };
+
+    // UI: aktivno dugme
+    document.querySelectorAll(".process-step").forEach(btn => {
+      btn.classList.toggle("active", btn.getAttribute("data-phase-id") === phaseId);
+    });
+
+    // Levi panel – detalji
+    const detailsCard = document.getElementById("phase-details-card");
+    const titleEl = document.getElementById("phase-title");
+    const subtitleEl = document.getElementById("phase-subtitle");
+    const bodyEl = document.getElementById("phase-body");
+
+    titleEl.textContent = `Faza: ${phase.label}`;
+    subtitleEl.textContent = phase.purpose;
+    bodyEl.style.display = "block";
+
+    document.getElementById("phase-name-val").textContent = phase.label;
+    document.getElementById("phase-owner-val").textContent = phase.owner;
+    document.getElementById("phase-purpose-val").textContent = phase.purpose;
+
+    const pill = document.getElementById("phase-status-pill");
+    pill.className = statusToPillClass(statusInfo.status);
+    pill.textContent = statusToLabel(statusInfo.status);
+
+    // aktivnosti
+    const actList = document.getElementById("phase-activities-list");
+    actList.innerHTML = "";
+    phase.activities.forEach(a => {
+      const li = document.createElement("li");
+      li.textContent = a;
+      actList.appendChild(li);
+    });
+
+    // cilj automatizacije
+    document.getElementById("phase-metric-text").textContent = phase.autoGoal;
+
+    // log
+    const logBox = document.getElementById("phase-log-box");
+    logBox.textContent = statusInfo.log || "Nema log zapisa za ovu fazu.";
+
+    // desni panel – sažetak
+    document.getElementById("summary-active-phase").textContent = phase.label;
+
+    const quickNotes = document.getElementById("summary-quick-notes");
+    quickNotes.innerHTML = "";
+    const li1 = document.createElement("li");
+    li1.textContent = `Trenutna faza: ${phase.label} – status: ${statusToLabel(statusInfo.status)}.`;
+    quickNotes.appendChild(li1);
+
+    if (statusInfo.status === "error") {
+      const liErr = document.createElement("li");
+      liErr.textContent = "Potrebna intervencija operatera – pogledaj log za detalje.";
+      quickNotes.appendChild(liErr);
+    } else if (statusInfo.status === "in_progress") {
+      const liIn = document.createElement("li");
+      liIn.textContent = "Faza je u toku – deo posla već radi automatika, deo čeka čoveka.";
+      quickNotes.appendChild(liIn);
+    } else if (statusInfo.status === "not_started") {
+      const liNs = document.createElement("li");
+      liNs.textContent = "Faza još nije pokrenuta – zavisi od prethodnih koraka u procesu.";
+      quickNotes.appendChild(liNs);
+    } else if (statusInfo.status === "done") {
+      const liDone = document.createElement("li");
+      liDone.textContent = "Faza je završena – možeš preći na sledeću ili revidirati rezultate.";
+      quickNotes.appendChild(liDone);
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    // Render status bara
+    renderProcessBar();
+
+    // Prikaži inicijalni sažetak automatizacije (gruba simulacija)
+    const autoSummary = computeAutomationSummary();
+    document.getElementById("summary-auto-share").textContent = autoSummary.auto;
+    document.getElementById("summary-manual-share").textContent = autoSummary.manual;
+
+    // Klik handleri na faze
+    document.getElementById("process-steps").addEventListener("click", (e) => {
+      const btn = e.target.closest(".process-step");
+      if (!btn) return;
+      const phaseId = btn.getAttribute("data-phase-id");
+      setActivePhase(phaseId);
+    });
+
+    // Po defaultu aktiviramo SAP CRM (tipično “usko grlo”)
+    setActivePhase("sap");
+  });
+</script>
+</body>
+</html>
