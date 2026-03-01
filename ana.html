@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ANA V.2 — Interni plan (realni scenario za demo/prodaju)</title>
+  <title>ANA V.2 — Realni scenario za demo/prodaju)</title>
   <style>
     :root{
       --bg:#0b1020;
@@ -169,17 +169,17 @@
 <body>
   <div class="wrap">
     <header>
-      <div class="topBadge"><span class="dot"></span> Interni dokument • plan za “napravim sam i iznesem na demo/prodaju”</div>
-      <h1>ANA V.2 — Realni scenario za demo u Srbiji (sa postojećim resursima)</h1>
+      <div class="topBadge"><span class="dot"></span> Interni dokument • plan za “demo/prodaju”</div>
+      <h1>ANA V.2 — Realni scenario za demo (sa postojećim resursima)</h1>
       <p class="sub">
-        Ako ne prođe prodaja velikoj firmi: cilj je da se napravi funkcionalan proizvod za tablet (avatar + glas + odgovori + lead forma),
-        koji se može pokazati direktorima / klijentima i zatvoriti prvi ugovor.
+        Cilj je da se napravi funkcionalan proizvod za tablet (avatar + glas + odgovori + lead forma),
+        koji se može pokazati i zatvoriti prvi ugovor.
       </p>
 
       <div class="chips">
-        <div class="chip">🧩 <span>Već postoji:</span> Python/Flask + OpenAI + Telegram + voice</div>
-        <div class="chip">🎯 <span>Cilj demo:</span> 1 tablet “kiosk mode” + stabilan flow</div>
-        <div class="chip">⏱️ <span>Rok:</span> 8–10 nedelja (lean tim)</div>
+        <div class="chip"> <span>Već postoji:</span> Python/Flask + OpenAI + Telegram + voice</div>
+        <div class="chip"> <span>Cilj demo:</span> 1 tablet “kiosk mode” + stabilan flow</div>
+        <div class="chip"> <span>Rok:</span> 8–10 nedelja (lean tim)</div>
       </div>
     </header>
 
@@ -196,7 +196,7 @@
 
     <section id="start">
       <h2>Polazna tačka (šta imamo danas)</h2>
-      <p class="hint">Ovo je realna prednost: AI i kanali već rade. Ne krećemo od nule.</p>
+      <p class="hint">Ovo je realna prednost: AI i kanali već rade. Ne krećem se od nule.</p>
 
       <div class="grid2">
         <div class="card">
@@ -206,12 +206,12 @@
             <li><strong>Telegram bot</strong> + webhook flow</li>
             <li><strong>Voice kanal</strong> (Twilio + TTS) + lead logika</li>
             <li><strong>SQLite</strong> leadovi (kasnije Postgres po potrebi)</li>
-            <li>Ti poznaješ sistem i hard gate logiku</li>
+            <li>Sistem i hard gate logika</li>
           </ul>
         </div>
 
         <div class="card">
-          <h3><span class="icon warn">⚠️</span> Šta fali za ANA V.2</h3>
+          <h3><span class="icon warn"></span> Šta fali za ANA V.2</h3>
           <ul>
             <li><strong>Tablet UI</strong> (kiosk app ili web app)</li>
             <li><strong>Avatar (3D)</strong> sa blendshapes</li>
@@ -225,7 +225,7 @@
       </div>
 
       <div class="callout" style="margin-top:14px;">
-        <strong>Interna odluka:</strong> Za demo je najbrže uraditi <u>tablet kao web app</u> (React + Three.js/R3F) u kiosk browser modu.
+        <strong>Interno:</strong> Za demo je najbrže uraditi <u>tablet kao web app</u> (React + Three.js/R3F) u kiosk browser modu.
         Time izbacujemo RN učenje i skraćujemo rok.
       </div>
     </section>
@@ -236,7 +236,7 @@
 
       <div class="grid3">
         <div class="card">
-          <h3><span class="icon good">🎭</span> Vizuelno</h3>
+          <h3><span class="icon good"></span> Vizuelno</h3>
           <ul>
             <li>Avatar se vidi na tabletu</li>
             <li>Osnovne emocije/poze (idle, smile)</li>
@@ -256,7 +256,7 @@
         </div>
 
         <div class="card">
-          <h3><span class="icon good">🧾</span> Lead flow</h3>
+          <h3><span class="icon good"></span> Lead flow</h3>
           <ul>
             <li>Prikupljanje imena/telefona/paketa</li>
             <li>Hard gate (ne sme da pobegne u chat)</li>
@@ -267,7 +267,7 @@
       </div>
 
       <div class="card" style="margin-top:14px;">
-        <h3><span class="icon">🔗</span> Minimalna integracija (primer)</h3>
+        <h3><span class="icon"></span> Minimalna integracija (primer)</h3>
         <pre>
 // Tablet (web) -> Flask
 POST /api/ana/text { user_id, text }
@@ -333,11 +333,11 @@ POST /api/ana/text { user_id, text }
 
     <section id="tim">
       <h2>Koliko ljudi treba (minimalno realno)</h2>
-      <p class="hint">Opcije su prilagođene tvojoj realnosti: ti nosiš backend + AI + integraciju.</p>
+      <p class="hint">Opcije su prilagođene: ja nosim backend + AI + integraciju.</p>
 
       <div class="grid2">
         <div class="card">
-          <h3><span class="icon">🧑‍💻</span> Lean tim (preporuka)</h3>
+          <h3><span class="icon"></span> Lean tim (preporuka)</h3>
           <ul>
             <li><strong>Ti (1):</strong> Flask API/WS, AI integracija, lead flow, deploy</li>
             <li><strong>Frontend 3D dev (1):</strong> React + Three.js/R3F + perf</li>
@@ -349,9 +349,9 @@ POST /api/ana/text { user_id, text }
         </div>
 
         <div class="card">
-          <h3><span class="icon warn">⏳</span> Solo (moguće, ali sporo)</h3>
+          <h3><span class="icon warn"></span> Solo (moguće, ali sporo)</h3>
           <ul>
-            <li>Učenje RN + 3D + lip-sync = veliki rizik</li>
+            <li>RN + 3D + lip-sync = veliki rizik</li>
             <li>Rok realno ide na <strong>4–6 meseci</strong></li>
             <li>Najviše će pojesti: perf + lip-sync debug</li>
           </ul>
@@ -408,7 +408,7 @@ POST /api/ana/text { user_id, text }
       </table>
 
       <div class="callout" style="margin-top:14px;">
-        <strong>Brutalno realno:</strong> “1.400€ total” je moguće samo ako dobiješ jeftinog freelancera + gotov avatar + bez realnog lip-sync kvaliteta.
+        <strong>Idealan scenario:</strong> “1.400€ total” je moguće samo ako se nadje jeftin freelancer + gotov avatar + bez realnog lip-sync kvaliteta.
         Za demo koji stvarno “prodaje”, računaj <strong>3–7k€</strong> i lean tim.
       </div>
     </section>
@@ -417,15 +417,15 @@ POST /api/ana/text { user_id, text }
       <h2>Rizici i mitigacije</h2>
       <div class="grid2">
         <div class="card">
-          <h3><span class="icon bad">⚠️</span> Najveći rizici</h3>
+          <h3><span class="icon bad"></span> Najveći rizici</h3>
           <ul>
             <li>Lip-sync: latency + kvalitet + integracija u 3D</li>
             <li>Performanse na tabletu: grejanje, FPS drop</li>
-            <li>Scope creep: “aj još ovo” ubija rok</li>
+            <li>Scope creep: ubija rok</li>
           </ul>
         </div>
         <div class="card">
-          <h3><span class="icon good">🛡️</span> Mitigacije</h3>
+          <h3><span class="icon good"></span> Mitigacije</h3>
           <ul>
             <li>Web kiosk umesto RN (brže, manje rizika)</li>
             <li>Ready Player Me avatar (brz start)</li>
