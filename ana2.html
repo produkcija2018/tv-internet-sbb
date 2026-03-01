@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ANA V.2 — Realna verzija (bez bilborda) + ROI (godišnja vrednost)</title>
+
+  <style>
+    :root{
+      --bg1:#0b1020;
+      --bg2:#0a2a43;
+      --card:#0f172a;
+      --card2:#111c34;
+      --text:#e5e7eb;
+      --muted:#a7b0c0;
+      --line:rgba(255,255,255,.08);
+      --brand:#7c3aed;
+      --good:#22c55e;
+      --warn:#f97316;
+      --bad:#ef4444;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 10%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(900px 500px at 85% 20%, rgba(34,197,94,.25), transparent 55%),
+        radial-gradient(900px 500px at 65% 85%, rgba(249,115,22,.20), transparent 55%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      min-height:100vh;
+      padding:24px;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      background: rgba(15, 23, 42, .55);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .header{
+      padding:56px 28px 28px;
+      position:relative;
+      border-bottom:1px solid var(--line);
+      background:
+        radial-gradient(900px 300px at 20% 0%, rgba(124,58,237,.25), transparent 55%),
+        radial-gradient(700px 260px at 80% 10%, rgba(34,197,94,.18), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.02), transparent);
+    }
+
+    .badgeTop{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      color: var(--muted);
+      font-weight:700;
+      font-size:.92rem;
+    }
+    .badgeDot{
+      width:10px;height:10px;border-radius:999px;background:var(--good);
+      box-shadow:0 0 0 4px rgba(34,197,94,.15);
+    }
+    .title{
+      margin-top:14px;
+      font-size: clamp(2.0rem, 4vw, 3.1rem);
+      line-height:1.05;
+      letter-spacing:-.02em;
+    }
+    .subtitle{
+      margin-top:12px;
+      color:var(--muted);
+      max-width: 850px;
+      font-size:1.05rem;
+      line-height:1.6;
+    }
+
+    .contactRow{
+      margin-top:18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      color: var(--text);
+      font-weight:700;
+      font-size:.95rem;
+    }
+    .chip span{ color: var(--muted); font-weight:800; }
+
+    .metrics{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      justify-content:space-between;
+      margin-top:14px;
+    }
+    .metric{
+      flex:1;
+      min-width: 180px;
+      padding:14px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+    }
+    .metric .num{
+      font-size:1.9rem;
+      font-weight:900;
+      letter-spacing:-.02em;
+      color: var(--text);
+    }
+    .metric .lbl{
+      margin-top:4px;
+      color: var(--muted);
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-size:.75rem;
+    }
+
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background: rgba(11,16,32,.72);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .navInner{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      padding:14px 16px;
+    }
+    .nav a{
+      text-decoration:none;
+      color: var(--muted);
+      font-weight:800;
+      padding:10px 14px;
+      border-radius:999px;
+      transition: .15s ease;
+      background: rgba(255,255,255,.03);
+      border:1px solid transparent;
+    }
+    .nav a:hover{
+      color: var(--text);
+      border-color: var(--line);
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.06);
+    }
+
+    .section{
+      padding:34px 22px;
+      border-bottom:1px solid var(--line);
+    }
+    .section:last-child{ border-bottom:none; }
+    .section h2{
+      font-size: 1.7rem;
+      letter-spacing:-.02em;
+      margin-bottom:14px;
+    }
+    .hint{
+      color: var(--muted);
+      line-height:1.6;
+      margin-bottom:18px;
+    }
+
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
+    .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
+    @media(max-width:900px){ .grid2, .grid3{ grid-template-columns:1fr; } }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.30);
+    }
+    .card h3{
+      font-size:1.05rem;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .icon{
+      width:34px;height:34px;border-radius:10px;
+      display:grid;place-items:center;
+      background: rgba(124,58,237,.15);
+      border: 1px solid rgba(124,58,237,.25);
+    }
+    .icon.green{ background: rgba(34,197,94,.14); border-color: rgba(34,197,94,.25);}
+    .icon.orange{ background: rgba(249,115,22,.14); border-color: rgba(249,115,22,.25);}
+    .icon.red{ background: rgba(239,68,68,.14); border-color: rgba(239,68,68,.25);}
+    .card p, .card li{ color: var(--muted); line-height:1.6; }
+    .card ul{ margin-left:18px; }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-weight:800;
+      font-size:.85rem;
+    }
+    .pill.good{ color:#b7f7c9; border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.10);}
+    .pill.warn{ color:#ffd7b0; border-color: rgba(249,115,22,.35); background: rgba(249,115,22,.10);}
+    .pill.bad{ color:#ffb4a2; border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.10);}
+
+    .callout{
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background:
+        radial-gradient(700px 260px at 20% 0%, rgba(124,58,237,.20), transparent 55%),
+        radial-gradient(700px 260px at 80% 0%, rgba(34,197,94,.12), transparent 55%),
+        rgba(255,255,255,.03);
+      padding:18px;
+    }
+    .callout strong{ color: var(--text); }
+
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-top:8px;
+    }
+    .btn{
+      cursor:pointer;
+      border:none;
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:900;
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,197,94,.55));
+      border-color: rgba(255,255,255,.18);
+    }
+    .btn.scenario{
+      background: rgba(255,255,255,.05);
+    }
+    .btn.scenario.active{
+      border-color: rgba(124,58,237,.45);
+      background: rgba(124,58,237,.18);
+    }
+
+    input{
+      background: rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      color: var(--text);
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:800;
+      outline:none;
+      width: 170px;
+    }
+    input::placeholder{ color: rgba(167,176,192,.7); }
+
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+    }
+    th, td{
+      padding:12px 12px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      vertical-align:top;
+    }
+    th{
+      font-size:.9rem;
+      color: var(--text);
+      background: rgba(124,58,237,.14);
+    }
+    tr:last-child td{ border-bottom:none; }
+    .sumRow td{
+      background: rgba(34,197,94,.10);
+      color: var(--text);
+      font-weight:900;
+    }
+    .small{ font-size:.92rem; color: var(--muted); }
+
+    .footer{
+      padding:28px 22px;
+      text-align:center;
+      color: var(--muted);
+      background: rgba(11,16,32,.55);
+      border-top: 1px solid var(--line);
+    }
+    a:focus, button:focus, input:focus{
+      outline: 3px solid rgba(124,58,237,.35);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="badgeTop"><span class="badgeDot"></span> Realna verzija • bez bilborda • ROI računa godišnju vrednost korisnika</div>
+      <h1 class="title">ANA V.2 — interaktivni AI kiosci (5 tableta)</h1>
+      <p class="subtitle">
+        Fokus: 5 tablet lokacija + centralni server + 3D avatar + integracija sa postojećim AI sistemom.
+        ROI kalkulator koristi <strong>godišnju neto vrednost novog korisnika</strong> (12 meseci).
+      </p>
+
+      <div class="contactRow">
+        <div class="chip">📞 <span>Telefon:</span> +381114221750</div>
+        <div class="chip">💬 <span>Telegram:</span> @TVInternetSBB_bot</div>
+        <div class="chip">🌐 <span>Web:</span> www.tvinternetsbb.rs</div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="num">5</div>
+          <div class="lbl">Lokacija / tableta</div>
+        </div>
+        <div class="metric">
+          <div class="num">~3.275€</div>
+          <div class="lbl">Operativa / mes</div>
+        </div>
+        <div class="metric">
+          <div class="num">~47.250€</div>
+          <div class="lbl">Jednokratno</div>
+        </div>
+        <div class="metric">
+          <div class="num">~86.550€</div>
+          <div class="lbl">Prva godina</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="navInner">
+        <a href="#budzet">Budžet</a>
+        <a href="#roi">ROI kalkulator</a>
+        <a href="#napomene">Napomene</a>
+      </div>
+    </nav>
+
+    <!-- BUDŽET -->
+    <section id="budzet" class="section">
+      <h2>Budžet (realno, bez bilborda)</h2>
+      <p class="hint">
+        Sve cifre su bez PDV. Ovo je verzija koja realno može da se proda i isporuči bez “enterprise” troškova.
+      </p>
+
+      <div class="callout">
+        <strong>Meta:</strong> Jednokratno ~47.250€ • Operativa ~3.275€/mes • Prva godina ~86.550€
+      </div>
+
+      <h3 style="margin:18px 0 10px;">Jednokratno</h3>
+      <table aria-label="Jednokratni budžet">
+        <thead>
+          <tr>
+            <th>Stavka</th>
+            <th>Opis</th>
+            <th style="width:160px;">Cena (€)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>React Native / Tablet app</strong></td>
+            <td class="small">UI + 3D + konekcija + basic analytics</td>
+            <td><strong>18.000</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Backend (API + WS)</strong></td>
+            <td class="small">Sesije + lead endpointi + logovi</td>
+            <td><strong>12.000</strong></td>
+          </tr>
+          <tr>
+            <td><strong>3D Ana model</strong></td>
+            <td class="small">Custom ili RPM + optimizacija</td>
+            <td><strong>4.000</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Integracija sa postojećim AI</strong></td>
+            <td class="small">Hard gate + save_lead() + API sloj</td>
+            <td><strong>3.000</strong></td>
+          </tr>
+          <tr>
+            <td><strong>UI/UX + QA</strong></td>
+            <td class="small">Dizajn + test na uređajima</td>
+            <td><strong>4.000</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Hardver (5 tablet kit)</strong></td>
+            <td class="small">5× tablet (~800€), stalci, zaštita, zvučnici, instalacija</td>
+            <td><strong>6.250</strong></td>
+          </tr>
+          <tr class="sumRow">
+            <td colspan="2"><strong>UKUPNO JEDNOKRATNO</strong></td>
+            <td><strong>47.250</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin:18px 0 10px;">Mesečno (operativa)</h3>
+      <table aria-label="Mesečni budžet">
+        <thead>
+          <tr>
+            <th>Kategorija</th>
+            <th>Šta pokriva</th>
+            <th style="width:160px;">€/mesec</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Server</strong></td>
+            <td class="small">Cloud server + Redis + backup (bez GPU/CDN)</td>
+            <td><strong>250</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Tableti</strong></td>
+            <td class="small">Struja + osnovno održavanje + realna amortizacija</td>
+            <td><strong>225</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Ljudi</strong></td>
+            <td class="small">Dev part-time + podrška + marketing (lean)</td>
+            <td><strong>2.800</strong></td>
+          </tr>
+          <tr class="sumRow">
+            <td><strong>UKUPNO</strong></td>
+            <td></td>
+            <td><strong>3.275</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ROI -->
+    <section id="roi" class="section">
+      <h2>ROI kalkulator (godišnja neto vrednost korisnika)</h2>
+      <p class="hint">
+        Umesto “mesečnog ARPU”, koristimo <strong>godišnju neto vrednost novog korisnika</strong> (12 meseci) —
+        to direktorima realnije pokazuje koliko novih ugovora mesečno treba da sistem pokrije troškove.
+      </p>
+
+      <div class="grid2">
+        <div class="card">
+          <h3><span class="icon">🎛️</span> Brzi scenariji (razumljivo)</h3>
+          <p class="small">
+            Klikni scenario da popuni vrednost po korisniku. Opisi su “na ljudski”, bez finansijskih termina:
+          </p>
+          <div class="controls" style="margin-top:12px;">
+            <button id="btnSafe" class="btn scenario active" onclick="setScenario('safe')">
+              Siguran (više popusta)
+            </button>
+            <button id="btnNormal" class="btn scenario" onclick="setScenario('normal')">
+              Standard (realan miks)
+            </button>
+            <button id="btnStrong" class="btn scenario" onclick="setScenario('strong')">
+              Jak (malo otkazivanja)
+            </button>
+          </div>
+
+          <div class="callout" style="margin-top:12px;">
+            <div><span class="pill warn">Siguran</span> Računamo da ima popusta, deo ljudi odustane, i neto vrednost po korisniku je niža.</div>
+            <div style="margin-top:8px;"><span class="pill">Standard</span> Realan miks prodaje: nešto jeftiniji, nešto skuplji paketi, normalan churn.</div>
+            <div style="margin-top:8px;"><span class="pill good">Jak</span> Dobre lokacije + dobra prodaja: više premium paketa, manje odustajanja.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><span class="icon green">🧮</span> Parametri i rezultat</h3>
+
+          <div class="controls">
+            <label class="pill">Vrednost korisnika (€/12 mes)</label>
+            <input id="annualValue" type="number" min="0" step="10" value="180" />
+
+            <label class="pill">Novi korisnici / mesec</label>
+            <input id="newUsers" type="number" min="0" step="1" value="15" />
+
+            <button class="btn primary" onclick="calcROIAnnual()">Izračunaj</button>
+          </div>
+
+          <p class="small" style="margin-top:10px;">
+            Referentno: operativa <strong id="opexLbl">3.275€</strong> / mes • jednokratno <strong id="oneTimeLbl">47.250€</strong>
+          </p>
+
+          <div class="callout" style="margin-top:12px;">
+            <p id="roiOutAnnual" style="font-weight:900; color:var(--text); line-height:1.7;">
+              Unesi parametre i klikni “Izračunaj”.
+            </p>
+          </div>
+
+          <p class="small" style="margin-top:10px;">
+            Tipične vrednosti za pitch: <strong>180–300€</strong> neto vrednost po korisniku za 12 meseci.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAPOMENE -->
+    <section id="napomene" class="section">
+      <h2>Napomene (da ne bude pogrešno shvaćeno)</h2>
+      <div class="grid2">
+        <div class="card">
+          <h3><span class="icon orange">⚠️</span> Zašto ne koristimo “40€ mesečno”</h3>
+          <ul>
+            <li>40€ mesečno je bruto cena paketa, ali ne znači neto dobit</li>
+            <li>U praksi postoje popusti, instalacija, odustajanja (churn)</li>
+            <li>Zato je direktorima realnije pokazati <strong>neto vrednost ugovora na 12 meseci</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><span class="icon green">✅</span> Šta je “vrednost korisnika / 12 mes”</h3>
+          <ul>
+            <li>Procena koliko sistem donosi “čiste vrednosti” po novom korisniku u prvih godinu dana</li>
+            <li>Uključuje realan miks paketa + realan churn + realne popuste</li>
+            <li>Koristi se za break-even i payback račun</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="small">Februar 2026 • ANA V.2 (realna verzija) • Bez PDV</div>
+      <div class="small" style="margin-top:10px;">
+        📞 +381114221750 • 💬 @TVInternetSBB_bot • 🌐 www.tvinternetsbb.rs
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Referentne vrednosti (možeš menjati)
+    const ROI_OPEX_MONTHLY = 3275;   // €/mes
+    const ROI_ONE_TIME = 47250;      // €
+
+    // Scenariji (namerno opisani "na ljudski")
+    // safe  = više popusta/odustajanja -> manja neto vrednost
+    // normal= realan miks -> srednja vrednost
+    // strong= bolje lokacije/premium mix -> veća vrednost
+    const SCENARIOS = {
+      safe:   { annualValue: 180, label: "Siguran (više popusta)" },
+      normal: { annualValue: 250, label: "Standard (realan miks)" },
+      strong: { annualValue: 300, label: "Jak (malo otkazivanja)" }
+    };
+
+    function eur(n){
+      return new Intl.NumberFormat('sr-RS', { maximumFractionDigits: 0 }).format(n);
+    }
+
+    function setScenario(key){
+      const s = SCENARIOS[key];
+      if(!s) return;
+
+      document.getElementById('annualValue').value = s.annualValue;
+
+      // toggle active button
+      document.getElementById('btnSafe').classList.toggle('active', key === 'safe');
+      document.getElementById('btnNormal').classList.toggle('active', key === 'normal');
+      document.getElementById('btnStrong').classList.toggle('active', key === 'strong');
+
+      calcROIAnnual();
+    }
+
+    function calcROIAnnual(){
+      const annualValue = Number(document.getElementById('annualValue').value || 0); // € / 12 mes
+      const newUsers = Number(document.getElementById('newUsers').value || 0);
+
+      const out = document.getElementById('roiOutAnnual');
+
+      if (annualValue <= 0 || newUsers < 0){
+        out.textContent = "Unesi realnu godišnju vrednost i broj novih korisnika.";
+        return;
+      }
+
+      const valueMonthlyPerUser = annualValue / 12;
+      const monthlyRevenue = valueMonthlyPerUser * newUsers;
+      const monthlyNet = monthlyRevenue - ROI_OPEX_MONTHLY;
+
+      const breakEvenUsers = Math.ceil(ROI_OPEX_MONTHLY / Math.max(valueMonthlyPerUser, 0.000001));
+      const paybackMonths = monthlyNet > 0 ? (ROI_ONE_TIME / monthlyNet) : null;
+
+      document.getElementById('opexLbl').textContent = eur(ROI_OPEX_MONTHLY) + "€";
+      document.getElementById('oneTimeLbl').textContent = eur(ROI_ONE_TIME) + "€";
+
+      let html = "";
+      html += `Vrednost po korisniku: <strong>${eur(annualValue)}€</strong> / 12 meseci<br/>`;
+      html += `Mesečni ekvivalent: <strong>${eur(valueMonthlyPerUser)}€</strong> po korisniku / mesec<br/><br/>`;
+
+      html += `Mesečni prihod: <strong>${eur(monthlyRevenue)}€</strong><br/>`;
+      html += `Mesečna operativa: <strong>${eur(ROI_OPEX_MONTHLY)}€</strong><br/>`;
+      html += `Mesečno (neto): <strong style="color:${monthlyNet>=0 ? '#b7f7c9' : '#ffb4a2'}">${eur(monthlyNet)}€</strong><br/><br/>`;
+
+      html += `Break-even: <strong>${breakEvenUsers}</strong> novih korisnika/mesec (pri vrednosti ${eur(annualValue)}€ na 12 meseci).<br/>`;
+
+      if (paybackMonths){
+        html += `Povraćaj jednokratnog (${eur(ROI_ONE_TIME)}€): <strong>${paybackMonths.toFixed(1)} meseci</strong>.`;
+      } else {
+        html += `Povraćaj jednokratnog: <strong style="color:#ffb4a2;">nema</strong> (ispod operative).`;
+      }
+
+      out.innerHTML = html;
+    }
+
+    // init default to "safe"
+    setScenario('safe');
+  </script>
+</body>
+</html>
