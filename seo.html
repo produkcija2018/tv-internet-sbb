@@ -1,0 +1,1090 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SEO Control Center — Ops + Evidence</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1020;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.04);
+      --stroke:rgba(255,255,255,.10);
+      --text:#E7ECFF;
+      --muted:rgba(231,236,255,.70);
+      --muted2:rgba(231,236,255,.52);
+      --good:#4ADE80;
+      --warn:#FBBF24;
+      --bad:#FB7185;
+      --cyan:#22D3EE;
+      --violet:#A78BFA;
+      --blue:#60A5FA;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(34,211,238,.18), transparent 60%),
+        radial-gradient(1000px 600px at 80% 20%, rgba(167,139,250,.14), transparent 55%),
+        radial-gradient(1200px 800px at 60% 90%, rgba(96,165,250,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+    a{color:var(--cyan); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1280px; margin:0 auto; padding:22px 16px 70px}
+
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:80;
+      padding:14px 12px;
+      margin:0 -12px 14px;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,10,18,.82), rgba(7,10,18,.35));
+      border-bottom:1px solid rgba(255,255,255,.08);
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+    }
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(34,211,238,.85), transparent 60%),
+        radial-gradient(16px 16px at 70% 60%, rgba(167,139,250,.75), transparent 65%),
+        linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 10px 40px rgba(0,0,0,.55);
+    }
+    .title h1{font-size:14px; margin:0; letter-spacing:.2px}
+    .title .sub{font-size:12px; margin-top:2px; color:var(--muted2)}
+    .controls{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+    .pill{
+      padding:8px 10px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      border-radius:999px;
+      color:var(--muted);
+      font-size:12px;
+      display:flex; gap:8px; align-items:center;
+      white-space:nowrap;
+    }
+    .pill b{color:var(--text); font-weight:600}
+    .dot{width:7px; height:7px; border-radius:50%}
+    .dot.good{background:var(--good)}
+    .dot.warn{background:var(--warn)}
+    .dot.bad{background:var(--bad)}
+    .mono{font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace}
+    .search{
+      width:min(420px, 60vw);
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      outline:none;
+    }
+    .search::placeholder{color:rgba(231,236,255,.45)}
+
+    /* Cards / grid */
+    .grid{display:grid; grid-template-columns: 1.2fr .8fr; gap:14px}
+    .grid3{display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px}
+    @media (max-width: 1040px){
+      .grid{grid-template-columns:1fr}
+      .grid3{grid-template-columns:1fr}
+      .search{width:100%}
+    }
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .card .hd .kicker{
+      font-size:12px; color:var(--muted2); letter-spacing:.2px;
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    .card .hd h2{margin:6px 0 0; font-size:16px; letter-spacing:.2px}
+    .card .bd{padding:14px 16px}
+
+    .badge{
+      font-size:11px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--muted);
+      background: rgba(255,255,255,.04);
+      display:inline-flex; gap:8px; align-items:center;
+      white-space:nowrap;
+    }
+
+    /* Metrics */
+    .metricRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .metric{
+      flex:1;
+      min-width:220px;
+      padding:12px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius:14px;
+    }
+    .metric .lbl{font-size:12px; color:var(--muted2)}
+    .metric .val{font-size:18px; font-weight:700; margin-top:6px}
+    .metric .hint{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.35}
+
+    /* Tables */
+    table{width:100%; border-collapse:separate; border-spacing:0}
+    th,td{padding:10px 10px; border-bottom:1px solid rgba(255,255,255,.08); vertical-align:top}
+    th{
+      font-size:12px; text-align:left; color:rgba(231,236,255,.85);
+      background: rgba(255,255,255,.04);
+      position: static;
+    }
+    td{font-size:12.5px; color:var(--muted); line-height:1.35; word-break: break-word;}
+    tr:hover td{background:rgba(255,255,255,.03)}
+    .tblWrap{
+      position: relative;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      overflow:auto;
+      background: rgba(255,255,255,.02);
+    }
+    .tblWrap thead th{
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(12,16,32,.92);
+      backdrop-filter: blur(10px);
+      white-space: nowrap;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:11px;
+      padding:5px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color:rgba(231,236,255,.82);
+      margin-right:6px;
+      margin-top:6px;
+    }
+    .prio{font-weight:700; font-family:"JetBrains Mono", monospace; letter-spacing:.2px}
+    .p0{color:var(--bad)}
+    .p1{color:var(--warn)}
+    .p2{color:var(--good)}
+
+    /* Process */
+    .flow{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 980px){ .flow{grid-template-columns:1fr} }
+    .step{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius:16px;
+      padding:12px 12px;
+    }
+    .step .st{font-size:12px; color:var(--muted2); font-family:"JetBrains Mono", monospace}
+    .step .tt{font-size:13px; font-weight:700; margin-top:6px}
+    .step .dd{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.45}
+    .divider{height:1px; background:rgba(255,255,255,.10); margin:14px 0}
+
+    /* Evidence cards */
+    .eviGrid{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
+    @media (max-width: 980px){ .eviGrid{grid-template-columns:1fr} }
+    .evi{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius:16px;
+      padding:12px;
+    }
+    .evi .h{display:flex; justify-content:space-between; gap:10px; align-items:center}
+    .evi .t{font-size:13px; font-weight:700}
+    .evi .m{font-size:12px; color:var(--muted2); margin-top:6px}
+    .evi .small{font-size:12px; color:var(--muted); line-height:1.45; margin-top:8px}
+    .btn{
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:9px 12px;
+      border-radius:14px;
+      font-weight:700;
+      font-size:12px;
+    }
+    .btn:hover{background: rgba(255,255,255,.09)}
+    .in{
+      width:100%;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      outline:none;
+      font-size:13px;
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap}
+    .col{flex:1; min-width:220px}
+    .note{
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+    .kbd{
+      font-family:"JetBrains Mono", monospace;
+      font-size:11px;
+      padding:2px 6px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color:rgba(231,236,255,.82);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title">
+          <h1>SEO Control Center — Ops + Evidence</h1>
+          <div class="sub">
+            Fokus: SERP → Trust → Technical → Content → Conversion • Mode: senior team • Timebox: mesečno
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="pill"><span class="dot warn"></span><b>Realnost</b> Browser ne može legalno/tehnički da “scrape” sve (CORS + Google). Data ide preko API proxy-a ili upload-a.</div>
+        <input id="search" class="search" placeholder="Filter sekcija (npr. 'CWV', 'SERP', 'schema', 'canonical', 'local', 'ctr', 'leads')  •  <Ctrl/⌘+K>" />
+      </div>
+    </div>
+
+    <!-- EXEC SUMMARY -->
+    <div class="grid" data-filter="exec summary leadership kpi ctr leads conversions revenue p0">
+      <div class="card">
+        <div class="hd">
+          <div>
+            <div class="kicker">EXEC SUMMARY</div>
+            <h2>Jedan ekran: gde gubimo i šta menja brojke</h2>
+          </div>
+          <span class="badge"><span class="dot bad"></span>P0 fokus = klik + lead, ne “pozicija”</span>
+        </div>
+        <div class="bd">
+          <div class="metricRow">
+            <div class="metric">
+              <div class="lbl">Share-of-Voice (SERP) • 20 money upita</div>
+              <div class="val"><span id="sovVal">—</span>%</div>
+              <div class="hint">Definicija: % pojavljivanja domena u Top10 za definisan set upita. Evidence: SERP dossier tabela.</div>
+            </div>
+            <div class="metric">
+              <div class="lbl">CTR (GSC) • money landing set</div>
+              <div class="val"><span id="ctrVal">—</span>%</div>
+              <div class="hint">Cilj: povećanje CTR kroz title/meta + rich results (FAQ) + intent split.</div>
+            </div>
+            <div class="metric">
+              <div class="lbl">Leads (GA4 events) • click_to_call + submit</div>
+              <div class="val"><span id="leadsVal">—</span></div>
+              <div class="hint">Meri se po landing-u: <span class="mono">click_to_call/sessions</span> + <span class="mono">form_submit/sessions</span>.</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="flow">
+            <div class="step">
+              <div class="st">STEP 01 • SERP</div>
+              <div class="tt">Share-of-Voice + features</div>
+              <div class="dd">Top10 po money upitima: domen, title pattern, rich results, sitelinks. Bez toga nema prioriteta.</div>
+            </div>
+            <div class="step">
+              <div class="st">STEP 02 • TRUST</div>
+              <div class="tt">Brand + IA + Internal links</div>
+              <div class="dd">Sitelinks i trust dolaze iz strukture: hubovi, intent split, canonical disciplina.</div>
+            </div>
+            <div class="step">
+              <div class="st">STEP 03 • TECH</div>
+              <div class="tt">Indexing + CWV + Schema</div>
+              <div class="dd">Crawl, canonical, sitemap, CWV (mobile), schema validacija. Sve merljivo.</div>
+            </div>
+            <div class="step">
+              <div class="st">STEP 04 • MONEY</div>
+              <div class="tt">CTA funnel + events</div>
+              <div class="dd">Sticky call + “Zakaži poziv” + mikro-CTA. Bez eventa = nema dokazivanja rasta.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- LIVE CONNECTORS / DATA IN -->
+      <div class="card" data-filter="connectors api proxy pagespeed serp gsc upload csv json ga4 events">
+        <div class="hd">
+          <div>
+            <div class="kicker">CONNECTORS</div>
+            <h2>Data input (API proxy ili upload)</h2>
+          </div>
+          <span class="badge"><span class="dot warn"></span>UI je frontend. Crawling/SERP ide preko servera.</span>
+        </div>
+        <div class="bd">
+          <div class="row">
+            <div class="col">
+              <div class="note">
+                <b class="mono">API endpoints</b> (tvoj server):<br/>
+                <span class="mono">/api/pagespeed?url=</span><br/>
+                <span class="mono">/api/serp?query=&loc=</span><br/>
+                <span class="mono">/api/index?url=</span><br/>
+                <span class="mono">/api/crawl?seed=</span><br/>
+                <div style="margin-top:10px; color:rgba(231,236,255,.62)">
+                  Bez proxy-a browser će blokirati većinu izvora (CORS). Ovaj panel služi da se UI “nahrani”.
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <label style="font-size:12px;color:var(--muted2)">Site / seed URL</label>
+              <input id="siteUrl" class="in" value="https://example.com" />
+              <div style="height:10px"></div>
+
+              <label style="font-size:12px;color:var(--muted2)">API Base (proxy)</label>
+              <input id="apiBase" class="in" placeholder="https://yourdomain.com" />
+              <div style="height:10px"></div>
+
+              <div class="row">
+                <button class="btn" id="btnLoadDemo">Load demo dataset</button>
+                <button class="btn" id="btnRunAll">Run (proxy)</button>
+              </div>
+
+              <div style="height:12px"></div>
+
+              <label style="font-size:12px;color:var(--muted2)">Upload JSON (GSC/GA4/SERP/Crawl)</label>
+              <input id="fileJson" type="file" class="in" accept="application/json" />
+              <div style="margin-top:8px; font-size:12px; color:var(--muted)">
+                Tip: napravi eksport iz alata u jedan JSON i ubaci ovde. UI automatski popunjava tabele/grafike.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD: KPI CHARTS -->
+    <div class="grid3" style="margin-top:14px" data-filter="charts kpi cwv pagespeed ctr sov leads conversions">
+      <div class="card">
+        <div class="hd">
+          <div>
+            <div class="kicker">KPI</div>
+            <h2>SOV / CTR / Leads trend</h2>
+          </div>
+          <span class="badge"><span class="dot good"></span>Trend > snapshot</span>
+        </div>
+        <div class="bd">
+          <canvas id="kpiTrend" height="220"></canvas>
+          <div style="margin-top:10px; color:var(--muted2); font-size:12px; line-height:1.45">
+            KPI definicije:
+            <span class="tag"><span class="mono">SOV</span> % Top10</span>
+            <span class="tag"><span class="mono">CTR</span> money URLs</span>
+            <span class="tag"><span class="mono">Leads</span> events</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="hd">
+          <div>
+            <div class="kicker">TECH</div>
+            <h2>Indexing health</h2>
+          </div>
+          <span class="badge"><span class="dot warn"></span>crawl/index mismatch</span>
+        </div>
+        <div class="bd">
+          <canvas id="indexPie" height="220"></canvas>
+          <div style="margin-top:10px; color:var(--muted2); font-size:12px; line-height:1.45">
+            Cilj: smanjiti <span class="mono">Excluded</span> i <span class="mono">Duplicate</span> kroz canonical/sitemap discipline.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="hd">
+          <div>
+            <div class="kicker">CWV</div>
+            <h2>PageSpeed (mobile)</h2>
+          </div>
+          <span class="badge"><span class="dot warn"></span>LCP/INP/CLS</span>
+        </div>
+        <div class="bd">
+          <canvas id="psiBars" height="220"></canvas>
+          <div style="margin-top:10px; color:var(--muted2); font-size:12px; line-height:1.45">
+            UI očekuje PSI rezultate po top landing-ima (hubovi). Input: proxy endpoint ili JSON upload.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERP DOSSIER -->
+    <div class="card" style="margin-top:14px" data-filter="serp dossier share of voice titles meta rich results faq sitelinks localpack">
+      <div class="hd">
+        <div>
+          <div class="kicker">SERP DOSSIER</div>
+          <h2>20 upita × Top10: ko dobija klikove i zašto</h2>
+        </div>
+        <span class="badge"><span class="dot good"></span>Evidence-driven prioritization</span>
+      </div>
+      <div class="bd">
+        <div class="tblWrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="min-width:220px">Query</th>
+                <th style="min-width:220px">Lokacija</th>
+                <th style="min-width:240px">Top 3 domena</th>
+                <th style="min-width:240px">Features (rich / sitelinks / local)</th>
+                <th style="min-width:240px">Title/Meta pattern koji uzima CTR</th>
+                <th style="min-width:240px">Kontra potez (SATVISION)</th>
+                <th style="min-width:160px">Datum</th>
+              </tr>
+            </thead>
+            <tbody id="serpBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH AUDIT -->
+    <div class="grid" style="margin-top:14px" data-filter="technical seo canonical sitemap robots indexing duplication hreflang schema security">
+      <div class="card">
+        <div class="hd">
+          <div>
+            <div class="kicker">TECH AUDIT</div>
+            <h2>P0/P1/P2 — problemi koji blokiraju rast</h2>
+          </div>
+          <span class="badge"><span class="dot bad"></span>Fix-first model</span>
+        </div>
+        <div class="bd">
+          <div class="tblWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="min-width:90px">Prioritet</th>
+                  <th style="min-width:260px">Problem</th>
+                  <th style="min-width:240px">Uticaj</th>
+                  <th style="min-width:220px">Gde se rešava (WP)</th>
+                  <th style="min-width:220px">Kako se meri</th>
+                </tr>
+              </thead>
+              <tbody id="techBody"></tbody>
+            </table>
+          </div>
+          <div style="margin-top:10px" class="note">
+            Pravilo: ništa se ne radi “zato što je best practice”. Sve ide kroz: <b>signal → merilo → cilj</b>.
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-filter="schema faq organization localbusiness breadcrumbs product offers howto">
+        <div class="hd">
+          <div>
+            <div class="kicker">SCHEMA & TRUST</div>
+            <h2>Rich results i trust signal</h2>
+          </div>
+          <span class="badge"><span class="dot warn"></span>CTR leverage</span>
+        </div>
+        <div class="bd">
+          <div class="eviGrid">
+            <div class="evi">
+              <div class="h">
+                <div class="t">FAQ schema (money URLs)</div>
+                <span class="badge"><span class="dot warn"></span>P1</span>
+              </div>
+              <div class="m">Cilj: veći snippet → veći CTR bez #1 pozicije</div>
+              <div class="small">
+                Pravilo: FAQ schema samo gde postoji realan FAQ na strani.
+                Validacija: Rich Results Test + GSC Enhancements (ako se pojavi).
+              </div>
+            </div>
+            <div class="evi">
+              <div class="h">
+                <div class="t">Organization / LocalBusiness</div>
+                <span class="badge"><span class="dot good"></span>P0</span>
+              </div>
+              <div class="m">Cilj: konzistentan NAP + brend signal</div>
+              <div class="small">
+                U WP: schema preko SEO plugina + footer NAP + kontakt stranica + Google Business Profile usklađen.
+              </div>
+            </div>
+            <div class="evi">
+              <div class="h">
+                <div class="t">BreadcrumbList</div>
+                <span class="badge"><span class="dot good"></span>P0</span>
+              </div>
+              <div class="m">Cilj: IA čitljiva Google-u → sitelinks</div>
+              <div class="small">
+                U WP: breadcrumbs + internal linking (hub → podstrane). Meri: sitelinks pojavnost na brand upitima.
+              </div>
+            </div>
+            <div class="evi">
+              <div class="h">
+                <div class="t">Offers (ako imate cenu/akciju)</div>
+                <span class="badge"><span class="dot warn"></span>P1</span>
+              </div>
+              <div class="m">Cilj: “ponuda” signal, ali bez spam-a</div>
+              <div class="small">
+                Ne raditi lažnu cenu. Ako je realno i stabilno: Offer schema. U suprotnom, držati kao content + CTA.
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px" class="note">
+            <span class="kbd">Ctrl</span>/<span class="kbd">⌘</span>+<span class="kbd">K</span> fokus search. Filter radi po tokenima sekcija (professional ops).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT GAP + INTERNAL LINKING -->
+    <div class="card" style="margin-top:14px" data-filter="content gap internal links hubs clusters intent split new existing local landing money pages">
+      <div class="hd">
+        <div>
+          <div class="kicker">CONTENT & IA</div>
+          <h2>Klasteri, hubovi, intent split i internal linking (za sitelinks)</h2>
+        </div>
+        <span class="badge"><span class="dot good"></span>Struktura = poverenje</span>
+      </div>
+      <div class="bd">
+        <div class="flow">
+          <div class="step">
+            <div class="st">CLUSTER</div>
+            <div class="tt">EON</div>
+            <div class="dd">Hub: /eon/ → podstrane: cene, kanali, faq, beograd+5. Goal: CTR + lead.</div>
+          </div>
+          <div class="step">
+            <div class="st">CLUSTER</div>
+            <div class="tt">TV paketi</div>
+            <div class="dd">Razdvojiti “SBB mreža” vs “van mreže”. Goal: čista namera i manja kanibalizacija.</div>
+          </div>
+          <div class="step">
+            <div class="st">CLUSTER</div>
+            <div class="tt">Internet + TV</div>
+            <div class="dd">Jedan primarni hub (canonical). Local landing set (Beograd + 5) je P1.</div>
+          </div>
+          <div class="step">
+            <div class="st">INTENT SPLIT</div>
+            <div class="tt">Novi / Postojeći</div>
+            <div class="dd">Dve strane + linkovi ka money hubovima. Goal: više ulaza + bolji mapping upita.</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="tblWrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="min-width:220px">Landing (hub)</th>
+                <th style="min-width:260px">Primarni intent</th>
+                <th style="min-width:260px">Support pages (min)</th>
+                <th style="min-width:260px">Internal link anchors (standard)</th>
+                <th style="min-width:220px">KPI</th>
+              </tr>
+            </thead>
+            <tbody id="iaBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONVERSION OPS -->
+    <div class="card" style="margin-top:14px" data-filter="conversion funnel cta sticky call schedule ga4 events leads forms phone">
+      <div class="hd">
+        <div>
+          <div class="kicker">CONVERSION OPS</div>
+          <h2>CTA sistemi i events — dokazivanje lead rasta</h2>
+        </div>
+        <span class="badge"><span class="dot bad"></span>Bez eventa nema growth-a</span>
+      </div>
+      <div class="bd">
+        <div class="grid3">
+          <div class="metric">
+            <div class="lbl">Sticky CTA (mobile)</div>
+            <div class="val">Pozovi + Zakaži poziv</div>
+            <div class="hint">Implementacija: theme hook / mini plugin. Eventi: <span class="mono">click_to_call</span>, <span class="mono">schedule_call_submit</span>.</div>
+          </div>
+          <div class="metric">
+            <div class="lbl">Form friction</div>
+            <div class="val">Micro-commit</div>
+            <div class="hint">Ne “Poruči odmah” kao jedini put. Dodaj 2 koraka: zakaži → potvrdi. Meri drop-off.</div>
+          </div>
+          <div class="metric">
+            <div class="lbl">Landing KPI</div>
+            <div class="val">Leads / sessions</div>
+            <div class="hint">Po URL-u: call clicks i submits / sessions. Cilj: stabilan rast na money hubovima.</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="tblWrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="min-width:240px">Event name (GA4)</th>
+                <th style="min-width:260px">Trigger</th>
+                <th style="min-width:260px">Parametri</th>
+                <th style="min-width:260px">Zašto</th>
+                <th style="min-width:220px">KPI</th>
+              </tr>
+            </thead>
+            <tbody id="eventsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACKLOG -->
+    <div class="card" style="margin-top:14px" data-filter="backlog p0 p1 p2 tasks wordpress owners due dates measurement gsc ga4">
+      <div class="hd">
+        <div>
+          <div class="kicker">EXECUTION BACKLOG</div>
+          <h2>P0/P1/P2 plan (merljivo + proverljivo + WP)</h2>
+        </div>
+        <span class="badge"><span class="dot good"></span>Ops-ready</span>
+      </div>
+      <div class="bd">
+        <div class="tblWrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="min-width:90px">Prioritet</th>
+                <th style="min-width:280px">Zadatak</th>
+                <th style="min-width:260px">Razlog (konkurentski)</th>
+                <th style="min-width:220px">Owner</th>
+                <th style="min-width:160px">Rok</th>
+                <th style="min-width:220px">Merenje</th>
+              </tr>
+            </thead>
+            <tbody id="backlogBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // ==========================
+    // DATA MODEL (UI expects this)
+    // ==========================
+    // You can load via:
+    // 1) Demo data (btn)
+    // 2) Upload JSON containing these keys
+    // 3) Proxy endpoints (btnRunAll) - optional, requires your backend
+
+    const state = {
+      siteUrl: "https://example.com",
+      kpiMonthly: [],       // [{month:"2026-01", sov:22, ctr:3.1, leads:44}]
+      indexHealth: null,    // {indexed:120, excluded:45, duplicates:12, errors:3}
+      psi: [],              // [{url:"/eon-tv/", mobile: {lcp:3.2, inp:280, cls:0.08, score:58}}]
+      serp: [],             // [{query, loc, topDomains:[...], features:[...], pattern, counter, date}]
+      techIssues: [],       // [{prio:"P0", problem, impact, where, measure}]
+      iaBlueprint: [],      // [{hub, intent, support, anchors, kpi}]
+      eventsSpec: [],       // [{name, trigger, params, why, kpi}]
+      backlog: []           // [{prio, task, reason, owner, due, measure}]
+    };
+
+    // ==========================
+    // CHARTS
+    // ==========================
+    let kpiTrendChart, indexPieChart, psiBarsChart;
+
+    function initCharts(){
+      // KPI trend
+      const kpiCtx = document.getElementById("kpiTrend");
+      kpiTrendChart = new Chart(kpiCtx, {
+        type: "line",
+        data: { labels: [], datasets: [
+          { label: "SOV %", data: [], borderColor: "rgba(34,211,238,.9)", backgroundColor:"rgba(34,211,238,.18)", tension:.35, fill:true },
+          { label: "CTR %", data: [], borderColor: "rgba(167,139,250,.9)", backgroundColor:"rgba(167,139,250,.12)", tension:.35, fill:true },
+          { label: "Leads", data: [], borderColor: "rgba(96,165,250,.9)", backgroundColor:"rgba(96,165,250,.12)", tension:.35, fill:true, yAxisID:"y1" }
+        ]},
+        options: {
+          responsive:true,
+          plugins:{ legend:{ labels:{ color:"rgba(231,236,255,.78)", font:{size:11, family:"Inter"} } } },
+          scales:{
+            x:{ ticks:{ color:"rgba(231,236,255,.55)" }, grid:{ color:"rgba(255,255,255,.06)" } },
+            y:{ ticks:{ color:"rgba(231,236,255,.55)" }, grid:{ color:"rgba(255,255,255,.06)" } },
+            y1:{ position:"right", ticks:{ color:"rgba(231,236,255,.55)" }, grid:{ display:false } }
+          }
+        }
+      });
+
+      // Index pie
+      const pieCtx = document.getElementById("indexPie");
+      indexPieChart = new Chart(pieCtx, {
+        type: "doughnut",
+        data: {
+          labels:["Indexed","Excluded","Duplicates","Errors"],
+          datasets:[{
+            data:[0,0,0,0],
+            backgroundColor:[
+              "rgba(74,222,128,.80)",
+              "rgba(251,191,36,.80)",
+              "rgba(167,139,250,.75)",
+              "rgba(251,113,133,.80)"
+            ],
+            borderColor:"rgba(255,255,255,.10)",
+            borderWidth:1.2,
+            hoverOffset:8
+          }]
+        },
+        options:{
+          plugins:{ legend:{ position:"bottom", labels:{ color:"rgba(231,236,255,.78)", padding:14, boxWidth:12, font:{size:11, family:"Inter"} } } },
+          cutout:"62%"
+        }
+      });
+
+      // PSI bars
+      const psiCtx = document.getElementById("psiBars");
+      psiBarsChart = new Chart(psiCtx, {
+        type:"bar",
+        data:{
+          labels:[],
+          datasets:[
+            { label:"LCP (s)", data:[], backgroundColor:"rgba(34,211,238,.55)" },
+            { label:"INP (ms)", data:[], backgroundColor:"rgba(167,139,250,.55)" },
+            { label:"CLS", data:[], backgroundColor:"rgba(96,165,250,.55)" },
+            { label:"Score", data:[], backgroundColor:"rgba(251,191,36,.55)" }
+          ]
+        },
+        options:{
+          responsive:true,
+          plugins:{ legend:{ labels:{ color:"rgba(231,236,255,.78)", font:{size:11, family:"Inter"} } } },
+          scales:{
+            x:{ ticks:{ color:"rgba(231,236,255,.55)" }, grid:{ color:"rgba(255,255,255,.06)" } },
+            y:{ ticks:{ color:"rgba(231,236,255,.55)" }, grid:{ color:"rgba(255,255,255,.06)" } }
+          }
+        }
+      });
+    }
+
+    // ==========================
+    // RENDERERS
+    // ==========================
+    function setText(id, v){ document.getElementById(id).textContent = (v ?? "—"); }
+
+    function renderKPIs(){
+      const last = state.kpiMonthly[state.kpiMonthly.length - 1];
+      setText("sovVal", last ? last.sov : "—");
+      setText("ctrVal", last ? last.ctr : "—");
+      setText("leadsVal", last ? last.leads : "—");
+
+      // trend chart
+      const labels = state.kpiMonthly.map(x => x.month);
+      kpiTrendChart.data.labels = labels;
+      kpiTrendChart.data.datasets[0].data = state.kpiMonthly.map(x => x.sov);
+      kpiTrendChart.data.datasets[1].data = state.kpiMonthly.map(x => x.ctr);
+      kpiTrendChart.data.datasets[2].data = state.kpiMonthly.map(x => x.leads);
+      kpiTrendChart.update();
+    }
+
+    function renderIndexHealth(){
+      const h = state.indexHealth || {indexed:0, excluded:0, duplicates:0, errors:0};
+      indexPieChart.data.datasets[0].data = [h.indexed, h.excluded, h.duplicates, h.errors];
+      indexPieChart.update();
+    }
+
+    function renderPSI(){
+      const rows = (state.psi || []).slice(0, 8);
+      const labels = rows.map(r => (r.url || "").replace(state.siteUrl,"").slice(0,28) || r.url);
+      psiBarsChart.data.labels = labels;
+      psiBarsChart.data.datasets[0].data = rows.map(r => r.mobile?.lcp ?? 0);
+      psiBarsChart.data.datasets[1].data = rows.map(r => r.mobile?.inp ?? 0);
+      psiBarsChart.data.datasets[2].data = rows.map(r => r.mobile?.cls ?? 0);
+      psiBarsChart.data.datasets[3].data = rows.map(r => r.mobile?.score ?? 0);
+      psiBarsChart.update();
+    }
+
+    function fillTbody(tbodyId, rows, renderer){
+      const tb = document.getElementById(tbodyId);
+      tb.innerHTML = "";
+      rows.forEach(r => tb.appendChild(renderer(r)));
+    }
+
+    function tr(html){
+      const el = document.createElement("tr");
+      el.innerHTML = html;
+      return el;
+    }
+
+    function renderTables(){
+      fillTbody("serpBody", state.serp, r => tr(`
+        <td><span style="color:rgba(231,236,255,.92);font-weight:700">${esc(r.query)}</span></td>
+        <td><span class="mono">${esc(r.loc || "—")}</span></td>
+        <td>${(r.topDomains||[]).map(d=>`<div class="mono">${esc(d)}</div>`).join("")}</td>
+        <td>${(r.features||[]).map(f=>`<span class="tag">${esc(f)}</span>`).join("")}</td>
+        <td>${esc(r.pattern || "—")}</td>
+        <td>${esc(r.counter || "—")}</td>
+        <td><span class="mono">${esc(r.date || "—")}</span></td>
+      `));
+
+      fillTbody("techBody", state.techIssues, r => tr(`
+        <td class="prio ${r.prio === "P0" ? "p0" : r.prio === "P1" ? "p1" : "p2"}">${esc(r.prio)}</td>
+        <td><span style="color:rgba(231,236,255,.92);font-weight:700">${esc(r.problem)}</span></td>
+        <td>${esc(r.impact)}</td>
+        <td><span class="mono">${esc(r.where)}</span></td>
+        <td>${esc(r.measure)}</td>
+      `));
+
+      fillTbody("iaBody", state.iaBlueprint, r => tr(`
+        <td><span class="mono" style="color:rgba(231,236,255,.92);font-weight:700">${esc(r.hub)}</span></td>
+        <td>${esc(r.intent)}</td>
+        <td>${(r.support||[]).map(s=>`<div class="mono">${esc(s)}</div>`).join("")}</td>
+        <td>${(r.anchors||[]).map(a=>`<span class="tag">${esc(a)}</span>`).join("")}</td>
+        <td>${esc(r.kpi)}</td>
+      `));
+
+      fillTbody("eventsBody", state.eventsSpec, r => tr(`
+        <td><span class="mono" style="color:rgba(231,236,255,.92);font-weight:700">${esc(r.name)}</span></td>
+        <td>${esc(r.trigger)}</td>
+        <td>${(r.params||[]).map(p=>`<div class="mono">${esc(p)}</div>`).join("")}</td>
+        <td>${esc(r.why)}</td>
+        <td>${esc(r.kpi)}</td>
+      `));
+
+      fillTbody("backlogBody", state.backlog, r => tr(`
+        <td class="prio ${r.prio === "P0" ? "p0" : r.prio === "P1" ? "p1" : "p2"}">${esc(r.prio)}</td>
+        <td><span style="color:rgba(231,236,255,.92);font-weight:700">${esc(r.task)}</span></td>
+        <td>${esc(r.reason)}</td>
+        <td><span class="mono">${esc(r.owner || "—")}</span></td>
+        <td><span class="mono">${esc(r.due || "—")}</span></td>
+        <td>${esc(r.measure)}</td>
+      `));
+    }
+
+    function renderAll(){
+      renderKPIs();
+      renderIndexHealth();
+      renderPSI();
+      renderTables();
+    }
+
+    // ==========================
+    // DEMO DATASET (replace with your real inputs)
+    // ==========================
+    function loadDemo(){
+      state.siteUrl = document.getElementById("siteUrl").value.trim() || state.siteUrl;
+
+      state.kpiMonthly = [
+        {month:"2025-10", sov:14, ctr:2.1, leads:22},
+        {month:"2025-11", sov:16, ctr:2.4, leads:28},
+        {month:"2025-12", sov:18, ctr:2.8, leads:33},
+        {month:"2026-01", sov:22, ctr:3.2, leads:44}
+      ];
+
+      state.indexHealth = { indexed: 186, excluded: 64, duplicates: 18, errors: 4 };
+
+      state.psi = [
+        { url: state.siteUrl + "/eon-tv/", mobile:{ lcp:3.6, inp:320, cls:0.09, score:58 } },
+        { url: state.siteUrl + "/tv-paketi/", mobile:{ lcp:3.1, inp:280, cls:0.07, score:63 } },
+        { url: state.siteUrl + "/eon-trio-paketi/", mobile:{ lcp:4.0, inp:350, cls:0.12, score:52 } },
+        { url: state.siteUrl + "/", mobile:{ lcp:3.3, inp:300, cls:0.10, score:60 } }
+      ];
+
+      state.serp = [
+        {
+          query:"internet tv beograd",
+          loc:"Beograd",
+          topDomains:["kablovskainfo.rs","euroconnection.rs","satvision.rs"],
+          features:["LocalPack","Sitelinks","Offers-like copy"],
+          pattern:"‘2026’ + ‘akcija’ + ‘direktna linija’ / ‘zakaži poziv’",
+          counter:"/internet-tv-beograd/ + sticky call + FAQ schema",
+          date:"2026-03-01"
+        },
+        {
+          query:"eon beograd",
+          loc:"Beograd",
+          topDomains:["sbb.rs","euroconnection.rs","satvision.rs"],
+          features:["Sitelinks","FAQ (ponekad)"],
+          pattern:"brand trust + intent hub + jasna kategorija",
+          counter:"/eon-beograd/ + intent split (novi/postojeći) + micro-CTA",
+          date:"2026-03-01"
+        },
+        {
+          query:"tv paketi",
+          loc:"Srbija",
+          topDomains:["sbb.rs","kablovska.info","euroconnection.rs"],
+          features:["Sitelinks","Rich snippets (var)"],
+          pattern:"‘TV paketi’ kao čist intent + call-first",
+          counter:"razdvojiti ‘TV u mreži’ vs ‘van mreže’ + title/meta",
+          date:"2026-03-01"
+        }
+      ];
+
+      state.techIssues = [
+        { prio:"P0", problem:"Kanibalizacija hubova (više URL-ova za isti intent)", impact:"Google deli signale → slabiji ranking/CTR", where:"WP: 301 + canonical + internal links", measure:"GSC: impresije/klikovi po primarnom URL-u; pad duplih query mapiranja" },
+        { prio:"P0", problem:"Nema sticky call CTA na mobilnom (money pages)", impact:"Manje poziva = manje leadova", where:"Theme hook / mini plugin + GA4 events", measure:"GA4: click_to_call/sessions po URL-u + trend leads" },
+        { prio:"P1", problem:"FAQ schema nije sistemski na money landing-ima", impact:"Propušten CTR lift", where:"RankMath/Yoast schema + validacija", measure:"GSC CTR rast + Rich Results test" },
+        { prio:"P1", problem:"Local landing set nije definisan (Beograd + 5)", impact:"Gubitak long-tail leadova", where:"WP Pages + unikatan lokalni blok", measure:"GSC: ‘+ grad’ query set + pozivi po lokalnom URL-u" },
+        { prio:"P2", problem:"Nema mesečnog SERP dossier-a (20 upita × Top10)", impact:"Prioriteti postaju ‘na osećaj’", where:"Sheets/Notion + export u JSON", measure:"Share-of-voice trend + lista novih domena/feature-a" }
+      ];
+
+      state.iaBlueprint = [
+        { hub:"/eon/", intent:"EON paketi (core) + van mreže", support:["/eon-cene/","/eon-kanali/","/eon-faq/","/eon-beograd/"], anchors:["eon paketi","eon cena","eon van mreže","eon beograd"], kpi:"CTR + leads (call/submit)" },
+        { hub:"/tv-paketi/", intent:"TV paketi (mreža) — čist intent", support:["/tv-paketi-cene/","/tv-kanali/","/tv-faq/"], anchors:["tv paketi","tv kanali","tv cena"], kpi:"Impressions + CTR" },
+        { hub:"/internet-tv/", intent:"Internet+TV hub (canonical)", support:["/internet-tv-beograd/","/internet-tv-novi-sad/","/internet-tv-nis/"], anchors:["internet i tv","internet tv beograd","net tv"], kpi:"Leads/sessions + CTR" },
+        { hub:"/novi-korisnici/", intent:"Novi korisnici — intent split", support:["/eon/","/internet-tv/","/tv-paketi/"], anchors:["novi korisnici","novi sbb korisnici"], kpi:"Impressions + nav clicks" },
+      ];
+
+      state.eventsSpec = [
+        { name:"click_to_call", trigger:"Klik na tel: link (header, sticky bar, kontakt modul)", params:["page_location","cta_position","product_cluster"], why:"Merimo call-first lead behavior", kpi:"click_to_call / sessions" },
+        { name:"schedule_call_open", trigger:"Klik ‘Zakaži poziv’ (otvara modal)", params:["page_location","cta_position"], why:"Merimo micro-commit", kpi:"open rate" },
+        { name:"schedule_call_submit", trigger:"Submit u modal formi", params:["page_location","product_cluster","city"], why:"Meri završetak bez frikcije", kpi:"submit / sessions" },
+        { name:"lead_form_submit", trigger:"Submit glavne forme (porudžbina)", params:["page_location","product_cluster","city"], why:"Final conversion", kpi:"submit / sessions" }
+      ];
+
+      state.backlog = [
+        { prio:"P0", task:"Jedan canonical hub po intentu (301 + internal linking)", reason:"Kanibalizacija ubija CTR i stabilnost rangiranja", owner:"Tech SEO", due:"+7d", measure:"GSC: konsolidacija klikova na 1 URL" },
+        { prio:"P0", task:"Sticky CTA bar (mobile): Pozovi + Zakaži poziv + GA4 events", reason:"Konkurenti zatvaraju lead ‘call-first’", owner:"Dev + CRO", due:"+5d", measure:"click_to_call/sessions + leads trend" },
+        { prio:"P0", task:"Intent hubovi: Novi / Postojeći (2 strane + menu)", reason:"Google bolje mapira intent; više ulaza", owner:"Content + IA", due:"+10d", measure:"GSC impresije na ‘novi/postojeći’ query set" },
+        { prio:"P1", task:"Local landing set (Beograd + 5) za Internet+TV", reason:"Preotimanje lokalnog long-tail-a", owner:"Content + Dev", due:"+21d", measure:"GSC ‘+ grad’ + pozivi po lokalnim URL-ovima" },
+        { prio:"P1", task:"FAQ schema na money landing-ima (real FAQ)", reason:"CTR lift bez #1", owner:"SEO", due:"+14d", measure:"CTR delta po URL-u" },
+        { prio:"P2", task:"SERP dossier 20×Top10 mesečno (export JSON)", reason:"Evidence-driven prioritizacija", owner:"SEO Ops", due:"monthly", measure:"SOV trend + feature capture" }
+      ];
+
+      renderAll();
+    }
+
+    // ==========================
+    // PROXY RUNNER (optional)
+    // ==========================
+    async function runProxy(){
+      const apiBase = (document.getElementById("apiBase").value || "").trim().replace(/\/+$/,"");
+      const siteUrl = (document.getElementById("siteUrl").value || "").trim();
+      if(!apiBase){
+        alert("Unesi API Base (proxy). Ako nemaš proxy, koristi demo ili upload JSON.");
+        return;
+      }
+      if(!siteUrl){
+        alert("Unesi site URL.");
+        return;
+      }
+      state.siteUrl = siteUrl;
+
+      // This expects your server to return JSON in expected shapes:
+      // GET {apiBase}/api/dashboard?site=https://...
+      // -> { kpiMonthly, indexHealth, psi, serp, techIssues, iaBlueprint, eventsSpec, backlog }
+      try{
+        const url = `${apiBase}/api/dashboard?site=${encodeURIComponent(siteUrl)}`;
+        const res = await fetch(url, { headers:{ "accept":"application/json" }});
+        if(!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        hydrateFromJson(data);
+        renderAll();
+      }catch(err){
+        console.error(err);
+        alert("Proxy fetch nije uspeo. Proveri endpoint /api/dashboard ili koristi demo/upload.");
+      }
+    }
+
+    // ==========================
+    // JSON UPLOAD
+    // ==========================
+    function hydrateFromJson(data){
+      // safe merge only known keys
+      const keys = ["kpiMonthly","indexHealth","psi","serp","techIssues","iaBlueprint","eventsSpec","backlog","siteUrl"];
+      keys.forEach(k=>{
+        if(data && data[k] != null) state[k] = data[k];
+      });
+    }
+
+    document.getElementById("fileJson").addEventListener("change", async (e)=>{
+      const f = e.target.files?.[0];
+      if(!f) return;
+      try{
+        const txt = await f.text();
+        const json = JSON.parse(txt);
+        hydrateFromJson(json);
+        renderAll();
+      }catch(err){
+        console.error(err);
+        alert("Ne mogu da učitam JSON. Proveri format.");
+      }
+    });
+
+    // ==========================
+    // SEARCH FILTER (tokens)
+    // ==========================
+    const searchEl = document.getElementById("search");
+    const filterables = Array.from(document.querySelectorAll("[data-filter]"));
+
+    function applyFilter(q){
+      const query = (q || "").trim().toLowerCase();
+      if(!query){
+        filterables.forEach(el => el.style.display = "");
+        return;
+      }
+      filterables.forEach(el => {
+        const hay = (el.getAttribute("data-filter") || "").toLowerCase();
+        el.style.display = hay.includes(query) ? "" : "none";
+      });
+    }
+    searchEl.addEventListener("input", e => applyFilter(e.target.value));
+    document.addEventListener("keydown", (e) => {
+      const isMac = navigator.platform.toUpperCase().includes("MAC");
+      if ((isMac ? e.metaKey : e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        searchEl.focus();
+      }
+    });
+
+    // ==========================
+    // Helpers
+    // ==========================
+    function esc(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // ==========================
+    // Buttons
+    // ==========================
+    document.getElementById("btnLoadDemo").addEventListener("click", loadDemo);
+    document.getElementById("btnRunAll").addEventListener("click", runProxy);
+
+    // ==========================
+    // Init
+    // ==========================
+    initCharts();
+    loadDemo(); // start with something visible
+  </script>
+</body>
+</html>
