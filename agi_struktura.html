@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI Holding Struktura - Kompletan Vodič za Partnere</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 60px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            animation: moveDots 60s linear infinite;
+        }
+
+        @keyframes moveDots {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-50px, -50px); }
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #fff, #a8b9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            max-width: 800px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 50px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            color: #16213e;
+            border-left: 6px solid #667eea;
+            padding-left: 20px;
+        }
+
+        .section h3 {
+            font-size: 1.4em;
+            margin: 25px 0 15px;
+            color: #1a1a2e;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid #e0e7ff;
+        }
+
+        .card.highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .card.highlight h3 {
+            color: white;
+        }
+
+        .stat {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .stat.small {
+            font-size: 1.8em;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 20px;
+            height: 300px;
+            margin: 40px 0;
+            padding: 20px 0;
+        }
+
+        .bar-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar {
+            width: 100%;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            border-radius: 10px 10px 0 0;
+            min-height: 40px;
+            transition: height 0.3s ease;
+            position: relative;
+        }
+
+        .bar-label {
+            font-weight: 600;
+            color: #1a1a2e;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .bar-value {
+            font-size: 0.9em;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+            margin: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 25px;
+            background: #f8f9ff;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 55%;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 55%;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border: 4px solid white;
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.3);
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e7ff;
+            background: white;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: #f8f9ff;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .badge.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge.danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 40px 50px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #a8b9ff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+                margin-right: 0 !important;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+        }
+
+        .hierarchy {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px 0;
+        }
+
+            .hierarchy-level {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .hierarchy-box {
+            background: #f8f9ff;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 20px 30px;
+            min-width: 250px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .hierarchy-box.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+
+        .hierarchy-box.primary h4 {
+            color: white;
+        }
+
+        .hierarchy-connector {
+            width: 2px;
+            height: 30px;
+            background: #667eea;
+            margin: 5px auto;
+        }
+
+        .hierarchy-connector.horizontal {
+            width: 50px;
+            height: 2px;
+            margin: auto 0;
+        }
+
+        .cost-summary {
+            background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AGI Holding Struktura</h1>
+            <p>Kompletan vodič za osnivanje globalne AI kompanije sa zaštitom misije i privlačenje investitora</p>
+            <p style="margin-top: 20px; font-size: 1.1em;">👤 Osnivač: Srpski državljanin | 🎯 Cilj: AGI / Svesna AI | 🌍 Globalno tržište</p>
+        </div>
+
+        <div class="content">
+            <!-- Ključna poruka -->
+            <div class="section">
+                <h2>🎯 Ključna Poruka za Partnere</h2>
+                <div class="grid-2">
+                    <div class="card highlight">
+                        <h3 style="color: white;">✅ Srbija (DOO)</h3>
+                        <p style="color: white; font-size: 1.2em;">Radionica, razvoj, inženjeri, programeri</p>
+                        <div class="stat" style="color: white;">Operativa</div>
+                    </div>
+                    <div class="card highlight">
+                        <h3 style="color: white;">✅ Estonija (OÜ + Sihtasutus)</h3>
+                        <p style="color: white; font-size: 1.2em;">Čuvar misije, intelektualna svojina, holding</p>
+                        <div class="stat" style="color: white;">Zaštita</div>
+                    </div>
+                    <div class="card highlight">
+                        <h3 style="color: white;">✅ SAD (Delaware - kasnije)</h3>
+                        <p style="color: white; font-size: 1.2em;">Globalni investitori, berza, skaliranje</p>
+                        <div class="stat" style="color: white;">Rast</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zašto ne Srbija? -->
+            <div class="section">
+                <h2>❌ Zašto Srpski DOO NIJE Dovoljan za Globalni Nivo?</h2>
+                <div class="chart-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspekt</th>
+                                <th>DOO Srbija</th>
+                                <th>Delaware C-Corp / Holandija BV</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Investitori</strong></td>
+                                <td><span class="badge danger">Ne ulažu (osim domaćih)</span></td>
+                                <td><span class="badge success">Globalni standard (Sequoia, a16z, SoftBank)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Izlazak (prodaja)</strong></td>
+                                <td><span class="badge danger">Komplikovano, sporo, nepoverenje</span></td>
+                                <td><span class="badge success">Jednostavno (prodaja akcija u 24h)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Zaštita misije (AGI)</strong></td>
+                                <td><span class="badge danger">Ne postoji</span></td>
+                                <td><span class="badge success">PBC + Trust</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kontrola osnivača</strong></td>
+                                <td><span class="badge warning">Gubi se sa 49%</span></td>
+                                <td><span class="badge success">Dual-Class (čuva se i sa 10%)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Poreska fleksibilnost</strong></td>
+                                <td><span class="badge warning">Ograničena</span></td>
+                                <td><span class="badge success">Globalna optimizacija</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Hijerarhijska struktura -->
+            <div class="section">
+                <h2>🏗️ Pravilna Hijerarhija za Globalni Nivo</h2>
+                <div class="hierarchy">
+                    <div class="hierarchy-level">
+                        <div class="hierarchy-box primary">
+                            <h4>🔰 NIVO 1: Čuvar misije</h4>
+                            <p>Trust / Fondacija (Kajmani, Holandija, Estonija)</p>
+                            <p style="font-size: 0.9em;">Kontroliše kroz "zlatnu akciju" ili veto</p>
+                        </div>
+                    </div>
+                    <div class="hierarchy-connector"></div>
+                    <div class="hierarchy-level">
+                        <div class="hierarchy-box">
+                            <h4>🏢 NIVO 2: Globalni holding</h4>
+                            <p>Delaware C-Corp (SAD) ili Holandija BV ili Estonija OÜ</p>
+                            <p style="font-size: 0.9em;">100% vlasništvo</p>
+                        </div>
+                    </div>
+                    <div class="hierarchy-connector"></div>
+                    <div class="hierarchy-level">
+                        <div class="hierarchy-box">
+                            <h4>🌍 NIVO 3: Regionalni holding</h4>
+                            <p>Estonija OÜ / Kipar / Luksemburg (opciono)</p>
+                            <p style="font-size: 0.9em;">100% vlasništvo</p>
+                        </div>
+                    </div>
+                    <div class="hierarchy-connector"></div>
+                    <div class="hierarchy-level">
+                        <div class="hierarchy-box">
+                            <h4>🇷🇸 NIVO 4: Operativa</h4>
+                            <p>Srpski DOO</p>
+                            <p style="font-size: 0.9em;">Programeri, razvoj, testiranje</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Poređenje jurisdikcija -->
+            <div class="section">
+                <h2>⚖️ Poređenje Jurisdikcija za Srpskog Državljanina</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kriterijum</th>
+                            <th>Direktno SAD (Delaware)</th>
+                            <th>Estonija (e-Residency)</th>
+                            <th>Holandija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Mogućnost otvaranja</strong></td>
+                            <td><span class="badge danger">Teško</span></td>
+                            <td><span class="badge success">Lako (online, e-Rezident)</span></td>
+                            <td><span class="badge warning">Srednje</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cena održavanja (godišnje)</strong></td>
+                            <td>$1000-3000</td>
+                            <td><strong>€300-1000</strong></td>
+                            <td>€3000-5000</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Poreska opterećenja</strong></td>
+                            <td>Visoka</td>
+                            <td><strong>Niska</strong></td>
+                            <td>Srednja</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pogodnost za investitore</strong></td>
+                            <td><strong>Najbolja</strong></td>
+                            <td>Dobra</td>
+                            <td>Odlična</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zaštita AGI misije</strong></td>
+                            <td><strong>Najbolja</strong></td>
+                            <td>Srednja</td>
+                            <td>Dobra</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Banka za strance</strong></td>
+                            <td>Veoma teško</td>
+                            <td><strong>Lako</strong></td>
+                            <td>Srednje teško</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 20px; font-size: 1.1em;"><strong>🏆 Preporuka za početak:</strong> Estonija (e-Rezidentstvo) + Srpski DOO</p>
+            </div>
+
+            <!-- Grafikoni troškova -->
+            <div class="section">
+                <h2>💰 Troškovi Osnivanja i Održavanja</h2>
+                <div class="grid-2">
+                    <div>
+                        <h3>Početni troškovi (jednokratno)</h3>
+                        <div class="bar-chart">
+                            <div class="bar-item">
+                                <div class="bar" style="height: 30px;"></div>
+                                <span class="bar-label">e-Rezidentstvo</span>
+                                <span class="bar-value">€100-120</span>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 50px;"></div>
+                                <span class="bar-label">Osnivanje OÜ</span>
+                                <span class="bar-value">€199</span>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 300px;"></div>
+                                <span class="bar-label">Fondacija</span>
+                                <span class="bar-value">€1500-2500</span>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 80px;"></div>
+                                <span class="bar-label">Notar/prevodi</span>
+                                <span class="bar-value">€300-800</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Mesečni troškovi</h3>
+                        <div class="bar-chart">
+                            <div class="bar-item">
+                                <div class="bar" style="height: 150px;"></div>
+                                <span class="bar-label">Xolo</span>
+                                <span class="bar-value">€49-99</span>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 15px;"></div>
+                                <span class="bar-label">Banka (LHV)</span>
+                                <span class="bar-value">€5</span>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 300px;"></div>
+                                <span class="bar-label">Računovođa Srbija</span>
+                                <span class="bar-value">€100-300</span>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 45px;"></div>
+                                <span class="bar-label">Ostalo</span>
+                                <span class="bar-value">€20-50</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cost-summary">
+                    <h3>📊 UKUPNO:</h3>
+                    <p><strong>Početak (bez fondacije):</strong> ~€500-700</p>
+                    <p><strong>Početak (sa fondacijom):</strong> ~€2000-3500</p>
+                    <p><strong>Mesečno održavanje:</strong> ~€150-400</p>
+                </div>
+            </div>
+
+            <!-- Zaštita AGI misije -->
+            <div class="section">
+                <h2>🛡️ Kako štitimo AGI misiju?</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>1️⃣ Sihtasutus (Fondacija)</h3>
+                        <p>Neprofitna organizacija u Estoniji koja drži "zlatnu akciju" sa pravom veta na:</p>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Prodaju tehnologije</li>
+                            <li>Gašenje projekta</li>
+                            <li>Promenu statuta</li>
+                            <li>Spajanje sa drugom firmom</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>2️⃣ Public Benefit Corporation</h3>
+                        <p>Kasnije, kada pređemo u SAD (Delaware PBC), zakonska obaveza da balansiramo profit i dobrobit čovečanstva.</p>
+                    </div>
+                    <div class="card">
+                        <h3>3️⃣ Trust struktura</h3>
+                        <p>Dugoročno, intelektualna svojina se prenosi u Trust koji upravlja tehnologijom u interesu čovečanstva.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="section">
+                <h2>⏱️ Roadmap - Korak po Korak</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Faza 1: Mesec 1-2</div>
+                            <h3>📝 e-Rezidentstvo Estonije</h3>
+                            <p>Prijava, čekanje (4-6 nedelja), preuzimanje kartice u ambasadi u Beogradu</p>
+                            <p><strong>Trošak:</strong> €100-120</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Faza 2: Mesec 2-3</div>
+                            <h3>🏢 Osnivanje Estonske OÜ</h3>
+                            <p>Preko Xolo servisa, digitalno potpisivanje, dobijanje registry code-a</p>
+                            <p><strong>Trošak:</strong> €199 + €49/mesec</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Faza 3: Mesec 3</div>
+                            <h3>🏦 Otvaranje bankovnog računa</h3>
+                            <p>Wise (odmah) + LHV (video poziv) za dugoročno</p>
+                            <p><strong>Trošak:</strong> €0-5/mesec</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Faza 4: Mesec 3-4</div>
+                            <h3>🛡️ Osnivanje Sihtasutus (Fondacije)</h3>
+                            <p>Uz pomoć estonskog advokata, pravljenje statuta, registracija, prenos "zlatne akcije"</p>
+                            <p><strong>Trošak:</strong> €1500-2500</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Faza 5: Mesec 4-5</div>
+                            <h3>🇷🇸 Povezivanje sa Srpskim DOO</h3>
+                            <p>Prenos vlasništva DOO na estonski holding, overe, APR</p>
+                            <p><strong>Trošak:</strong> €500-1000</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Faza 6: 1-2 godine kasnije</div>
+                            <h3>🇺🇸 Prelazak u SAD (Delaware C-Corp)</h3>
+                            <p>Kada dođu ozbiljni investitori (Serija A+), "flip" u Delaware PBC</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Poreska optimizacija -->
+            <div class="section">
+                <h2>💶 Poreska Optimizacija - Kako teče novac?</h2>
+                <div style="display: flex; justify-content: center; margin: 40px 0;">
+                    <div style="width: 100%; max-width: 800px;">
+                        <svg viewBox="0 0 800 300" style="width: 100%;">
+                            <rect x="50" y="50" width="150" height="80" rx="10" fill="#f8f9ff" stroke="#667eea" stroke-width="3" />
+                            <text x="125" y="90" text-anchor="middle" fill="#1a1a2e" font-weight="bold">Klijent (USA/EU)</text>
+                            
+                            <rect x="300" y="50" width="150" height="80" rx="10" fill="#667eea" stroke="#764ba2" stroke-width="3" />
+                            <text x="375" y="90" text-anchor="middle" fill="white" font-weight="bold">Holding (Estonija OÜ)</text>
+                            
+                            <rect x="550" y="50" width="150" height="80" rx="10" fill="#f8f9ff" stroke="#667eea" stroke-width="3" />
+                            <text x="625" y="90" text-anchor="middle" fill="#1a1a2e" font-weight="bold">DOO Srbija</text>
+                            
+                            <rect x="550" y="200" width="150" height="40" rx="5" fill="#d4edda" stroke="#155724" stroke-width="2" />
+                            <text x="625" y="225" text-anchor="middle" fill="#155724" font-size="14">Programeri</text>
+                            
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                                    <polygon points="0 0, 10 5, 0 10" fill="#1a1a2e" />
+                                </marker>
+                            </defs>
+                            
+                            <line x1="200" y1="90" x2="300" y2="90" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrowhead)" />
+                            <text x="250" y="70" text-anchor="middle" fill="#1a1a2e" font-size="12">€ (kupovina)</text>
+                            
+                            <line x1="450" y1="90" x2="550" y2="90" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrowhead)" />
+                            <text x="500" y="70" text-anchor="middle" fill="#1a1a2e" font-size="12">€ (troškovi + 10%)</text>
+                            
+                            <line x1="625" y1="130" x2="625" y2="200" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrowhead)" />
+                            <text x="665" y="165" text-anchor="start" fill="#1a1a2e" font-size="12">Plate</text>
+                        </svg>
+                    </div>
+                </div>
+                <div style="background: #e8f4fd; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h4>📌 Ključni principi:</h4>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li><strong>DOO Srbija</strong> - razvija softver, plaća programere, plaća porez u Srbiji (15% na dobit)</li>
+                        <li><strong>DOO fakturiše holdingu</strong> - "troškovi + 10% marže" (transferne cene)</li>
+                        <li><strong>Holding (Estonija)</strong> - drži intelektualnu svojinu, ne plaća porez na dobit dok se ne isplati</li>
+                        <li><strong>Investitori</strong> - ulažu u holding (ne u DOO)</li>
+                        <li><strong>Prodaja</strong> - prodaje se holding (jednostavno, brzo)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Checklista -->
+            <div class="section">
+                <h2>✅ Kompletna Checklista za Partnere</h2>
+                <div class="grid-2">
+                    <div>
+                        <h3>📋 Faza 1: Priprema</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 10px 0;">⬜ Prijava za e-Rezidentstvo</li>
+                            <li style="margin: 10px 0;">⬜ Plaćanje takse (€100-120)</li>
+                            <li style="margin: 10px 0;">⬜ Kupovina čitača kartica</li>
+                        </ul>
+                        <h3 style="margin-top: 20px;">📋 Faza 2: Preuzimanje</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 10px 0;">⬜ Dobijanje mejla da je spremno</li>
+                            <li style="margin: 10px 0;">⬜ Zakazivanje termina u ambasadi</li>
+                            <li style="margin: 10px 0;">⬜ Preuzimanje kartice i PIN-ova</li>
+                            <li style="margin: 10px 0;">⬜ Testiranje kartice na računaru</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>📋 Faza 3: Osnivanje</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 10px 0;">⬜ Odabir imena firme</li>
+                            <li style="margin: 10px 0;">⬜ Popunjavanje formulara na Xolo</li>
+                            <li style="margin: 10px 0;">⬜ Digitalno potpisivanje (PIN2)</li>
+                            <li style="margin: 10px 0;">⬜ Dobijanje registry code-a</li>
+                        </ul>
+                        <h3 style="margin-top: 20px;">📋 Faza 4: Banka</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 10px 0;">⬜ Otvaranje Wise računa</li>
+                            <li style="margin: 10px 0;">⬜ Apliciranje za LHV</li>
+                        </ul>
+                        <h3 style="margin-top: 20px;">📋 Faza 5: Fondacija</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 10px 0;">⬜ Kontaktiranje estonskog advokata</li>
+                            <li style="margin: 10px 0;">⬜ Osnivanje Sihtasutus</li>
+                            <li style="margin: 10px 0;">⬜ Prenos "zlatne akcije"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Najčešće greške -->
+            <div class="section">
+                <h2>⚠️ Najčešće Greške i Kako ih Izbeg</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 style="color: #dc3545;">❌ Greška 1</h3>
+                        <p><strong>Niste testirali čitač kartica</strong></p>
+                        <p>Kupite čitač i testirajte ga pre nego što vam zatreba.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: #dc3545;">❌ Greška 2</h3>
+                        <p><strong>Izgubili PIN kodove</strong></p>
+                        <p>Čuvajte PIN1 i PIN2 odvojeno od kartice. Ako izgubite, morate u Estoniju.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: #dc3545;">❌ Greška 3</h3>
+                        <p><strong>Niste produžili e-Rezidentstvo</strong></p>
+                        <p>Kartica važi 5 godina. Podsetite se 3 meseca pre isteka.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: #dc3545;">❌ Greška 4</h3>
+                        <p><strong>Ne vodite knjige u Estoniji</strong></p>
+                        <p>Morate podnositi godišnji izveštaj. Xolo to radi umesto vas.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: #dc3545;">❌ Greška 5</h3>
+                        <p><strong>Mešanje privatnog i poslovnog</strong></p>
+                        <p>Estonska firma ne sme da plaća vaše privatne račune.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: #dc3545;">❌ Greška 6</h3>
+                        <p><strong>Zanemarivanje transfernih cena</strong></p>
+                        <p>DOO mora fakturisati holdingu po tržišnim cenama.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h2 style="color: white; margin-bottom: 20px;">🚀 Spremni za AGI?</h2>
+            <p style="font-size: 1.2em; margin-bottom: 30px;">Srbija (razvoj) + Estonija (holding, zaštita) + SAD (kasnije, investitori)</p>
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <div style="background: rgba(255,255,255,0.1); padding: 15px 25px; border-radius: 10px;">
+                    <span style="font-size: 2em;">🇷🇸</span> DOO (operativa)
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px 25px; border-radius: 10px;">
+                    <span style="font-size: 2em;">🇪🇪</span> OÜ (holding)
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px 25px; border-radius: 10px;">
+                    <span style="font-size: 2em;">🛡️</span> Sihtasutus (zaštita)
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px 25px; border-radius: 10px;">
+                    <span style="font-size: 2em;">🇺🇸</span> Delaware PBC (budućnost)
+                </div>
+            </div>
+            <p style="margin-top: 40px; font-size: 0.9em; opacity: 0.7;">© 2024 AGI Holding Struktura - Kompletan vodič za partnere</p>
+        </div>
+    </div>
+</body>
+</html>
