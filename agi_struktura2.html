@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TVInternetSBB d.o.o. | AI Tehnološka Kompanija</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.5;
+        }
+
+        /* PREMIUM STIL - INVESTICIJSKI NIVO */
+        .investor-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* HEADER SA STATUSOM */
+        .company-header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            border-radius: 32px;
+            padding: 48px;
+            margin-bottom: 40px;
+            color: white;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .company-header::before {
+            content: "▲";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            font-size: 300px;
+            opacity: 0.1;
+            color: white;
+            transform: rotate(15deg);
+        }
+
+        .live-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .live-badge span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #4ade80;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .company-name {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .company-tagline {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-bottom: 32px;
+        }
+
+        .company-metrics {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .metric-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* INFO GRID */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #312e81;
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1e1b4b;
+        }
+
+        .card-content {
+            color: #475569;
+            font-size: 15px;
+        }
+
+        .card-content ul {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .card-content li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .card-content li::before {
+            content: "•";
+            color: #312e81;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* REGISTRACIJA */
+        .registration-section {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #1e1b4b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title span {
+            background: #1e1b4b;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 14px;
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .activity-item {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            border-left: 4px solid #312e81;
+        }
+
+        .activity-code {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: #312e81;
+            margin-bottom: 8px;
+        }
+
+        .activity-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .activity-desc {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* PROIZVOD */
+        .product-showcase {
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            border-radius: 32px;
+            padding: 48px;
+            margin-bottom: 40px;
+            border: 1px solid #c7d2fe;
+        }
+
+        .product-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e1b4b;
+            margin-bottom: 24px;
+        }
+
+        .product-description {
+            font-size: 18px;
+            color: #334155;
+            max-width: 800px;
+            margin-bottom: 32px;
+        }
+
+        .product-features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .feature-item {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .feature-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .feature-detail {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .cta-numbers {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .cta-item {
+            text-align: center;
+        }
+
+        .cta-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e1b4b;
+        }
+
+        .cta-label {
+            font-size: 14px;
+            color: #475569;
+        }
+
+        /* INVESTICIJSKI PODACI */
+        .investor-data {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 2px solid #312e81;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .data-item {
+            text-align: center;
+        }
+
+        .data-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1e1b4b;
+            margin-bottom: 8px;
+        }
+
+        .data-label {
+            font-size: 14px;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* KONTAKT */
+        .contact-section {
+            background: #1e1b4b;
+            border-radius: 24px;
+            padding: 48px;
+            color: white;
+            text-align: center;
+        }
+
+        .contact-phone {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 20px 0;
+            letter-spacing: 2px;
+            color: #c7d2fe;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .contact-link {
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            background: white;
+            color: #1e1b4b;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .info-grid,
+            .activities-grid,
+            .product-features,
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .company-name {
+                font-size: 32px;
+            }
+            
+            .contact-phone {
+                font-size: 32px;
+            }
+            
+            .company-header {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="investor-container">
+        <!-- HEADER -->
+        <div class="company-header">
+            <div class="live-badge">
+                <span></span> LIVE OPERATIONAL • 24/7 ACTIVE
+            </div>
+            <h1 class="company-name">TVInternetSBB d.o.o.</h1>
+            <p class="company-tagline">IKT kompanija specijalizovana za razvoj AI rešenja i inteligentnih komunikacionih platformi</p>
+            <div class="company-metrics">
+                <div class="metric-item">
+                    <span class="metric-value">2023</span>
+                    <span class="metric-label">Osnovano</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-value">24/7</span>
+                    <span class="metric-label">Operativnost</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-value">99.9%</span>
+                    <span class="metric-label">Uptime</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- OSNOVNE INFORMACIJE -->
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="card-icon">🏛️</div>
+                <h3 class="card-title">Pravni Status</h3>
+                <div class="card-content">
+                    Privredno društvo sa ograničenom odgovornošću<br>
+                    <strong>Matični broj:</strong> [unesi]<br>
+                    <strong>PIB:</strong> [unesi]<br>
+                    <strong>Datum osnivanja:</strong> 2023
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="card-icon">🎯</div>
+                <h3 class="card-title">Specijalizacija</h3>
+                <div class="card-content">
+                    <ul>
+                        <li>Razvoj konverzacionih AI asistenata</li>
+                        <li>NLP rešenja za srpski jezik</li>
+                        <li>Inteligentne komunikacione platforme</li>
+                        <li>Telekom-AI integracije</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="card-icon">🌍</div>
+                <h3 class="card-title">Tržište</h3>
+                <div class="card-content">
+                    <ul>
+                        <li>Srbija (primarno)</li>
+                        <li>Region (potencijal)</li>
+                        <li>EU (strateški cilj)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGISTROVANE DELATNOSTI -->
+        <div class="registration-section">
+            <h2 class="section-title">
+                📋 Registrovane delatnosti
+                <span>APR</span>
+            </h2>
+            <div class="activities-grid">
+                <div class="activity-item">
+                    <div class="activity-code">6201</div>
+                    <div class="activity-name">Računarsko programiranje</div>
+                    <div class="activity-desc">Razvoj softvera, kodiranje, implementacija</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-code">6202</div>
+                    <div class="activity-name">IT konsalting</div>
+                    <div class="activity-desc">Savetodavne usluge u oblasti informacionih tehnologija</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-code">7219</div>
+                    <div class="activity-name">AI istraživanje i razvoj</div>
+                    <div class="activity-desc">Istraživanje i eksperimentalni razvoj veštačke inteligencije</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-code">6312</div>
+                    <div class="activity-name">Mrežne komunikacije</div>
+                    <div class="activity-desc">Upravljanje računarskim mrežama i komunikacionim sistemima</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROIZVOD -->
+        <div class="product-showcase">
+            <h2 class="product-title">🤖 ANA - AI sagovornik za srpsko tržište</h2>
+            <p class="product-description">
+                Prvi napredni AI asistent koji kombinuje veštačku inteligenciju 
+                sa telekomunikacionom infrastrukturom, optimizovan za prirodnu 
+                komunikaciju na srpskom jeziku.
+            </p>
+            
+            <div class="product-features">
+                <div class="feature-item">
+                    <div class="feature-icon">📞</div>
+                    <div class="feature-name">Telefon</div>
+                    <div class="feature-detail">+381114221750</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-name">Telegram</div>
+                    <div class="feature-detail">@TVInternetSBB_bot</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌐</div>
+                    <div class="feature-name">Web</div>
+                    <div class="feature-detail">tvinternetsbb.rs</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-name">Response</div>
+                    <div class="feature-detail">&lt; 0.5 sekundi</div>
+                </div>
+            </div>
+
+            <div class="cta-numbers">
+                <div class="cta-item">
+                    <div class="cta-number">1000+</div>
+                    <div class="cta-label">razgovora/mesečno</div>
+                </div>
+                <div class="cta-item">
+                    <div class="cta-number">24/7</div>
+                    <div class="cta-label">dostupnost</div>
+                </div>
+                <div class="cta-item">
+                    <div class="cta-number">99%</div>
+                    <div class="cta-label">zadovoljstvo</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INVESTICIJSKI PODACI -->
+        <div class="investor-data">
+            <h2 class="section-title" style="color: #1e1b4b; margin-bottom: 40px;">
+                📊 Investicioni potencijal
+            </h2>
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="data-value">$0.0065</div>
+                    <div class="data-label">cena po pozivu</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">$19.92</div>
+                    <div class="data-label">trenutni Twilio balance</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">100%</div>
+                    <div class="data-label">vlasništvo</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">4</div>
+                    <div class="data-label">registrovane delatnosti</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">13</div>
+                    <div class="data-label">aktivnih ruta</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">BYOC</div>
+                    <div class="data-label">arhitektura</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KONTAKT -->
+        <div class="contact-section">
+            <h2 style="font-size: 36px; margin-bottom: 20px;">📞 Kontakt za investitore</h2>
+            <div class="contact-phone">+381 11 422 1750</div>
+            <p style="opacity: 0.9; margin-bottom: 30px;">Direktna linija za ozbiljne razgovore</p>
+            <div class="contact-links">
+                <a href="https://www.tvinternetsbb.rs" class="contact-link" target="_blank">🌐 Website</a>
+                <a href="https://t.me/TVInternetSBB_bot" class="contact-link" target="_blank">🤖 Telegram</a>
+                <a href="#" class="contact-link">📧 Email</a>
+            </div>
+            <p style="margin-top: 40px; font-size: 14px; opacity: 0.6;">
+                TVInternetSBB d.o.o. • PIB: [unesi] • Matični broj: [unesi]
+            </p>
+        </div>
+
+        <!-- FOOTER -->
+        <div style="text-align: center; margin-top: 40px; color: #64748b; font-size: 14px;">
+            © 2024 TVInternetSBB d.o.o. • Sva prava zadržana • Investiciona prezentacija
+        </div>
+    </div>
+</body>
+</html>
