@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZOTA Sistem / AI ANA — pregled platforme</title>
+  <meta name="description" content="Pregled ZOTA sistema i AI ANA platforme: arhitektura, moduli, dijagrami, namena i upotreba na jednom mestu." />
+  <style>
+    :root{
+      --bg:#071018;
+      --bg-soft:#0c1623;
+      --panel:#0f1c2a;
+      --panel-2:#132334;
+      --line:rgba(107, 201, 255, .16);
+      --line-strong:rgba(107, 201, 255, .28);
+      --text:#e7f1fb;
+      --muted:#9db2ca;
+      --cyan:#63dcff;
+      --green:#58efb1;
+      --amber:#ffd166;
+      --violet:#8e82ff;
+      --shadow:0 18px 60px rgba(0,0,0,.35);
+      --radius:20px;
+      --radius-sm:14px;
+      --max:1240px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 15% 0%, rgba(99,220,255,.08), transparent 26%),
+        radial-gradient(circle at 100% 10%, rgba(142,130,255,.08), transparent 24%),
+        linear-gradient(180deg,#061018 0%,#09131d 100%);
+      line-height:1.6;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(99,220,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,220,255,.04) 1px, transparent 1px);
+      background-size:32px 32px;
+      opacity:.6;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.85), rgba(0,0,0,.35));
+    }
+
+    .wrap{max-width:var(--max);margin:0 auto;padding:24px}
+
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:16px 18px;border:1px solid var(--line);border-radius:18px;
+      background:rgba(10,18,28,.78);backdrop-filter:blur(12px);box-shadow:var(--shadow);
+      position:sticky;top:14px;z-index:20;margin-bottom:18px;
+    }
+
+    .brand{display:flex;align-items:center;gap:14px;min-width:0}
+    .logo{
+      width:50px;height:50px;border-radius:16px;display:grid;place-items:center;
+      font-weight:900;letter-spacing:.08em;color:#071018;
+      background:linear-gradient(135deg,var(--cyan),#c6f7ff);
+      box-shadow:0 0 24px rgba(99,220,255,.28);
+      flex:0 0 auto;
+    }
+
+    .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan)}
+    h1,h2,h3{margin:0 0 10px}
+    .top-title{font-size:22px;font-weight:850;line-height:1.1}
+    .top-sub{font-size:13px;color:var(--muted)}
+
+    .top-badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;
+      border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:12px;color:var(--text)
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 14px currentColor}
+    .dot.cyan{background:var(--cyan)}
+    .dot.amber{background:var(--amber)}
+
+    .hero{
+      display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-bottom:18px;
+    }
+
+    .panel{
+      border:1px solid var(--line);border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(15,28,42,.95), rgba(9,18,29,.95));
+      box-shadow:var(--shadow);overflow:hidden;
+    }
+
+    .panel-head{
+      padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;
+    }
+
+    .panel-title{
+      font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)
+    }
+
+    .panel-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .panel-body{padding:20px}
+
+    .lead{
+      font-size:17px;color:#dbe9f7;max-width:760px;margin-bottom:16px;
+    }
+
+    .hero h2{
+      font-size:clamp(30px,4.5vw,52px);line-height:1.03;letter-spacing:-.03em;font-weight:900;margin-bottom:14px;
+    }
+
+    .hero h2 span{color:var(--cyan);text-shadow:0 0 20px rgba(99,220,255,.2)}
+
+    .checklist{display:grid;gap:10px;margin:18px 0 0;padding:0;list-style:none}
+    .checklist li{
+      padding:12px 14px 12px 42px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.03);position:relative;color:#dbe8f4
+    }
+    .checklist li::before{
+      content:"●";position:absolute;left:16px;top:11px;color:var(--green);font-size:16px
+    }
+
+    .signal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;height:100%}
+    .signal{
+      min-height:120px;padding:16px;border-radius:18px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+    }
+    .signal .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    .signal .v{font-size:30px;font-weight:900;letter-spacing:-.03em;margin-bottom:8px}
+    .signal .m{font-size:12px;color:var(--muted)}
+
+    .section{margin-bottom:18px}
+    .section h3{font-size:24px;margin-bottom:8px}
+    .section p.sec-desc{color:var(--muted);margin:0 0 18px}
+
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{
+      padding:18px;border-radius:18px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      min-height:220px;
+    }
+    .card h4{font-size:18px;margin-bottom:10px}
+    .card p{margin:0 0 12px;color:#d7e6f5}
+    .mini-list{margin:0;padding-left:18px;color:var(--muted)}
+
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+    .diagram{
+      margin:0;padding:18px;overflow:auto;
+      border-radius:18px;border:1px solid var(--line-strong);
+      background:#09131d;color:#cfeaff;
+      font:13px/1.45 Consolas,Monaco,'Courier New',monospace;
+      box-shadow:inset 0 0 0 1px rgba(99,220,255,.04);
+      white-space:pre;
+    }
+
+    .use-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .use-card{
+      padding:18px;border-radius:18px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      min-height:180px;
+    }
+    .use-card h4{margin-bottom:8px}
+    .tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .tag{
+      padding:7px 10px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(255,255,255,.03);font-size:12px;color:var(--muted)
+    }
+
+    .timeline{display:grid;gap:14px}
+    .step{
+      border:1px solid var(--line);border-radius:16px;padding:16px;background:rgba(255,255,255,.025)
+    }
+    .step h4{display:flex;align-items:center;gap:10px}
+    .step-num{
+      width:28px;height:28px;border-radius:10px;display:grid;place-items:center;font-weight:800;
+      background:linear-gradient(135deg,var(--cyan),#b8f5ff);color:#081018;font-size:13px
+    }
+
+    .footer{
+      margin-top:18px;padding:16px 18px;border:1px solid var(--line);border-radius:18px;
+      background:rgba(255,255,255,.025);color:var(--muted);font-size:13px
+    }
+
+    .highlight{color:var(--cyan);font-weight:700}
+    .accent{color:var(--green);font-weight:700}
+
+    @media (max-width:1100px){
+      .hero,.split,.cards,.use-grid{grid-template-columns:1fr}
+    }
+
+    @media (max-width:700px){
+      .wrap{padding:14px}
+      .topbar{padding:14px;position:static}
+      .topbar,.brand{align-items:flex-start}
+      .top-badges{justify-content:flex-start}
+      .signal-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">Z</div>
+        <div>
+          <div class="eyebrow">ZOTA SYSTEM / AI ANA PLATFORM</div>
+          <div class="top-title">Centralni pregled sistema, modula i mogućnosti</div>
+          <div class="top-sub">Jedno mesto za definiciju šta je ZOTA, šta je AI ANA i gde sve može da se iskoristi</div>
+        </div>
+      </div>
+      <div class="top-badges">
+        <div class="badge"><span class="dot"></span> AI Layer</div>
+        <div class="badge"><span class="dot cyan"></span> Ops + SEO + Infra</div>
+        <div class="badge"><span class="dot amber"></span> SaaS potencijal</div>
+      </div>
+    </header>
+
+    <section class="hero section">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Šta je ZOTA sistem</div>
+            <div class="panel-sub">Krovni tehnološki sloj iznad infrastrukture, operacije i poslovne inteligencije</div>
+          </div>
+          <div class="badge">Enterprise koncept</div>
+        </div>
+        <div class="panel-body">
+          <h2>ZOTA nije samo ime — to je <span>sistemski identitet</span> za AI operativni centar</h2>
+          <p class="lead">
+            <span class="highlight">ZOTA sistem</span> predstavlja tehnološki i platformski okvir u kome <span class="highlight">AI ANA</span>
+            radi kao centralna inteligencija: razume procese, povezuje module, prati signale, aktivira automatizacije i
+            pretvara podatke u sledeću akciju, preporuku ili dokument.
+          </p>
+          <ul class="checklist">
+            <li><strong>SATVISION</strong> pokriva fizičku infrastrukturu, mreže, SKS i tehničke projekte.</li>
+            <li><strong>TVINTERNETSBB</strong> pokriva portal, procese, administraciju i operativne tokove.</li>
+            <li><strong>AI ANA</strong> je AI sloj koji razume podatke, dokumente, emailove, zadatke i signale.</li>
+            <li><strong>ZOTA</strong> je ime sistema / control center identiteta koji sve to spaja u jednu enterprise platformu.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Brzi signalni pregled</div>
+            <div class="panel-sub">Kako se AI ANA i ZOTA pozicioniraju</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="signal-grid">
+            <div class="signal">
+              <div class="k">Uloga</div>
+              <div class="v">AI OS</div>
+              <div class="m">Operativni sistem za firmu, ne samo chatbot</div>
+            </div>
+            <div class="signal">
+              <div class="k">Domen</div>
+              <div class="v">Ops</div>
+              <div class="m">Email, CRM, SAP, dokumenti, dashboard</div>
+            </div>
+            <div class="signal">
+              <div class="k">Specijalnost</div>
+              <div class="v">Infra</div>
+              <div class="m">SKS, rack, Fluke sertifikacija, projekti</div>
+            </div>
+            <div class="signal">
+              <div class="k">Rast</div>
+              <div class="v">SaaS</div>
+              <div class="m">Kasnije može da preraste u platformu za druge firme</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Najkraća definicija</div>
+            <div class="panel-sub">Jedna rečenica koja objašnjava ceo koncept</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p class="lead" style="margin:0;max-width:none;">
+            <strong>AI ANA u okviru ZOTA sistema je centralni AI operativni sloj koji povezuje poslovne procese, infrastrukturne projekte,
+            komercijalne tokove, dokumente i analitiku u jedan kontrolni centar za odluke, automatizaciju i rast.</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Gde sve AI ANA može da se koristi</h3>
+      <p class="sec-desc">Sve mogućnosti koje smo pominjali skupljene na jednom mestu, organizovane po zonama sistema.</p>
+      <div class="cards">
+        <article class="card">
+          <h4>1. Operativa i administracija</h4>
+          <p>AI ANA može da bude glavni asistent za obradu svakodnevnih poslovnih tokova.</p>
+          <ul class="mini-list">
+            <li>čitanje i parsiranje emailova</li>
+            <li>pretvaranje emaila u strukturisanu formu</li>
+            <li>priprema za CRM / SAP unos</li>
+            <li>praćenje statusa slučajeva</li>
+            <li>generisanje potvrda, izveštaja i exporta</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>2. Dokumenti i izvozi</h4>
+          <p>AI ANA može da radi kao dokumentacioni motor koji pretvara podatke u gotove izlaze.</p>
+          <ul class="mini-list">
+            <li>PDF i CSV eksport</li>
+            <li>popunjavanje šablona</li>
+            <li>priprema internih izveštaja</li>
+            <li>tehnička dokumentacija</li>
+            <li>arhiviranje i praćenje istorije</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>3. SEO i digitalna inteligencija</h4>
+          <p>AI ANA može da prati sajt, signale i digitalni učinak kao kontrolni centar za rast.</p>
+          <ul class="mini-list">
+            <li>SEO monitoring</li>
+            <li>CWV i brzina stranica</li>
+            <li>analiza sadržaja i strukture</li>
+            <li>signalizacija problema</li>
+            <li>AI preporuke za optimizaciju</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>4. Infrastruktura i SKS projekti</h4>
+          <p>AI ANA može da bude inteligentni sloj iznad fizičke mrežne infrastrukture.</p>
+          <ul class="mini-list">
+            <li>pregled aktivnih SKS projekata</li>
+            <li>rack i server dokumentacija</li>
+            <li>praćenje Fluke sertifikacije</li>
+            <li>status tehničkih timova i zadataka</li>
+            <li>jedinstven pregled infrastrukture</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>5. Prodaja i komercijalni tokovi</h4>
+          <p>AI ANA može da prati pipeline, ponude i naredne komercijalne poteze.</p>
+          <ul class="mini-list">
+            <li>obrada leadova</li>
+            <li>rangiranje prioriteta</li>
+            <li>priprema ponuda i follow-up logike</li>
+            <li>partner kanali i tokovi</li>
+            <li>kontrola komercijalnih signala</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>6. Upravljanje firmom</h4>
+          <p>Najveća snaga AI ANA je što može da bude komandni most za direktora ili menadžment.</p>
+          <ul class="mini-list">
+            <li>dashboard za odluke</li>
+            <li>alerti i prioriteti</li>
+            <li>KPI i performanse</li>
+            <li>pregled svih modula na jednom mestu</li>
+            <li>preporuka sledećih koraka</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Dijagram 1 — velika slika</div>
+            <div class="panel-sub">Kako se SATVISION, TVINTERNETSBB, AI ANA i ZOTA uklapaju</div>
+          </div>
+        </div>
+        <div class="panel-body">
+<pre class="diagram">┌────────────────────────────────────────────────────────────┐
+│                      SATVISION GROUP                      │
+│         Infrastructure • Operations • Automation • AI     │
+└──────────────────────────────┬─────────────────────────────┘
+                               │
+                               ▼
+┌────────────────────────────────────────────────────────────┐
+│                        ZOTA SYSTEM                        │
+│       Platform identity / control center / AI layer      │
+└──────────────────────────────┬─────────────────────────────┘
+                               │
+                               ▼
+┌────────────────────────────────────────────────────────────┐
+│                         AI ANA CORE                       │
+│  Central intelligence • process understanding • routing   │
+└───────────────┬──────────────────┬─────────────────────────┘
+                │                  │
+                ▼                  ▼
+       ┌────────────────┐   ┌─────────────────────────┐
+       │ OPERATIONS HUB │   │  INFRASTRUCTURE HUB     │
+       └────────────────┘   └─────────────────────────┘
+                │                  │
+                ▼                  ▼
+       Email / CRM / SAP      SKS / Rack / Fluke / Docs
+
+                └──────────────┬──────────────────────┘
+                               ▼
+                    COMMERCIAL + INTELLIGENCE
+                               ▼
+                     Dashboard / Alerts / Output</pre>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Dijagram 2 — funkcionalna logika</div>
+            <div class="panel-sub">Kako AI ANA pretvara ulaz u akciju</div>
+          </div>
+        </div>
+        <div class="panel-body">
+<pre class="diagram">ULAZI U SISTEM
+│
+├─ Emailovi
+├─ CRM podaci
+├─ SAP podaci
+├─ PDF / CSV dokumenti
+├─ SEO metrike
+├─ Tehnička dokumentacija
+└─ Komercijalni signali
+
+            │
+            ▼
+        AI ANA CORE
+        razume / tumači / rangira / povezuje
+            │
+            ▼
+  AUTOMATIZACIJA I ODLUKA
+  │
+  ├─ predlog sledećeg koraka
+  ├─ generisanje dokumenta
+  ├─ priprema unosa
+  ├─ signalizacija problema
+  ├─ dashboard status
+  └─ prioritet i preporuka
+            │
+            ▼
+          IZLAZI
+  CRM update / SAP unos / PDF / SEO akcija /
+  izveštaj / menadžerski pregled</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Glavne uloge AI ANA unutar ZOTA sistema</h3>
+      <p class="sec-desc">Ovo su ključne funkcije zbog kojih AI ANA nije običan chat bot nego sistemski modul.</p>
+      <div class="use-grid">
+        <article class="use-card">
+          <h4>AI ANA kao Operations Brain</h4>
+          <p>Razume poslovne tokove i pomaže operativi da radi brže, urednije i sa manje ručnih grešaka.</p>
+          <div class="tag-row">
+            <span class="tag">Email intake</span>
+            <span class="tag">Case review</span>
+            <span class="tag">CRM prep</span>
+            <span class="tag">SAP flow</span>
+          </div>
+        </article>
+        <article class="use-card">
+          <h4>AI ANA kao Document Engine</h4>
+          <p>Pretvara strukturisane podatke u jasne dokumente, izvoze, potvrde i interne izveštaje.</p>
+          <div class="tag-row">
+            <span class="tag">PDF</span>
+            <span class="tag">CSV</span>
+            <span class="tag">Templates</span>
+            <span class="tag">Reports</span>
+          </div>
+        </article>
+        <article class="use-card">
+          <h4>AI ANA kao SEO Control Layer</h4>
+          <p>Prati SEO stanje, performanse stranica i probleme koji utiču na rast sajta i lead generaciju.</p>
+          <div class="tag-row">
+            <span class="tag">CWV</span>
+            <span class="tag">Signals</span>
+            <span class="tag">Content review</span>
+            <span class="tag">Priorities</span>
+          </div>
+        </article>
+        <article class="use-card">
+          <h4>AI ANA kao Infrastructure Intelligence</h4>
+          <p>Dodaje inteligenciju nad tehničkim projektima, mrežama, SKS-om i sertifikacionom dokumentacijom.</p>
+          <div class="tag-row">
+            <span class="tag">SKS</span>
+            <span class="tag">Rack</span>
+            <span class="tag">Fluke</span>
+            <span class="tag">Field status</span>
+          </div>
+        </article>
+        <article class="use-card">
+          <h4>AI ANA kao Commercial Assistant</h4>
+          <p>Pomaže prodaji da vidi gde su prioriteti, koje ponude su najvažnije i koji leadovi traže akciju.</p>
+          <div class="tag-row">
+            <span class="tag">Leads</span>
+            <span class="tag">Offers</span>
+            <span class="tag">Pipeline</span>
+            <span class="tag">Follow-up</span>
+          </div>
+        </article>
+        <article class="use-card">
+          <h4>AI ANA kao Director Dashboard</h4>
+          <p>Na vrhu svega, AI ANA može da bude komandni most za direktora: status, KPI, problemi i preporuke.</p>
+          <div class="tag-row">
+            <span class="tag">Alerts</span>
+            <span class="tag">KPI</span>
+            <span class="tag">Decision support</span>
+            <span class="tag">Executive view</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Praktični primer toka</div>
+            <div class="panel-sub">Jedan od najvažnijih use-case scenarija</div>
+          </div>
+        </div>
+        <div class="panel-body">
+<pre class="diagram">PARTNER / PRODAJA šalje email
+            │
+            ▼
+        AI ANA čita sadržaj
+            │
+            ▼
+   izvlači nazive, PIB, adresu,
+   paket, opremu i bitna polja
+            │
+            ▼
+  priprema strukturisani case
+            │
+            ▼
+  operater proverava i potvrđuje
+            │
+            ▼
+  CRM / SAP unos ili export
+            │
+            ▼
+  PDF / CSV / status log / dashboard</pre>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Zašto je ovo važno</div>
+            <div class="panel-sub">Suštinska vrednost sistema</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <ul class="checklist" style="margin-top:0">
+            <li>smanjuje ručni rad i greške u unosu</li>
+            <li>ubrzava operativne procese</li>
+            <li>spaja tehnički i poslovni svet u jedan pregled</li>
+            <li>daje direktoru jasniji pregled nego klasični Excel haos</li>
+            <li>stvara bazu za kasniji SaaS proizvod</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Preporučena struktura modula za AI ANA v1.0</h3>
+      <p class="sec-desc">Ovo je jednostavna i jaka osnova kako da sistem bude profesionalno organizovan.</p>
+      <div class="timeline">
+        <div class="step">
+          <h4><span class="step-num">1</span> AI ANA CORE</h4>
+          <p>Centralna logika, orkestracija, routing, razumevanje procesa i odlučivanje koji modul treba da reaguje.</p>
+        </div>
+        <div class="step">
+          <h4><span class="step-num">2</span> AI ANA OPS</h4>
+          <p>Email intake, case obrada, priprema za CRM i SAP tokove, statusi i operativna potvrda.</p>
+        </div>
+        <div class="step">
+          <h4><span class="step-num">3</span> AI ANA DOCS</h4>
+          <p>PDF, CSV, izvozi, šabloni, dokumenti i istorija izlaza.</p>
+        </div>
+        <div class="step">
+          <h4><span class="step-num">4</span> AI ANA SEO</h4>
+          <p>Monitoring sajta, SEO zdravlje, CWV, upozorenja i preporuke.</p>
+        </div>
+        <div class="step">
+          <h4><span class="step-num">5</span> AI ANA INFRA</h4>
+          <p>Pregled SKS projekata, rack dokumentacije, tehničkih tokova i Fluke sertifikacije.</p>
+        </div>
+        <div class="step">
+          <h4><span class="step-num">6</span> AI ANA DASHBOARD</h4>
+          <p>Kontrolni centar za direktora, operativu i tehnički tim, sa statusom, alertima i KPI signalima.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Zaključak</div>
+            <div class="panel-sub">Suština cele priče u nekoliko tačaka</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <ul class="checklist" style="margin-top:0">
+            <li><strong>ZOTA</strong> je najjači kao ime sistema, platforme ili control-center identiteta.</li>
+            <li><strong>AI ANA</strong> je glavni AI sloj koji daje inteligenciju svim modulima.</li>
+            <li>Najveći potencijal nije samo u jednom sajtu ili jednom procesu, nego u <span class="accent">AI operativnom sistemu za firmu</span>.</li>
+            <li>To omogućava da se spoje operativa, infrastruktura, SEO, prodaja i dokumenti u jedan pregled.</li>
+            <li>Kasnije taj koncept može da preraste u interni enterprise sistem ili zaseban SaaS proizvod.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Dokument je zamišljen kao početna “master overview” HTML stranica za ZOTA sistem / AI ANA platformu. Sledeći logičan korak je verzija sa linkovima ka pravim /director/ modulima i karticama koje vode na postojeće stranice u tvom sistemu.
+    </footer>
+  </div>
+</body>
+</html>
