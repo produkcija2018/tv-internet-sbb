@@ -1,0 +1,1290 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZOTA Control Center | AI ANA Enterprise Ops</title>
+  <meta name="description" content="ZOTA Control Center — AI ANA enterprise control center za operacije, SEO, infrastrukturu i automatizaciju." />
+
+  <style>
+    :root{
+      --bg:#071018;
+      --bg2:#0b1521;
+      --panel:#0d1b29;
+      --panel2:#102131;
+      --line:rgba(115, 170, 255, .16);
+      --line-strong:rgba(115, 170, 255, .30);
+      --text:#dbeafe;
+      --muted:#8ea8c7;
+      --cyan:#52d9ff;
+      --green:#49f2b0;
+      --amber:#ffd166;
+      --red:#ff6b8a;
+      --violet:#8f7cff;
+      --glow:0 0 0 1px rgba(82,217,255,.15), 0 0 22px rgba(82,217,255,.08);
+      --radius:18px;
+      --radius-sm:12px;
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+      --max:1480px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(82,217,255,.08), transparent 28%),
+        radial-gradient(circle at 100% 10%, rgba(143,124,255,.09), transparent 24%),
+        linear-gradient(180deg, #061018 0%, #08111a 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        linear-gradient(rgba(82,217,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(82,217,255,.045) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.75), rgba(0,0,0,.35));
+      pointer-events:none;
+      z-index:0;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        linear-gradient(90deg, transparent 0%, rgba(82,217,255,.05) 48%, rgba(82,217,255,.10) 50%, rgba(82,217,255,.05) 52%, transparent 100%);
+      animation: scan 7s linear infinite;
+      pointer-events:none;
+      z-index:0;
+      opacity:.35;
+    }
+
+    @keyframes scan{
+      from{transform:translateX(-100%)}
+      to{transform:translateX(100%)}
+    }
+
+    .wrap{
+      position:relative;
+      z-index:1;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:22px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 18px;
+      border:1px solid var(--line);
+      background:rgba(10,19,30,.78);
+      backdrop-filter: blur(14px);
+      border-radius:16px;
+      box-shadow:var(--glow);
+      margin-bottom:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .logo{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      letter-spacing:.08em;
+      color:#061018;
+      background:
+        linear-gradient(135deg,var(--cyan),#9ef3ff 60%,#d9fbff 100%);
+      box-shadow:0 0 18px rgba(82,217,255,.4);
+      flex:0 0 auto;
+    }
+
+    .brandText{
+      min-width:0;
+    }
+
+    .eyebrow{
+      color:var(--cyan);
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      opacity:.95;
+    }
+
+    .title{
+      font-size:22px;
+      font-weight:800;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:2px;
+    }
+
+    .statusRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(14,28,42,.88), rgba(10,20,31,.95));
+      border-radius:999px;
+      color:var(--text);
+      font-size:13px;
+      box-shadow:var(--glow);
+    }
+
+    .dot{
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 12px currentColor;
+      animation:pulse 1.8s infinite;
+    }
+
+    .dot.amber{background:var(--amber)}
+    .dot.red{background:var(--red)}
+    .dot.cyan{background:var(--cyan)}
+
+    @keyframes pulse{
+      0%,100%{transform:scale(1);opacity:1}
+      50%{transform:scale(1.35);opacity:.7}
+    }
+
+    .ticker{
+      margin-bottom:18px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(8,16,25,.82);
+      overflow:hidden;
+      box-shadow:var(--glow);
+    }
+
+    .tickerTrack{
+      display:flex;
+      gap:40px;
+      white-space:nowrap;
+      padding:10px 0;
+      min-width:max-content;
+      animation:ticker 26s linear infinite;
+    }
+
+    .ticker:hover .tickerTrack{animation-play-state:paused}
+
+    @keyframes ticker{
+      from{transform:translateX(0)}
+      to{transform:translateX(-50%)}
+    }
+
+    .tick{
+      font-size:13px;
+      color:var(--muted);
+      padding-left:20px;
+    }
+    .tick b{color:var(--text)}
+    .tick .ok{color:var(--green)}
+    .tick .warn{color:var(--amber)}
+    .tick .err{color:var(--red)}
+    .tick .info{color:var(--cyan)}
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.45fr .95fr;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .panel{
+      position:relative;
+      border:1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(13,27,41,.95), rgba(8,18,29,.95));
+      border-radius:var(--radius);
+      box-shadow:var(--shadow), var(--glow);
+      overflow:hidden;
+    }
+
+    .panel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(82,217,255,.04), transparent 18%, transparent 82%, rgba(82,217,255,.025));
+      pointer-events:none;
+    }
+
+    .panelHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px 18px 12px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .panelTitle{
+      font-size:14px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--cyan);
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .cursor{
+      width:10px;
+      height:10px;
+      border-radius:2px;
+      background:var(--cyan);
+      box-shadow:0 0 14px rgba(82,217,255,.8);
+      animation:blink 1s steps(1,end) infinite;
+    }
+
+    @keyframes blink{
+      50%{opacity:0}
+    }
+
+    .panelSub{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .heroMain{
+      min-height:355px;
+      padding:0;
+    }
+
+    .heroBody{
+      padding:18px;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .bigTitle{
+      font-size:clamp(28px,4vw,48px);
+      line-height:1.02;
+      margin:0 0 12px;
+      font-weight:900;
+      letter-spacing:-.03em;
+    }
+
+    .bigTitle span{
+      color:var(--cyan);
+      text-shadow:0 0 18px rgba(82,217,255,.22);
+    }
+
+    .lead{
+      color:#b7c9df;
+      font-size:15px;
+      line-height:1.7;
+      max-width:760px;
+      margin:0 0 18px;
+    }
+
+    .heroActions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:18px;
+    }
+
+    .btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      padding:12px 15px;
+      border-radius:14px;
+      font-weight:800;
+      letter-spacing:.02em;
+      transition:.22s ease;
+    }
+
+    .btn.primary{
+      color:#041018;
+      background:linear-gradient(135deg,var(--cyan),#b4f6ff);
+      box-shadow:0 0 18px rgba(82,217,255,.25);
+    }
+
+    .btn.secondary{
+      color:var(--text);
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 24px rgba(0,0,0,.25);
+    }
+
+    .miniStats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+
+    .miniCard{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border-radius:16px;
+      padding:14px;
+      min-height:96px;
+    }
+
+    .miniLabel{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:8px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .miniValue{
+      font-size:26px;
+      font-weight:900;
+      letter-spacing:-.03em;
+      margin-bottom:6px;
+    }
+
+    .miniMeta{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .miniMeta .up{color:var(--green)}
+    .miniMeta .down{color:var(--red)}
+    .miniMeta .warn{color:var(--amber)}
+
+    .radarBox{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      min-height:100%;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:
+        radial-gradient(circle at center, rgba(82,217,255,.11), transparent 46%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      overflow:hidden;
+    }
+
+    .radar{
+      width:min(100%,340px);
+      aspect-ratio:1/1;
+      border-radius:50%;
+      position:relative;
+      border:1px solid rgba(82,217,255,.18);
+      box-shadow:inset 0 0 34px rgba(82,217,255,.08), 0 0 30px rgba(82,217,255,.08);
+      background:
+        radial-gradient(circle, transparent 0 19%, rgba(82,217,255,.12) 20% 20.6%, transparent 21% 39%, rgba(82,217,255,.12) 40% 40.6%, transparent 41% 59%, rgba(82,217,255,.12) 60% 60.6%, transparent 61% 79%, rgba(82,217,255,.12) 80% 80.6%, transparent 81%),
+        linear-gradient(rgba(82,217,255,.11) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(82,217,255,.11) 1px, transparent 1px);
+      background-size:auto, 100% 25%, 25% 100%;
+    }
+
+    .radar::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      background:conic-gradient(from 0deg, rgba(82,217,255,.0) 0 315deg, rgba(82,217,255,.34) 340deg, rgba(82,217,255,.0) 360deg);
+      animation:rotate 5.5s linear infinite;
+      filter:blur(1px);
+    }
+
+    .radar::after{
+      content:"";
+      position:absolute;
+      inset:8%;
+      border-radius:50%;
+      border:1px dashed rgba(82,217,255,.12);
+    }
+
+    @keyframes rotate{
+      to{transform:rotate(360deg)}
+    }
+
+    .target{
+      position:absolute;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 16px rgba(73,242,176,.8);
+      animation:targetBlink 1.7s infinite;
+    }
+
+    @keyframes targetBlink{
+      50%{opacity:.35; transform:scale(1.25)}
+    }
+
+    .radarTag{
+      position:absolute;
+      bottom:14px;
+      left:14px;
+      right:14px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:18px;
+    }
+
+    .span-3{grid-column:span 3}
+    .span-4{grid-column:span 4}
+    .span-5{grid-column:span 5}
+    .span-6{grid-column:span 6}
+    .span-7{grid-column:span 7}
+    .span-8{grid-column:span 8}
+    .span-12{grid-column:span 12}
+
+    .metricCards{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .metric{
+      padding:18px;
+      min-height:150px;
+    }
+
+    .metricTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:18px;
+    }
+
+    .metricLabel{
+      font-size:13px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .metricNum{
+      font-size:34px;
+      font-weight:900;
+      letter-spacing:-.03em;
+      margin-bottom:8px;
+    }
+
+    .metricDelta{
+      color:var(--muted);
+      font-size:13px;
+    }
+    .metricDelta .ok{color:var(--green)}
+    .metricDelta .warn{color:var(--amber)}
+    .metricDelta .bad{color:var(--red)}
+
+    .bars{
+      display:flex;
+      align-items:flex-end;
+      gap:8px;
+      height:78px;
+      margin-top:16px;
+    }
+
+    .bar{
+      flex:1;
+      border-radius:10px 10px 4px 4px;
+      background:linear-gradient(180deg, rgba(82,217,255,.95), rgba(82,217,255,.18));
+      box-shadow:0 0 14px rgba(82,217,255,.12);
+      position:relative;
+    }
+
+    .bar.green{
+      background:linear-gradient(180deg, rgba(73,242,176,.95), rgba(73,242,176,.18));
+    }
+    .bar.amber{
+      background:linear-gradient(180deg, rgba(255,209,102,.95), rgba(255,209,102,.18));
+    }
+    .bar.violet{
+      background:linear-gradient(180deg, rgba(143,124,255,.95), rgba(143,124,255,.18));
+    }
+
+    .tableWrap{
+      padding:0 16px 16px;
+      overflow:auto;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:760px;
+    }
+
+    th,td{
+      padding:12px 10px;
+      text-align:left;
+      border-bottom:1px solid rgba(255,255,255,.05);
+      font-size:13px;
+    }
+
+    th{
+      color:var(--cyan);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-size:11px;
+      position:relative;
+    }
+
+    th::after{
+      content:"";
+      position:absolute;
+      right:8px;
+      top:50%;
+      transform:translateY(-50%);
+      width:7px;
+      height:7px;
+      border-radius:2px;
+      background:rgba(82,217,255,.9);
+      box-shadow:0 0 12px rgba(82,217,255,.7);
+      animation:blink 1s steps(1,end) infinite;
+    }
+
+    td{
+      color:#d4e4f6;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 9px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      font-size:12px;
+      line-height:1;
+      white-space:nowrap;
+    }
+    .badge.ok{color:var(--green)}
+    .badge.warn{color:var(--amber)}
+    .badge.bad{color:var(--red)}
+    .badge.info{color:var(--cyan)}
+
+    .split{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+    }
+
+    .stack{
+      display:grid;
+      gap:18px;
+    }
+
+    .logList{
+      padding:6px 16px 16px;
+      display:grid;
+      gap:10px;
+    }
+
+    .log{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:12px;
+      align-items:flex-start;
+      border:1px solid rgba(255,255,255,.05);
+      background:rgba(255,255,255,.02);
+      border-radius:14px;
+      padding:12px;
+    }
+
+    .logTime{
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    .logMsg{
+      font-size:13px;
+      color:#d7e6f6;
+      line-height:1.5;
+    }
+
+    .logStatus{
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .status-ok{color:var(--green)}
+    .status-warn{color:var(--amber)}
+    .status-bad{color:var(--red)}
+    .status-info{color:var(--cyan)}
+
+    .nodes{
+      padding:16px;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+
+    .node{
+      position:relative;
+      min-height:102px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      padding:14px;
+      overflow:hidden;
+    }
+
+    .node::before{
+      content:"";
+      position:absolute;
+      inset:auto -18% -32% auto;
+      width:110px;
+      height:110px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(82,217,255,.18), transparent 62%);
+      pointer-events:none;
+    }
+
+    .nodeTitle{
+      font-size:13px;
+      color:var(--cyan);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:8px;
+      font-weight:800;
+    }
+
+    .nodeValue{
+      font-size:28px;
+      font-weight:900;
+      letter-spacing:-.03em;
+      margin-bottom:8px;
+    }
+
+    .nodeMeta{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .flowMap{
+      padding:18px;
+    }
+
+    .flowLine{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+
+    .flowBox{
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      min-width:120px;
+      text-align:center;
+      font-size:13px;
+      font-weight:700;
+      position:relative;
+      box-shadow:var(--glow);
+    }
+
+    .flowArrow{
+      color:var(--cyan);
+      font-weight:900;
+      font-size:18px;
+      text-shadow:0 0 10px rgba(82,217,255,.5);
+    }
+
+    .footer{
+      margin-top:18px;
+      padding:14px 16px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(10,20,31,.76);
+      color:var(--muted);
+      font-size:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:var(--glow);
+    }
+
+    .small{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    @media (max-width:1200px){
+      .hero,
+      .split,
+      .heroBody{
+        grid-template-columns:1fr;
+      }
+      .metricCards{
+        grid-template-columns:repeat(2,1fr);
+      }
+      .miniStats{
+        grid-template-columns:repeat(2,1fr);
+      }
+      .span-3,.span-4,.span-5,.span-6,.span-7,.span-8{
+        grid-column:span 12;
+      }
+    }
+
+    @media (max-width:760px){
+      .wrap{padding:14px}
+      .topbar{padding:12px}
+      .title{font-size:18px}
+      .metricCards{
+        grid-template-columns:1fr;
+      }
+      .miniStats{
+        grid-template-columns:1fr;
+      }
+      .nodes{
+        grid-template-columns:1fr;
+      }
+      .statusRow{
+        justify-content:flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">Z</div>
+        <div class="brandText">
+          <div class="eyebrow">AI ANA / ZOTA SYSTEMS</div>
+          <div class="title">ZOTA Control Center</div>
+          <div class="subtitle">Enterprise AI operations layer za infrastrukturu, automatizaciju i poslovnu inteligenciju</div>
+        </div>
+      </div>
+
+      <div class="statusRow">
+        <div class="pill"><span class="dot"></span> CORE ONLINE</div>
+        <div class="pill"><span class="dot cyan"></span> 12 ACTIVE AGENTS</div>
+        <div class="pill"><span class="dot amber"></span> 3 PRIORITY ALERTS</div>
+        <div class="pill"><span class="dot"></span> 97.8% SYSTEM HEALTH</div>
+      </div>
+    </div>
+
+    <div class="ticker">
+      <div class="tickerTrack">
+        <div class="tick"><b class="info">SEO</b> CWV LCP: <b>2.8s</b> <span class="warn">→ target 2.5s</span></div>
+        <div class="tick"><b class="info">OPS</b> Email intake queue: <b>14</b> pending</div>
+        <div class="tick"><b class="info">CRM</b> Parsed success rate: <b class="ok">96.4%</b></div>
+        <div class="tick"><b class="info">INFRA</b> SKS projects active: <b>5</b></div>
+        <div class="tick"><b class="info">AI</b> Recommendation engine: <b class="ok">stable</b></div>
+        <div class="tick"><b class="info">DOCS</b> PDF exports today: <b>38</b></div>
+        <div class="tick"><b class="info">PIPELINE</b> Commercial leads: <b>27</b> <span class="ok">+5</span></div>
+
+        <div class="tick"><b class="info">SEO</b> CWV LCP: <b>2.8s</b> <span class="warn">→ target 2.5s</span></div>
+        <div class="tick"><b class="info">OPS</b> Email intake queue: <b>14</b> pending</div>
+        <div class="tick"><b class="info">CRM</b> Parsed success rate: <b class="ok">96.4%</b></div>
+        <div class="tick"><b class="info">INFRA</b> SKS projects active: <b>5</b></div>
+        <div class="tick"><b class="info">AI</b> Recommendation engine: <b class="ok">stable</b></div>
+        <div class="tick"><b class="info">DOCS</b> PDF exports today: <b>38</b></div>
+        <div class="tick"><b class="info">PIPELINE</b> Commercial leads: <b>27</b> <span class="ok">+5</span></div>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="panel heroMain">
+        <div class="panelHead">
+          <div>
+            <div class="panelTitle"><span class="cursor"></span> MASTER CONTROL</div>
+            <div class="panelSub">Central intelligence layer • orchestration • alerts • decision support</div>
+          </div>
+          <div class="badge info">LIVE MODE</div>
+        </div>
+
+        <div class="heroBody">
+          <div>
+            <h1 class="bigTitle">Build your firm around a <span>real AI control layer</span></h1>
+            <p class="lead">
+              ZOTA Control Center objedinjuje operacije, SEO, infrastrukturu, dokumente, leadove i AI automatizaciju
+              u jedinstven komandni most. Ovo nije običan dashboard, već centralni sistem za upravljanje procesima,
+              signalima i sledećim akcijama.
+            </p>
+
+            <div class="heroActions">
+              <button class="btn primary" id="runBtn">Run System Scan</button>
+              <button class="btn secondary">Open Director View</button>
+              <button class="btn secondary">Open AI Agent Matrix</button>
+            </div>
+
+            <div class="miniStats">
+              <div class="miniCard">
+                <div class="miniLabel">Active processes</div>
+                <div class="miniValue">128</div>
+                <div class="miniMeta"><span class="up">+12</span> vs juče</div>
+              </div>
+              <div class="miniCard">
+                <div class="miniLabel">Automation success</div>
+                <div class="miniValue">96.4%</div>
+                <div class="miniMeta"><span class="up">stable</span> parsing / export flow</div>
+              </div>
+              <div class="miniCard">
+                <div class="miniLabel">Priority incidents</div>
+                <div class="miniValue">03</div>
+                <div class="miniMeta"><span class="warn">1 SEO</span> • <span class="warn">2 ops</span></div>
+              </div>
+              <div class="miniCard">
+                <div class="miniLabel">Revenue signals</div>
+                <div class="miniValue">27</div>
+                <div class="miniMeta"><span class="up">qualified leads</span> in pipeline</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="radarBox">
+            <div class="radar">
+              <span class="target" style="top:22%;left:61%"></span>
+              <span class="target" style="top:38%;left:23%"></span>
+              <span class="target" style="top:64%;left:58%"></span>
+              <span class="target" style="top:74%;left:33%"></span>
+            </div>
+            <div class="radarTag">
+              <span>Threat / bottleneck scan</span>
+              <span>AI response matrix</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+          <div class="panelHead">
+            <div>
+              <div class="panelTitle"><span class="cursor"></span> AGENT STATUS</div>
+              <div class="panelSub">Core sub-systems and assistant nodes</div>
+            </div>
+            <div class="badge ok">12/12 online</div>
+          </div>
+
+          <div class="nodes">
+            <div class="node">
+              <div class="nodeTitle">AI ANA Core</div>
+              <div class="nodeValue">ONLINE</div>
+              <div class="nodeMeta">Orchestration • routing • decisions</div>
+            </div>
+            <div class="node">
+              <div class="nodeTitle">Email Parser</div>
+              <div class="nodeValue">96.4%</div>
+              <div class="nodeMeta">Structured extraction confidence</div>
+            </div>
+            <div class="node">
+              <div class="nodeTitle">SEO Engine</div>
+              <div class="nodeValue">ACTIVE</div>
+              <div class="nodeMeta">Signals • CWV • rankings • pages</div>
+            </div>
+            <div class="node">
+              <div class="nodeTitle">Infra Hub</div>
+              <div class="nodeValue">05</div>
+              <div class="nodeMeta">Open SKS / network projects</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panelHead">
+            <div>
+              <div class="panelTitle"><span class="cursor"></span> DATA INGEST</div>
+              <div class="panelSub">Live packet simulation for demo presentation</div>
+            </div>
+            <div class="badge info" id="ingestBadge">IDLE</div>
+          </div>
+
+          <div style="padding:16px;">
+            <div class="bars" id="ingestBars">
+              <div class="bar" style="height:24%"></div>
+              <div class="bar green" style="height:52%"></div>
+              <div class="bar violet" style="height:38%"></div>
+              <div class="bar" style="height:61%"></div>
+              <div class="bar amber" style="height:34%"></div>
+              <div class="bar green" style="height:72%"></div>
+              <div class="bar" style="height:48%"></div>
+              <div class="bar violet" style="height:57%"></div>
+            </div>
+            <div class="small" style="margin-top:12px;">
+              Sources: Email • CRM • SAP • SEO crawler • Technical docs • Commercial pipeline
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="metricCards">
+      <div class="panel metric">
+        <div class="metricTop">
+          <div class="metricLabel">Operations throughput</div>
+          <div class="badge ok">Healthy</div>
+        </div>
+        <div class="metricNum">1,284</div>
+        <div class="metricDelta"><span class="ok">+8.2%</span> obrađenih jedinica ove nedelje</div>
+        <div class="bars">
+          <div class="bar" style="height:35%"></div>
+          <div class="bar" style="height:50%"></div>
+          <div class="bar" style="height:62%"></div>
+          <div class="bar" style="height:48%"></div>
+          <div class="bar" style="height:71%"></div>
+          <div class="bar" style="height:64%"></div>
+          <div class="bar" style="height:83%"></div>
+        </div>
+      </div>
+
+      <div class="panel metric">
+        <div class="metricTop">
+          <div class="metricLabel">SEO health score</div>
+          <div class="badge warn">Needs tuning</div>
+        </div>
+        <div class="metricNum">82/100</div>
+        <div class="metricDelta"><span class="warn">LCP</span> i interne veze prioritet</div>
+        <div class="bars">
+          <div class="bar green" style="height:82%"></div>
+          <div class="bar amber" style="height:61%"></div>
+          <div class="bar green" style="height:76%"></div>
+          <div class="bar amber" style="height:58%"></div>
+          <div class="bar green" style="height:80%"></div>
+          <div class="bar amber" style="height:66%"></div>
+          <div class="bar green" style="height:72%"></div>
+        </div>
+      </div>
+
+      <div class="panel metric">
+        <div class="metricTop">
+          <div class="metricLabel">Commercial pipeline</div>
+          <div class="badge ok">Growing</div>
+        </div>
+        <div class="metricNum">27</div>
+        <div class="metricDelta"><span class="ok">+5</span> qualified leads / 7 dana</div>
+        <div class="bars">
+          <div class="bar violet" style="height:26%"></div>
+          <div class="bar violet" style="height:44%"></div>
+          <div class="bar violet" style="height:40%"></div>
+          <div class="bar violet" style="height:55%"></div>
+          <div class="bar violet" style="height:63%"></div>
+          <div class="bar violet" style="height:70%"></div>
+          <div class="bar violet" style="height:84%"></div>
+        </div>
+      </div>
+
+      <div class="panel metric">
+        <div class="metricTop">
+          <div class="metricLabel">Infrastructure load</div>
+          <div class="badge info">Balanced</div>
+        </div>
+        <div class="metricNum">05</div>
+        <div class="metricDelta"><span class="ok">2</span> rack / <span class="ok">3</span> SKS projekta aktivna</div>
+        <div class="bars">
+          <div class="bar green" style="height:32%"></div>
+          <div class="bar green" style="height:55%"></div>
+          <div class="bar green" style="height:49%"></div>
+          <div class="bar green" style="height:77%"></div>
+          <div class="bar green" style="height:59%"></div>
+          <div class="bar green" style="height:68%"></div>
+          <div class="bar green" style="height:74%"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel span-7">
+        <div class="panelHead">
+          <div>
+            <div class="panelTitle"><span class="cursor"></span> PRIORITY MATRIX</div>
+            <div class="panelSub">Operational, SEO and infrastructure tasks ranked by urgency</div>
+          </div>
+          <div class="badge warn">3 critical</div>
+        </div>
+
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Module</th>
+                <th>Issue</th>
+                <th>Impact</th>
+                <th>Owner</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>SEO Engine</td>
+                <td>LCP on core landing page above target</td>
+                <td>High</td>
+                <td>Marketing / Dev</td>
+                <td><span class="badge warn">In review</span></td>
+              </tr>
+              <tr>
+                <td>Email Parser</td>
+                <td>2 malformed partner templates detected</td>
+                <td>Medium</td>
+                <td>Ops Admin</td>
+                <td><span class="badge info">Monitoring</span></td>
+              </tr>
+              <tr>
+                <td>CRM Sync</td>
+                <td>Delayed field mapping for one custom form</td>
+                <td>Medium</td>
+                <td>Automation</td>
+                <td><span class="badge warn">Pending</span></td>
+              </tr>
+              <tr>
+                <td>Infra Hub</td>
+                <td>Rack documentation update required</td>
+                <td>Low</td>
+                <td>Technical</td>
+                <td><span class="badge ok">Scheduled</span></td>
+              </tr>
+              <tr>
+                <td>Commercial Hub</td>
+                <td>3 hot leads need proposal follow-up</td>
+                <td>High</td>
+                <td>Sales</td>
+                <td><span class="badge bad">Urgent</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel span-5">
+        <div class="panelHead">
+          <div>
+            <div class="panelTitle"><span class="cursor"></span> PROCESS FLOW</div>
+            <div class="panelSub">Core automation path</div>
+          </div>
+          <div class="badge info">OPS CHAIN</div>
+        </div>
+
+        <div class="flowMap">
+          <div class="flowLine">
+            <div class="flowBox">Email Intake</div>
+            <div class="flowArrow">→</div>
+            <div class="flowBox">AI Parse</div>
+            <div class="flowArrow">→</div>
+            <div class="flowBox">Case Review</div>
+          </div>
+          <div class="flowLine">
+            <div class="flowBox">CRM Push</div>
+            <div class="flowArrow">→</div>
+            <div class="flowBox">PDF / CSV</div>
+            <div class="flowArrow">→</div>
+            <div class="flowBox">Status Log</div>
+          </div>
+          <div class="flowLine">
+            <div class="flowBox">SEO Crawl</div>
+            <div class="flowArrow">→</div>
+            <div class="flowBox">Signal Engine</div>
+            <div class="flowArrow">→</div>
+            <div class="flowBox">Director View</div>
+          </div>
+          <div class="small" style="margin-top:10px;">
+            Jedinstveni AI sloj povezuje operacije, dokumente, SEO i odluke.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel span-8">
+        <div class="panelHead">
+          <div>
+            <div class="panelTitle"><span class="cursor"></span> LIVE SYSTEM LOGS</div>
+            <div class="panelSub">Recent activity from automation and agent network</div>
+          </div>
+          <div class="badge ok">Streaming</div>
+        </div>
+
+        <div class="logList" id="logList">
+          <div class="log">
+            <div class="logTime">15:41:08</div>
+            <div class="logMsg">AI ANA CORE validated intake schema and synchronized queue priorities.</div>
+            <div class="logStatus status-ok">OK</div>
+          </div>
+          <div class="log">
+            <div class="logTime">15:42:16</div>
+            <div class="logMsg">SEO engine detected elevated render delay on one landing page template.</div>
+            <div class="logStatus status-warn">WARN</div>
+          </div>
+          <div class="log">
+            <div class="logTime">15:43:31</div>
+            <div class="logMsg">Commercial hub marked 3 leads as high-intent after behavior scoring update.</div>
+            <div class="logStatus status-info">INFO</div>
+          </div>
+          <div class="log">
+            <div class="logTime">15:44:12</div>
+            <div class="logMsg">Document engine generated 12 exports without formatting conflict.</div>
+            <div class="logStatus status-ok">OK</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel span-4">
+        <div class="panelHead">
+          <div>
+            <div class="panelTitle"><span class="cursor"></span> EXECUTIVE NODES</div>
+            <div class="panelSub">Director-level overview</div>
+          </div>
+          <div class="badge info">Summary</div>
+        </div>
+
+        <div class="nodes">
+          <div class="node">
+            <div class="nodeTitle">Director View</div>
+            <div class="nodeValue">READY</div>
+            <div class="nodeMeta">KPI • alerts • strategy feed</div>
+          </div>
+          <div class="node">
+            <div class="nodeTitle">Ops View</div>
+            <div class="nodeValue">14</div>
+            <div class="nodeMeta">Cases waiting final confirmation</div>
+          </div>
+          <div class="node">
+            <div class="nodeTitle">SEO View</div>
+            <div class="nodeValue">82</div>
+            <div class="nodeMeta">Health score / optimization queue</div>
+          </div>
+          <div class="node">
+            <div class="nodeTitle">Infra View</div>
+            <div class="nodeValue">05</div>
+            <div class="nodeMeta">Field / rack / certification tracking</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>ZOTA Control Center • AI ANA Enterprise Layer • Demo UI concept</div>
+      <div>Modules: Core • Ops • SEO • Infra • Docs • Commercial • Intelligence</div>
+    </div>
+  </div>
+
+  <script>
+    const runBtn = document.getElementById('runBtn');
+    const ingestBadge = document.getElementById('ingestBadge');
+    const ingestBars = document.querySelectorAll('#ingestBars .bar');
+    const logList = document.getElementById('logList');
+
+    const logPool = [
+      {t:'INFO', msg:'AI parser refreshed entity rules for partner email templates.'},
+      {t:'OK', msg:'Queue optimizer reduced average handling time by 7.4%.'},
+      {t:'WARN', msg:'SEO crawler flagged oversized hero media on one page.'},
+      {t:'OK', msg:'Document export engine completed PDF batch successfully.'},
+      {t:'INFO', msg:'Commercial hub updated lead score thresholds.'},
+      {t:'WARN', msg:'Two cases require manual field confirmation before CRM push.'},
+      {t:'OK', msg:'Infrastructure documentation sync completed.'},
+      {t:'INFO', msg:'Director dashboard cached latest KPI package.'}
+    ];
+
+    function addLog(){
+      const item = logPool[Math.floor(Math.random() * logPool.length)];
+      const now = new Date();
+      const time = now.toLocaleTimeString('sr-RS', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+
+      const row = document.createElement('div');
+      row.className = 'log';
+
+      const statusClass =
+        item.t === 'OK' ? 'status-ok' :
+        item.t === 'WARN' ? 'status-warn' :
+        item.t === 'INFO' ? 'status-info' : 'status-bad';
+
+      row.innerHTML = `
+        <div class="logTime">${time}</div>
+        <div class="logMsg">${item.msg}</div>
+        <div class="logStatus ${statusClass}">${item.t}</div>
+      `;
+
+      logList.prepend(row);
+      while (logList.children.length > 6) {
+        logList.removeChild(logList.lastElementChild);
+      }
+    }
+
+    function randomizeBars(active = false){
+      ingestBars.forEach((bar, i) => {
+        const min = active ? 35 : 18;
+        const max = active ? 96 : 72;
+        const h = Math.floor(Math.random() * (max - min + 1)) + min;
+        bar.style.height = h + '%';
+        bar.style.opacity = active ? '1' : '.85';
+      });
+    }
+
+    let intervalId = null;
+
+    runBtn.addEventListener('click', () => {
+      ingestBadge.textContent = 'SCANNING';
+      ingestBadge.className = 'badge warn';
+
+      runBtn.textContent = 'System Scan Running...';
+      runBtn.disabled = true;
+
+      randomizeBars(true);
+      addLog();
+
+      intervalId = setInterval(() => {
+        randomizeBars(true);
+        addLog();
+      }, 900);
+
+      setTimeout(() => {
+        clearInterval(intervalId);
+        randomizeBars(false);
+        ingestBadge.textContent = 'SYNCED';
+        ingestBadge.className = 'badge ok';
+        runBtn.textContent = 'Run System Scan';
+        runBtn.disabled = false;
+        addLog();
+      }, 5200);
+    });
+
+    setInterval(addLog, 7000);
+  </script>
+</body>
+</html>
