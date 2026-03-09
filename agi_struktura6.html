@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>V4 Investor / Legal Briefing — Srbija DOO + Estonija OÜ Holding</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root{
+      --bg:#07101d;
+      --panel:#0f1930;
+      --panel2:#121f3d;
+      --panel3:#0b1430;
+      --line:rgba(255,255,255,.08);
+      --text:#eef4ff;
+      --muted:#9fb2d9;
+      --blue:#5f84ff;
+      --blue2:#7a5cff;
+      --green:#33d69f;
+      --amber:#ffbf69;
+      --red:#ff6b6b;
+      --shadow:0 18px 44px rgba(0,0,0,.28);
+      --radius:22px;
+    }
+
+    body{
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(95,132,255,.10), transparent 25%),
+        radial-gradient(circle at top left, rgba(122,92,255,.08), transparent 22%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      padding:24px;
+    }
+
+    .wrap{
+      max-width:1400px;
+      margin:0 auto;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(135deg, #101a35 0%, #203263 56%, #594df0 100%);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:30px;
+      padding:38px;
+      box-shadow:var(--shadow);
+      margin-bottom:24px;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      right:-90px;
+      top:-90px;
+      width:280px;
+      height:280px;
+      background:radial-gradient(circle, rgba(255,255,255,.18), transparent 65%);
+      pointer-events:none;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:12px;
+      letter-spacing:.45px;
+      font-weight:700;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.16);
+      color:#e8efff;
+      margin-bottom:16px;
+    }
+
+    h1{
+      font-size:42px;
+      line-height:1.1;
+      margin-bottom:12px;
+      max-width:1020px;
+    }
+
+    .hero p{
+      color:#dbe5ff;
+      font-size:17px;
+      max-width:1020px;
+    }
+
+    .grid{ display:grid; gap:20px; }
+    .g2{ grid-template-columns:repeat(2,1fr); margin-bottom:24px; }
+    .g3{ grid-template-columns:repeat(3,1fr); margin-bottom:24px; }
+    .g4{ grid-template-columns:repeat(4,1fr); margin-bottom:24px; }
+
+    .card{
+      background:linear-gradient(180deg, rgba(18,31,61,.96), rgba(14,24,46,.96));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .card h2{
+      font-size:22px;
+      margin-bottom:12px;
+      color:#fff;
+    }
+
+    .card h3{
+      font-size:17px;
+      margin-bottom:10px;
+      color:#cad7ff;
+    }
+
+    .muted{ color:var(--muted); }
+    .small{ font-size:13px; color:#aebfe4; }
+
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:10px;
+      letter-spacing:.3px;
+    }
+    .blue{ background:rgba(95,132,255,.16); color:#bfd0ff; }
+    .green{ background:rgba(51,214,159,.14); color:#cbffeb; }
+    .amber{ background:rgba(255,191,105,.14); color:#ffe6b8; }
+    .red{ background:rgba(255,107,107,.14); color:#ffd2d2; }
+
+    .box{
+      background:#0d1630;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .structure{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:14px;
+      margin-top:12px;
+    }
+    .structure .top{
+      width:min(880px,100%);
+      background:linear-gradient(135deg, #4368ff, #6b54ff);
+      border-radius:18px;
+      padding:20px;
+      text-align:center;
+      box-shadow:var(--shadow);
+    }
+    .structure .mid,
+    .structure .bottom{
+      width:min(880px,100%);
+      background:#10182c;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      text-align:center;
+    }
+    .connector{
+      width:3px;
+      height:24px;
+      border-radius:2px;
+      background:linear-gradient(180deg, #6787ff, #8d6bff);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      overflow:hidden;
+      border-radius:16px;
+      margin-top:14px;
+    }
+
+    th, td{
+      padding:14px 12px;
+      text-align:left;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    th{
+      background:#19284c;
+      color:#fff;
+      font-weight:700;
+    }
+
+    td{
+      background:#0d1630;
+      color:#ebf2ff;
+    }
+
+    tr:last-child td{ border-bottom:none; }
+
+    .phase{
+      margin-top:14px;
+      border-left:4px solid var(--blue);
+      background:#0b1430;
+      border-radius:14px;
+      padding:16px 16px 16px 18px;
+    }
+
+    .phase strong{
+      display:block;
+      margin-bottom:8px;
+      font-size:17px;
+      color:#fff;
+    }
+
+    .list{
+      list-style:none;
+      margin-top:10px;
+    }
+
+    .list li{
+      margin:9px 0;
+      padding-left:18px;
+      position:relative;
+      color:#e5edff;
+    }
+
+    .list li::before{
+      content:"•";
+      position:absolute;
+      left:0;
+      color:#8eabff;
+      font-weight:800;
+    }
+
+    .timeline{
+      position:relative;
+      margin-top:10px;
+      padding-left:18px;
+    }
+
+    .timeline::before{
+      content:"";
+      position:absolute;
+      left:9px;
+      top:4px;
+      bottom:4px;
+      width:2px;
+      background:linear-gradient(180deg, #6f8bff, #876cff);
+    }
+
+    .t-item{
+      position:relative;
+      margin:0 0 18px 0;
+      padding-left:28px;
+    }
+
+    .t-item::before{
+      content:"";
+      position:absolute;
+      left:-1px;
+      top:6px;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#7ea1ff;
+      box-shadow:0 0 0 4px rgba(126,161,255,.16);
+    }
+
+    .t-title{
+      font-size:17px;
+      font-weight:700;
+      color:#fff;
+      margin-bottom:6px;
+    }
+
+    .t-meta{
+      font-size:12px;
+      color:#b7c7e9;
+      margin-bottom:6px;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+    }
+
+    .metric{
+      background:#0d1630;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      text-align:center;
+    }
+
+    .metric .value{
+      font-size:30px;
+      font-weight:800;
+      color:#a6beff;
+      margin-bottom:6px;
+    }
+
+    .metric .label{
+      font-size:13px;
+      color:#a8badf;
+    }
+
+    .callout{
+      padding:18px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:#0c1530;
+      margin-top:14px;
+    }
+
+    .status{
+      display:inline-block;
+      padding:4px 9px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+
+    .s-green{ background:rgba(51,214,159,.14); color:#caffea; }
+    .s-amber{ background:rgba(255,191,105,.14); color:#ffe5b4; }
+    .s-red{ background:rgba(255,107,107,.14); color:#ffd2d2; }
+
+    .vesting{
+      margin-top:18px;
+    }
+
+    .vesting-row{
+      display:grid;
+      grid-template-columns:140px 1fr 90px;
+      gap:12px;
+      align-items:center;
+      margin-bottom:12px;
+    }
+
+    .vesting-label{
+      color:#dbe6ff;
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .bar-wrap{
+      height:16px;
+      border-radius:999px;
+      background:#081126;
+      border:1px solid rgba(255,255,255,.06);
+      overflow:hidden;
+    }
+
+    .bar{
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg, #5f84ff, #8c68ff);
+    }
+
+    .vesting-val{
+      text-align:right;
+      color:#bfd0ff;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .footer{
+      text-align:center;
+      color:#8fa3cc;
+      font-size:13px;
+      margin-top:10px;
+      padding-bottom:10px;
+    }
+
+    @media (max-width: 1150px){
+      .g2,.g3,.g4{ grid-template-columns:1fr; }
+      h1{ font-size:32px; }
+      .vesting-row{ grid-template-columns:1fr; }
+      .vesting-val{ text-align:left; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <section class="hero">
+      <div class="eyebrow">V4 INVESTOR / LEGAL BRIEFING • TIMELINE • SIGNATURE MAP • DECISION MATRIX</div>
+      <h1>Investor / Legal Briefing ekran: kako 4 osnivača prelaze iz ideje u holding, savetnika, prvu rundu i razvojni tim bez gubitka kontrole</h1>
+      <p>
+        Formalniji vizuelni dokument za internu prezentaciju, partnere i buduće savetnike.
+        Fokus je na strukturi odluka, redosledu koraka, odgovornosti za potpisivanje i disciplini
+        ulaska prvog kapitala kroz Estonija OÜ holding, dok Srbija DOO ostaje operativna baza.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Struktura sistema</h2>
+      <div class="structure">
+        <div class="top">
+          <h3>ESTONIJA OÜ HOLDING</h3>
+          <p>equity • advisory package • governance • reserved matters • investitori • future option plan</p>
+        </div>
+        <div class="connector"></div>
+        <div class="mid">
+          <h3>FOUNDERS GOVERNANCE LAYER</h3>
+          <p>founders consent • super-većina • potpisna disciplina • kontrola nad ključnim odlukama</p>
+        </div>
+        <div class="connector"></div>
+        <div class="bottom">
+          <h3>SRBIJA DOO</h3>
+          <p>operativa • prostor • računari • razvojni tim • produkt • svakodnevno izvršenje</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid g2">
+      <div class="card">
+        <span class="pill blue">CAP TABLE SNAPSHOT</span>
+        <h2>Početni raspored na holdingu</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nosilac</th>
+              <th>%</th>
+              <th>Funkcija</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Osnivač 1</td><td>32%</td><td>vizija / inicijator / strateški pravac</td></tr>
+            <tr><td>Osnivač 2</td><td>24%</td><td>core partner / izvršenje / operativa</td></tr>
+            <tr><td>Osnivač 3</td><td>20%</td><td>tehnologija / produkt / razvoj</td></tr>
+            <tr><td>Osnivač 4</td><td>14%</td><td>biznis / podrška / rast</td></tr>
+            <tr><td>Advisory rezerva</td><td>3%</td><td>za jednog jakog savetnika i eventualni mali dodatak</td></tr>
+            <tr><td>Future team rezerva</td><td>7%</td><td>za ključne kodere i rani option okvir</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <span class="pill green">CORE PRINCIPLE</span>
+        <h2>Šta se štiti od prvog dana</h2>
+        <ul class="list">
+          <li>osnivači ne prodaju kontrolu pre nego što postoji governance okvir</li>
+          <li>savetnik se uvodi kao akcelerator, ne kao paralelni centar moći</li>
+          <li>prva prodaja udela služi timu i razvoju, ne haotičnom trošenju</li>
+          <li>ključne odluke se pomeraju iz “dogovorićemo se” u formalnu matricu</li>
+        </ul>
+        <div class="callout">
+          <strong>Osnovna logika:</strong> procenat bez pravila je slab. Procenat plus founders consent i super-većina je stvarna kontrola.
+        </div>
+      </div>
+    </section>
+
+    <section class="grid g2">
+      <div class="card">
+        <span class="pill amber">TIMELINE</span>
+        <h2>Faze projekta</h2>
+
+        <div class="timeline">
+          <div class="t-item">
+            <div class="t-meta">Faza 1</div>
+            <div class="t-title">Interni founders dogovor</div>
+            <p class="muted">Definišu se procenti, uloge, reserved matters, model glasanja i pravila potpisa.</p>
+          </div>
+
+          <div class="t-item">
+            <div class="t-meta">Faza 2</div>
+            <div class="t-title">Osnivanje Estonija OÜ holdinga</div>
+            <p class="muted">Holding se postavlja kao gornji sloj za equity, savetnike, investitore i budući option plan.</p>
+          </div>
+
+          <div class="t-item">
+            <div class="t-meta">Faza 3</div>
+            <div class="t-title">Governance zaključavanje</div>
+            <p class="muted">Unose se founders consent pravila, super-većina i zaštita odluka koje ne smeju da budu preglasane.</p>
+          </div>
+
+          <div class="t-item">
+            <div class="t-meta">Faza 4</div>
+            <div class="t-title">Uvođenje savetnika</div>
+            <p class="muted">Prvi savetnik dobija mali advisory paket uz jasan mandat, deliverables i vesting.</p>
+          </div>
+
+          <div class="t-item">
+            <div class="t-meta">Faza 5</div>
+            <div class="t-title">Prva kontrolisana prodaja holdinga</div>
+            <p class="muted">Ulazi početni kapital za prostor, računare, prve kodere i runway.</p>
+          </div>
+
+          <div class="t-item">
+            <div class="t-meta">Faza 6</div>
+            <div class="t-title">Tim + MVP + tržišna potvrda</div>
+            <p class="muted">Kapital se pretvara u tim, infrastrukturu i prvi dokaz da proizvod može da raste.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="pill blue">WHO SIGNS WHAT</span>
+        <h2>Mapa potpisa i odgovornosti</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Dokument / odluka</th>
+              <th>Ko potpisuje / odobrava</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Founders internal memorandum</td>
+              <td>sva 4 osnivača</td>
+            </tr>
+            <tr>
+              <td>Holding osnivački akt i osnovni setup</td>
+              <td>osnivači / ovlašćeni potpisnik po dogovoru</td>
+            </tr>
+            <tr>
+              <td>Founders consent / reserved matters okvir</td>
+              <td>sva 4 osnivača</td>
+            </tr>
+            <tr>
+              <td>Advisory agreement</td>
+              <td>holding + ovlašćeni founders blok</td>
+            </tr>
+            <tr>
+              <td>Prva prodaja manjeg dela holdinga</td>
+              <td>super-većina + founders consent za kapitalne odluke</td>
+            </tr>
+            <tr>
+              <td>Veće zaduženje / IP / promene glasačkih prava</td>
+              <td>isključivo founders consent nivo</td>
+            </tr>
+            <tr>
+              <td>Operativni ugovori za prostor, opremu i tim</td>
+              <td>DOO upravljanje po definisanom internom pragu</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="phase">
+          <strong>Praktična ideja</strong>
+          Što je odluka bliža sudbini firme, to potpisna disciplina mora biti stroža i bliža founders consent nivou.
+        </div>
+      </div>
+    </section>
+
+    <section class="grid g2">
+      <div class="card">
+        <span class="pill green">ADVISORY PACKAGE</span>
+        <h2>Model za prvog savetnika</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Element</th>
+              <th>Predlog</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Početni paket</td><td>1.00% – 1.50%</td></tr>
+            <tr><td>Maksimalni start paket</td><td>do 2.00% samo ako savetnik realno otvara ključna vrata</td></tr>
+            <tr><td>Model</td><td>advisory equity / vesting</td></tr>
+            <tr><td>Trajanje vestinga</td><td>24 meseca</td></tr>
+            <tr><td>Cliff</td><td>6 meseci</td></tr>
+            <tr><td>Kontrola nad reserved matters</td><td>nema</td></tr>
+            <tr><td>Review period</td><td>na 6 i 12 meseci</td></tr>
+          </tbody>
+        </table>
+
+        <div class="phase">
+          <strong>Mandat savetnika</strong>
+          globalni positioning, korekcija investitorskog narativa, uvod u kontakte, pomoć pri definisanju prve runde i usmeravanje puta ka svetskom tržištu.
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="pill amber">ADVISORY VESTING GRAPH</span>
+        <h2>Primer vesting profila</h2>
+        <p class="muted">Primer za savetnika sa 1.25% paketa i 24-mesečnim vestingom.</p>
+
+        <div class="vesting">
+          <div class="vesting-row">
+            <div class="vesting-label">0–6 meseci</div>
+            <div class="bar-wrap"><div class="bar" style="width:0%;"></div></div>
+            <div class="vesting-val">0%</div>
+          </div>
+
+          <div class="vesting-row">
+            <div class="vesting-label">6 meseci</div>
+            <div class="bar-wrap"><div class="bar" style="width:25%;"></div></div>
+            <div class="vesting-val">25%</div>
+          </div>
+
+          <div class="vesting-row">
+            <div class="vesting-label">12 meseci</div>
+            <div class="bar-wrap"><div class="bar" style="width:50%;"></div></div>
+            <div class="vesting-val">50%</div>
+          </div>
+
+          <div class="vesting-row">
+            <div class="vesting-label">18 meseci</div>
+            <div class="bar-wrap"><div class="bar" style="width:75%;"></div></div>
+            <div class="vesting-val">75%</div>
+          </div>
+
+          <div class="vesting-row">
+            <div class="vesting-label">24 meseca</div>
+            <div class="bar-wrap"><div class="bar" style="width:100%;"></div></div>
+            <div class="vesting-val">100%</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Poenta:</strong> savetnik mora da ostane dovoljno dugo i da realno doprinese, da bi ceo paket postao njegov.
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="pill red">DECISION MATRIX</span>
+      <h2>Matrica odlučivanja</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Tip odluke</th>
+            <th>Primer</th>
+            <th>Nivo odobrenja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rutinska operativa</td>
+            <td>manja nabavka, standardni operativni trošak, tekući rad</td>
+            <td><span class="status s-green">Prosta većina</span></td>
+          </tr>
+          <tr>
+            <td>Važne poslovne odluke</td>
+            <td>veći ugovor, značajnija nabavka, veće zapošljavanje, značajan trošak</td>
+            <td><span class="status s-amber">Super-većina 75%</span></td>
+          </tr>
+          <tr>
+            <td>Kapitalne i sudbinske odluke</td>
+            <td>prodaja firme, novi veliki equity, promene glasačkih prava, IP, spajanje</td>
+            <td><span class="status s-red">Founders consent</span></td>
+          </tr>
+          <tr>
+            <td>Advisory / investor rights iznad standarda</td>
+            <td>poseban veto, mesto koje menja odnos snaga, posebna kontrolna prava</td>
+            <td><span class="status s-red">Founders consent</span></td>
+          </tr>
+          <tr>
+            <td>Veliko zaduženje / zalog ključne imovine</td>
+            <td>dug, zalog nad IP-om, velike garancije</td>
+            <td><span class="status s-red">Founders consent</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="phase">
+        <strong>Predlog pravila</strong>
+        Sve što menja vlasništvo, glasanje, IP, dugoročnu kontrolu ili sudbinu firme izlazi iz zone obične većine i prelazi u founders consent zonu.
+      </div>
+    </section>
+
+    <section class="grid g2">
+      <div class="card">
+        <span class="pill red">NON-OVERRIDABLE MATTERS</span>
+        <h2>Odluke koje niko ne sme da preglasa</h2>
+        <ul class="list">
+          <li>prodaja cele firme</li>
+          <li>prodaja ili prenos ključnog IP-a</li>
+          <li>spajanje, pripajanje ili gašenje</li>
+          <li>promena misije i glavnog pravca proizvoda</li>
+          <li>izdavanje novog equity-ja koje bitno menja kontrolu</li>
+          <li>uvođenje investitora sa jačim pravima od founders logike</li>
+          <li>promena glasačkih prava ili modela odlučivanja</li>
+          <li>veliko zaduženje ili zalog nad ključnom imovinom</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="pill green">FIRST SALE OF HOLDING</span>
+        <h2>Prva faza kapitala</h2>
+
+        <div class="grid g3" style="margin-top:8px;">
+          <div class="metric">
+            <div class="value">5–7%</div>
+            <div class="label">minimalni start</div>
+          </div>
+          <div class="metric">
+            <div class="value">8–12%</div>
+            <div class="label">najzdraviji prvi raspon</div>
+          </div>
+          <div class="metric">
+            <div class="value">12–15%</div>
+            <div class="label">gornja sigurna zona</div>
+          </div>
+        </div>
+
+        <div class="phase">
+          <strong>Preporuka</strong>
+          Za tvoj scenario najzdraviji raspon je 8%–12% ukupno, uz već zaključan governance, savetnika i jasan plan trošenja.
+        </div>
+
+        <div class="phase">
+          <strong>Namena kapitala</strong>
+          prostor, računari, 2–4 ključna kodera, osnovni runway, pravna i računovodstvena postavka, razvoj MVP-a.
+        </div>
+      </div>
+    </section>
+
+    <section class="grid g4">
+      <div class="card">
+        <span class="pill blue">STEP 1</span>
+        <h2>Founders setup</h2>
+        <p class="muted">Procenti, uloge, pravila glasa, reserved matters, potpisi.</p>
+      </div>
+      <div class="card">
+        <span class="pill amber">STEP 2</span>
+        <h2>Advisor in</h2>
+        <p class="muted">Mali paket, jasan mandat, vesting, review tačke.</p>
+      </div>
+      <div class="card">
+        <span class="pill green">STEP 3</span>
+        <h2>Capital in</h2>
+        <p class="muted">Prva kontrolisana prodaja dela holdinga za runway i tim.</p>
+      </div>
+      <div class="card">
+        <span class="pill red">STEP 4</span>
+        <h2>MVP out</h2>
+        <p class="muted">Kapital se pretvara u produkt, validaciju i sledeću rundu.</p>
+      </div>
+    </section>
+
+    <div class="footer">
+      V4 Investor / Legal Briefing • Timeline • Signature map • Advisory vesting • Decision matrix
+    </div>
+  </div>
+</body>
+</html>
