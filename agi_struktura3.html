@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proces: Srbija DOO + Estonija OÜ Holding</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      background: #0b1020;
+      color: #e8eefc;
+      line-height: 1.55;
+      padding: 24px;
+    }
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .hero {
+      background: linear-gradient(135deg, #111936 0%, #1d295a 55%, #3b4ca8 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 13px;
+      margin-bottom: 18px;
+      color: #cfe0ff;
+    }
+    h1 {
+      font-size: 38px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      max-width: 900px;
+      font-size: 17px;
+      color: #d8e2ff;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+      margin-bottom: 24px;
+    }
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+      margin-bottom: 24px;
+    }
+    .card {
+      background: #11182d;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    }
+    .card h2 {
+      font-size: 22px;
+      margin-bottom: 14px;
+      color: #ffffff;
+    }
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #bcd0ff;
+    }
+    .muted {
+      color: #9fb0d3;
+    }
+    ul {
+      padding-left: 18px;
+      margin-top: 10px;
+    }
+    li { margin: 8px 0; }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .flow-step {
+      background: linear-gradient(180deg, #161f3a, #10182c);
+      border: 1px solid rgba(122,162,255,0.18);
+      border-radius: 18px;
+      padding: 18px;
+      position: relative;
+      min-height: 160px;
+    }
+    .flow-step .num {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #4e73ff;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .flow-step p {
+      font-size: 14px;
+      color: #d9e5ff;
+    }
+
+    .structure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .box {
+      width: min(760px, 100%);
+      text-align: center;
+      padding: 18px 20px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #131d35;
+    }
+    .box.primary {
+      background: linear-gradient(135deg, #3157ff, #6f4dff);
+      color: #fff;
+    }
+    .connector {
+      width: 3px;
+      height: 24px;
+      background: linear-gradient(180deg, #5f81ff, #9a6dff);
+      border-radius: 2px;
+    }
+
+    .phase {
+      border-left: 4px solid #5e7dff;
+      padding: 18px 18px 18px 20px;
+      background: #0f1730;
+      border-radius: 16px;
+      margin-top: 14px;
+    }
+    .phase strong {
+      color: #fff;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .kpi .item {
+      background: #0f1730;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+    }
+    .kpi .value {
+      font-size: 28px;
+      font-weight: 800;
+      color: #8fb0ff;
+      margin-bottom: 6px;
+    }
+    .kpi .label {
+      font-size: 13px;
+      color: #9fb0d3;
+    }
+
+    .warning {
+      background: linear-gradient(180deg, rgba(255,189,89,0.12), rgba(255,189,89,0.06));
+      border: 1px solid rgba(255,189,89,0.28);
+    }
+
+    .success {
+      background: linear-gradient(180deg, rgba(87,214,151,0.14), rgba(87,214,151,0.06));
+      border: 1px solid rgba(87,214,151,0.24);
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 13px;
+      color: #92a4cb;
+      text-align: center;
+      padding-bottom: 10px;
+    }
+
+    @media (max-width: 1024px) {
+      .grid-3, .grid-2, .flow, .kpi {
+        grid-template-columns: 1fr;
+      }
+      h1 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <section class="hero">
+      <div class="badge">STRATEŠKI MODEL • SRBIJA DOO + ESTONIJA OÜ HOLDING</div>
+      <h1>Kako iz 4 osnivača u Srbiji doći do savetnika, kapitala i tima — bez gubitka kontrole glasa</h1>
+      <p>
+        Model u kome Srbija DOO ostaje operativa sa 4 osnivača, dok Estonija OÜ služi kao holding za
+        equity, savetnike, buduće investitore i kontrolisano prikupljanje kapitala za prostor, računare
+        i razvojni tim.
+      </p>
+    </section>
+
+    <section class="grid grid-3">
+      <div class="card">
+        <h2>1. Srbija DOO</h2>
+        <p class="muted">Ostaje lokalna operativa.</p>
+        <ul>
+          <li>4 osnivača</li>
+          <li>razvoj i svakodnevni rad</li>
+          <li>kasnije prostor, računari, tim</li>
+          <li>ne koristi se za ulazak investitora</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>2. Estonija OÜ Holding</h2>
+        <p class="muted">Gornji sloj za equity i finansiranje.</p>
+        <ul>
+          <li>prima kapital</li>
+          <li>dodeljuje advisor / employee equity</li>
+          <li>drži buduću vrednost firme</li>
+          <li>olakšava međunarodni investitorski razgovor</li>
+        </ul>
+      </div>
+
+      <div class="card warning">
+        <h2>3. Ključni cilj</h2>
+        <p class="muted">Ne prodavati kontrolu prerano.</p>
+        <ul>
+          <li>prvo zaključati glasanje i prava</li>
+          <li>tek onda uvoditi savetnika i investitore</li>
+          <li>prodavati mali, planski deo holdinga</li>
+          <li>svaki ulazak mora imati jasan razlog</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Preporučena hijerarhija</h2>
+      <div class="structure">
+        <div class="box primary">
+          <h3>ESTONIJA OÜ HOLDING</h3>
+          <p>equity • savetnici • investitori • option/advisory pool • budući exit</p>
+        </div>
+        <div class="connector"></div>
+        <div class="box">
+          <h3>SRBIJA DOO</h3>
+          <p>4 osnivača • razvoj • operativa • kasnije kancelarija, kompovi, tim</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Proces kojim “ulivaš krv u sistem”</h2>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="num">1</div>
+          <h3>Otvaranje holdinga</h3>
+          <p>Formira se Estonija OÜ kao gornja firma za equity i buduće finansiranje.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">2</div>
+          <h3>Zaključavanje kontrole</h3>
+          <p>Pre prvog ulaska bilo koga spolja definišu se voting pravila, veto teme i posebna prava.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">3</div>
+          <h3>Uvođenje savetnika</h3>
+          <p>Prvo mali advisory paket i jasan mandat: strategija, globalni positioning, investitorski outreach.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">4</div>
+          <h3>Prva prodaja manjeg dela</h3>
+          <p>Prodaje se mali deo holding equity-ja da se dobije početni kapital za tim i infrastrukturu.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">5</div>
+          <h3>Izgradnja operative</h3>
+          <p>Kapital ide u prostor, računare, prve kodere, razvoj MVP-a i pripremu sledeće runde.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid grid-2">
+      <div class="card success">
+        <h2>Faza A — prvo savetnik, ne odmah veliki investitor</h2>
+        <div class="phase">
+          <strong>Zašto prvo savetnik?</strong>
+          Savetnik ti pomaže da ne prodaš prerano ili previše. Njegova uloga je da sagleda globalni put,
+          pomogne u narativu firme i da pripremi teren za ozbiljnije ulaganje.
+        </div>
+        <div class="phase">
+          <strong>Kako ga uvesti?</strong>
+          Mali advisory paket na holdingu, sa ugovorom, zadacima i vremenom trajanja. Ne ulazi odmah duboko
+          u kontrolu; dobija motivaciju da pomogne rastu.
+        </div>
+        <div class="phase">
+          <strong>Šta mora da radi?</strong>
+          Definisanje investitorske priče, tržišnog pravca, partnerstava i pomoć u zatvaranju prvog kapitala.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Faza B — prvi kapital</h2>
+        <div class="phase">
+          <strong>Šta se prodaje?</strong>
+          Ne dira se Srbija DOO. Prodaje se ograničen deo holding equity-ja.
+        </div>
+        <div class="phase">
+          <strong>Zašto mali deo?</strong>
+          Da obezbediš početni novac, a da 4 osnivača i dalje praktično drže stvarnu kontrolu.
+        </div>
+        <div class="phase">
+          <strong>Za šta ide novac?</strong>
+          Prostor, računari, prvi koderi, backend/AI razvoj, dizajn infrastrukture, pravno i računovodstveno sređivanje.
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Kako zadržati moć glasa u budućnosti</h2>
+      <div class="grid grid-2" style="margin-top: 14px;">
+        <div class="card" style="background:#0f1730;">
+          <h3>Osnovni princip</h3>
+          <ul>
+            <li>ne prodavati “previše” prerano</li>
+            <li>zadržati founders blok kao jezgro</li>
+            <li>ključne odluke zaštititi posebnim pravima</li>
+            <li>ne puštati novog investitora bez jasno definisanih granica</li>
+          </ul>
+        </div>
+        <div class="card" style="background:#0f1730;">
+          <h3>Teme koje moraju biti zaštićene</h3>
+          <ul>
+            <li>prodaja firme ili IP-a</li>
+            <li>izdavanje velikog novog equity-ja</li>
+            <li>promena misije i pravca proizvoda</li>
+            <li>smena osnivačkog upravljanja</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Predlog redosleda za tvoj konkretan slučaj</h2>
+
+      <div class="phase">
+        <strong>KORAK 1 — 4 osnivača definišu internu osnivačku logiku</strong>
+        Koliko ko ima u holdingu, ko vodi šta, koje odluke traže jednoglasnost, a koje većinu.
+      </div>
+
+      <div class="phase">
+        <strong>KORAK 2 — otvara se Estonija OÜ</strong>
+        Holding postoji kao gornja firma za equity, savetnike i kapital.
+      </div>
+
+      <div class="phase">
+        <strong>KORAK 3 — zaključava se governance</strong>
+        Pre spoljnog lica: shareholders agreement, reserved matters, voting protection, ko može a ko ne može biti preglasan.
+      </div>
+
+      <div class="phase">
+        <strong>KORAK 4 — uvodi se savetnik</strong>
+        Mali advisory paket + jasan posao: sagledavanje globalnog puta, partneri, investitori, priprema prve prodaje udela.
+      </div>
+
+      <div class="phase">
+        <strong>KORAK 5 — priprema investicionog materijala</strong>
+        Pitch deck, cap table, use-of-funds plan, šta se tačno finansira i koji milestone se kupuje tim novcem.
+      </div>
+
+      <div class="phase">
+        <strong>KORAK 6 — prodaje se ograničen deo holdinga</strong>
+        Kapital ulazi gore, a dole se finansira stvaranje tima i infrastrukture.
+      </div>
+
+      <div class="phase">
+        <strong>KORAK 7 — gradi se tim i MVP</strong>
+        Koderi, kompovi, prostor, produkt, prvi korisnici, validacija tržišta.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Na šta se troši prvi kapital</h2>
+      <div class="kpi">
+        <div class="item">
+          <div class="value">1</div>
+          <div class="label">savetnik / strateški lead</div>
+        </div>
+        <div class="item">
+          <div class="value">2–4</div>
+          <div class="label">prva kodera / inženjera</div>
+        </div>
+        <div class="item">
+          <div class="value">1</div>
+          <div class="label">radni prostor / studio baza</div>
+        </div>
+        <div class="item">
+          <div class="value">MVP</div>
+          <div class="label">prvi proizvod za dokaz tržišta</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid grid-2">
+      <div class="card warning">
+        <h2>Šta ne treba raditi</h2>
+        <ul>
+          <li>ne prodavati veliki deo holdinga na početku</li>
+          <li>ne uvoditi savetnika bez jasnog mandata</li>
+          <li>ne mešati savetnika i investitora bez granica</li>
+          <li>ne ostaviti voting zaštitu “za kasnije”</li>
+          <li>ne finansirati haotično bez plana milestona</li>
+        </ul>
+      </div>
+
+      <div class="card success">
+        <h2>Šta je zdrava logika</h2>
+        <ul>
+          <li>prvo kontrola i pravila</li>
+          <li>onda savetnik</li>
+          <li>onda mali kapital</li>
+          <li>onda tim + prostor + kompovi</li>
+          <li>onda produkt + dokaz tržišta + sledeća runda</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="footer">
+      Vizuelni strateški prikaz • Srbija DOO ostaje operativa • Estonija OÜ drži equity i budući kapital
+    </div>
+  </div>
+</body>
+</html>
