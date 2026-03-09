@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Startup Power Map</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:#08101d;
+      color:#eef4ff;
+      padding:32px;
+      line-height:1.5;
+    }
+    .wrap{
+      max-width:1400px;
+      margin:0 auto;
+    }
+    .hero{
+      background:linear-gradient(135deg,#101a35 0%,#203263 55%,#5b4df0 100%);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:28px;
+      padding:32px;
+      margin-bottom:24px;
+      box-shadow:0 20px 50px rgba(0,0,0,.28);
+    }
+    .eyebrow{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.14);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.4px;
+      margin-bottom:14px;
+    }
+    h1{
+      font-size:40px;
+      line-height:1.1;
+      margin-bottom:10px;
+    }
+    .hero p{
+      color:#dbe6ff;
+      max-width:1000px;
+      font-size:17px;
+    }
+
+    .grid{
+      display:grid;
+      gap:20px;
+      margin-bottom:24px;
+    }
+    .g2{grid-template-columns:repeat(2,1fr)}
+    .g3{grid-template-columns:repeat(3,1fr)}
+    .g4{grid-template-columns:repeat(4,1fr)}
+
+    .card{
+      background:linear-gradient(180deg,#121e39,#0d1630);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;
+      padding:24px;
+      box-shadow:0 14px 34px rgba(0,0,0,.22);
+    }
+    .card h2{
+      font-size:22px;
+      margin-bottom:12px;
+    }
+    .card h3{
+      font-size:17px;
+      margin-bottom:8px;
+      color:#cad7ff;
+    }
+    .muted{color:#9fb2d9}
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:10px;
+      letter-spacing:.3px;
+    }
+    .blue{background:rgba(95,132,255,.16);color:#bfd0ff}
+    .green{background:rgba(51,214,159,.14);color:#cbffeb}
+    .amber{background:rgba(255,191,105,.14);color:#ffe6b8}
+    .red{background:rgba(255,107,107,.14);color:#ffd2d2}
+
+    .map{
+      position:relative;
+      min-height:760px;
+      background:
+        radial-gradient(circle at center, rgba(91,77,240,.06), transparent 35%),
+        #0b1430;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:28px;
+      overflow:hidden;
+      padding:20px;
+    }
+
+    .node{
+      position:absolute;
+      width:220px;
+      min-height:110px;
+      padding:16px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.1);
+      box-shadow:0 12px 28px rgba(0,0,0,.24);
+      background:linear-gradient(180deg,#101a31,#0c1427);
+    }
+    .node.center{
+      background:linear-gradient(135deg,#4368ff,#6b54ff);
+      border:none;
+    }
+    .node h4{
+      font-size:18px;
+      margin-bottom:6px;
+    }
+    .node p{
+      font-size:13px;
+      color:#dce7ff;
+    }
+    .node.small p{
+      font-size:12px;
+    }
+
+    .legend{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .legend-item{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:#b9c8ea;
+      font-size:13px;
+    }
+    .line{
+      width:28px;
+      height:3px;
+      border-radius:2px;
+    }
+    .l1{background:#7aa0ff}
+    .l2{background:#45d7a0}
+    .l3{background:#ffbf69}
+    .l4{background:#ff7b7b}
+
+    svg.power-lines{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
+    }
+
+    .metric{
+      background:#0d1630;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:18px;
+      text-align:center;
+    }
+    .metric .value{
+      font-size:30px;
+      font-weight:800;
+      color:#a6beff;
+      margin-bottom:6px;
+    }
+    .metric .label{
+      color:#a8badf;
+      font-size:13px;
+    }
+
+    .list{
+      list-style:none;
+      margin-top:8px;
+    }
+    .list li{
+      position:relative;
+      padding-left:18px;
+      margin:8px 0;
+      color:#e5edff;
+    }
+    .list li::before{
+      content:"•";
+      position:absolute;
+      left:0;
+      color:#8fb0ff;
+      font-weight:800;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+      overflow:hidden;
+      border-radius:16px;
+    }
+    th,td{
+      padding:13px 12px;
+      text-align:left;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font-size:14px;
+      vertical-align:top;
+    }
+    th{
+      background:#19284c;
+      color:#fff;
+    }
+    td{
+      background:#0d1630;
+    }
+    tr:last-child td{border-bottom:none}
+
+    .callout{
+      margin-top:14px;
+      padding:16px 18px;
+      border-left:4px solid #6484ff;
+      background:#0b1430;
+      border-radius:14px;
+    }
+    .callout strong{display:block;margin-bottom:6px}
+
+    .footer{
+      text-align:center;
+      color:#8fa3cc;
+      font-size:13px;
+      margin-top:10px;
+      padding-bottom:10px;
+    }
+
+    @media (max-width: 1200px){
+      .g2,.g3,.g4{grid-template-columns:1fr}
+      .map{
+        min-height:auto;
+        display:grid;
+        grid-template-columns:1fr;
+        gap:14px;
+      }
+      .node{
+        position:relative;
+        width:100%;
+        top:auto !important;
+        left:auto !important;
+        right:auto !important;
+        bottom:auto !important;
+      }
+      svg.power-lines{display:none}
+      h1{font-size:30px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <section class="hero">
+      <div class="eyebrow">STARTUP POWER MAP • FOUNDERS • ADVISORS • INVESTORS • HOLDING • DOO</div>
+      <h1>Mapa moći: ko utiče na koga, ko čuva balans i gde su granice sistema</h1>
+      <p>
+        Ovaj prikaz služi da se jasno vidi kako se kreću uticaj, kapital, odluke i kontrola
+        u modelu gde je Estonija OÜ holding centar vlasničke logike, a Srbija DOO operativni motor.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Centralna mapa uticaja</h2>
+      <div class="map">
+
+        <svg class="power-lines" viewBox="0 0 1400 760" preserveAspectRatio="none">
+          <defs>
+            <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+              <polygon points="0 0, 10 5, 0 10" fill="#7aa0ff"></polygon>
+            </marker>
+            <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+              <polygon points="0 0, 10 5, 0 10" fill="#45d7a0"></polygon>
+            </marker>
+            <marker id="arrowAmber" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+              <polygon points="0 0, 10 5, 0 10" fill="#ffbf69"></polygon>
+            </marker>
+            <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+              <polygon points="0 0, 10 5, 0 10" fill="#ff7b7b"></polygon>
+            </marker>
+          </defs>
+
+          <!-- Founders to Holding -->
+          <line x1="300" y1="150" x2="610" y2="245" stroke="#7aa0ff" stroke-width="3" marker-end="url(#arrowBlue)" />
+          <!-- CSO / Governance to Holding -->
+          <line x1="1110" y1="150" x2="820" y2="245" stroke="#7aa0ff" stroke-width="3" marker-end="url(#arrowBlue)" />
+          <!-- Advisor to Holding -->
+          <line x1="190" y1="430" x2="610" y2="330" stroke="#45d7a0" stroke-width="3" marker-end="url(#arrowGreen)" />
+          <!-- Investor to Holding -->
+          <line x1="1210" y1="430" x2="830" y2="330" stroke="#ffbf69" stroke-width="3" marker-end="url(#arrowAmber)" />
+          <!-- Holding to DOO -->
+          <line x1="720" y1="370" x2="720" y2="560" stroke="#7aa0ff" stroke-width="4" marker-end="url(#arrowBlue)" />
+          <!-- DOO to Team -->
+          <line x1="720" y1="650" x2="390" y2="700" stroke="#45d7a0" stroke-width="3" marker-end="url(#arrowGreen)" />
+          <line x1="720" y1="650" x2="1040" y2="700" stroke="#45d7a0" stroke-width="3" marker-end="url(#arrowGreen)" />
+          <!-- Investors pressure -->
+          <line x1="1210" y1="430" x2="1110" y2="150" stroke="#ff7b7b" stroke-width="2.5" stroke-dasharray="8 8" marker-end="url(#arrowRed)" />
+          <!-- Advisor influence -->
+          <line x1="190" y1="430" x2="300" y2="150" stroke="#45d7a0" stroke-width="2.5" stroke-dasharray="8 8" marker-end="url(#arrowGreen)" />
+        </svg>
+
+        <div class="node small" style="top:70px; left:80px;">
+          <h4>Founders Block</h4>
+          <p>4 osnivača zajedno drže jezgro moći, misiju i krajnju saglasnost za sudbinske odluke.</p>
+        </div>
+
+        <div class="node small" style="top:70px; right:80px;">
+          <h4>CSO / Governance Core</h4>
+          <p>Čuva cap table, ravnotežu glasova, reserved matters i redosled ulaska spoljnog kapitala.</p>
+        </div>
+
+        <div class="node center" style="top:220px; left:50%; transform:translateX(-50%); width:260px; min-height:140px;">
+          <h4>Estonija OÜ Holding</h4>
+          <p>Centar equity-ja, savetnika, investitora, glasačkih pravila i budućeg strateškog rasta.</p>
+        </div>
+
+        <div class="node small" style="top:360px; left:40px;">
+          <h4>Advisor</h4>
+          <p>Daje smer, tržišni uvid, kontakte i investitorsku pripremu, ali ne sme da preuzme upravljanje.</p>
+        </div>
+
+        <div class="node small" style="top:360px; right:40px;">
+          <h4>Investors</h4>
+          <p>Unose kapital i pritisak na rast, ali njihova moć mora biti ograničena governance pravilima.</p>
+        </div>
+
+        <div class="node" style="top:540px; left:50%; transform:translateX(-50%); width:260px;">
+          <h4>Srbija DOO</h4>
+          <p>Operativni motor: prostor, računari, tim, razvoj, izvršenje i pretvaranje kapitala u proizvod.</p>
+        </div>
+
+        <div class="node small" style="bottom:20px; left:160px;">
+          <h4>Tech / Product Team</h4>
+          <p>Koderi, AI razvoj, infrastruktura, MVP i tehnička realizacija.</p>
+        </div>
+
+        <div class="node small" style="bottom:20px; right:160px;">
+          <h4>Sales / Market Motion</h4>
+          <p>Prvi korisnici, partnerstva, validacija tržišta i rast priče ka sledećoj rundi.</p>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><span class="line l1"></span> formalna kontrola / governance</div>
+        <div class="legend-item"><span class="line l2"></span> savetodavni ili operativni uticaj</div>
+        <div class="legend-item"><span class="line l3"></span> kapital / ulaganje</div>
+        <div class="legend-item"><span class="line l4"></span> pritisak / potencijalni konflikt interesa</div>
+      </div>
+    </section>
+
+    <section class="grid g4">
+      <div class="metric">
+        <div class="value">4</div>
+        <div class="label">osnivača u jezgru sistema</div>
+      </div>
+      <div class="metric">
+        <div class="value">1</div>
+        <div class="label">holding centar za equity</div>
+      </div>
+      <div class="metric">
+        <div class="value">1</div>
+        <div class="label">operativna baza u Srbiji</div>
+      </div>
+      <div class="metric">
+        <div class="value">8–12%</div>
+        <div class="label">zdrav raspon prve prodaje holdinga</div>
+      </div>
+    </section>
+
+    <section class="grid g2">
+      <div class="card">
+        <span class="pill blue">POWER RELATIONSHIPS</span>
+        <h2>Ko utiče na šta</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Akter</th>
+              <th>Glavni uticaj</th>
+              <th>Granica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Founders block</td>
+              <td>misija, krajnja kontrola, reserved matters</td>
+              <td>ne sme se sam razbiti lošom prodajom udela</td>
+            </tr>
+            <tr>
+              <td>CSO / governance</td>
+              <td>cap table, struktura glasanja, balans rundi</td>
+              <td>ne sme postati paralelni CEO</td>
+            </tr>
+            <tr>
+              <td>Advisor</td>
+              <td>pravac, kontakti, strateško sagledavanje</td>
+              <td>nema pravo da preglasava osnivače</td>
+            </tr>
+            <tr>
+              <td>Investitor</td>
+              <td>kapital, rast, disciplina tržišta</td>
+              <td>nema automatsku komandnu moć nad misijom</td>
+            </tr>
+            <tr>
+              <td>Holding</td>
+              <td>prima kapital i deli equity</td>
+              <td>mora imati jaka interna pravila</td>
+            </tr>
+            <tr>
+              <td>DOO</td>
+              <td>pretvara novac u rad, tim i produkt</td>
+              <td>ne sme biti mesto haotičnog suvlasništva</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <span class="pill amber">CONFLICT MAP</span>
+        <h2>Gde najčešće nastaje problem</h2>
+        <ul class="list">
+          <li>investitor traži veći uticaj nego što mu pripada za ranu fazu</li>
+          <li>savetnik dobije preveliku simboličku moć bez realnih rezultata</li>
+          <li>osnivači se ne dogovore interno pre nego što uđe kapital</li>
+          <li>holding proda previše udela pre nego što postoji MVP i tržišna potvrda</li>
+          <li>operativa troši kapital bez discipline i bez jasnog milestone plana</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Suština:</strong>
+          startup puca ili od manjka kapitala, ili od loše raspoređene moći. Tvoj model pokušava da izbegne oba problema odjednom.
+        </div>
+      </div>
+    </section>
+
+    <section class="grid g3">
+      <div class="card">
+        <span class="pill green">FOUNDERS DEFENSE</span>
+        <h2>Šta čuva osnivače</h2>
+        <ul class="list">
+          <li>founders consent za ključne odluke</li>
+          <li>super-većina za kapitalne promene</li>
+          <li>ograničen prvi advisory paket</li>
+          <li>umerena prva prodaja holdinga</li>
+          <li>jasno razdvojeni holding i operativa</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="pill blue">CAPITAL FLOW</span>
+        <h2>Kako teče energija sistema</h2>
+        <ul class="list">
+          <li>investitor ulaže u holding</li>
+          <li>holding usmerava kapital prema operativi</li>
+          <li>DOO gradi tim i proizvod</li>
+          <li>proizvod gradi tržišni dokaz</li>
+          <li>tržišni dokaz povećava vrednost holdinga</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="pill red">RED LINE</span>
+        <h2>Šta niko ne sme da slomi</h2>
+        <ul class="list">
+          <li>misiju firme</li>
+          <li>kontrolu nad IP-om</li>
+          <li>osnivački blok odlučivanja</li>
+          <li>ravnotežu između rasta i kontrole</li>
+          <li>disciplinu prve runde kapitala</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="pill blue">INTERPRETATION</span>
+      <h2>Kako da čitaš ovu mapu</h2>
+      <div class="grid g2">
+        <div>
+          <h3>Leva strana</h3>
+          <p class="muted">Predstavlja unutrašnji mozak i usmeravanje: osnivači + savetnik.</p>
+
+          <h3 style="margin-top:12px;">Centar</h3>
+          <p class="muted">Holding je srce moći: tu sedi vlasništvo, kapital i governance.</p>
+
+          <h3 style="margin-top:12px;">Dno</h3>
+          <p class="muted">DOO i tim su mašina izvršenja: bez njih nema proizvoda ni vrednosti.</p>
+        </div>
+        <div>
+          <h3>Desna strana</h3>
+          <p class="muted">Predstavlja spoljašnju silu: investitore, tržišni pritisak i očekivanje rasta.</p>
+
+          <h3 style="margin-top:12px;">Plave veze</h3>
+          <p class="muted">Formalna kontrola, vlasništvo, governance i odlučivanje.</p>
+
+          <h3 style="margin-top:12px;">Crvene veze</h3>
+          <p class="muted">Mesta gde se može pojaviti sukob interesa ili pokušaj preuzimanja većeg uticaja.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      Startup Power Map • founders / advisor / investors / holding / DOO / team
+    </div>
+  </div>
+</body>
+</html>
