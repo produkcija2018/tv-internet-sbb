@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Version 2 — Srbija DOO + Estonija OÜ Holding</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background: #09111f;
+      color: #eaf1ff;
+      line-height: 1.55;
+      padding: 24px;
+    }
+    .wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+    .hero {
+      background: linear-gradient(135deg, #101a36 0%, #1c2d63 55%, #5546d8 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 34px;
+      margin-bottom: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 13px;
+      color: #dbe6ff;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 38px;
+      line-height: 1.14;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      max-width: 980px;
+      color: #dbe5ff;
+      font-size: 17px;
+    }
+
+    .grid { display: grid; gap: 20px; }
+    .g2 { grid-template-columns: repeat(2, 1fr); margin-bottom: 24px; }
+    .g3 { grid-template-columns: repeat(3, 1fr); margin-bottom: 24px; }
+    .g4 { grid-template-columns: repeat(4, 1fr); margin-bottom: 24px; }
+
+    .card {
+      background: #111a31;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+    }
+    .card h2 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+    .card h3 {
+      font-size: 17px;
+      margin-bottom: 10px;
+      color: #c9d7ff;
+    }
+    .muted { color: #9fb0d3; }
+    .small { font-size: 14px; color: #aebee0; }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      margin-bottom: 10px;
+    }
+    .blue { background: rgba(88, 128, 255, 0.18); color: #b8cbff; }
+    .green { background: rgba(83, 213, 147, 0.16); color: #bdf3d3; }
+    .amber { background: rgba(255, 190, 92, 0.16); color: #ffe0ab; }
+    .red { background: rgba(255, 110, 110, 0.14); color: #ffc4c4; }
+
+    .cap-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 18px;
+      margin-top: 14px;
+    }
+    .cap-table th, .cap-table td {
+      padding: 14px 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .cap-table th {
+      background: #18254a;
+      color: #fff;
+      font-size: 14px;
+    }
+    .cap-table td {
+      background: #0f1730;
+      color: #e7efff;
+      font-size: 14px;
+    }
+    .cap-table tr:last-child td { border-bottom: none; }
+
+    .structure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .box {
+      width: min(820px, 100%);
+      text-align: center;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: #10182d;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .box.primary {
+      background: linear-gradient(135deg, #3d63ff, #704eff);
+      color: white;
+      border: none;
+    }
+    .connector {
+      width: 3px;
+      height: 24px;
+      background: linear-gradient(180deg, #6787ff, #9d76ff);
+      border-radius: 2px;
+    }
+
+    .phase {
+      margin-top: 14px;
+      border-left: 4px solid #6484ff;
+      background: #0d1530;
+      border-radius: 14px;
+      padding: 16px 16px 16px 18px;
+    }
+    .phase strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 17px;
+      color: #fff;
+    }
+
+    .metric {
+      background: #0e1630;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+    }
+    .metric .value {
+      font-size: 30px;
+      font-weight: 800;
+      color: #9db8ff;
+      margin-bottom: 6px;
+    }
+    .metric .label {
+      font-size: 13px;
+      color: #a5b6d9;
+    }
+
+    .warning {
+      background: linear-gradient(180deg, rgba(255,190,92,0.12), rgba(255,190,92,0.05));
+      border: 1px solid rgba(255,190,92,0.22);
+    }
+    .success {
+      background: linear-gradient(180deg, rgba(83,213,147,0.12), rgba(83,213,147,0.05));
+      border: 1px solid rgba(83,213,147,0.20);
+    }
+    .danger {
+      background: linear-gradient(180deg, rgba(255,110,110,0.12), rgba(255,110,110,0.05));
+      border: 1px solid rgba(255,110,110,0.20);
+    }
+
+    ul { padding-left: 18px; margin-top: 10px; }
+    li { margin: 8px 0; }
+
+    .footer {
+      text-align: center;
+      color: #8fa2cc;
+      font-size: 13px;
+      margin-top: 14px;
+      padding-bottom: 8px;
+    }
+
+    @media (max-width: 1050px) {
+      .g2, .g3, .g4 { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <section class="hero">
+      <div class="eyebrow">VERSION 2 • 4 OSNIVAČA • HOLDING KONTROLA • PRVA FAZA KAPITALA</div>
+      <h1>Model: 4 osnivača u Srbiji + Estonija OÜ holding + savetnik + prva kontrolisana prodaja dela holdinga</h1>
+      <p>
+        Srbija DOO ostaje operativna baza. Estonija OÜ služi kao gornji sloj za equity, savetnike,
+        buduće investitore i plansko prikupljanje kapitala za kancelariju, računare, razvojni tim
+        i prvi ozbiljan produkt.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Hijerarhija</h2>
+      <div class="structure">
+        <div class="box primary">
+          <h3>ESTONIJA OÜ HOLDING</h3>
+          <p>equity • posebna prava • savetnik • investitori • future option pool • izlazak / prodaja</p>
+        </div>
+        <div class="connector"></div>
+        <div class="box">
+          <h3>SRBIJA DOO</h3>
+          <p>4 osnivača • operativa • razvoj • tim • prostor • računari • izvršenje proizvoda</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid g2">
+      <div class="card">
+        <span class="pill blue">PREDLOG POCETNOG CAP TABLE-A NA HOLDINGU</span>
+        <h2>4 osnivača — konkretni procenti</h2>
+        <p class="muted">Ovo je ilustrativan model koji čuva snažan founders blok i ostavlja mali prostor za prve spoljne ljude bez haosa.</p>
+
+        <table class="cap-table">
+          <thead>
+            <tr>
+              <th>Nosilac</th>
+              <th>%</th>
+              <th>Uloga</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Osnivač 1</td>
+              <td>32%</td>
+              <td>glavni inicijator / vizija / pravac</td>
+            </tr>
+            <tr>
+              <td>Osnivač 2</td>
+              <td>24%</td>
+              <td>core partner / operativa / izvršenje</td>
+            </tr>
+            <tr>
+              <td>Osnivač 3</td>
+              <td>20%</td>
+              <td>tehnički ili produktni stub</td>
+            </tr>
+            <tr>
+              <td>Osnivač 4</td>
+              <td>14%</td>
+              <td>biznis / podrška / razvojni doprinos</td>
+            </tr>
+            <tr>
+              <td>Advisory rezervacija</td>
+              <td>3%</td>
+              <td>za prvog jakog savetnika i eventualno još jednog manjeg</td>
+            </tr>
+            <tr>
+              <td>Future team / option rezerva</td>
+              <td>7%</td>
+              <td>za prve ključne kodere kasnije</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card success">
+        <span class="pill green">LOGIKA</span>
+        <h2>Zašto baš ovako</h2>
+        <ul>
+          <li>4 osnivača zajedno drže <strong>90%</strong> holdinga u startu.</li>
+          <li>Odmah postoji mala, kontrolisana rezerva za savetnika i prve ključne ljude.</li>
+          <li>Nema potrebe da kasnije panično “otkidaš” procente iz svog džepa.</li>
+          <li>Držiš cap table čistim i spremnijim za prvi ozbiljan razgovor sa kapitalom.</li>
+        </ul>
+        <div class="phase">
+          <strong>Alternativa ako želiš još tvrđu founders kontrolu</strong>
+          35% / 25% / 20% / 15% + 2% advisory + 3% future team.
+        </div>
+      </div>
+    </section>
+
+    <section class="grid g2">
+      <div class="card">
+        <span class="pill amber">PRVI SAVETNIK</span>
+        <h2>Savetnički paket</h2>
+        <p class="muted">Savetnik treba da uđe kao strateški ubrzivač, ne kao neko ko prerano uzima veliku kontrolu.</p>
+
+        <table class="cap-table">
+          <thead>
+            <tr>
+              <th>Element</th>
+              <th>Predlog</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Equity paket</td>
+              <td>0.75% – 2.00%</td>
+            </tr>
+            <tr>
+              <td>Idealni početni target</td>
+              <td>1.00% – 1.50%</td>
+            </tr>
+            <tr>
+              <td>Model</td>
+              <td>advisory equity / vesting</td>
+            </tr>
+            <tr>
+              <td>Vesting</td>
+              <td>24 meseca</td>
+            </tr>
+            <tr>
+              <td>Cliff</td>
+              <td>6 meseci</td>
+            </tr>
+            <tr>
+              <td>Uslov</td>
+              <td>jasan mandat + konkretni deliverables</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="phase">
+          <strong>Šta savetnik treba da radi</strong>
+          global positioning, investitorska priča, validacija tržišta, upoznavanje sa partnerima, pomoć u zatvaranju prvog kapitala.
+        </div>
+      </div>
+
+      <div class="card warning">
+        <span class="pill red">NE RADITI</span>
+        <h2>Šta ne treba dati savetniku</h2>
+        <ul>
+          <li>ne davati mu odmah 3%–5% bez jasne istorije rezultata</li>
+          <li>ne davati pravo da blokira osnivače na strateškim odlukama</li>
+          <li>ne mešati savetnički rad i investitorski ulazak bez posebnih ugovora</li>
+          <li>ne davati equity bez vestinga i bez jasnog roka saradnje</li>
+        </ul>
+        <div class="phase">
+          <strong>Zdrav pristup</strong>
+          Mali paket, merljiv učinak, revizija posle 6–12 meseci, pa tek onda eventualno širenje paketa.
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="pill blue">PRVA PRODAJA HOLDINGA</span>
+      <h2>Safe raspon za prvu fazu prodaje</h2>
+      <p class="muted">Cilj je da dobiješ “krv u sistem” — dovoljno kapitala za tim i infrastrukturu, ali bez lomljenja founders kontrole u prvoj rundi.</p>
+
+      <div class="grid g4" style="margin-top:16px;">
+        <div class="metric">
+          <div class="value">5–7%</div>
+          <div class="label">vrlo konzervativno<br>ako je cilj samo minimalni runway</div>
+        </div>
+        <div class="metric">
+          <div class="value">8–12%</div>
+          <div class="label">najzdraviji prvi raspon<br>za većinu ranih situacija</div>
+        </div>
+        <div class="metric">
+          <div class="value">12–15%</div>
+          <div class="label">gornja “safe” zona<br>ako postoji jak plan i dobar savetnik</div>
+        </div>
+        <div class="metric danger">
+          <div class="value">15%+</div>
+          <div class="label">oprezno<br>tek uz jaku valuaciju i jasne uslove</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <strong>Moj praktični predlog</strong>
+        Prva faza: ciljaj <strong>8%–12%</strong> ukupno. To je dovoljno da uđe prvi ozbiljniji novac, a da founders blok ostane vrlo jak.
+      </div>
+
+      <div class="phase">
+        <strong>Za šta taj novac ide</strong>
+        kancelarija / studio baza, računari, 2–4 ključna kodera, MVP razvoj, pravno i računovodstveno sređivanje, osnovni runway 6–12 meseci.
+      </div>
+    </section>
+
+    <section class="grid g2">
+      <div class="card">
+        <span class="pill green">POSLE PRVE FAZE</span>
+        <h2>Primer cap table-a nakon prve prodaje</h2>
+        <p class="muted">Primer: savetnik dobija 1.25%, a investitor(i) ukupno 10%.</p>
+
+        <table class="cap-table">
+          <thead>
+            <tr>
+              <th>Nosilac</th>
+              <th>% posle prve faze</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Osnivač 1</td>
+              <td>32%</td>
+            </tr>
+            <tr>
+              <td>Osnivač 2</td>
+              <td>24%</td>
+            </tr>
+            <tr>
+              <td>Osnivač 3</td>
+              <td>20%</td>
+            </tr>
+            <tr>
+              <td>Osnivač 4</td>
+              <td>14%</td>
+            </tr>
+            <tr>
+              <td>Savetnik</td>
+              <td>1.25%</td>
+            </tr>
+            <tr>
+              <td>Future team rezerva</td>
+              <td>7%</td>
+            </tr>
+            <tr>
+              <td>Prvi investitor / investitorski blok</td>
+              <td>10%</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="phase">
+          <strong>Ključna poenta</strong>
+          Osnivači i dalje zajedno drže <strong>90%</strong> ako savetnik i team rezerva nisu još aktivirani kao puni spoljašnji glasovi, odnosno i dalje imaju snažnu realnu kontrolu čak i uz prvi investitorski ulaz.
+        </div>
+      </div>
+
+      <div class="card success">
+        <span class="pill amber">RAZUMNA DISCIPLINA</span>
+        <h2>Kako se koristi prvi kapital</h2>
+        <ul>
+          <li><strong>20–30%</strong> — ljudi (prvi koderi / tehnički kostur)</li>
+          <li><strong>15–20%</strong> — računari, oprema, setup</li>
+          <li><strong>10–20%</strong> — prostor / radna baza</li>
+          <li><strong>20–30%</strong> — runway za razvoj</li>
+          <li><strong>5–10%</strong> — pravno, računovodstvo, struktura</li>
+          <li><strong>5–10%</strong> — pitch, prodaja, partnerstva</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="pill red">NIKO NE SME DA PREGLASA OVO</span>
+      <h2>Reserved matters — odluke koje moraju biti zaštićene</h2>
+      <p class="muted">Ovo je srce tvoje kontrole. Ove odluke ne smeju ostati na običnoj prostoj većini ako želiš dugoročnu bezbednost osnivača.</p>
+
+      <div class="grid g2" style="margin-top:16px;">
+        <div class="card" style="background:#0d1530;">
+          <h3>Strateške odluke</h3>
+          <ul>
+            <li>prodaja cele firme</li>
+            <li>prodaja ili prenos ključnog IP-a</li>
+            <li>spajanje sa drugom kompanijom</li>
+            <li>gašenje firme ili ključnog proizvoda</li>
+            <li>promena glavne misije i pravca kompanije</li>
+          </ul>
+        </div>
+        <div class="card" style="background:#0d1530;">
+          <h3>Kapital i vlasništvo</h3>
+          <ul>
+            <li>izdavanje velikog novog broja udela</li>
+            <li>nova runda koja menja odnos moći osnivača</li>
+            <li>uvođenje investitora sa posebnim vetom</li>
+            <li>promena prava glasa ili tipova udela</li>
+            <li>ukidanje pre-emptive zaštite bez saglasnosti</li>
+          </ul>
+        </div>
+        <div class="card" style="background:#0d1530;">
+          <h3>Upravljanje</h3>
+          <ul>
+            <li>smena ključnog osnivača iz upravljanja</li>
+            <li>imenovanje direktora mimo osnivačkog bloka</li>
+            <li>promena modela upravljanja holdingom</li>
+            <li>davanje širokih prava savetniku ili investitoru</li>
+            <li>dugoročne obaveze koje menjaju kontrolu firme</li>
+          </ul>
+        </div>
+        <div class="card" style="background:#0d1530;">
+          <h3>Novac i rizik</h3>
+          <ul>
+            <li>veliko zaduživanje holdinga</li>
+            <li>zalog nad IP-om ili ključnom imovinom</li>
+            <li>garancije trećim licima</li>
+            <li>vanredne isplate koje iscrpljuju runway</li>
+            <li>transakcije sa povezanim licima bez odobrenja</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <strong>Praktično pravilo za ove odluke</strong>
+        Ove tačke stavi da traže <strong>super-većinu</strong> ili poseban founders consent, a ne običnih 50% + 1.
+      </div>
+    </section>
+
+    <section class="grid g3">
+      <div class="card warning">
+        <h2>Šta je zdravo u prvoj godini</h2>
+        <ul>
+          <li>holding otvoren i pravila zaključana</li>
+          <li>1 jak savetnik</li>
+          <li>1 prva kontrolisana prodaja</li>
+          <li>2–4 kodera</li>
+          <li>radni prostor i osnovna infrastruktura</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Šta ne treba žuriti</h2>
+        <ul>
+          <li>veliki investitor pre nego što znaš cenu firme</li>
+          <li>preširok advisory pool</li>
+          <li>prevelika prva prodaja holdinga</li>
+          <li>davanje kontrole kroz sitna nepregledna prava</li>
+        </ul>
+      </div>
+
+      <div class="card success">
+        <h2>Idealni tok</h2>
+        <ul>
+          <li>4 osnivača</li>
+          <li>OÜ holding</li>
+          <li>governance zaštita</li>
+          <li>savetnik</li>
+          <li>8–12% prva prodaja</li>
+          <li>tim + prostor + MVP</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="footer">
+      V2 strateški model • Srbija DOO ostaje operativa • Estonija OÜ nosi equity i kapital
+    </div>
+  </div>
+</body>
+</html>
