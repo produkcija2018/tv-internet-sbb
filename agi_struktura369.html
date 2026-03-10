@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZOTA Founders Company Setup Path — 4 osnivača</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#f4f7ff;
+      --panel:#ffffff;
+      --panel-soft:#f8f9ff;
+      --line:#e3e9ff;
+      --text:#16213e;
+      --muted:#5f6b86;
+      --blue:#667eea;
+      --violet:#764ba2;
+      --green:#21b573;
+      --amber:#ffb020;
+      --red:#dc3545;
+      --shadow:0 18px 45px rgba(22,33,62,.10);
+      --radius:22px;
+      --max:1280px;
+    }
+
+    body{
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      line-height:1.6;
+      color:var(--text);
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      padding:32px 18px;
+    }
+
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(10px);
+      border-radius:30px;
+      overflow:hidden;
+      box-shadow:0 30px 60px rgba(0,0,0,.22);
+    }
+
+    .hero{
+      background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);
+      color:#fff;
+      padding:56px 46px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      top:-50%;right:-50%;
+      width:200%;height:200%;
+      background:radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size:50px 50px;
+      opacity:.35;
+      animation:moveDots 60s linear infinite;
+    }
+
+    @keyframes moveDots{
+      0%{transform:translate(0,0)}
+      100%{transform:translate(-50px,-50px)}
+    }
+
+    .hero .eyebrow{
+      position:relative;z-index:1;
+      display:inline-block;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
+
+    .hero h1{
+      position:relative;z-index:1;
+      font-size:clamp(32px,4.4vw,54px);
+      line-height:1.08;
+      margin-bottom:16px;
+      background:linear-gradient(135deg,#fff,#b8c7ff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .hero p{
+      position:relative;z-index:1;
+      font-size:18px;
+      max-width:900px;
+      opacity:.95;
+    }
+
+    .content{padding:42px}
+
+    .section{
+      margin-bottom:26px;
+      background:var(--panel);
+      border:1px solid #edf1ff;
+      border-radius:22px;
+      padding:28px;
+      box-shadow:var(--shadow);
+    }
+
+    .section h2{
+      font-size:28px;
+      margin-bottom:18px;
+      color:var(--text);
+      border-left:6px solid var(--blue);
+      padding-left:18px;
+    }
+
+    .section h3{
+      font-size:19px;
+      margin:18px 0 12px;
+      color:#1d2b52;
+    }
+
+    .lead{
+      font-size:17px;
+      color:#2d3a59;
+      margin-bottom:12px;
+    }
+
+    .muted{color:var(--muted)}
+
+    .grid-2,.grid-3,.grid-4{
+      display:grid;
+      gap:18px;
+      margin-top:16px;
+    }
+
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-4{grid-template-columns:repeat(4,1fr)}
+
+    .card{
+      background:var(--panel-soft);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:20px;
+    }
+
+    .card.highlight{
+      background:linear-gradient(135deg,var(--blue),var(--violet));
+      color:#fff;
+      border:none;
+    }
+
+    .card h4{font-size:18px;margin-bottom:10px}
+    .card p{font-size:15px}
+
+    .badge{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .success{background:#dbf5e8;color:#136a45}
+    .warning{background:#fff3d6;color:#946100}
+    .danger{background:#fde2e5;color:#8a2030}
+    .info{background:#e2f0ff;color:#1d5fa9}
+
+    .timeline{
+      position:relative;
+      padding:12px 0 6px;
+      margin-top:12px;
+    }
+
+    .timeline::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      width:4px;height:100%;
+      background:linear-gradient(180deg,var(--blue),var(--violet));
+      border-radius:2px;
+    }
+
+    .timeline-item{
+      position:relative;
+      width:100%;
+      display:flex;
+      justify-content:center;
+      margin-bottom:24px;
+    }
+
+    .timeline-dot{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      width:20px;height:20px;
+      background:var(--blue);
+      border:4px solid #fff;
+      border-radius:50%;
+      z-index:2;
+      box-shadow:0 0 0 4px rgba(102,126,234,.20);
+    }
+
+    .timeline-content{
+      width:45%;
+      background:var(--panel-soft);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:22px;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content{margin-right:55%}
+    .timeline-item:nth-child(even) .timeline-content{margin-left:55%}
+
+    .timeline-date{
+      font-weight:800;
+      color:var(--blue);
+      margin-bottom:8px;
+      font-size:15px;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      border-radius:16px;
+      overflow:hidden;
+      margin-top:14px;
+      box-shadow:0 5px 15px rgba(0,0,0,.05);
+    }
+
+    th{
+      background:linear-gradient(135deg,var(--blue),var(--violet));
+      color:#fff;
+      font-weight:700;
+      padding:14px;
+      text-align:left;
+    }
+
+    td{
+      background:#fff;
+      padding:14px;
+      border-bottom:1px solid var(--line);
+      vertical-align:top;
+    }
+
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:#fafcff}
+
+    .checklist{list-style:none;margin-top:12px}
+    .checklist li{
+      padding:10px 0 10px 28px;
+      position:relative;
+      border-bottom:1px dashed #e8ecfb;
+    }
+    .checklist li:last-child{border-bottom:none}
+    .checklist li::before{
+      content:"✓";
+      position:absolute;left:0;top:10px;
+      color:var(--green);
+      font-weight:900;
+    }
+
+    .danger-list li::before{content:"⚠";color:var(--red)}
+
+    .phase-box{
+      background:linear-gradient(135deg,#eef2ff,#f8f4ff);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:22px;
+      margin-top:16px;
+    }
+
+    .number-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+    .stat{
+      background:#f8faff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      text-align:center;
+    }
+    .stat .num{font-size:30px;font-weight:900;color:var(--blue);margin-bottom:6px}
+    .stat .lbl{font-size:13px;color:var(--muted)}
+
+    .footer{
+      background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);
+      color:#fff;
+      padding:34px 42px;
+      text-align:center;
+    }
+
+    .footer h2{margin-bottom:14px}
+    .footer p{opacity:.9}
+
+    @media (max-width: 980px){
+      .grid-2,.grid-3,.grid-4,.number-row{grid-template-columns:1fr}
+      .timeline::before{left:22px}
+      .timeline-dot{left:22px}
+      .timeline-content{width:calc(100% - 60px);margin-left:60px !important;margin-right:0 !important}
+    }
+
+    @media (max-width: 720px){
+      .content{padding:20px}
+      .hero{padding:34px 24px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div class="eyebrow">4 osnivača • firma • holding • kontrola</div>
+      <h1>Tutorial putanja za otvaranje firme<br>za 4 osnivača</h1>
+      <p>
+        Ovo je suštinski vodič samo za putanju osnivanja i postavljanja firme: kako 4 osnivača da
+        organizuju Srbiju, Estonija OÜ holding, pravila kontrole i prvi administrativni redosled — bez
+        mešanja proizvoda i bez platformskih detalja.
+      </p>
+    </header>
+
+    <main class="content">
+
+      <section class="section">
+        <h2>1. Suština modela</h2>
+        <p class="lead">
+          Najpraktičniji početni model za 4 osnivača je: <strong>Srbija DOO kao operativa + Estonija OÜ kao holding</strong>.
+          Srbija služi za lokalni rad i operativu, dok Estonija služi za holding, vlasništvo, budući kapital i čistiji međunarodni okvir.
+        </p>
+        <div class="grid-3">
+          <div class="card highlight">
+            <h4>🇷🇸 Srbija DOO</h4>
+            <p>Operativa, ugovori, lokalni rad, tim, svakodnevno poslovanje.</p>
+          </div>
+          <div class="card highlight">
+            <h4>🇪🇪 Estonija OÜ</h4>
+            <p>Holding, cap table, investitori, IP, strateška kontrola i širenje.</p>
+          </div>
+          <div class="card highlight">
+            <h4>🇺🇸 Kasnije Delaware</h4>
+            <p>Tek kasnije, kada postoji razlog: veći kapital, ozbiljniji investitori ili globalni flip.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>2. Šta 4 osnivača prvo moraju da zaključe međusobno</h2>
+        <div class="grid-2">
+          <div class="card">
+            <span class="badge info">pre papira</span>
+            <h4>Osnovna interna pitanja</h4>
+            <ul class="checklist">
+              <li>Ko su tačno 4 osnivača i koliko ko ima procenata?</li>
+              <li>Ko vodi operativu, ko tehnologiju, ko strategiju, ko finansije/governance?</li>
+              <li>Koje odluke traže običnu većinu, a koje founders consent?</li>
+              <li>Da li će svi biti direktno upisani u Srbiji i u Estoniji ili samo kroz holding logiku?</li>
+              <li>Ko je ovlašćen za komunikaciju sa advokatom, APR-om i estonskim servisima?</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="badge warning">bez ovoga ne kretati</span>
+            <h4>Dokument koji morate imati pre registracije</h4>
+            <p class="muted">Čak i ako nije još finalni pravni ugovor, morate imati interni founders memo ili dogovor koji pokriva:</p>
+            <ul class="checklist">
+              <li>raspodelu udela</li>
+              <li>uloge osnivača</li>
+              <li>pravila izlaska / ulaska novih ljudi</li>
+              <li>pravila prodaje udela</li>
+              <li>reserved matters</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>3. Zašto model Srbija DOO + Estonija OÜ ima smisla</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Pitanje</th>
+              <th>Srbija DOO</th>
+              <th>Estonija OÜ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Operativni rad</td>
+              <td>Najpraktičnije za lokalnu operativu</td>
+              <td>Nije glavni fokus</td>
+            </tr>
+            <tr>
+              <td>Međunarodni holding</td>
+              <td>Slabije prepoznatljiv</td>
+              <td>Pogodan za online osnivanje i međunarodni okvir</td>
+            </tr>
+            <tr>
+              <td>Investitori kasnije</td>
+              <td>Manje atraktivno</td>
+              <td>Čistije za cap table i buduće runde</td>
+            </tr>
+            <tr>
+              <td>IP / brend / platforma</td>
+              <td>Može, ali nije idealno za holding logiku</td>
+              <td>Bolje mesto za držanje IP i strateške kontrole</td>
+            </tr>
+            <tr>
+              <td>Prvi korak za 4 osnivača</td>
+              <td>Da, ako treba lokalna firma odmah</td>
+              <td>Da, ako se gradi holding iznad operative</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2>4. Realan redosled osnivanja</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Korak 1</div>
+              <h3>Interni founders dogovor</h3>
+              <p>Pre bilo kog osnivanja: procenat svakog osnivača, osnovna prava glasa, reserved matters, ko potpisuje šta i ko vodi proces.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Korak 2</div>
+              <h3>Srbija DOO ako je potrebna operativa odmah</h3>
+              <p>Ako vam treba lokalna operativa, ugovori, račun i dnevni rad, osniva se DOO u Srbiji kao radna firma 4 osnivača.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Korak 3</div>
+              <h3>e-Residency za one koji će učestvovati u Estonija OÜ</h3>
+              <p>Prijava za e-Residency, čekanje odluke, preuzimanje kartice i testiranje digitalnog potpisa.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Korak 4</div>
+              <h3>Osnivanje Estonija OÜ holdinga</h3>
+              <p>Otvaranje holding firme online, definisanje članova, osnovnih prava i početnog cap table-a.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Korak 5</div>
+              <h3>Banka / platni račun / administrativni setup</h3>
+              <p>Otvaranje poslovnog naloga, legal address / contact person ako je potreban, računovodstvo i osnovni compliance.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Korak 6</div>
+              <h3>Povezivanje Srbije i Estonije</h3>
+              <p>Tek kada pravni i poreski savetnik potvrdi model: kako holding stoji iznad operative, kako teku ugovori i gde se drži IP.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>5. Estonija OÜ — šta 4 osnivača moraju znati</h2>
+        <div class="grid-2">
+          <div class="card">
+            <span class="badge success">praktično</span>
+            <h4>Zašto Estonija</h4>
+            <ul class="checklist">
+              <li>e-Residency daje digitalni identitet za online osnivanje i potpisivanje</li>
+              <li>OÜ se može registrovati online</li>
+              <li>holding logika je čistija za buduće investitore i cap table</li>
+              <li>lakše je graditi međunarodnu strukturu iznad lokalne operative</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="badge info">za 4 osnivača</span>
+            <h4>Šta treba unapred definisati</h4>
+            <ul class="checklist">
+              <li>ko su shareholderi</li>
+              <li>koliko ko ima</li>
+              <li>da li postoje posebna prava</li>
+              <li>ko je u board / management logici</li>
+              <li>da li pravite advisory ili team rezervu već na početku</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase-box">
+          <h3>Preporučena logika</h3>
+          <p>
+            Ako je cilj dugoročna globalna firma, Estonija OÜ treba da bude <strong>holding sloj</strong>, a ne improvizovana operativna firma.
+            Tu sede: vlasništvo, cap table, strategija, IP i kasnije investitori.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>6. Kako može izgledati početni cap table za 4 osnivača</h2>
+        <p class="lead">Ovo je ilustrativni model da svi shvate logiku, ne gotov pravni savet.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Nosilac</th>
+              <th>%</th>
+              <th>Napomena</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Osnivač 1</td><td>32%</td><td>vizija / glavni inicijator</td></tr>
+            <tr><td>Osnivač 2</td><td>24%</td><td>operativa / core partner</td></tr>
+            <tr><td>Osnivač 3</td><td>20%</td><td>tehnologija / sistem</td></tr>
+            <tr><td>Osnivač 4</td><td>14%</td><td>biznis / podrška / rast</td></tr>
+            <tr><td>Advisory reserve</td><td>3%</td><td>za budućeg jakog savetnika</td></tr>
+            <tr><td>Future team reserve</td><td>7%</td><td>za ključne ljude kasnije</td></tr>
+          </tbody>
+        </table>
+        <div class="phase-box">
+          <h3>Zašto ovako</h3>
+          <p>
+            4 osnivača zajedno drže 90% na startu, što ostavlja snažan founders blok,
+            ali i disciplinovan prostor za savetnika ili prve ključne ljude bez haotičnog prekrajanja vlasništva kasnije.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>7. Pravila kontrole — šta niko ne sme da uradi sam</h2>
+        <div class="grid-2">
+          <div class="card">
+            <span class="badge danger">reserved matters</span>
+            <h4>Odluke koje traže poseban prag</h4>
+            <ul class="checklist danger-list">
+              <li>prodaja cele firme</li>
+              <li>prodaja ili prenos IP-a</li>
+              <li>izdavanje velikog novog equity-ja</li>
+              <li>promena glasačkih prava</li>
+              <li>ulazak investitora sa prejakim vetom</li>
+              <li>veliko zaduživanje ili zalaganje ključne imovine</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="badge warning">pravilo</span>
+            <h4>Kako odlučivati</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Tip odluke</th>
+                  <th>Predlog</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Rutinska operativa</td><td>prosta većina</td></tr>
+                <tr><td>Važne poslovne odluke</td><td>super-većina</td></tr>
+                <tr><td>Sudbinske odluke</td><td>founders consent / 75%+</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>8. Troškovi i administrativna realnost</h2>
+        <div class="number-row">
+          <div class="stat">
+            <div class="num">€150</div>
+            <div class="lbl">e-Residency prijava</div>
+          </div>
+          <div class="stat">
+            <div class="num">€265</div>
+            <div class="lbl">online registracija OÜ</div>
+          </div>
+          <div class="stat">
+            <div class="num">€200–400</div>
+            <div class="lbl">legal address / contact person godišnje</div>
+          </div>
+          <div class="stat">
+            <div class="num">od €50</div>
+            <div class="lbl">računovodstvo mesečno u Estoniji</div>
+          </div>
+        </div>
+        <div class="phase-box">
+          <h3>Šta ovo znači za 4 osnivača</h3>
+          <p>
+            Estonija OÜ nije skupa kao puna zapadna korporativna struktura, ali nije ni "besplatna firma".
+            Treba planirati: e-Residency, osnivanje, kontakt osobu / adresu, računovodstvo i osnovnu pravnu podršku.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>9. Srbija DOO — gde joj je mesto</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h4>Kada ima smisla</h4>
+            <ul class="checklist">
+              <li>ako vam treba lokalna operativa odmah</li>
+              <li>ako sklapate lokalne ugovore</li>
+              <li>ako imate rad u Srbiji, ljude i svakodnevno poslovanje</li>
+              <li>ako vam treba lokalni račun i domaća pravna prisutnost</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Šta ne treba raditi</h4>
+            <ul class="checklist danger-list">
+              <li>ne mešati operativu i holding u jednoj firmi bez jasnog plana</li>
+              <li>ne prodavati udele u lokalnoj operativi haotično</li>
+              <li>ne držati IP i globalnu logiku u firmi koja služi samo za dnevni rad</li>
+              <li>ne praviti složene prenose bez advokata i poreskog savetnika</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>10. Najsigurniji tutorial redosled za 4 osnivača</h2>
+        <div class="grid-2">
+          <div class="card">
+            <span class="badge success">redosled</span>
+            <h4>Prvo</h4>
+            <ul class="checklist">
+              <li>interni founders dogovor</li>
+              <li>uloge i procenti</li>
+              <li>reserved matters</li>
+              <li>ko vodi osnivanje</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="badge success">zatim</span>
+            <h4>Drugo</h4>
+            <ul class="checklist">
+              <li>Srbija DOO ako je potrebna odmah za operativu</li>
+              <li>e-Residency za Estonija sloj</li>
+              <li>osnivanje OÜ holdinga</li>
+              <li>banka, adresa, računovodstvo</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="badge success">tek posle</span>
+            <h4>Treće</h4>
+            <ul class="checklist">
+              <li>povezivanje Srbije i Estonije</li>
+              <li>IP i ugovorna logika</li>
+              <li>savetnik</li>
+              <li>prvi kapital</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="badge danger">nikako obrnuto</span>
+            <h4>Greška koju treba izbeći</h4>
+            <ul class="checklist danger-list">
+              <li>ne uvoditi kapital pre dogovora osnivača</li>
+              <li>ne praviti holding bez jasnog cap table-a</li>
+              <li>ne prenositi ništa između firmi napamet</li>
+              <li>ne preskakati pravni i poreski pregled</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>11. Konačna checklista</h2>
+        <div class="grid-2">
+          <div>
+            <h3>A. Founders pre svega</h3>
+            <ul class="checklist">
+              <li>dogovoreni procenti</li>
+              <li>dogovorene uloge</li>
+              <li>dogovorena pravila prodaje udela</li>
+              <li>dogovoren founders consent model</li>
+            </ul>
+
+            <h3>B. Srbija</h3>
+            <ul class="checklist">
+              <li>odluka da li DOO treba odmah</li>
+              <li>APR registracija</li>
+              <li>lokalni račun / operativni setup</li>
+            </ul>
+          </div>
+          <div>
+            <h3>C. Estonija</h3>
+            <ul class="checklist">
+              <li>e-Residency prijava</li>
+              <li>preuzimanje kartice</li>
+              <li>testiranje potpisa</li>
+              <li>osnivanje OÜ</li>
+              <li>legal address / contact person</li>
+              <li>banking / accounting setup</li>
+            </ul>
+
+            <h3>D. Posle osnivanja</h3>
+            <ul class="checklist">
+              <li>pravni pregled odnosa Srbija ↔ Estonija</li>
+              <li>IP i ugovorna logika</li>
+              <li>cap table finalizacija</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>12. Završna poruka za 4 osnivača</h2>
+        <div class="phase-box">
+          <h3>Najzdravija formula</h3>
+          <p class="lead">
+            <strong>Prvo se zaključava poverenje među 4 osnivača, zatim se postavlja lokalna operativa gde treba, pa tek onda Estonija OÜ kao holding sloj za vlasništvo, kontrolu i budući rast.</strong>
+          </p>
+          <p>
+            Ako taj redosled ostane čist, firma može rasti. Ako se preskoči interni dogovor i krene pravo u akcije,
+            savetnike i investitore, haos dolazi mnogo ranije nego rast.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <h2>4 osnivača • Srbija DOO • Estonija OÜ • jasan redosled</h2>
+      <p>Ovaj dokument služi kao praktičan tutorial putanje osnivanja firme, bez mešanja proizvoda, samo kao osnova za firmu, holding i kontrolu.</p>
+    </footer>
+  </div>
+</body>
+</html>
+
