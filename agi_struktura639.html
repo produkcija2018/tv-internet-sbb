@@ -1,1 +1,709 @@
-123
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZOTA / AI ANA — Founders Transfer Brief</title>
+  <style>
+    :root{
+      --bg:#08101f;
+      --bg2:#0d1730;
+      --panel:#121d39;
+      --panel2:#17244a;
+      --line:rgba(255,255,255,.10);
+      --text:#eef4ff;
+      --muted:#a9b7d8;
+      --blue:#6f8fff;
+      --cyan:#68e0ff;
+      --green:#39d98a;
+      --amber:#ffbf5a;
+      --red:#ff7c7c;
+      --shadow:0 18px 44px rgba(0,0,0,.28);
+      --radius:22px;
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(111,143,255,.16), transparent 22%),
+        radial-gradient(circle at top left, rgba(104,224,255,.10), transparent 18%),
+        linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      line-height:1.62;
+      padding:24px;
+    }
+
+    .wrap{max-width:var(--max);margin:0 auto}
+
+    .hero{
+      background:linear-gradient(135deg,#162146 0%,#223a77 60%,#5f58ef 100%);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:30px;
+      padding:36px;
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      right:-80px; top:-80px;
+      width:250px; height:250px;
+      background:radial-gradient(circle, rgba(255,255,255,.18), transparent 66%);
+      pointer-events:none;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.10);
+      margin-bottom:16px;
+    }
+
+    h1{
+      font-size:clamp(30px,4.8vw,52px);
+      line-height:1.06;
+      margin-bottom:14px;
+      max-width:900px;
+    }
+
+    .hero p{
+      max-width:920px;
+      color:#deebff;
+      font-size:17px;
+    }
+
+    .toc{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin:20px 0 22px;
+    }
+
+    .toc a{
+      text-decoration:none;
+      color:var(--text);
+      background:linear-gradient(180deg, rgba(23,36,74,.95), rgba(18,29,57,.95));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px 18px;
+      box-shadow:var(--shadow);
+      transition:.2s ease;
+    }
+
+    .toc a:hover{transform:translateY(-3px);border-color:rgba(104,224,255,.28)}
+    .toc strong{display:block;margin-bottom:4px;font-size:15px}
+    .toc span{font-size:13px;color:var(--muted)}
+
+    .section{
+      margin-bottom:18px;
+      background:linear-gradient(180deg, rgba(18,29,57,.98), rgba(15,24,47,.98));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .section-head{
+      padding:18px 20px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+    }
+
+    .num{
+      width:40px;height:40px;flex:0 0 40px;
+      display:grid;place-items:center;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--cyan),#bdf7ff);
+      color:#081018;
+      font-weight:900;
+      font-size:15px;
+      box-shadow:0 8px 20px rgba(104,224,255,.18);
+    }
+
+    .section-head h2{
+      font-size:24px;
+      line-height:1.2;
+      margin-bottom:4px;
+    }
+
+    .section-head p{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .section-body{padding:22px}
+
+    .lead{
+      font-size:17px;
+      color:#dce8ff;
+      margin-bottom:14px;
+    }
+
+    .grid{display:grid;gap:16px}
+    .g2{grid-template-columns:repeat(2,1fr)}
+    .g3{grid-template-columns:repeat(3,1fr)}
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .card h3,.card h4{margin-bottom:10px}
+    .card p{color:#d6e4ff}
+
+    .list{list-style:none;margin-top:8px}
+    .list li{
+      position:relative;
+      padding-left:18px;
+      margin:9px 0;
+      color:#e9f0ff;
+    }
+    .list li::before{
+      content:"•";
+      position:absolute;left:0;top:0;
+      color:var(--cyan);
+      font-weight:800;
+    }
+
+    .checklist{list-style:none;display:grid;gap:10px;margin-top:12px}
+    .checklist li{
+      position:relative;
+      padding:12px 14px 12px 40px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      border-radius:14px;
+      color:#e4ecff;
+    }
+    .checklist li::before{
+      content:"✓";
+      position:absolute;left:14px;top:10px;
+      color:var(--green);
+      font-weight:900;
+    }
+
+    .danger li::before{content:"⚠";color:var(--red)}
+
+    .callout{
+      margin-top:14px;
+      padding:16px 18px;
+      border-left:4px solid var(--blue);
+      background:#0b1430;
+      border-radius:14px;
+    }
+    .callout strong{display:block;margin-bottom:6px}
+
+    .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .pill{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .diagram{
+      margin-top:14px;
+      padding:18px;
+      border-radius:18px;
+      border:1px solid rgba(104,224,255,.20);
+      background:#09131d;
+      color:#d8f0ff;
+      font:13px/1.5 Consolas, Monaco, "Courier New", monospace;
+      white-space:pre;
+      overflow:auto;
+    }
+
+    .footer{
+      margin-top:20px;
+      background:linear-gradient(135deg,#111a34 0%,#172654 100%);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .footer h2{margin-bottom:10px}
+    .footer p{color:var(--muted)}
+
+    @media (max-width: 980px){
+      .toc,.g2,.g3{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="hero">
+      <div class="eyebrow">Founders Transfer Brief • ZOTA / AI ANA</div>
+      <h1>Prenos ključnog znanja za nastavak planiranja firme</h1>
+      <p>
+        Ovaj dokument sabira sve najvažnije zaključke do ovog trenutka: projekat, uloge osnivača,
+        holding i operativnu logiku, kapital, zaštitu founders bloka i sledeće teme za razradu.
+      </p>
+    </header>
+
+    <nav class="toc">
+      <a href="#s1"><strong>1–4</strong><span>Projekat, founders, struktura i glavni zaključak</span></a>
+      <a href="#s5"><strong>5–9</strong><span>Zaštita osnivača, kapital, investitori i OÜ↔DOO odnos</span></a>
+      <a href="#s10"><strong>10–13</strong><span>Tok novca, redosled, otvorena pitanja i strateške istine</span></a>
+    </nav>
+
+    <section class="section" id="s1">
+      <div class="section-head">
+        <div class="num">1</div>
+        <div>
+          <h2>Ko smo i šta gradimo</h2>
+          <p>Osnovni identitet projekta i dugoročna namena firme</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <p class="lead">
+          Imamo 4 osnivača iz Srbije. Projekat polazi iz AI ANA kao realnog početnog proizvoda,
+          dok je ZOTA šira dugoročna platforma i AI operativni sistem.
+        </p>
+        <ul class="checklist">
+          <li>AI ANA je realni početni proizvod / asistent.</li>
+          <li>ZOTA je širi sistem, control layer i platforma.</li>
+          <li>Cilj nije mali lokalni biznis, nego global company structure.</li>
+          <li>Firma treba da bude spremna za savetnike, investitore, kapital i međunarodni rast.</li>
+          <li>Ključni cilj je da se ne izgubi founders kontrola kako firma raste.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="num">2</div>
+        <div>
+          <h2>Founders situacija</h2>
+          <p>Trenutna raspodela i glavna zaštitna logika</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="grid g2">
+          <div class="card">
+            <h3>Polazna osnova</h3>
+            <ul class="list">
+              <li>4 osnivača</li>
+              <li>pretpostavka: 25 / 25 / 25 / 25</li>
+              <li>cilj: niko ne sme lako da bude preglasan, razvodnjen ili istisnut</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Šta samo procenti ne rešavaju</h3>
+            <ul class="list">
+              <li>rezervisana pitanja</li>
+              <li>jednoglasnost za ključne odluke</li>
+              <li>zaštitu od prerane dilucije</li>
+              <li>pravila za ulazak investitora i savetnika</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Zaključak</strong>
+          25/25/25/25 bez jakih governance pravila može izgledati fer, ali i dalje može voditi u deadlock
+          ili u pogrešno preglasavanje ako pragovi nisu precizno zaključani.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="num">3</div>
+        <div>
+          <h2>Osnovna struktura koju želimo</h2>
+          <p>Odvajanje holding sloja od operative</p>
+        </div>
+      </div>
+      <div class="section-body">
+<pre class="diagram">4 osnivača
+    ↓
+Estonia OÜ
+(holding / ownership / cap table / investitori / IP)
+    ↓
+Srbija DOO
+(operativa / development / logistika / lokalni troškovi)</pre>
+        <div class="grid g2" style="margin-top:16px">
+          <div class="card">
+            <h3>Estonia OÜ treba da bude</h3>
+            <ul class="list">
+              <li>holding layer</li>
+              <li>ownership i cap table layer</li>
+              <li>investitorski entry point</li>
+              <li>advisory / options / future capital layer</li>
+              <li>potencijalno mesto za IP, brand i stratešku kontrolu</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Srbija DOO treba da bude</h3>
+            <ul class="list">
+              <li>lokalna operativa</li>
+              <li>development baza</li>
+              <li>plaćanje kodera</li>
+              <li>logistika i lokalni troškovi</li>
+              <li>svakodnevni rad i izvršenje</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Suština</strong>
+          Investitori i savetnici ne treba da ulaze u lokalnu operativu, nego u holding layer.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="num">4</div>
+        <div>
+          <h2>Glavni strateški zaključak do sada</h2>
+          <p>Model koji je ocenjen kao najzdraviji</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>Prvo se zaključava founders control logika.</li>
+          <li>Zatim se osniva Estonia OÜ.</li>
+          <li>Posle toga, kada realno zatreba operativa, otvara se Srbija DOO.</li>
+          <li>Novac, investitori i SAFE / convertible / equity ulaze na nivou OÜ.</li>
+          <li>Srbija DOO služi za lokalno plaćanje kodera i logistike.</li>
+        </ul>
+        <div class="callout">
+          <strong>Ocena</strong>
+          Ovaj model je ocenjen kao najčistija i dugoročno najpametnija forma za zaštitu founders bloka.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="s5">
+      <div class="section-head">
+        <div class="num">5</div>
+        <div>
+          <h2>Šta je razjašnjeno oko zaštite osnivača</h2>
+          <p>Founders Control Memorandum kao nulti dokument</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <p class="lead">Pre bilo kakvog osnivanja mora postojati Founders Control Memorandum.</p>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Minimalni sadržaj</h3>
+            <ul class="list">
+              <li>potvrda 4 core founders</li>
+              <li>25/25/25/25</li>
+              <li>nema novog equity-ja bez saglasnosti sva 4</li>
+              <li>nema investitora bez saglasnosti sva 4</li>
+              <li>nema promene glasačkih prava bez saglasnosti sva 4</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Dodatno mora pokriti</h3>
+            <ul class="list">
+              <li>nema prodaje firme, IP-a ili kontrole bez saglasnosti sva 4</li>
+              <li>nema advisor equity ili option pool-a bez posebne founders odluke</li>
+              <li>odeljke za rutinske, važne i reserved matters odluke</li>
+              <li>uloge u operativi i governance-u</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Zaključak</strong>
+          Nema osnivanja pre founders control dokumenta.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="num">6</div>
+        <div>
+          <h2>Šta je razjašnjeno oko finansija i potrebe za kapitalom</h2>
+          <p>Pragovi koji imaju smisla za sledeću fazu</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="grid g3">
+          <div class="card">
+            <h3>Minimalno smislen početak</h3>
+            <p><strong>oko 6.000.000 RSD</strong></p>
+          </div>
+          <div class="card">
+            <h3>Najzdraviji prvi cilj</h3>
+            <p><strong>oko 9.000.000 do 12.000.000 RSD</strong></p>
+          </div>
+          <div class="card">
+            <h3>Radna brojka</h3>
+            <p><strong>oko 10.000.000 RSD</strong><br/>≈ 85.000 EUR</p>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Čemu taj novac služi</strong>
+          Razvoj AI Ana v2, osnovni koderi, oprema, logistika i nekoliko meseci runway-a.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="num">7</div>
+        <div>
+          <h2>Šta je razjašnjeno oko investitora i prve runde</h2>
+          <p>Zašto je rano bolje ići privatno i konvertibilno</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <p class="lead">
+          Ako osnivači ne mogu sami da finansiraju sledeću fazu, najzdraviji model je
+          mali privatni convertible / SAFE-like round na nivou Estonia OÜ.
+        </p>
+        <ul class="checklist">
+          <li>Investitor daje novac u OÜ.</li>
+          <li>Ne dobija odmah klasične akcije/udele.</li>
+          <li>Novac se kasnije pretvara u equity po pravilima.</li>
+          <li>Time se izbegava prerano zaključavanje loše valuacije.</li>
+          <li>Ne radi se javna ponuda, nego privatni razgovori sa angelima i strateškim kontaktima.</li>
+        </ul>
+        <div class="callout">
+          <strong>Zaključak</strong>
+          Ako se rano diže novac, za nas je zdravije SAFE-like / convertible nego prerana direktna prodaja equity-ja.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="num">8</div>
+        <div>
+          <h2>Šta je razjašnjeno oko prve prodaje i investitorskog signala</h2>
+          <p>Šta znači to što se Ana v1 vidi javno</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <ul class="checklist">
+          <li>Ana v1 na sajtu znači investitorima jer pokazuje da postoji realan trag proizvoda.</li>
+          <li>To potvrđuje da ne postoji samo ideja na papiru.</li>
+          <li>Ali samo prisustvo v1 nije dovoljno bez dodatnog objašnjenja i roadmap-a.</li>
+        </ul>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Šta je korisno</h3>
+            <ul class="list">
+              <li>realni use-case</li>
+              <li>vidljiv trag proizvoda</li>
+              <li>signal da postoji početni sloj</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Šta investitor i dalje želi</h3>
+            <ul class="list">
+              <li>šta Ana v1 stvarno radi</li>
+              <li>put od v1 do v2</li>
+              <li>šta tačno donosi sledeći kapital</li>
+              <li>jasan roadmap i sledeću vrednost</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="num">9</div>
+        <div>
+          <h2>Šta je razjašnjeno oko odnosa Estonija OÜ i Srbija DOO</h2>
+          <p>Legalnost postoji, ali struktura mora biti ozbiljna</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <p class="lead">
+          Legalno je da ista 4 osnivača otvore OÜ, pa zatim DOO, i da te firme imaju međusobne ugovore.
+          Ali to ne sme biti neformalno “sami sa sobom”.
+        </p>
+        <ul class="checklist">
+          <li>Mora postojati jasan pravni osnov.</li>
+          <li>Mora postojati stvaran ugovor.</li>
+          <li>Cene moraju imati tržišnu logiku.</li>
+          <li>Dokumentacija mora biti čista.</li>
+          <li>Treba paziti na povezana lica i transfer pricing logiku.</li>
+          <li>Treba primeniti dobru governance praksu gde postoji sukob interesa.</li>
+        </ul>
+        <div class="callout">
+          <strong>Najzdraviji model</strong>
+          OÜ bude vlasnik ili control layer iznad DOO, a ne da 4 fizička lica haotično drže sve paralelno bez jasne strukture.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="s10">
+      <div class="section-head">
+        <div class="num">10</div>
+        <div>
+          <h2>Šta je razjašnjeno oko toka novca iz Estonije u Srbiju</h2>
+          <p>Novac ne ide “slobodno”, nego samo po čistom osnovu</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="grid g2">
+          <div class="card">
+            <h3>Ako DOO još ne postoji</h3>
+            <ul class="list">
+              <li>OÜ direktno plaća srpske izvođače, firme ili kodere</li>
+              <li>uvek po ugovorima i fakturama</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Ako DOO postoji</h3>
+            <ul class="list">
+              <li>OÜ finansira DOO kroz kapital</li>
+              <li>ili kroz zajam</li>
+              <li>ili kroz intercompany service / development / support ugovor</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Zaključak</strong>
+          Novac ne ide “slobodno”, nego samo po ugovoru i dokumentovanom osnovu.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="num">11</div>
+        <div>
+          <h2>Šta je razjašnjeno oko redosleda osnivanja</h2>
+          <p>Operativni redosled koji sada treba dalje razrađivati</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><strong>Korak 1:</strong> Founders Control Memorandum</li>
+          <li><strong>Korak 2:</strong> Estonia OÜ kao holding / control / ownership / future investor entry point</li>
+          <li><strong>Korak 3:</strong> po potrebi SAFE-like / convertible razgovori, advisors kasnije, options kasnije</li>
+          <li><strong>Korak 4:</strong> Srbija DOO kada operativa zaista traži lokalnu firmu za kodere, logistiku i troškove</li>
+        </ul>
+        <div class="callout">
+          <strong>Operativni zaključak</strong>
+          OÜ prvo, DOO posle.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="num">12</div>
+        <div>
+          <h2>Šta je otvoreno i šta treba dalje razraditi</h2>
+          <p>Teme za sledeću fazu rada</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="grid g2">
+          <div class="card">
+            <h3>A. Founders Control Memorandum</h3>
+            <ul class="list">
+              <li>reserved matters</li>
+              <li>jednoglasnost</li>
+              <li>zabrana neželjene dilucije</li>
+              <li>pravila za investitore i advisory equity</li>
+              <li>ko vodi operativu, a ko governance</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>B. Struktura Estonia OÜ</h3>
+            <ul class="list">
+              <li>da li sva 4 osnivača ulaze direktno po 25%</li>
+              <li>posebna prava i zaštitni mehanizmi</li>
+              <li>zaštita founders bloka pre investitora</li>
+              <li>governance logika u holdingu</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>C. Kada tačno otvoriti Srbija DOO</h3>
+            <ul class="list">
+              <li>odmah posle OÜ</li>
+              <li>tek kada novac uđe</li>
+              <li>tek kada kreće realna operativa</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>D. Model finansiranja prve faze</h3>
+            <ul class="list">
+              <li>SAFE-like ili drugi instrument</li>
+              <li>tačan iznos</li>
+              <li>kako obrazložiti 10.000.000 RSD</li>
+              <li>6–9 mesečni runway plan</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>E. Odnos OÜ ↔ DOO</h3>
+            <ul class="list">
+              <li>koji ugovori treba da postoje</li>
+              <li>clean intercompany logic</li>
+              <li>gde sedi IP</li>
+              <li>kako se čuva due diligence čistoća</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="num">13</div>
+        <div>
+          <h2>Veoma važne strateške istine koje ne treba zaboraviti</h2>
+          <p>Temelji koji ne smeju da se izgube u sledećoj fazi</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <ul class="checklist danger">
+          <li>Glavni cilj nije brzina, nego zaštita founders kontrole.</li>
+          <li>Srbija DOO je logična za operativu, ali nije dovoljan jedini vrh strukture ako želimo globalnu firmu.</li>
+          <li>Estonia OÜ treba da bude investitorski i control entry point.</li>
+          <li>Ne želimo da investitori ulaze u lokalnu operativu.</li>
+          <li>Ne želimo prerano da poklanjamo equity savetnicima ili koderima.</li>
+          <li>Ako se diže prvi privatni novac, najzdravije je da ide na nivou OÜ kroz privatni SAFE-like / convertible format.</li>
+          <li>Ako novac uđe u OÜ, spuštanje novca u Srbiju mora ići samo kroz pravno čist osnov.</li>
+          <li>Pre bilo kakvog osnivanja mora postojati founders control dokument.</li>
+          <li>25/25/25/25 je prihvaćena polazna osnova, ali nije dovoljna zaštita bez jednoglasnih reserved matters pravila.</li>
+          <li>Naš model nije “sve u jednom preduzeću”, nego jasno odvajanje holdinga i operative.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <h2>Kratka suština</h2>
+      <p>
+        Mi smo 4 osnivača iz Srbije sa jednakim procentima, gradimo AI ANA kao početni proizvod i ZOTA kao širu platformu,
+        i želimo strukturu u kojoj Estonia OÜ bude holding i investitorski vrh, a Srbija DOO operativna baza,
+        uz maksimalnu zaštitu founders bloka od preglasavanja, preuranjene dilucije i gubitka kontrole.
+      </p>
+      <div class="pill-row">
+        <span class="pill">4 osnivača</span>
+        <span class="pill">Estonia OÜ = holding</span>
+        <span class="pill">Srbija DOO = operativa</span>
+        <span class="pill">Founders control first</span>
+        <span class="pill">SAFE / convertible kasnije</span>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
