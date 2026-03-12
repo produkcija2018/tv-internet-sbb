@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estonia OÜ – sveobuhvatna analiza troškova za 4 osnivača</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #131a2e;
+      --muted: #9fb0d0;
+      --text: #eef4ff;
+      --accent: #7cc4ff;
+      --accent2: #92f2c8;
+      --warn: #ffd27a;
+      --danger: #ff9a9a;
+      --line: #26314f;
+      --chip: #1c2540;
+      --good: #1a3a2b;
+      --shadow: 0 10px 30px rgba(0,0,0,.28);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #0b1020 0%, #0d1428 100%);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+    .hero {
+      background: linear-gradient(135deg, rgba(124,196,255,.16), rgba(146,242,200,.08));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    h1, h2, h3 { margin: 0 0 12px; line-height: 1.2; }
+    h1 { font-size: 34px; }
+    h2 { font-size: 24px; margin-top: 8px; }
+    h3 { font-size: 18px; color: var(--accent); }
+    p { margin: 0 0 12px; color: var(--text); }
+    .muted { color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      grid-column: span 12;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+    .card.half { grid-column: span 6; }
+    .card.third { grid-column: span 4; }
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--accent);
+      font-size: 12px;
+      margin-right: 8px;
+      border: 1px solid var(--line);
+    }
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .kpi > div {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .big { font-size: 26px; font-weight: 700; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th { color: var(--accent); font-weight: 700; }
+    .note {
+      border-left: 4px solid var(--warn);
+      background: rgba(255,210,122,.08);
+      padding: 12px 14px;
+      border-radius: 12px;
+      margin-top: 12px;
+      color: #fff4d9;
+    }
+    .danger {
+      border-left-color: var(--danger);
+      background: rgba(255,154,154,.08);
+      color: #ffe5e5;
+    }
+    .good {
+      border-left-color: var(--accent2);
+      background: rgba(146,242,200,.08);
+      color: #eafff6;
+    }
+    ul { margin: 10px 0 0 20px; }
+    li { margin: 6px 0; }
+    .footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .small { font-size: 13px; color: var(--muted); }
+    .pill-row { margin-top: 10px; }
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      margin: 4px 6px 0 0;
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      font-size: 12px;
+    }
+    @media (max-width: 900px) {
+      .card.half, .card.third { grid-column: span 12; }
+      .kpi { grid-template-columns: 1fr; }
+      h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="badge">4 osnivača iz Srbije</div>
+      <div class="badge">Estonia OÜ kao holding</div>
+      <div class="badge">12-mesečni budžet</div>
+      <h1>Sveobuhvatna analiza troškova za otvaranje, održavanje i zatvaranje Estonia OÜ</h1>
+      <p>Ovaj pregled je napravljen za model u kome 4 osnivača iz Srbije otvaraju <strong>Estonia OÜ</strong> kao holding / control / cap table sloj. Dokument pokriva tri varijante budžeta, skrivene troškove, 12-mesečni pregled i praktičnu preporuku.</p>
+      <p class="muted">Cilj nije samo najniži trošak, nego čist odnos između founders kontrole, administracije i dugoročne održivosti.</p>
+      <div class="kpi">
+        <div>
+          <div class="small">Najjeftiniji početak</div>
+          <div class="big">~ €1,020–€1,065</div>
+          <div class="small">otvaranje + minimum obaveznih elemenata</div>
+        </div>
+        <div>
+          <div class="small">Zdrav prvi godišnji budžet</div>
+          <div class="big">~ €1,500–€2,000</div>
+          <div class="small">osnivanje + osnovni accounting + compliance</div>
+        </div>
+        <div>
+          <div class="small">Komforniji model</div>
+          <div class="big">~ €2,800+</div>
+          <div class="small">premium provider + skuplje održavanje</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card third">
+        <h3>Varijanta 1 — Ultra-lean</h3>
+        <p>Najniži mogući budžet uz legalan i relativno čist setup.</p>
+        <ul>
+          <li>4 × e-Residency kartice</li>
+          <li>online registracija OÜ</li>
+          <li>najjeftiniji legal address + contact person</li>
+          <li>minimalan ili odložen accounting dok nema aktivnosti</li>
+        </ul>
+        <div class="note good">Dobro za fazu u kojoj je OÜ pre svega control shell, a ne odmah aktivan operativni holding.</div>
+      </section>
+
+      <section class="card third">
+        <h3>Varijanta 2 — Realna i zdrava</h3>
+        <p>Model koji daje najviše smisla za vaš trenutni founder setup.</p>
+        <ul>
+          <li>4 × e-Residency</li>
+          <li>online registracija</li>
+          <li>stabilan address/contact provider</li>
+          <li>starter accounting od prvog meseca</li>
+          <li>mirniji annual report i compliance</li>
+        </ul>
+        <div class="note good">Ovo je najbolji odnos cene i sigurnosti za founders koji žele čist holding sloj.</div>
+      </section>
+
+      <section class="card third">
+        <h3>Varijanta 3 — Komfornija</h3>
+        <p>Veći trošak, manje administrativnog napora po founderima.</p>
+        <ul>
+          <li>premium incorporation paket</li>
+          <li>skuplji address/contact provider</li>
+          <li>skuplji accounting plan</li>
+          <li>više pomoći oko compliance-a</li>
+        </ul>
+        <div class="note">Ima smisla ako hoćete brzinu i manje founder vremena potrošenog na administraciju.</div>
+      </section>
+
+      <section class="card half">
+        <h2>1. Osnovni obavezni troškovi</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Stavka</th>
+              <th>Procena</th>
+              <th>Napomena</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>e-Residency za 4 osnivača</td>
+              <td>€600</td>
+              <td>Računato kao €150 po osobi.</td>
+            </tr>
+            <tr>
+              <td>Registracija OÜ</td>
+              <td>€265</td>
+              <td>Online registracija.</td>
+            </tr>
+            <tr>
+              <td>Legal address + contact person</td>
+              <td>~ €124 + VAT do €199 godišnje</td>
+              <td>Realno obavezan sloj za board van Estonije.</td>
+            </tr>
+            <tr>
+              <td>Starter accounting</td>
+              <td>~ €40–€50 mesečno</td>
+              <td>Zavisi od providera i aktivnosti.</td>
+            </tr>
+            <tr>
+              <td>Share capital</td>
+              <td>Vrlo nizak / simboličan moguć</td>
+              <td>Ne mora biti stari fiksni minimum, ali realna kapitalizacija i dalje ostaje poslovno pitanje.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card half">
+        <h2>2. Najveća mesta za uštedu</h2>
+        <ul>
+          <li>Ne kupovati premium incorporation paket ako možete sami da registrujete OÜ.</li>
+          <li>Uzeti jeftinijeg address/contact providera, ali bez ugrožavanja osnovnog compliance-a.</li>
+          <li>Ne uvoditi skup accounting paket pre nego što firma stvarno ima aktivnost.</li>
+          <li>Ne zaključavati veći share capital samo da bi firma „izgledala ozbiljnije“.</li>
+          <li>Ne uzimati više konsultantskih paketa prerano ako je OÜ za sada samo founders holding.</li>
+        </ul>
+        <div class="note">Najveća ušteda nije u registracionoj taksi, nego u izbegavanju nepotrebnog premium sloja u prvoj godini.</div>
+      </section>
+
+      <section class="card">
+        <h2>3. Tri detaljne varijante budžeta</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Stavka</th>
+              <th>Ultra-lean</th>
+              <th>Realna / zdrava</th>
+              <th>Komfornija</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>e-Residency (4 osobe)</td>
+              <td>€600</td>
+              <td>€600</td>
+              <td>€600</td>
+            </tr>
+            <tr>
+              <td>Registracija OÜ</td>
+              <td>€265</td>
+              <td>€265</td>
+              <td>€699 premium paket</td>
+            </tr>
+            <tr>
+              <td>Address + contact</td>
+              <td>~ €153.76</td>
+              <td>~ €199</td>
+              <td>~ €396 godišnje</td>
+            </tr>
+            <tr>
+              <td>Accounting</td>
+              <td>€0 do minimum-a / odloženo</td>
+              <td>€480 godišnje</td>
+              <td>€1,116 godišnje</td>
+            </tr>
+            <tr>
+              <td>Ukupno za prvu godinu</td>
+              <td><strong>~ €1,018.76–€1,065</strong></td>
+              <td><strong>~ €1,544</strong></td>
+              <td><strong>~ €2,811+</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="note danger">Komfornija varijanta može otići i više ako uzmete dodatne pravne konsultacije, multi-shareholder setup pomoć, bank support ili investitorsku dokumentaciju.</div>
+      </section>
+
+      <section class="card">
+        <h2>4. Budžet za 12 meseci — liniju po liniju</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Mesec / stavka</th>
+              <th>Ultra-lean</th>
+              <th>Realna / zdrava</th>
+              <th>Komfornija</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mesec 1 — e-Residency</td>
+              <td>€600</td>
+              <td>€600</td>
+              <td>€600</td>
+            </tr>
+            <tr>
+              <td>Mesec 1 — registracija</td>
+              <td>€265</td>
+              <td>€265</td>
+              <td>€699</td>
+            </tr>
+            <tr>
+              <td>Mesec 1 — address/contact</td>
+              <td>€153.76 godišnje</td>
+              <td>€199 godišnje</td>
+              <td>€396 godišnje</td>
+            </tr>
+            <tr>
+              <td>Meseci 1–12 — accounting</td>
+              <td>€0 ili minimum po potrebi</td>
+              <td>€40 × 12 = €480</td>
+              <td>€93 × 12 = €1,116</td>
+            </tr>
+            <tr>
+              <td>Meseci 1–12 — annual report priprema</td>
+              <td>često posebno ili minimalno uključeno</td>
+              <td>često uključeno u starter plan</td>
+              <td>najčešće uključeno ili lakše pokriveno</td>
+            </tr>
+            <tr>
+              <td>Ukupna godišnja slika</td>
+              <td><strong>~ €1,020–€1,065</strong></td>
+              <td><strong>~ €1,500–€1,800</strong></td>
+              <td><strong>~ €2,800+</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="small">Napomena: raspon u realnoj varijanti je malo širi zato što neki provideri drukčije naplaćuju annual report, onboarding, broj dokumenata ili aktivnost po mesečnom obimu.</div>
+      </section>
+
+      <section class="card half">
+        <h2>5. Skriveni troškovi koje founders često zaborave</h2>
+        <ul>
+          <li>Annual report čak i kada firma nema pravu aktivnost.</li>
+          <li>Dodatni accounting ako se firma aktivira ranije nego što je planirano.</li>
+          <li>Dodatne naknade za više shareholder-a ili više board članova kod nekih providera.</li>
+          <li>Dodatni troškovi ako uvodite investitorsku dokumentaciju ili intercompany dokumentaciju.</li>
+          <li>Dodatna pomoć oko banke / fintech-a / onboarding provera.</li>
+          <li>Troškovi promena u registru ako naknadno menjate board, adresu ili ownership podatke.</li>
+          <li>Pravna pomoć ako nešto nije čisto oko founders dogovora ili IP prenosa.</li>
+        </ul>
+      </section>
+
+      <section class="card half">
+        <h2>6. Šta je najskuplje u praksi</h2>
+        <ul>
+          <li>e-Residency za sva 4 osnivača kao prva veća zbirna stavka.</li>
+          <li>Godišnji compliance sloj: address + contact + accounting + annual report.</li>
+          <li>Premium “done-for-you” setup paketi.</li>
+          <li>Kasniji pravni rad kada krenu investitori, SAFE-like aranžmani ili OÜ ↔ DOO ugovori.</li>
+          <li>Zatvaranje firme ako do njega dođe, posebno ako firma nije potpuno čista ili je prošlo dosta vremena.</li>
+        </ul>
+        <div class="note">Najskuplje skoro nikad nije samo samo osnivanje. Najskuplje je kada se loše isplanira održavanje, pa onda compliance ide kroz gašenje požara.</div>
+      </section>
+
+      <section class="card">
+        <h2>7. Trošak zatvaranja firme</h2>
+        <p>Ako jednog dana rešite da zatvorite OÜ, treba planirati poseban closure budžet. Sam proces obično nije „klik i gotovo“, već traje više meseci i može tražiti dodatnu administraciju.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Closure stavka</th>
+              <th>Procena</th>
+              <th>Napomena</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Minimalni dissolution / liquidation servis</td>
+              <td>~ €310–€350</td>
+              <td>Najniže viđene komercijalne procene.</td>
+            </tr>
+            <tr>
+              <td>Realniji closure budžet</td>
+              <td>~ €350–€800+</td>
+              <td>Zavisno od trajanja, address/contact i eventualnog accounting nastavka tokom liquidation perioda.</td>
+            </tr>
+            <tr>
+              <td>Dodatni skriveni closure troškovi</td>
+              <td>promenljivi</td>
+              <td>Notar, punomoć, dodatna dokumentacija, istek digitalnog identiteta, pravna pomoć.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="note danger">Greška je planirati otvaranje OÜ bez rezerve za zatvaranje. Čak i ako gašenje nikad ne dođe, ova rezerva vas tera da razmišljate disciplinovano.</div>
+      </section>
+
+      <section class="card">
+        <h2>8. Moja preporuka za vas</h2>
+        <p>Za vaš model <strong>4 founders → Estonia OÜ → Srbija DOO</strong>, najbolja odluka u ovoj fazi nije najjeftinija varijanta po svaku cenu, nego <strong>realna i zdrava varijanta</strong>.</p>
+        <div class="pill-row">
+          <span class="pill">Budžet za samo osnivanje: ~ €1,050</span>
+          <span class="pill">Prva godina urednog održavanja: ~ €1,500–€1,800</span>
+          <span class="pill">Rezerva za gašenje: ~ €500–€800</span>
+        </div>
+        <p style="margin-top:12px;">To znači:</p>
+        <ul>
+          <li>nemojte ići u skupi premium model prerano,</li>
+          <li>ali nemojte ni previše “istanjiti” accounting i compliance ako OÜ treba da bude ozbiljan holding layer,</li>
+          <li>planirajte OÜ kao strukturu koja može da primi investitore kasnije, a ne samo kao formalno ime u registru.</li>
+        </ul>
+        <div class="note good">Za vašu fazu: ultra-lean je koristan samo ako OÜ još nema pravu aktivnost. Čim uđe novac, intercompany logika ili ozbiljniji razgovori, prebacite se na zdrav managed model.</div>
+      </section>
+
+      <section class="card">
+        <h2>9. Konačan sažetak</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Pitanje</th>
+              <th>Odgovor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Koliko je minimum da 4 osnivača otvore OÜ?</td>
+              <td>Otprilike ~ €1,020–€1,065 u ultra-lean modelu.</td>
+            </tr>
+            <tr>
+              <td>Koliko je zdrav budžet za prvu godinu?</td>
+              <td>Otprilike ~ €1,500–€2,000, realno često ~ €1,544 do ~ €1,800.</td>
+            </tr>
+            <tr>
+              <td>Koliko može otići komforniji model?</td>
+              <td>Otprilike ~ €2,800+, a može i više uz dodatne pravne ili administrativne pakete.</td>
+            </tr>
+            <tr>
+              <td>Koliko planirati za eventualno zatvaranje?</td>
+              <td>Najmanje ~ €350, zdravije je računati ~ €500–€800.</td>
+            </tr>
+            <tr>
+              <td>Koja je moja preporuka za vas?</td>
+              <td>Realna i zdrava varijanta, ne ultra-lean osim ako OÜ ostaje gotovo neaktivan shell u početku.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+    <div class="footer">
+      <p>Ovaj HTML je radni founders planning dokument. Služi za budžetiranje i donošenje odluke pre osnivanja Estonia OÜ. Nije zamena za pravni ili poreski savet.</p>
+    </div>
+  </div>
+</body>
+</html>
