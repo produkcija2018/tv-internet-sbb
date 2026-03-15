@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZOTA — Treća faza: razvoj posle Ana v2</title>
+  <style>
+    :root{
+      --bg:#07101d;
+      --bg2:#0b1530;
+      --panel:#101a33;
+      --line:rgba(255,255,255,.09);
+      --text:#eef4ff;
+      --muted:#a5b7da;
+      --blue:#6d8cff;
+      --cyan:#63dcff;
+      --green:#33d69f;
+      --amber:#ffbf69;
+      --red:#ff6b6b;
+      --shadow:0 18px 44px rgba(0,0,0,.28);
+      --radius:24px;
+      --max:1320px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      color:var(--text);
+      line-height:1.68;
+      background:
+        radial-gradient(circle at top right, rgba(109,140,255,.12), transparent 24%),
+        radial-gradient(circle at top left, rgba(99,220,255,.08), transparent 20%),
+        linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(99,220,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,220,255,.035) 1px, transparent 1px);
+      background-size:30px 30px;
+      opacity:.45;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.85), rgba(0,0,0,.20));
+    }
+
+    .wrap{max-width:var(--max);margin:0 auto;padding:22px}
+
+    .topbar{
+      position:sticky;top:12px;z-index:30;
+      display:flex;justify-content:space-between;align-items:center;gap:16px;
+      background:rgba(10,18,28,.82);
+      backdrop-filter:blur(12px);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px 18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+
+    .brand{display:flex;align-items:center;gap:14px;min-width:0}
+    .logo{
+      width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
+      font-weight:900;letter-spacing:.08em;color:#071018;
+      background:linear-gradient(135deg,var(--cyan),#c6f7ff);
+      box-shadow:0 0 24px rgba(99,220,255,.26);
+      flex:0 0 auto;
+    }
+    .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:4px}
+    .title{font-size:24px;font-weight:850;line-height:1.1}
+    .subtitle{font-size:13px;color:var(--muted)}
+
+    .badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;
+      border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:12px;color:var(--text)
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px currentColor}
+    .dot.cyan{background:var(--cyan)}
+    .dot.amber{background:var(--amber)}
+    .dot.red{background:var(--red)}
+
+    .hero{
+      position:relative;overflow:hidden;
+      background:linear-gradient(135deg,#111b37 0%,#21366d 58%,#5b4df0 100%);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:30px;
+      padding:36px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .hero::after{
+      content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;
+      background:radial-gradient(circle, rgba(255,255,255,.18), transparent 65%);pointer-events:none;
+    }
+    .hero .pill{
+      display:inline-block;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.35px;
+      background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);margin-bottom:16px;
+    }
+    .hero h1{font-size:clamp(30px,4.4vw,50px);line-height:1.08;letter-spacing:-.03em;margin-bottom:14px;max-width:1000px}
+    .hero p{font-size:17px;color:#dbe5ff;max-width:1020px}
+
+    .navcards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}
+    .navcard{
+      text-decoration:none;color:var(--text);background:linear-gradient(180deg, rgba(18,31,61,.96), rgba(14,24,46,.96));
+      border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);transition:.22s ease;
+    }
+    .navcard:hover{transform:translateY(-4px);border-color:rgba(99,220,255,.24)}
+    .navcard strong{display:block;font-size:16px;margin-bottom:6px}
+    .navcard span{display:block;font-size:13px;color:var(--muted)}
+
+    .section{margin-bottom:18px}
+    .section-title{font-size:28px;margin-bottom:8px}
+    .section-desc{color:var(--muted);margin-bottom:16px}
+
+    .panel{
+      background:linear-gradient(180deg, rgba(18,31,61,.96), rgba(14,24,46,.96));
+      border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
+    }
+    .panel-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .panel-title{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+    .panel-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .panel-body{padding:22px}
+
+    .grid{display:grid;gap:18px}
+    .g2{grid-template-columns:repeat(2,1fr)}
+    .g3{grid-template-columns:repeat(3,1fr)}
+    .g4{grid-template-columns:repeat(4,1fr)}
+
+    .card{
+      padding:20px;border-radius:18px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      min-height:150px;
+    }
+    .card h3,.card h4{margin-bottom:10px}
+    .card p{color:#d7e6f5}
+
+    .metric{
+      background:#0d1630;border:1px solid var(--line);border-radius:18px;padding:18px;text-align:center;
+    }
+    .metric .value{font-size:30px;font-weight:800;color:#a6beff;margin-bottom:6px}
+    .metric .label{font-size:13px;color:#a8badf}
+
+    .list{list-style:none;margin-top:8px}
+    .list li{position:relative;padding-left:18px;margin:10px 0;color:#e5edff}
+    .list li::before{content:"•";position:absolute;left:0;color:#8fb0ff;font-weight:800}
+
+    .checklist{display:grid;gap:10px;margin-top:12px;list-style:none}
+    .checklist li{
+      padding:12px 14px 12px 42px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.03);position:relative;color:#dbe8f4
+    }
+    .checklist li::before{content:"●";position:absolute;left:16px;top:11px;color:var(--green);font-size:16px}
+
+    .phase{margin-top:14px;border-left:4px solid var(--blue);background:#0b1430;border-radius:14px;padding:16px 16px 16px 18px}
+    .phase strong{display:block;margin-bottom:8px;font-size:17px;color:#fff}
+    .warning{border-left-color:var(--red)}
+    .warning strong{color:#ffd6d6}
+
+    .timeline{display:grid;gap:14px}
+    .step{border:1px solid var(--line);border-radius:16px;padding:16px;background:rgba(255,255,255,.025)}
+    .step h4{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .step-num{
+      width:28px;height:28px;border-radius:10px;display:grid;place-items:center;font-weight:800;
+      background:linear-gradient(135deg,var(--cyan),#b8f5ff);color:#081018;font-size:13px
+    }
+
+    table{width:100%;border-collapse:collapse;margin-top:12px;overflow:hidden;border-radius:16px}
+    th,td{padding:13px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;vertical-align:top}
+    th{background:#19284c;color:#fff}
+    td{background:#0d1630;color:#ebf2ff}
+    tr:last-child td{border-bottom:none}
+
+    .status{display:inline-block;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.2px;white-space:nowrap}
+    .s-green{background:rgba(51,214,159,.14);color:#caffea}
+    .s-amber{background:rgba(255,191,105,.14);color:#ffe6b8}
+    .s-red{background:rgba(255,107,107,.14);color:#ffd8d8}
+    .s-blue{background:rgba(99,220,255,.14);color:#d6f7ff}
+
+    .footer{
+      margin-top:20px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;
+      background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;
+    }
+
+    @media(max-width:1100px){
+      .navcards,.g4,.g3,.g2{grid-template-columns:1fr}
+    }
+    @media(max-width:900px){
+      .topbar{flex-direction:column;align-items:flex-start}
+      .hero{padding:26px}
+      .panel-body{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">ZO</div>
+        <div>
+          <div class="eyebrow">Founder Growth Guide</div>
+          <div class="title">ZOTA — treća faza: razvoj posle Ana v2</div>
+          <div class="subtitle">Jednostavno objašnjeno za osnivače • šta dolazi posle prve operativne pobede</div>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge"><span class="dot"></span>Ana v2 gotova</span>
+        <span class="badge"><span class="dot cyan"></span>ZOTA širenje</span>
+        <span class="badge"><span class="dot amber"></span>oprezan rast</span>
+        <span class="badge"><span class="dot red"></span>bez haosa</span>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="pill">Treća faza od ukupno tri faze</div>
+      <h1>Ovaj dokument objašnjava šta osnivači rade posle Ana v2: kako se iz prvog ozbiljnog proizvoda prelazi u širu ZOTA fazu bez gubljenja fokusa, kontrole i reda.</h1>
+      <p>
+        Ovo nije futuristička priča i nije prazna prezentacija. Ovo je praktičan osnivački vodič za treću fazu:
+        kada Ana v2 već postoji, šta je sledeći korak, kako se projekat širi, šta mora prvo da se učvrsti,
+        kako se raspoređuju prioriteti i kako da rast ne uništi ono što je ispravno postavljeno u prve dve faze.
+      </p>
+    </section>
+
+    <div class="navcards">
+      <a class="navcard" href="#all-phases"><strong>1. Sve 3 faze</strong><span>Gde se sada nalazimo</span></a>
+      <a class="navcard" href="#meaning"><strong>2. Šta znači treća faza</strong><span>Posle Ana v2</span></a>
+      <a class="navcard" href="#before"><strong>3. Šta mora da postoji pre širenja</strong><span>Ne preskačemo temelje</span></a>
+      <a class="navcard" href="#zota"><strong>4. Šta je ZOTA u ovoj fazi</strong><span>Iz proizvoda u širi sistem</span></a>
+      <a class="navcard" href="#priorities"><strong>5. Prioriteti</strong><span>Šta radimo prvo</span></a>
+      <a class="navcard" href="#team"><strong>6. Tim i uloge</strong><span>Ko šta vodi</span></a>
+      <a class="navcard" href="#risks"><strong>7. Rizici</strong><span>Šta može da pođe po zlu</span></a>
+      <a class="navcard" href="#closing"><strong>8. Završni plan</strong><span>Šta zaključujemo</span></a>
+    </div>
+
+    <section class="section" id="all-phases">
+      <h2 class="section-title">1. Podsetnik: kako izgledaju sve 3 faze</h2>
+      <p class="section-desc">Da bi svaki osnivač ostao u istoj slici, ovo je kratak podsetnik celog puta.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Mapa celog procesa</div>
+            <div class="panel-sub">Tri odvojene faze koje moraju ići pravim redom</div>
+          </div>
+          <span class="status s-green">Osnivački redosled</span>
+        </div>
+        <div class="panel-body timeline">
+          <div class="step">
+            <h4><span class="step-num">1</span>Prva faza — osnivanje i struktura</h4>
+            <p>
+              Osnivači prvo sređuju međusobni dogovor, otvaraju OÜ (estonska firma koja služi kao vlasnički i investicioni vrh),
+              a zatim kasnije DOO (firma u Srbiji za svakodnevnu operativu).
+            </p>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">2</span>Druga faza — početni novac za prva 3 meseca</h4>
+            <p>
+              Obezbeđuje se prvi kapital (početni novac sa strane) da bi tim mogao da radi, da se kupe osnovni uslovi i da Ana v2 izađe kao ozbiljniji proizvodni korak.
+            </p>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">3</span>Treća faza — širenje posle Ana v2</h4>
+            <p>
+              Tek kada su firma i početni novac postavljeni, a Ana v2 postoji, prelazi se na sledeću razvojnu etapu:
+              širenje ZOTA sistema, jačanje proizvoda, uređenje procesa i pripremu za ozbiljniji rast.
+            </p>
+          </div>
+        </div>
+
+        <div class="phase">
+          <strong>Najprostije objašnjenje</strong>
+          Prva faza pravi kuću. Druga faza pali struju i uvodi ljude unutra. Treća faza uređuje kuću da može ozbiljno da raste.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="meaning">
+      <h2 class="section-title">2. Šta treća faza zapravo znači</h2>
+      <p class="section-desc">Mnogi osnivači misle da je treća faza “sad kreće veliko širenje”. To nije dovoljno precizno. Treća faza je uređeni prelaz iz prvog uspeha u stabilniji sistem.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Suština treće faze</div>
+            <div class="panel-sub">Posle Ana v2 ne skačemo u haos, nego ulazimo u uređeni rast</div>
+          </div>
+          <span class="status s-amber">Osnivački fokus</span>
+        </div>
+        <div class="panel-body grid g2">
+          <div class="card">
+            <h3>Šta treća faza jeste</h3>
+            <ul class="list">
+              <li>pretvaranje Ana v2 iz prve pobede u stabilniji osnovni proizvod</li>
+              <li>širenje projekta u jasniji ZOTA sistem</li>
+              <li>uređivanje procesa, odgovornosti i pravca rasta</li>
+              <li>priprema za sledeći nivo firme i proizvoda</li>
+              <li>provera šta zaista radi, a šta ne radi</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Šta treća faza nije</h3>
+            <ul class="list">
+              <li>nije trenutak za nekontrolisano zapošljavanje</li>
+              <li>nije trenutak za rasipanje na sve strane</li>
+              <li>nije trenutak za gubljenje fokusa sa onoga što je dokazano</li>
+              <li>nije trenutak da se svi bave svime</li>
+              <li>nije trenutak da se zaboravi founders disciplina</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase">
+          <strong>Jedna jasna rečenica</strong>
+          Treća faza znači da se od prvog ozbiljnog proizvoda pravi stabilan pravac za rast, a ne haotično širenje bez reda.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="before">
+      <h2 class="section-title">3. Šta mora da postoji pre širenja</h2>
+      <p class="section-desc">Ovaj deo je važan jer osnivači često požele da “lete dalje” pre nego što potvrde da osnova stvarno stoji.</p>
+
+      <div class="grid g4">
+        <div class="metric">
+          <div class="value">1</div>
+          <div class="label">jasna struktura firme</div>
+        </div>
+        <div class="metric">
+          <div class="value">2</div>
+          <div class="label">uređena finansijska baza</div>
+        </div>
+        <div class="metric">
+          <div class="value">3</div>
+          <div class="label">Ana v2 kao dokaz</div>
+        </div>
+        <div class="metric">
+          <div class="value">4</div>
+          <div class="label">fokus osnivača</div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:18px;">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Preduslovi za treću fazu</div>
+            <div class="panel-sub">Ne širimo se dok osnova nije potvrđena</div>
+          </div>
+          <span class="status s-blue">Obavezna provera</span>
+        </div>
+        <div class="panel-body grid g2">
+          <div class="card">
+            <h3>Šta mora već da postoji</h3>
+            <ul class="list">
+              <li>jasan dogovor među osnivačima</li>
+              <li>OÜ postavljen kao vrh strukture</li>
+              <li>početna logika finansiranja zaključana</li>
+              <li>Ana v2 kao ozbiljan rezultat, ne samo ideja</li>
+              <li>jasna slika ko vodi koji deo sistema</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Šta znači da Ana v2 “stvarno postoji”</h3>
+            <ul class="list">
+              <li>da nije samo demo</li>
+              <li>da može da se pokaže kao stvaran radni korak</li>
+              <li>da rešava konkretan problem</li>
+              <li>da daje osnov za sledeće širenje</li>
+              <li>da osnivači mogu jasno da objasne šta je postignuto</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase warning">
+          <strong>Važno upozorenje</strong>
+          Ako osnivači krenu u treću fazu bez stvarno potvrđene Ana v2 i bez uređene osnove, rast će samo povećati postojeći nered.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="zota">
+      <h2 class="section-title">4. Šta je ZOTA u trećoj fazi</h2>
+      <p class="section-desc">Ovde je važno da osnivači ne koriste veliku reč “platforma” bez jasnog značenja. ZOTA u trećoj fazi mora biti objašnjen prostim jezikom.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">ZOTA posle Ana v2</div>
+            <div class="panel-sub">Od jednog ozbiljnog proizvoda ka širem sistemu</div>
+          </div>
+          <span class="status s-green">Razvojni pravac</span>
+        </div>
+        <div class="panel-body grid g2">
+          <div class="card">
+            <h3>Kako osnivači treba da razumeju ZOTA</h3>
+            <p>
+              ZOTA nije samo ime projekta. U trećoj fazi ZOTA postaje širi sistem oko onoga što je Ana v2 već dokazala.
+              To znači da se od jednog konkretnog proizvoda pravi šira celina koja može da raste, povezuje procese,
+              i vremenom nosi više funkcija.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Šta to praktično znači</h3>
+            <ul class="list">
+              <li>ne ostaje se samo na jednoj funkciji</li>
+              <li>ono što radi postaje osnova za dalje module</li>
+              <li>projekat dobija jasniji identitet i smer</li>
+              <li>počinje da se gradi stabilniji sistem, a ne samo jedan alat</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid g3" style="margin-top:18px;">
+          <div class="card">
+            <h3>Prvi nivo</h3>
+            <p>Ana v2 kao dokaz da sistem može da radi.</p>
+          </div>
+          <div class="card">
+            <h3>Drugi nivo</h3>
+            <p>Povezivanje funkcija, procesa i logike u širu celinu.</p>
+          </div>
+          <div class="card">
+            <h3>Treći nivo</h3>
+            <p>ZOTA kao stabilniji operativni sistem projekta, a ne samo pojedinačni proizvod.</p>
+          </div>
+        </div>
+
+        <div class="phase">
+          <strong>Najprostije objašnjenje</strong>
+          Ana v2 je prvi ozbiljan motor. ZOTA je sledeći nivo sistema koji se gradi oko tog motora.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="priorities">
+      <h2 class="section-title">5. Šta se radi prvo u trećoj fazi</h2>
+      <p class="section-desc">Kad treća faza počne, osnivači moraju da znaju šta ide prvim redom. Inače svi počnu da vuku na svoju stranu.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Prioriteti treće faze</div>
+            <div class="panel-sub">Rast mora biti raspoređen po redosledu</div>
+          </div>
+          <span class="status s-amber">Bez preskakanja</span>
+        </div>
+        <div class="panel-body timeline">
+          <div class="step">
+            <h4><span class="step-num">1</span>Potvrditi šta je Ana v2 stvarno dokazala</h4>
+            <p>Pre bilo kakvog širenja, osnivači moraju tačno znati šta radi, šta ne radi i šta je najveća stvarna vrednost proizvoda.</p>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">2</span>Odvojiti glavni pravac od sporednih ideja</h4>
+            <p>Treba jasno odlučiti šta je glavni razvojni put, a šta su samo dodatne ideje koje za sada ne dobijaju prioritet.</p>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">3</span>Urediti proizvodne i operativne procese</h4>
+            <p>Ako tim radi bez procesa, svaki sledeći rast će praviti više gužve nego koristi.</p>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">4</span>Jačati ono što već daje rezultat</h4>
+            <p>Ne širi se sve odjednom. Prvo se pojačava ono što je već dokazano kao korisno i stvarno.</p>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">5</span>Tek onda otvarati sledeće module i šire ambicije</h4>
+            <p>Nova širina dolazi tek kada osnovni sloj radi dovoljno stabilno.</p>
+          </div>
+        </div>
+
+        <div class="phase">
+          <strong>Praktična suština</strong>
+          Treća faza ne počinje pitanjem “šta sve možemo”, nego pitanjem “šta već radi i šta prvo treba ojačati”.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="team">
+      <h2 class="section-title">6. Ko šta vodi u trećoj fazi</h2>
+      <p class="section-desc">Kako projekat raste, još je važnije da se osnivači ne mešaju jedni drugima u odgovornosti.</p>
+
+      <div class="grid g4">
+        <div class="card">
+          <h3>Osnivač 1 — pravac i spoljašnja slika</h3>
+          <ul class="list">
+            <li>čuva glavni smer projekta</li>
+            <li>objašnjava tržištu šta projekat postaje</li>
+            <li>povezuje rast sa realnom vrednošću</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Osnivač 2 — proizvod</h3>
+          <ul class="list">
+            <li>vodi dalji razvoj proizvoda</li>
+            <li>čuva prioritete i red funkcija</li>
+            <li>pazi da se ne širi prerano</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Osnivač 3 — sistem i izvršenje</h3>
+          <ul class="list">
+            <li>vodi sistemsku stabilnost</li>
+            <li>pazi na infrastrukturu i povezivanje</li>
+            <li>čuva da rast ne sruši tehničku osnovu</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Osnivač 4 — kontrola i struktura</h3>
+          <ul class="list">
+            <li>čuva ownership i pravila odlučivanja</li>
+            <li>pazi da rast ne ugrozi founders blok</li>
+            <li>prati ulaganja, diluciju i veće odluke</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <strong>Jedna važna rečenica</strong>
+        Jednaki procenti ne znače da svi vode sve. Treća faza traži još jasniju podelu odgovornosti nego prve dve.
+      </div>
+    </section>
+
+    <section class="section" id="risks">
+      <h2 class="section-title">7. Šta može da pođe po zlu u trećoj fazi</h2>
+      <p class="section-desc">Ovaj deo je namerno direktan, da osnivači vide gde se najčešće greši kada projekat prvi put dobije jači zamah.</p>
+
+      <div class="grid g3">
+        <div class="card">
+          <h3>Greška 1 — preširoko širenje</h3>
+          <p>
+            Ako projekat prerano pokušava da radi sve, gubi se fokus i slabi ono što je prvo dokazano.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Greška 2 — zaboravljanje founders discipline</h3>
+          <p>
+            Kad krene rast, lako je da osnivači počnu da preskaču pravila koja su ih štitila u prvim fazama.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Greška 3 — rast bez procesa</h3>
+          <p>
+            Ako tim raste, a procesi nisu uređeni, dobijate više troška, više buke i manje stvarnog napretka.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Greška 4 — mešanje proizvoda i mašte</h3>
+          <p>
+            Nije svaka velika ideja spremna za odmah. Treća faza mora da se oslanja na ono što je već potvrđeno.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Greška 5 — prerana priča o “velikom sistemu”</h3>
+          <p>
+            Ako se previše priča o velikoj platformi, a premalo radi na učvršćivanju osnove, projekat može da postane neubedljiv.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Greška 6 — nejasno ko odlučuje</h3>
+          <p>
+            Kako projekat raste, nejasnoće među osnivačima postaju još skuplje nego na početku.
+          </p>
+        </div>
+      </div>
+
+      <div class="phase warning">
+        <strong>Najveći skriveni rizik</strong>
+        Najveći rizik treće faze nije da projekat ostane mali, nego da prerano pokuša da postane velik i tako oslabi ono što je već bilo dobro postavljeno.
+      </div>
+    </section>
+
+    <section class="section" id="closing">
+      <h2 class="section-title">8. Završni plan treće faze</h2>
+      <p class="section-desc">Ovo je završni blok koji osnivačima daje jednostavan plan: šta tačno treba zaključiti kada se uđe u treću fazu.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Šta zaključujemo u trećoj fazi</div>
+            <div class="panel-sub">Jasan spisak da svi vide isti pravac</div>
+          </div>
+          <span class="status s-green">Finalna radna osnova</span>
+        </div>
+        <div class="panel-body">
+          <ul class="checklist" style="margin-top:0;">
+            <li>Potvrditi šta je Ana v2 stvarno dokazala i gde je njena najveća vrednost.</li>
+            <li>Zaključiti koji je glavni razvojni pravac ZOTA posle Ana v2.</li>
+            <li>Odvojiti glavni put od sporednih ideja koje sada ne dobijaju prioritet.</li>
+            <li>Potvrditi ko od osnivača vodi koji deo treće faze.</li>
+            <li>Urediti procese rada da rast ne stvori operativni haos.</li>
+            <li>Pojačavati prvo ono što je već dokazano kao korisno.</li>
+            <li>Ne ulaziti u preširoko širenje dok osnova nije dovoljno jaka.</li>
+          </ul>
+
+          <div class="phase">
+            <strong>Završna rečenica</strong>
+            Treća faza uspeva samo ako osnivači ostanu disciplinovani: prvo učvrste ono što je Ana v2 dokazala, pa tek onda od toga grade širi ZOTA sistem.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <strong>ZOTA — treća faza: razvoj posle Ana v2</strong><br/>
+      Ovaj dokument je pisan jednostavno za osnivače, da svi mogu jasno da razumeju šta dolazi posle prve ozbiljne pobede proizvoda i kako da se projekat širi bez gubitka fokusa, reda i kontrole.
+    </div>
+  </div>
+</body>
+</html>
