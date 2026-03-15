@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZOTA Founders Master Document</title>
+  <style>
+    :root{
+      --bg:#07101d;
+      --bg2:#0b1530;
+      --panel:#101a33;
+      --panel2:#142143;
+      --line:rgba(255,255,255,.09);
+      --line2:rgba(99,220,255,.18);
+      --text:#eef4ff;
+      --muted:#a5b7da;
+      --blue:#6d8cff;
+      --violet:#7a5cff;
+      --cyan:#63dcff;
+      --green:#33d69f;
+      --amber:#ffbf69;
+      --red:#ff6b6b;
+      --shadow:0 18px 44px rgba(0,0,0,.28);
+      --radius:24px;
+      --max:1320px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      color:var(--text);
+      line-height:1.6;
+      background:
+        radial-gradient(circle at top right, rgba(109,140,255,.12), transparent 24%),
+        radial-gradient(circle at top left, rgba(99,220,255,.08), transparent 20%),
+        linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(99,220,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,220,255,.035) 1px, transparent 1px);
+      background-size:30px 30px;
+      opacity:.45;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.85), rgba(0,0,0,.20));
+    }
+
+    .wrap{max-width:var(--max);margin:0 auto;padding:22px}
+
+    .topbar{
+      position:sticky;top:12px;z-index:30;
+      display:flex;justify-content:space-between;align-items:center;gap:16px;
+      background:rgba(10,18,28,.80);
+      backdrop-filter:blur(12px);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px 18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+
+    .brand{display:flex;align-items:center;gap:14px;min-width:0}
+    .logo{
+      width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
+      font-weight:900;letter-spacing:.08em;color:#071018;
+      background:linear-gradient(135deg,var(--cyan),#c6f7ff);
+      box-shadow:0 0 24px rgba(99,220,255,.26);
+      flex:0 0 auto;
+    }
+    .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:4px}
+    .title{font-size:24px;font-weight:850;line-height:1.1}
+    .subtitle{font-size:13px;color:var(--muted)}
+
+    .badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;
+      border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:12px;color:var(--text)
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px currentColor}
+    .dot.cyan{background:var(--cyan)}
+    .dot.amber{background:var(--amber)}
+
+    .hero{
+      position:relative;overflow:hidden;
+      background:linear-gradient(135deg,#111b37 0%,#21366d 58%,#5b4df0 100%);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:30px;
+      padding:36px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .hero::after{
+      content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;
+      background:radial-gradient(circle, rgba(255,255,255,.18), transparent 65%);pointer-events:none;
+    }
+    .hero .pill{
+      display:inline-block;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.35px;
+      background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);margin-bottom:16px;
+    }
+    .hero h1{font-size:clamp(32px,4.6vw,54px);line-height:1.04;letter-spacing:-.03em;margin-bottom:14px;max-width:980px}
+    .hero p{font-size:17px;color:#dbe5ff;max-width:980px}
+
+    .navcards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}
+    .navcard{
+      text-decoration:none;color:var(--text);background:linear-gradient(180deg, rgba(18,31,61,.96), rgba(14,24,46,.96));
+      border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);transition:.22s ease;
+    }
+    .navcard:hover{transform:translateY(-4px);border-color:rgba(99,220,255,.24)}
+    .navcard strong{display:block;font-size:16px;margin-bottom:6px}
+    .navcard span{display:block;font-size:13px;color:var(--muted)}
+
+    .section{margin-bottom:18px}
+    .section-title{font-size:28px;margin-bottom:8px}
+    .section-desc{color:var(--muted);margin-bottom:16px}
+
+    .panel{
+      background:linear-gradient(180deg, rgba(18,31,61,.96), rgba(14,24,46,.96));
+      border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
+    }
+    .panel-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .panel-title{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+    .panel-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .panel-body{padding:22px}
+
+    .grid{display:grid;gap:18px}
+    .g2{grid-template-columns:repeat(2,1fr)}
+    .g3{grid-template-columns:repeat(3,1fr)}
+    .g4{grid-template-columns:repeat(4,1fr)}
+
+    .card{
+      padding:20px;border-radius:18px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      min-height:180px;
+    }
+    .card h3,.card h4{margin-bottom:10px}
+    .card p{color:#d7e6f5}
+
+    .metric{
+      background:#0d1630;border:1px solid var(--line);border-radius:18px;padding:18px;text-align:center;
+    }
+    .metric .value{font-size:30px;font-weight:800;color:#a6beff;margin-bottom:6px}
+    .metric .label{font-size:13px;color:#a8badf}
+
+    .list{list-style:none;margin-top:8px}
+    .list li{position:relative;padding-left:18px;margin:8px 0;color:#e5edff}
+    .list li::before{content:"•";position:absolute;left:0;color:#8fb0ff;font-weight:800}
+
+    .checklist{display:grid;gap:10px;margin-top:12px;list-style:none}
+    .checklist li{
+      padding:12px 14px 12px 42px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.03);position:relative;color:#dbe8f4
+    }
+    .checklist li::before{content:"●";position:absolute;left:16px;top:11px;color:var(--green);font-size:16px}
+
+    .phase{margin-top:14px;border-left:4px solid var(--blue);background:#0b1430;border-radius:14px;padding:16px 16px 16px 18px}
+    .phase strong{display:block;margin-bottom:8px;font-size:17px;color:#fff}
+
+    .timeline{display:grid;gap:14px}
+    .step{border:1px solid var(--line);border-radius:16px;padding:16px;background:rgba(255,255,255,.025)}
+    .step h4{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .step-num{
+      width:28px;height:28px;border-radius:10px;display:grid;place-items:center;font-weight:800;
+      background:linear-gradient(135deg,var(--cyan),#b8f5ff);color:#081018;font-size:13px
+    }
+
+    table{width:100%;border-collapse:collapse;margin-top:12px;overflow:hidden;border-radius:16px}
+    th,td{padding:13px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;vertical-align:top}
+    th{background:#19284c;color:#fff}
+    td{background:#0d1630;color:#ebf2ff}
+    tr:last-child td{border-bottom:none}
+
+    .status{display:inline-block;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.2px;white-space:nowrap}
+    .s-green{background:rgba(51,214,159,.14);color:#caffea}
+    .s-amber{background:rgba(255,191,105,.14);color:#ffe6b8}
+    .s-red{background:rgba(255,107,107,.14);color:#ffd8d8}
+    .s-blue{background:rgba(99,220,255,.14);color:#d6f7ff}
+
+    .diagram{
+      margin:0;padding:18px;overflow:auto;
+      border-radius:18px;border:1px solid var(--line2);
+      background:#09131d;color:#cfeaff;
+      font:13px/1.45 Consolas,Monaco,'Courier New',monospace;
+      box-shadow:inset 0 0 0 1px rgba(99,220,255,.04);
+      white-space:pre;
+    }
+
+    .footer{
+      margin-top:20px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;
+      background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;
+    }
+
+    @media(max-width:1100px){
+      .navcards,.g4,.g3,.g2{grid-template-columns:1fr}
+    }
+    @media(max-width:900px){
+      .topbar{flex-direction:column;align-items:flex-start}
+      .hero{padding:26px}
+      .panel-body{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">ZO</div>
+        <div>
+          <div class="eyebrow">Master Document</div>
+          <div class="title">ZOTA Founders Master Document</div>
+          <div class="subtitle">Company setup • governance • financing • Ana v2 • ZOTA roadmap • objašnjeno za osnivače korak po korak</div>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge"><span class="dot"></span>4 founders</span>
+        <span class="badge"><span class="dot cyan"></span>25% each</span>
+        <span class="badge"><span class="dot amber"></span>Serbia DOO + Estonia OÜ</span>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="pill">Founder Alignment / Final Working Version</div>
+      <h1>Jedan dokument koji spaja firmu, kontrolu, finansiranje i put od Ana v2 do ZOTA platforme.</h1>
+      <p>
+        Ovaj dokument služi kao master verzija za osnivače. Njegov cilj nije samo da objasni strukturu firme,
+        nego da zaključa zajedničku logiku: 4 osnivača sa po 25%, Estonia OÜ kao holding i investitorski entry point,
+        Srbija DOO kao operativna baza, ograničeno i plansko rano finansiranje, i jasan put od AI Ana proizvoda do ZOTA platforme.
+      </p>
+    </section>
+
+    <section class="section" id="founders-note">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Važno za osnivače</div>
+            <div class="panel-sub">Šta ovaj dokument praktično znači za vas lično</div>
+          </div>
+          <span class="status s-amber">Founder explainer</span>
+        </div>
+        <div class="panel-body grid g2">
+          <div class="card">
+            <h3>Ovo nije samo ideja nego ulazak u realan poslovni odnos</h3>
+            <ul class="list">
+              <li>ulazite u zajedničku firmu sa jasnim procentima, odgovornostima i odlukama</li>
+              <li>25% svakome znači jednak start, ali i jednaku odgovornost za ozbiljne odluke</li>
+              <li>svaka greška u startu kasnije postaje mnogo skuplja i teže se ispravlja</li>
+              <li>zato se prvo zaključavaju pravila, pa tek onda ide osnivanje</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Zašto je Estonia OÜ neobična ali logična</h3>
+            <ul class="list">
+              <li>za ljude u Srbiji to deluje strano jer firma nije lokalno registrovana kao glavni holding</li>
+              <li>to ne znači da je model rizičan sam po sebi, nego da traži više razumevanja i discipline</li>
+              <li>OÜ služi da vlasništvo, investitori i kontrola budu postavljeni čistije</li>
+              <li>Srbija DOO ostaje operativna baza za svakodnevni rad, tim i troškove</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="navcards">
+      <a class="navcard" href="#north-star"><strong>1. North Star</strong><span>Šta gradimo i zašto</span></a>
+      <a class="navcard" href="#structure"><strong>2. Struktura firme</strong><span>Holding gore, operativa dole</span></a>
+      <a class="navcard" href="#governance"><strong>3. Governance</strong><span>25/25/25/25 + reserved matters</span></a>
+      <a class="navcard" href="#financing"><strong>4. Finansiranje</strong><span>Prva 3 meseca do Ana v2</span></a>
+      <a class="navcard" href="#roadmap"><strong>5. Roadmap</strong><span>Ana v1 → Ana v2 → ZOTA</span></a>
+      <a class="navcard" href="#roles"><strong>6. Founder roles</strong><span>Ko čuva koji deo sistema</span></a>
+      <a class="navcard" href="#capital"><strong>7. Kapitalna disciplina</strong><span>SAFE-like i rana prodaja</span></a>
+      <a class="navcard" href="#actions"><strong>8. Sledeći koraci</strong><span>Šta zaključujemo odmah</span></a>
+    </div>
+
+    <section class="section" id="north-star">
+      <h2 class="section-title">1. North Star dokumenta</h2>
+      <p class="section-desc">Jedna ista slika koju sva 4 osnivača moraju moći da izgovore bez razilaženja. Drugim rečima: da svako ume jednostavno da objasni šta se pravi, kojim redom i zašto ne preskačemo korake.</p>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Core Thesis</div>
+            <div class="panel-sub">Prvo realan proizvod, zatim platforma, tek onda šire širenje</div>
+          </div>
+        </div>
+        <div class="panel-body grid g2">
+          <div>
+            <p style="font-size:18px;color:#dbe9f7;margin-bottom:14px;">
+              <strong>ZOTA</strong> je platformski i kontrolni identitet sistema, a <strong>AI Ana</strong> je centralna inteligencija
+              koja iz realne komunikacije, dokumenata, procesa i signala pravi operativne akcije.
+            </p>
+            <ul class="checklist">
+              <li>AI Ana je prvi realni use-case i dokaz da sistem nije samo ideja.</li>
+              <li>Ana v2 je ključni milestone koji mora da pretvori prototip u operativni engine.</li>
+              <li>ZOTA nastaje iz uspešne operativne osnove, ne iz prazne futurističke prezentacije.</li>
+              <li>Firma mora biti postavljena tako da štiti kontrolu osnivača pre investitora.</li>
+            </ul>
+          </div>
+          <pre class="diagram">REALNI PROBLEM
+(emailovi, dokumenti, operativa, unos, signali)
+        │
+        ▼
+AI ANA v1
+(prvi dokaz i javni trag proizvoda)
+        │
+        ▼
+AI ANA v2
+(interaktivni AI operations engine)
+        │
+        ▼
+ZOTA PLATFORM
+(AI operativni sistem za firmu)
+        │
+        ▼
+GLOBAL SaaS / ENTERPRISE SYSTEM</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="structure">
+      <h2 class="section-title">2. Finalna struktura firme</h2>
+      <p class="section-desc">Glavna logika: investitori, equity i IP gore; operativa, razvoj i lokalni troškovi dole. Prosto rečeno: vlasnička i strateška kuća je na vrhu, a svakodnevni posao i izvršenje su u lokalnoj firmi.</p>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Holding / Ops Architecture</div>
+            <div class="panel-sub">Čisto razdvajanje kontrole, kapitala i operativnog izvršenja</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <pre class="diagram">4 osnivača (25% / 25% / 25% / 25%)
+            │
+            ▼
+      ESTONIA OÜ (HOLDING)
+  ownership / cap table / investitori / IP / brand / control
+            │
+            ▼
+       SRBIJA DOO (OPERATIVA)
+ development / logistika / lokalni troškovi / izvršenje</pre>
+
+          <div class="grid g2" style="margin-top:18px;">
+            <div class="card">
+              <h3>Estonia OÜ treba da nosi</h3>
+              <ul class="list">
+                <li>cap table i founders ownership</li>
+                <li>budući ulaz investitora</li>
+                <li>advisory i future option logiku</li>
+                <li>IP, brand i stratešku kontrolu</li>
+                <li>SAFE-like / convertible razgovore</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Srbija DOO treba da nosi</h3>
+              <ul class="list">
+                <li>svakodnevnu operativu</li>
+                <li>lokalni razvojni tim</li>
+                <li>plaćanje kodera i saradnika</li>
+                <li>lokalne ugovore i troškove</li>
+                <li>izvršenje i delivery</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="phase">
+            <strong>Jedna rečenica</strong>
+            Investitori i savetnici ne treba da ulaze u lokalnu operativu, nego u holding layer.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="governance">
+      <h2 class="section-title">3. Governance i zaštita osnivača</h2>
+      <p class="section-desc">25% svakome je polazna osnova. Ali sami procenti nisu dovoljni. Prava zaštita nastaje tek kada se unapred napiše koje odluke niko ne sme da donese bez saglasnosti svih osnivača.</p>
+      <div class="grid g3">
+        <div class="metric">
+          <div class="value">4</div>
+          <div class="label">core osnivača</div>
+        </div>
+        <div class="metric">
+          <div class="value">25%</div>
+          <div class="label">svaki osnivač</div>
+        </div>
+        <div class="metric">
+          <div class="value">1.00x</div>
+          <div class="label">jednak startni status</div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:18px;">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Founders Control Memorandum</div>
+            <div class="panel-sub">Nulti dokument koji mora postojati pre osnivanja</div>
+          </div>
+        </div>
+        <div class="panel-body grid g2">
+          <div class="card">
+            <h3>Šta mora da piše unutra</h3>
+            <ul class="list">
+              <li>potvrda da postoje 4 core founders</li>
+              <li>startna raspodela 25 / 25 / 25 / 25</li>
+              <li>nema novog equity-ja bez saglasnosti svih 4</li>
+              <li>nema investitora bez saglasnosti svih 4</li>
+              <li>nema promene glasačkih prava bez saglasnosti svih 4</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Reserved matters koje traže founders consent</h3>
+            <ul class="list">
+              <li>prodaja firme, IP-a ili kontrole</li>
+              <li>izdavanje novih udela / akcija</li>
+              <li>option pool ili advisory equity</li>
+              <li>ulazak investitora i promena cap table-a</li>
+              <li>zalog nad IP-om ili velika zaduženja</li>
+              <li>promena governance modela</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:18px;">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Decision Matrix</div>
+            <div class="panel-sub">Što je odluka bliža sudbini firme, prag mora biti stroži</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <table>
+            <thead>
+              <tr>
+                <th>Tip odluke</th>
+                <th>Preporučeni prag</th>
+                <th>Napomena</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Rutinska operativa</td>
+                <td>operativni prag / direktor</td>
+                <td>ne sme dirati cap table ili kontrolu</td>
+              </tr>
+              <tr>
+                <td>Veći budžeti i zapošljavanje</td>
+                <td>super-većina</td>
+                <td>definisati interni finansijski prag</td>
+              </tr>
+              <tr>
+                <td>Prva prodaja dela holdinga</td>
+                <td>super-većina + founders consent</td>
+                <td>kapitalne odluke nisu obična operativa</td>
+              </tr>
+              <tr>
+                <td>IP, glas, investitori, novi equity</td>
+                <td>isključivo founders consent</td>
+                <td>nema preglasavanja na sudbinskim pitanjima</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="financing">
+      <h2 class="section-title">4. Finansiranje prve faze do Ana v2</h2>
+      <p class="section-desc">Ovo nije novac za luksuz, nego za prelaz preko najosetljivijih 3 meseca i pretvaranje Ana v1 u Ana v2. Osnivači moraju da razumeju da se u ovoj fazi finansira vreme, fokus i izvršenje — ne široka ekspanzija.</p>
+      <div class="grid g3">
+        <div class="metric">
+          <div class="value">≈ 6M RSD</div>
+          <div class="label">minimalno smislen početak</div>
+        </div>
+        <div class="metric">
+          <div class="value">9–12M RSD</div>
+          <div class="label">najzdraviji prvi cilj</div>
+        </div>
+        <div class="metric">
+          <div class="value">≈ 10M RSD</div>
+          <div class="label">radna brojka / oko 85k EUR</div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:18px;">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Use of Funds</div>
+            <div class="panel-sub">Na šta prvi kapital realno ide</div>
+          </div>
+        </div>
+        <div class="panel-body grid g4">
+          <div class="card">
+            <h3>2–4 ključna kodera</h3>
+            <p>Backend, AI integracije, stabilizacija i razvoj Ana v2.</p>
+          </div>
+          <div class="card">
+            <h3>Oprema i radna baza</h3>
+            <p>Računari, minimalna kancelarijska ili studio baza, osnovna infrastruktura.</p>
+          </div>
+          <div class="card">
+            <h3>Pravna i računovodstvena postavka</h3>
+            <p>OÜ setup, compliance, eventualna DOO postavka i čisti ugovori.</p>
+          </div>
+          <div class="card">
+            <h3>Runway za 3 meseca</h3>
+            <p>Most do trenutka kada Ana v2 izlazi kao ozbiljniji engine.</p>
+          </div>
+        </div>
+
+        <div class="phase">
+          <strong>Suština finansiranja</strong>
+          Prva faza kapitala kupuje vreme, tim i disciplinovano izvršenje do Ana v2 — ne kupuje preranu komplikaciju i ne kupuje gubitak kontrole.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roadmap">
+      <h2 class="section-title">5. Operativni roadmap</h2>
+      <p class="section-desc">Redosled mora biti čist. Greška je pomešati osnivanje, kapital i proizvod bez discipline. Ako se preskoči redosled, raste rizik da firma bude otvorena, a pravila i odnosi među osnivačima ostanu nejasni.</p>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Execution Sequence</div>
+            <div class="panel-sub">Founders control first, OÜ first, DOO when needed</div>
+          </div>
+        </div>
+        <div class="panel-body timeline">
+          <div class="step">
+            <h4><span class="step-num">1</span>Zaključati founders control memorandum</h4>
+            <p>Pre bilo kakvog osnivanja: procenti, glasanje, reserved matters, potpisi, zaštita od neželjene dilucije.</p>
+          </div>
+          <div class="step">
+            <h4><span class="step-num">2</span>Osnovati Estonia OÜ</h4>
+            <p>Holding / control / ownership / future investor entry point.</p>
+          </div>
+          <div class="step">
+            <h4><span class="step-num">3</span>Pripremiti kapitalni narativ</h4>
+            <p>Use-of-funds, milestone za Ana v2, cap table disciplina i pravila prve runde.</p>
+          </div>
+          <div class="step">
+            <h4><span class="step-num">4</span>Otvoriti Srbija DOO kada operativa to stvarno traži</h4>
+            <p>Lokalna firma za kodere, logistiku, ugovore i svakodnevni rad.</p>
+          </div>
+          <div class="step">
+            <h4><span class="step-num">5</span>Izbaciti Ana v2</h4>
+            <p>Prvi ozbiljan engine koji dokazuje da projekat prelazi iz demo faze u operativni sistem.</p>
+          </div>
+          <div class="step">
+            <h4><span class="step-num">6</span>Širiti ZOTA platformu</h4>
+            <p>Kada Ana v2 radi kao dokaz, tada ZOTA prelazi iz narativa u platformu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roles">
+      <h2 class="section-title">6. Founder roles mapa</h2>
+      <p class="section-desc">Jednaki procenti ne znače haos. Uloge moraju biti jasno razdvojene. To pomaže da osnivači ne ulaze jedni drugima u zonu odgovornosti i da se izbegnu kasniji sukobi.</p>
+      <div class="grid g4">
+        <div class="card">
+          <h3>Founder 1 — Vision / Market</h3>
+          <ul class="list">
+            <li>pravac projekta</li>
+            <li>tržišni narativ</li>
+            <li>partnerstva i spoljašnji front</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Founder 2 — Product Architect</h3>
+          <ul class="list">
+            <li>Ana roadmap</li>
+            <li>funkcije i prioriteti</li>
+            <li>MVP / v2 logika</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Founder 3 — Systems Architect</h3>
+          <ul class="list">
+            <li>backend i infra</li>
+            <li>integracije modula</li>
+            <li>skalabilnost sistema</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Founder 4 — Equity / Governance Guardian</h3>
+          <ul class="list">
+            <li>cap table disciplina</li>
+            <li>investitorske runde</li>
+            <li>zaštita founders bloka</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="capital">
+      <h2 class="section-title">7. Kapitalna disciplina</h2>
+      <p class="section-desc">Rani kapital mora biti mali, planski i iznad operative — na nivou holdinga. To znači da se firma ne prodaje prerano i da se kontrola ne rasipa zbog kratkoročnog pritiska.</p>
+      <div class="grid g2">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Prva runda</div>
+              <div class="panel-sub">Mali privatni SAFE-like / convertible razgovori</div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <ul class="checklist" style="margin-top:0;">
+              <li>Investitor daje novac u OÜ.</li>
+              <li>Ne ulazi direktno u lokalnu operativu.</li>
+              <li>Izbegava se prerano zaključavanje loše valuacije.</li>
+              <li>Kapital se koristi za Ana v2, tim i runway.</li>
+              <li>Direktna rana prodaja velikog equity-ja nije preporučena.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Pragovi za prvu prodaju</div>
+              <div class="panel-sub">Kontrolisano, ne agresivno</div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Raspon</th>
+                  <th>Tumačenje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>5–7%</td>
+                  <td>minimalni start</td>
+                </tr>
+                <tr>
+                  <td>8–12%</td>
+                  <td>najzdraviji prvi raspon</td>
+                </tr>
+                <tr>
+                  <td>12–15%</td>
+                  <td>gornja sigurna zona</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="phase">
+              <strong>Preporuka</strong>
+              Ako bude prve kontrolisane prodaje, cilj je mali i planski procenat, uz već zaključan governance i jasan milestone koji se kupuje tim novcem.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="actions">
+      <h2 class="section-title">8. Šta zaključujemo sada</h2>
+      <p class="section-desc">Ovo je praktičan spisak stvari koje ne treba više ostavljati otvorenim. Cilj je da svaki osnivač tačno zna šta je već zaključeno, a šta još mora pravno i operativno da se zatvori.</p>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Immediate Closing Points</div>
+            <div class="panel-sub">Sve što treba da bude zatvoreno pre sledećeg koraka</div>
+          </div>
+          <span class="status s-green">Final working base</span>
+        </div>
+        <div class="panel-body">
+          <ul class="checklist" style="margin-top:0;">
+            <li>Potvrđeno: 4 osnivača, svi po 25%.</li>
+            <li>Potvrđeno: Estonia OÜ je holding i investitorski entry point.</li>
+            <li>Potvrđeno: Srbija DOO je operativna firma, ne investitorski vrh.</li>
+            <li>Potvrđeno: nema investitora, advisory equity-ja ni option pool-a bez founders consent.</li>
+            <li>Potvrđeno: prvi kapital, ako bude potreban, ide planski i gore na nivou OÜ.</li>
+            <li>Potvrđeno: primarni milestone ove faze je Ana v2, a ne prerano širenje ZOTA priče.</li>
+            <li>Otvoreno za dalji rad: tačan tekst Founders Control Memorandum-a i konačna pravna dokumentacija.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="risks">
+      <h2 class="section-title">9. Rizici koje osnivači moraju da razumeju</h2>
+      <p class="section-desc">Ovaj deo je namerno napisan jednostavnije, da niko ne uđe u proces sa pogrešnim očekivanjima.</p>
+      <div class="grid g3">
+        <div class="card">
+          <h3>Pravni i strukturni rizik</h3>
+          <p>Pošto holding nije u Srbiji, deo procesa će osnivačima delovati nepoznato. To traži više poverenja u dokumentaciju, više discipline i jasniji dogovor pre svakog koraka.</p>
+        </div>
+        <div class="card">
+          <h3>Rizik odnosa među osnivačima</h3>
+          <p>Najveći problem u ranoj fazi često nije tehnologija nego nejasnoća: ko odlučuje, ko radi, ko potpisuje, ko može da blokira, a ko ne. Zato governance mora biti napisan pre kapitala.</p>
+        </div>
+        <div class="card">
+          <h3>Rizik prerane dilucije</h3>
+          <p>Ako se prerano prodaje veći deo udela, projekat može ostati bez kontrole upravo onda kada tek počinje da dobija realnu vrednost. Zato se kapital uvodi postepeno i s razlogom.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="founder-guide">
+      <h2 class="section-title">10. Šta vas kao osnivača konkretno čeka</h2>
+      <p class="section-desc">Ovaj deo je pisan jednostavnijim jezikom. Cilj je da svaki osnivač jasno razume u šta ulazi i koje obaveze i rizike prihvata.</p>
+      <div class="grid g3">
+        <div class="card">
+          <h3>Šta potpisujete</h3>
+          <ul class="list">
+            <li>ulazite u zajedničko vlasništvo firme (25% svakome)</li>
+            <li>prihvatate pravila odlučivanja i governance model</li>
+            <li>prihvatate da se ključne odluke donose zajednički</li>
+            <li>prihvatate da kapital i investitori ulaze samo kroz holding</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Šta će biti drugačije nego kod klasične firme u Srbiji</h3>
+          <ul class="list">
+            <li>glavna vlasnička firma nije u Srbiji nego u Estoniji</li>
+            <li>operativna firma u Srbiji služi za rad i razvoj</li>
+            <li>investitori i equity ulaze kroz holding sloj</li>
+            <li>pravila kontrole se definišu pre investitora</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Najveće realne odgovornosti</h3>
+          <ul class="list">
+            <li>gradnja proizvoda (Ana v2)</li>
+            <li>očuvanje poverenja među osnivačima</li>
+            <li>kontrola cap table‑a</li>
+            <li>disciplinovano korišćenje prvog kapitala</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tutorial">
+      <h2 class="section-title">11. Tutorijal: AGI struktura sistema</h2>
+      <p class="section-desc">Ovaj deo služi kao tehnički tutorijal koji objašnjava kako je zamišljena struktura sistema i kako AI Ana prelazi u širu ZOTA platformu.</p>
+      <div class="panel">
+        <div class="panel-body">
+          <p style="margin-bottom:12px;color:#cfe1ff;">
+            Sledeći blok je uključen kao referentni tutorijal za osnivače kako bi razumeli tehničku i sistemsku strukturu projekta.
+          </p>
+          <div class="diagram">Tutorijal iz fajla: agi_struktura369.html
+
+Ovaj deo objašnjava arhitekturu AGI / AI sistema i kako se modul Ana razvija u širu ZOTA platformu.
+U originalnoj verziji dokumenta prikazana je struktura modula, tok informacija i razvojni roadmap sistema.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cost-analysis">
+      <h2 class="section-title">12. Troškovi Estonia OÜ</h2>
+      <p class="section-desc">Najvažniji deo za osnivače je razumevanje realnih troškova. Ovaj blok se zasniva na analizi iz dokumenta <strong>agi_struktura963.html</strong>.</p>
+      <div class="grid g3">
+        <div class="card">
+          <h3>Otvaranje firme</h3>
+          <ul class="list">
+            <li>registracija OÜ</li>
+            <li>pravna dokumentacija</li>
+            <li>digitalni identitet i administracija</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Održavanje</h3>
+          <ul class="list">
+            <li>računovodstvo</li>
+            <li>godišnji izveštaji</li>
+            <li>administrativni troškovi</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Zatvaranje firme</h3>
+          <ul class="list">
+            <li>pravni postupak zatvaranja</li>
+            <li>administrativni troškovi</li>
+            <li>zatvaranje računa i obaveza</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase" style="margin-top:14px;">
+        <strong>Zašto je ovo važno</strong>
+        Osnivači moraju da razumeju da firma u Estoniji nije samo tehnička odluka nego i finansijska i administrativna obaveza. Ovaj model daje veću fleksibilnost za investitore ali zahteva disciplinu u vođenju dokumentacije i troškova.
+      </div>
+    </section>
+
+    <div class="footer">
+      <strong>ZOTA Founders Master Document</strong><br/>
+      Ova verzija je napravljena kao radna finalna osnova za usaglašavanje osnivača, advokata i naredne prezentacije.
+      Sledeći dokument treba da bude pravno-operativna verzija Founders Control Memorandum + execution checklist za osnivanje OÜ i kasnije DOO.
+    </div>
+  </div>
+</body>
+</html>
