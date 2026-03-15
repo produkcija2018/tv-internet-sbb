@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZOTA — Finansiranje prve faze do Ana v2 (jednostavno objašnjeno za osnivače)</title>
+  <style>
+    :root{
+      --bg:#07101d;
+      --bg2:#0b1530;
+      --panel:#101a33;
+      --line:rgba(255,255,255,.09);
+      --text:#eef4ff;
+      --muted:#a5b7da;
+      --blue:#6d8cff;
+      --cyan:#63dcff;
+      --green:#33d69f;
+      --amber:#ffbf69;
+      --red:#ff6b6b;
+      --shadow:0 18px 44px rgba(0,0,0,.28);
+      --radius:24px;
+      --max:1320px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      color:var(--text);
+      line-height:1.68;
+      background:
+        radial-gradient(circle at top right, rgba(109,140,255,.12), transparent 24%),
+        radial-gradient(circle at top left, rgba(99,220,255,.08), transparent 20%),
+        linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(99,220,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,220,255,.035) 1px, transparent 1px);
+      background-size:30px 30px;
+      opacity:.45;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.85), rgba(0,0,0,.20));
+    }
+
+    .wrap{max-width:var(--max);margin:0 auto;padding:22px}
+
+    .topbar{
+      position:sticky;top:12px;z-index:30;
+      display:flex;justify-content:space-between;align-items:center;gap:16px;
+      background:rgba(10,18,28,.82);
+      backdrop-filter:blur(12px);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px 18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+
+    .brand{display:flex;align-items:center;gap:14px;min-width:0}
+    .logo{
+      width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
+      font-weight:900;letter-spacing:.08em;color:#071018;
+      background:linear-gradient(135deg,var(--cyan),#c6f7ff);
+      box-shadow:0 0 24px rgba(99,220,255,.26);
+      flex:0 0 auto;
+    }
+    .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:4px}
+    .title{font-size:24px;font-weight:850;line-height:1.1}
+    .subtitle{font-size:13px;color:var(--muted)}
+
+    .badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;
+      border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:12px;color:var(--text)
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px currentColor}
+    .dot.cyan{background:var(--cyan)}
+    .dot.amber{background:var(--amber)}
+    .dot.red{background:var(--red)}
+
+    .hero{
+      position:relative;overflow:hidden;
+      background:linear-gradient(135deg,#111b37 0%,#21366d 58%,#5b4df0 100%);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:30px;
+      padding:36px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .hero::after{
+      content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;
+      background:radial-gradient(circle, rgba(255,255,255,.18), transparent 65%);pointer-events:none;
+    }
+    .hero .pill{
+      display:inline-block;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.35px;
+      background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);margin-bottom:16px;
+    }
+    .hero h1{font-size:clamp(30px,4.4vw,50px);line-height:1.08;letter-spacing:-.03em;margin-bottom:14px;max-width:1000px}
+    .hero p{font-size:17px;color:#dbe5ff;max-width:1020px}
+
+    .navcards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}
+    .navcard{
+      text-decoration:none;color:var(--text);background:linear-gradient(180deg, rgba(18,31,61,.96), rgba(14,24,46,.96));
+      border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);transition:.22s ease;
+    }
+    .navcard:hover{transform:translateY(-4px);border-color:rgba(99,220,255,.24)}
+    .navcard strong{display:block;font-size:16px;margin-bottom:6px}
+    .navcard span{display:block;font-size:13px;color:var(--muted)}
+
+    .section{margin-bottom:18px}
+    .section-title{font-size:28px;margin-bottom:8px}
+    .section-desc{color:var(--muted);margin-bottom:16px}
+
+    .panel{
+      background:linear-gradient(180deg, rgba(18,31,61,.96), rgba(14,24,46,.96));
+      border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
+    }
+    .panel-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .panel-title{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+    .panel-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .panel-body{padding:22px}
+
+    .grid{display:grid;gap:18px}
+    .g2{grid-template-columns:repeat(2,1fr)}
+    .g3{grid-template-columns:repeat(3,1fr)}
+    .g4{grid-template-columns:repeat(4,1fr)}
+
+    .card{
+      padding:20px;border-radius:18px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      min-height:150px;
+    }
+    .card h3,.card h4{margin-bottom:10px}
+    .card p{color:#d7e6f5}
+
+    .metric{
+      background:#0d1630;border:1px solid var(--line);border-radius:18px;padding:18px;text-align:center;
+    }
+    .metric .value{font-size:30px;font-weight:800;color:#a6beff;margin-bottom:6px}
+    .metric .label{font-size:13px;color:#a8badf}
+
+    .list{list-style:none;margin-top:8px}
+    .list li{position:relative;padding-left:18px;margin:10px 0;color:#e5edff}
+    .list li::before{content:"•";position:absolute;left:0;color:#8fb0ff;font-weight:800}
+
+    .checklist{display:grid;gap:10px;margin-top:12px;list-style:none}
+    .checklist li{
+      padding:12px 14px 12px 42px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.03);position:relative;color:#dbe8f4
+    }
+    .checklist li::before{content:"●";position:absolute;left:16px;top:11px;color:var(--green);font-size:16px}
+
+    .phase{margin-top:14px;border-left:4px solid var(--blue);background:#0b1430;border-radius:14px;padding:16px 16px 16px 18px}
+    .phase strong{display:block;margin-bottom:8px;font-size:17px;color:#fff}
+    .warning{border-left-color:var(--red)}
+    .warning strong{color:#ffd6d6}
+
+    .timeline{display:grid;gap:14px}
+    .step{border:1px solid var(--line);border-radius:16px;padding:16px;background:rgba(255,255,255,.025)}
+    .step h4{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .step-num{
+      width:28px;height:28px;border-radius:10px;display:grid;place-items:center;font-weight:800;
+      background:linear-gradient(135deg,var(--cyan),#b8f5ff);color:#081018;font-size:13px
+    }
+
+    table{width:100%;border-collapse:collapse;margin-top:12px;overflow:hidden;border-radius:16px}
+    th,td{padding:13px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;vertical-align:top}
+    th{background:#19284c;color:#fff}
+    td{background:#0d1630;color:#ebf2ff}
+    tr:last-child td{border-bottom:none}
+
+    .status{display:inline-block;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.2px;white-space:nowrap}
+    .s-green{background:rgba(51,214,159,.14);color:#caffea}
+    .s-amber{background:rgba(255,191,105,.14);color:#ffe6b8}
+    .s-red{background:rgba(255,107,107,.14);color:#ffd8d8}
+    .s-blue{background:rgba(99,220,255,.14);color:#d6f7ff}
+
+    .footer{
+      margin-top:20px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;
+      background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;
+    }
+
+    @media(max-width:1100px){
+      .navcards,.g4,.g3,.g2{grid-template-columns:1fr}
+    }
+    @media(max-width:900px){
+      .topbar{flex-direction:column;align-items:flex-start}
+      .hero{padding:26px}
+      .panel-body{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">ZO</div>
+        <div>
+          <div class="eyebrow">Founder Funding Guide</div>
+          <div class="title">ZOTA — finansiranje prve faze do Ana v2</div>
+          <div class="subtitle">Jednostavno objašnjeno za osnivače • šta je cilj • koliko novca treba • kako novac ulazi • kako se čuva kontrola</div>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge"><span class="dot"></span>3 meseca rada</span>
+        <span class="badge"><span class="dot cyan"></span>9–12M RSD cilj</span>
+        <span class="badge"><span class="dot amber"></span>OÜ prima novac</span>
+        <span class="badge"><span class="dot red"></span>Ana v2 je cilj</span>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="pill">Druga faza od ukupno tri faze</div>
+      <h1>Ovaj dokument objašnjava drugu fazu: kako osnivači obezbeđuju prvi novac da bi tim mogao da radi prva 3 meseca i da izbaci Ana v2.</h1>
+      <p>
+        Ovo nije dokument za komplikovane pravne izraze i nije prezentacija za veliku investicionu rundu.
+        Ovo je praktičan vodič za osnivače. Cilj mu je da svaki osnivač razume: šta je ova faza,
+        koliko novca treba, gde taj novac ulazi, na šta sme da se troši i kako da se sačuva kontrola firme dok projekat još raste.
+      </p>
+    </section>
+
+    <div class="navcards">
+      <a class="navcard" href="#all-phases"><strong>1. Sve 3 faze</strong><span>Gde se ova faza nalazi</span></a>
+      <a class="navcard" href="#goal"><strong>2. Cilj ove faze</strong><span>Zašto se novac traži</span></a>
+      <a class="navcard" href="#amount"><strong>3. Koliko novca</strong><span>Raspon i cilj</span></a>
+      <a class="navcard" href="#use"><strong>4. Na šta ide novac</strong><span>Use of funds (namena novca)</span></a>
+      <a class="navcard" href="#entry"><strong>5. Gde novac ulazi</strong><span>OÜ kao ulazna tačka</span></a>
+      <a class="navcard" href="#rules"><strong>6. Pravila</strong><span>Pod kojim uslovima novac sme da uđe</span></a>
+      <a class="navcard" href="#protection"><strong>7. Zaštita osnivača</strong><span>Šta ne sme da se izgubi</span></a>
+      <a class="navcard" href="#memo"><strong>8. Završni memorandum</strong><span>Pravila prvog ulaganja</span></a>
+    </div>
+
+    <section class="section" id="all-phases">
+      <h2 class="section-title">1. Kako izgledaju sve 3 faze</h2>
+      <p class="section-desc">Da bi osnivačima bilo potpuno jasno: ceo projekat je podeljen na tri odvojene faze. Ne smeju da se mešaju.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Tri faze osnivačkog procesa</div>
+            <div class="panel-sub">Prvo struktura, zatim početni novac, pa tek onda šira platforma</div>
+          </div>
+          <span class="status s-green">Glavna mapa</span>
+        </div>
+        <div class="panel-body timeline">
+
+          <div class="step">
+            <h4><span class="step-num">1</span>Prva faza — osnivanje i struktura firme</h4>
+            <p>
+              U ovoj fazi osnivači prvo zaključavaju međusobni dogovor, zatim se priprema i osniva OÜ
+              (estonska firma koja služi kao glavni vlasnički i investicioni sloj), a posle nje kasnije ide DOO
+              (firma u Srbiji za svakodnevni rad, tim, troškove i operativu).
+            </p>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">2</span>Druga faza — finansiranje prve 3 mesečne etape</h4>
+            <p>
+              Ovo je faza ovog dokumenta. U njoj osnivači obezbeđuju prvi kapital (prvi novac sa strane)
+              da projekat može da radi prva 3 meseca, angažuje ključne ljude, kupi osnovnu opremu i dovede proizvod do Ana v2.
+            </p>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">3</span>Treća faza — sledeća razvojna etapa ZOTA projekta</h4>
+            <p>
+              Tek kada postoji uređena struktura i kada Ana v2 izađe kao ozbiljniji proizvodni korak,
+              tada se prelazi na širu razvojnu priču ZOTA platforme. To je sledeća faza, a ne ova.
+            </p>
+          </div>
+        </div>
+
+        <div class="phase">
+          <strong>Najprostije objašnjenje</strong>
+          Prva faza pravi firmu. Druga faza obezbeđuje početni novac. Treća faza širi projekat dalje.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="goal">
+      <h2 class="section-title">2. Šta je cilj druge faze</h2>
+      <p class="section-desc">Ako osnivači ne razumeju cilj ove faze, lako mogu da krenu u pogrešnom pravcu.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Glavni cilj</div>
+            <div class="panel-sub">Prvi novac ne služi za luksuz, nego za prelazak preko najtežeg početnog perioda</div>
+          </div>
+          <span class="status s-amber">Osnivački fokus</span>
+        </div>
+        <div class="panel-body grid g2">
+          <div class="card">
+            <h3>Šta ova faza treba da postigne</h3>
+            <ul class="list">
+              <li>da firma ima dovoljno novca za prva 3 meseca rada</li>
+              <li>da se angažuju ključni ljudi za razvoj</li>
+              <li>da se obezbede računari, osnovna oprema i radni uslovi</li>
+              <li>da Ana v2 izađe kao ozbiljniji proizvodni korak</li>
+              <li>da se sve to uradi bez gubitka kontrole osnivača</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Šta ova faza nije</h3>
+            <ul class="list">
+              <li>nije velika investiciona runda</li>
+              <li>nije prodaja velikog dela firme</li>
+              <li>nije široka marketinška kampanja</li>
+              <li>nije završna ZOTA platform faza</li>
+              <li>nije razlog da osnivači izgube mir i pristanu na loše uslove</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase">
+          <strong>Jedna rečenica</strong>
+          Cilj ove faze je da se obezbedi most od današnjeg stanja do Ana v2, a da firma pritom ostane pod kontrolom osnivača.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="amount">
+      <h2 class="section-title">3. Koliko novca je potrebno</h2>
+      <p class="section-desc">Ovaj deo daje jasan raspon da niko ne nagađa da li treba premalo ili previše.</p>
+
+      <div class="grid g3">
+        <div class="metric">
+          <div class="value">≈ 6M RSD</div>
+          <div class="label">najmanji iznos za veoma stegnut početak</div>
+        </div>
+        <div class="metric">
+          <div class="value">9–12M RSD</div>
+          <div class="label">najzdraviji cilj za ovu fazu</div>
+        </div>
+        <div class="metric">
+          <div class="value">≈ 10M RSD</div>
+          <div class="label">radna brojka za interno planiranje</div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:18px;">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Objašnjenje iznosa</div>
+            <div class="panel-sub">Zašto postoji raspon, a ne samo jedna brojka</div>
+          </div>
+        </div>
+        <div class="panel-body grid g3">
+          <div class="card">
+            <h3>Donja granica</h3>
+            <p>
+              Oko 6 miliona RSD može da posluži samo za veoma skroman početak.
+              To znači manje prostora za greške, manje komfora i veći pritisak na osnivače.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Preporučeni raspon</h3>
+            <p>
+              Od 9 do 12 miliona RSD je zdraviji opseg jer omogućava realniji rad, bolji tempo
+              i veću šansu da Ana v2 izađe kako treba.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Radna brojka</h3>
+            <p>
+              Oko 10 miliona RSD je praktična srednja brojka koju osnivači mogu da koriste
+              za računanje i planiranje troškova.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="use">
+      <h2 class="section-title">4. Na šta novac tačno ide</h2>
+      <p class="section-desc">Kad osnivači traže novac, moraju da znaju tačno za šta ga traže. To je jedna od najvažnijih stvari.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Namena novca</div>
+            <div class="panel-sub">Use of funds (tačna namena prikupljenog novca)</div>
+          </div>
+          <span class="status s-green">Praktično i merljivo</span>
+        </div>
+        <div class="panel-body grid g4">
+          <div class="card">
+            <h3>Ključni ljudi</h3>
+            <p>
+              2 do 4 važna čoveka za razvoj sistema: programeri, backend rad, povezivanje sistema,
+              AI logika i stabilizacija do Ana v2.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Oprema</h3>
+            <p>
+              Računari, tehnička oprema i osnovni alati bez kojih razvoj ne može ozbiljno da se odvija.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Radni uslovi</h3>
+            <p>
+              Minimalan prostor ili organizacija rada koja omogućava da tim funkcioniše uredno i svakodnevno.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Pravni i administrativni troškovi</h3>
+            <p>
+              Troškovi vezani za firmu, računovođu, pravnu pripremu i kasniji operativni sloj.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid g2" style="margin-top:18px;">
+          <div class="card">
+            <h3>Dozvoljeni rani troškovi</h3>
+            <ul class="list">
+              <li>programeri i ključni saradnici</li>
+              <li>oprema i osnovna infrastruktura</li>
+              <li>softverski alati potrebni za rad</li>
+              <li>računovodstvo i pravna podrška</li>
+              <li>organizacija rada do Ana v2</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Troškovi koji ne smeju prerano da pojedu budžet</h3>
+            <ul class="list">
+              <li>velik kancelarijski luksuz</li>
+              <li>prevelik tim bez potrebe</li>
+              <li>agresivan marketing bez proizvoda koji je spreman</li>
+              <li>širenje platformske priče pre nego što Ana v2 pokaže rezultat</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase">
+          <strong>Prosto objašnjenje</strong>
+          Ovaj novac ne služi da firma izgleda veliko. Ovaj novac služi da firma stvarno uradi posao i izbaci Ana v2.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="entry">
+      <h2 class="section-title">5. Gde novac ulazi i zašto</h2>
+      <p class="section-desc">Ovaj deo je jako važan jer mnogi osnivači pogreše baš ovde i naprave haos između firmi.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Ulazna tačka novca</div>
+            <div class="panel-sub">OÜ (estonska holding firma) prima prvi spoljašnji novac</div>
+          </div>
+          <span class="status s-blue">Strukturna disciplina</span>
+        </div>
+        <div class="panel-body grid g2">
+          <div class="card">
+            <h3>Zašto OÜ prima novac</h3>
+            <ul class="list">
+              <li>OÜ je glavni vlasnički sloj</li>
+              <li>u OÜ je tabela vlasništva (cap table = ko koliko ima)</li>
+              <li>OÜ je prikladnije mesto za buduće investitore</li>
+              <li>OÜ je vrh strukture, a ne lokalna svakodnevna operativa</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Zašto DOO ne treba da bude prva ulazna tačka</h3>
+            <ul class="list">
+              <li>DOO služi za svakodnevni rad u Srbiji</li>
+              <li>DOO nije zamišljen kao glavni investicioni vrh</li>
+              <li>ako novac uđe na pogrešno mesto, kasnije nastaju komplikacije</li>
+              <li>mešaju se operativa, vlasništvo i investitorska logika</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase warning">
+          <strong>Važno upozorenje</strong>
+          Ako osnivači od početka ne znaju gde novac ulazi, kasnije mogu nastati problemi oko vlasništva, troškova, prenosa novca i odnosa između OÜ i DOO.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="rules">
+      <h2 class="section-title">6. Pod kojim pravilima novac sme da uđe</h2>
+      <p class="section-desc">Ovde osnivači štite sebe od panike i od loših dogovora.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Pravila prvog ulaganja</div>
+            <div class="panel-sub">Kapital (novac uložen spolja) ne sme da uđe bez jasnih granica</div>
+          </div>
+          <span class="status s-amber">Prvo pravila, pa razgovor</span>
+        </div>
+        <div class="panel-body grid g2">
+          <div class="card">
+            <h3>Šta mora da bude jasno pre bilo kog razgovora</h3>
+            <ul class="list">
+              <li>koliki je ciljani iznos koji se traži</li>
+              <li>da li ulazi jedan investitor ili više njih</li>
+              <li>da li novac dolazi odjednom ili iz više delova</li>
+              <li>koliko sme biti najveće rano smanjenje procenta osnivača (rana dilucija)</li>
+              <li>ko odobrava konačne uslove</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Šta ne sme da se desi</h3>
+            <ul class="list">
+              <li>da osnivači prihvate prvi novac samo zato što su pod pritiskom</li>
+              <li>da neko sa strane dobije previše moći prerano</li>
+              <li>da uslovi budu različiti i neuredni za svakog investitora</li>
+              <li>da se izgubi founders kontrola zbog brzine</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid g3" style="margin-top:18px;">
+          <div class="card">
+            <h3>5–7%</h3>
+            <p>
+              Mali i oprezan raspon ako se ide na veoma ograničeno rano otvaranje prostora investitoru.
+            </p>
+          </div>
+          <div class="card">
+            <h3>8–12%</h3>
+            <p>
+              Najzdraviji radni raspon za prvu kontrolisanu investicionu fazu ako baš mora da postoji
+              rano smanjenje procenta osnivača.
+            </p>
+          </div>
+          <div class="card">
+            <h3>12–15%</h3>
+            <p>
+              Gornja zona opreza. Preko ovoga se mora ići veoma pažljivo jer pritisak na founders blok postaje ozbiljniji.
+            </p>
+          </div>
+        </div>
+
+        <div class="phase">
+          <strong>Najprostije rečeno</strong>
+          U ovoj fazi nije cilj da neko “uđe jako”, nego da firma dobije dovoljno novca da prođe prvu etapu, a da osnivači ostanu sigurni.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="protection">
+      <h2 class="section-title">7. Šta osnivači moraju da zaštite</h2>
+      <p class="section-desc">Ovo je centralni deo zaštite. Nije dovoljno samo uzeti novac. Mora da se zna šta ne sme da bude izgubljeno.</p>
+
+      <div class="grid g3">
+        <div class="metric">
+          <div class="value">4</div>
+          <div class="label">osnivača</div>
+        </div>
+        <div class="metric">
+          <div class="value">25%</div>
+          <div class="label">početno svakome</div>
+        </div>
+        <div class="metric">
+          <div class="value">100%</div>
+          <div class="label">jasna saglasnost za strateške odluke</div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:18px;">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Zaštita founders bloka</div>
+            <div class="panel-sub">Founders blok = sva 4 osnivača kao zajednička osnova kontrole</div>
+          </div>
+          <span class="status s-red">Bez preglasavanja</span>
+        </div>
+        <div class="panel-body grid g2">
+          <div class="card">
+            <h3>Odluke koje ne smeju bez svih 4</h3>
+            <ul class="list">
+              <li>ulazak investitora</li>
+              <li>promena procenta vlasništva</li>
+              <li>izdavanje novih udela</li>
+              <li>davanje posebnih prava investitoru</li>
+              <li>prodaja firme, kontrole ili važnog intelektualnog vlasništva</li>
+              <li>davanje udela savetnicima bez zajedničke odluke</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Najveće rane greške</h3>
+            <ul class="list">
+              <li>pristati na loš dogovor jer “nam hitno treba novac”</li>
+              <li>pomešati administrativni potpis sa pravom da neko sam menja strukturu</li>
+              <li>ne postaviti gornju granicu ranog smanjenja udela osnivača</li>
+              <li>zaboraviti da je cilj ove faze Ana v2, a ne velika investiciona priča</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase warning">
+          <strong>Najveći skriveni rizik</strong>
+          Najveća opasnost nije samo da ne dobijete novac. Najveća opasnost je da ga dobijete pod lošim uslovima i da to kasnije skupo platite.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="memo">
+      <h2 class="section-title">8. Završni deo — interni memorandum o pravilima prvog ulaganja</h2>
+      <p class="section-desc">Ovo je isti dokument koji si ranije video pod nazivom „SAFE Policy / Investment Terms Memo”, ali sada pisan jasno na srpskom, jednostavno i za osnivače.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Interni memorandum o pravilima prvog ulaganja</div>
+            <div class="panel-sub">Interni dokument koji osnivači zaključuju pre prvog razgovora o ulaganju</div>
+          </div>
+          <span class="status s-green">Ugrađeno u ovaj HTML</span>
+        </div>
+        <div class="panel-body">
+
+          <div class="grid g2">
+            <div class="card">
+              <h3>Šta je ovaj memorandum</h3>
+              <p>
+                Ovo je interni dokument osnivača koji unapred kaže pod kojim pravilima firma sme da primi prvi spoljašnji novac.
+                On ne služi da zbuni osnivače pravnim izrazima, nego da ih zaštiti od haotičnih dogovora.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>Zašto ovaj memorandum postoji</h3>
+              <p>
+                Zato što se pravila moraju zaključati pre nego što neko spolja počne da nudi novac.
+                Ako pravila nisu zaključana, lako se ulazi u loš dogovor.
+              </p>
+            </div>
+          </div>
+
+          <div class="phase">
+            <strong>Prosto objašnjenje</strong>
+            Ovaj memorandum kaže: koliko tražimo, za šta tražimo, gde novac ulazi, koliko osnivači smeju da popuste i ko mora da kaže „da” da bi ulaganje bilo prihvaćeno.
+          </div>
+
+          <div class="panel" style="margin-top:18px;">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">A. Cilj memoranduma</div>
+                <div class="panel-sub">Šta ovaj dokument treba da zaštiti i omogući</div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <ul class="checklist" style="margin-top:0;">
+                <li>da firma može da primi prvi novac bez gubitka kontrole</li>
+                <li>da svi osnivači isto razumeju šta prihvataju</li>
+                <li>da novac služi za Ana v2 i prvu operativnu fazu</li>
+                <li>da se izbegnu loši i nejasni investitorski dogovori</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:18px;">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">B. Osnovna pravila prvog ulaganja</div>
+                <div class="panel-sub">Ovo su početne unutrašnje granice osnivača</div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Stavka</th>
+                    <th>Radna osnova</th>
+                    <th>Objašnjenje</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Ciljani iznos</td>
+                    <td>9–12M RSD</td>
+                    <td>To je raspon koji osnivači smatraju zdravim za prva 3 meseca i izlazak Ana v2.</td>
+                  </tr>
+                  <tr>
+                    <td>Radna brojka</td>
+                    <td>oko 10M RSD</td>
+                    <td>Srednja brojka korisna za planiranje i računanje.</td>
+                  </tr>
+                  <tr>
+                    <td>Ulazna tačka novca</td>
+                    <td>OÜ</td>
+                    <td>Prvi spoljašnji novac ide u estonski holding sloj, ne direktno u lokalnu operativu.</td>
+                  </tr>
+                  <tr>
+                    <td>Glavna namena</td>
+                    <td>Ana v2</td>
+                    <td>Novac mora da vodi do konkretne sledeće razvojne etape.</td>
+                  </tr>
+                  <tr>
+                    <td>Dozvoljeni oblik ranog ulaganja</td>
+                    <td>kontrolisani rani investicioni dogovor</td>
+                    <td>Kasnije pravnik može da ga pretvori u odgovarajući pravni oblik, ali osnivači prvo moraju interno da odobre princip.</td>
+                  </tr>
+                  <tr>
+                    <td>Rani raspon popuštanja prostora investitoru</td>
+                    <td>5–12% kao radni okvir, uz poseban oprez iznad toga</td>
+                    <td>Ovo služi kao unutrašnja granica da osnivači ne odu predaleko u prvoj etapi.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:18px;">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">C. Na šta novac sme da se troši</div>
+                <div class="panel-sub">Prvi novac ima ograničen zadatak</div>
+              </div>
+            </div>
+            <div class="panel-body grid g2">
+              <div class="card">
+                <h3>Dozvoljena namena</h3>
+                <ul class="list">
+                  <li>ključni koderi i tehnički saradnici</li>
+                  <li>računari i oprema</li>
+                  <li>osnovni radni prostor i infrastruktura</li>
+                  <li>pravno i računovodstveno postavljanje</li>
+                  <li>most do Ana v2</li>
+                </ul>
+              </div>
+              <div class="card">
+                <h3>Nedozvoljena ili prerana namena</h3>
+                <ul class="list">
+                  <li>nepotreban luksuz</li>
+                  <li>prevelik tim bez jasnog zadatka</li>
+                  <li>velika medijska i marketinška potrošnja bez proizvoda</li>
+                  <li>širenje platforme pre nego što Ana v2 potvrdi pravac</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:18px;">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">D. Ko mora da odobri ulaganje</div>
+                <div class="panel-sub">Ovde se štiti founders blok</div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <ul class="checklist" style="margin-top:0;">
+                <li>nijedno prvo ulaganje ne sme biti prihvaćeno bez saglasnosti sva 4 osnivača</li>
+                <li>nijedna promena procenta vlasništva ne sme biti urađena bez saglasnosti sva 4 osnivača</li>
+                <li>nijedna posebna prava za investitora ne smeju biti data bez saglasnosti sva 4 osnivača</li>
+                <li>nijedan savetnik ne dobija procenat firme bez zajedničke odluke osnivača</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:18px;">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">E. Šta pravnik kasnije radi sa ovim dokumentom</div>
+                <div class="panel-sub">Ovaj interni memorandum nije kraj, nego osnova za formalni pravni dokument</div>
+              </div>
+            </div>
+            <div class="panel-body grid g2">
+              <div class="card">
+                <h3>Šta osnivači rade sada</h3>
+                <ul class="list">
+                  <li>zaključavaju pravila među sobom</li>
+                  <li>određuju granice i ciljeve</li>
+                  <li>sprečavaju haotične investitorske razgovore</li>
+                </ul>
+              </div>
+              <div class="card">
+                <h3>Šta pravnik radi posle</h3>
+                <ul class="list">
+                  <li>pretvara ova pravila u formalni pravni dokument</li>
+                  <li>prilagođava ih pravnom obliku ulaganja</li>
+                  <li>pazi da sve bude usklađeno sa firmom i nadležnostima</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="phase">
+            <strong>Završna rečenica memoranduma</strong>
+            Osnivači ovim internim memorandumom potvrđuju da prvi spoljašnji novac sme da uđe samo ako služi cilju Ana v2, ako ulazi kroz OÜ, ako ne ruši founders kontrolu i ako sva 4 osnivača jasno pristanu na uslove.
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <strong>ZOTA — finansiranje prve faze do Ana v2</strong><br/>
+      Ovaj dokument je napisan za osnivače jednostavnijim jezikom da bi svako mogao da razume drugu fazu procesa bez tehničkog i pravnog predznanja.
+      <br/><br/>
+      Sledeći korak posle ovog dokumenta nije novi komplikovani pitch, nego još precizniji interni radni tekst koji advokat može da pretvori u formalne investicione papire.
+    </div>
+  </div>
+</body>
+</html>
