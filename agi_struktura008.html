@@ -586,7 +586,402 @@
         Najveći rizik treće faze nije da projekat ostane mali, nego da prerano pokuša da postane velik i tako oslabi ono što je već bilo dobro postavljeno.
       </div>
     </section>
+    <section class="section" id="technical-appendix">
+  <h2 class="section-title">9. Tehnički dodatak — jedan mogući prelaz od Ana v2 ka širem ZOTA sistemu</h2>
+  <p class="section-desc">
+    Ovaj deo nije glavni osnivački plan i nije obećanje da je sve već izgrađeno.
+    Ovo je tehnički dodatak koji osnivačima pokazuje <strong>jedan mogući pravac razvoja</strong> posle Ana v2.
+    Napisan je jednostavnije, a gde god postoji strani ili stručni izraz, odmah je dodat opis na srpskom u zagradi.
+  </p>
 
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Zašto ovaj dodatak postoji</div>
+        <div class="panel-sub">Da osnivači vide kako se jedan proizvod može širiti u veći sistem, ali bez tehničkog preopterećenja</div>
+      </div>
+      <span class="status s-blue">Tehnički appendix</span>
+    </div>
+    <div class="panel-body grid g2">
+      <div class="card">
+        <h3>Šta ovaj dodatak pokazuje</h3>
+        <ul class="list">
+          <li>kako Ana v2 može da preraste u širi sistem</li>
+          <li>kako više komunikacionih kanala može biti povezano u jednu celinu</li>
+          <li>kako sistem može kasnije da radi za više klijenata ili partnera</li>
+          <li>kako se korisnik vodi od razgovora do konkretnog prodajnog ishoda</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Šta ovaj dodatak ne znači</h3>
+        <ul class="list">
+          <li>ne znači da je sve već izgrađeno</li>
+          <li>ne znači da odmah idemo na ogroman obim</li>
+          <li>ne znači da projekat mora ostati samo u jednoj industriji</li>
+          <li>ne znači da osnivači sada moraju da ulaze u duboku tehničku arhitekturu</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <strong>Najprostije objašnjenje</strong>
+      Ovaj deo samo pokazuje kako bi Ana v2 jednog dana mogla da postane deo većeg ZOTA sistema koji povezuje razgovor, preporuku, kontakt, obradu i dalje akcije.
+    </div>
+  </div>
+</section>
+
+<section class="section" id="technical-high-level">
+  <h2 class="section-title">10. Visoki pregled sistema</h2>
+  <p class="section-desc">
+    „Visoki pregled sistema“ znači pogled odozgo: ne ulazimo u sitne tehničke detalje,
+    nego gledamo koje su glavne celine sistema i kako su povezane.
+  </p>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Jedan mogući model šireg sistema</div>
+        <div class="panel-sub">Od korisnika, preko AI razgovora, do obrade kontakta i prodajnog toka</div>
+      </div>
+      <span class="status s-green">Pojednostavljen pregled</span>
+    </div>
+    <div class="panel-body">
+      <div class="card">
+        <pre style="white-space:pre-wrap;color:#d7ecff;font-family:Consolas,Monaco,'Courier New',monospace;">
+KORISNICI NA INTERNETU
+(sajt, poruke, glasovni kontakt)
+        │
+        ▼
+ULAZNI KANALI
+(različiti načini komunikacije sa korisnikom)
+        │
+        ▼
+GLAVNI ULAZ SISTEMA
+(jedna centralna tačka kroz koju zahtevi ulaze u sistem)
+        │
+        ▼
+AI SLOJ ZA RAZGOVOR I LOGIKU
+(AI deo koji vodi razgovor, postavlja pitanja i razume potrebe)
+        │
+        ▼
+BAZA ZNANJA
+(podaci, pravila, informacije, odgovori, ponude)
+        │
+        ▼
+PRODAJNI TOK
+(koraci kojima se korisnik vodi ka preporuci ili odluci)
+        │
+        ▼
+OBRADA KONTAKTA
+(beleženje korisnika, interesa i sledeće akcije)
+        │
+        ▼
+BAZA KONTAKATA I REZULTATA
+(mesto gde se čuvaju podaci o razgovorima, interesovanjima i ishodima)
+        │
+        ├── IZVEŠTAJI I PRAĆENJE REZULTATA
+        ├── IZVOZ U CRM (sistem za vođenje prodajnih kontakata)
+        └── AUTOMATSKI POVRATNI POZIVI
+        </pre>
+      </div>
+
+      <div class="phase">
+        <strong>Objašnjenje</strong>
+        Ideja je da korisnik može da dođe kroz više kanala, da AI vodi razgovor, da sistem razume šta mu treba,
+        da to pretvori u konkretan kontakt ili priliku i da posle toga firma može dalje da reaguje.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="technical-modules">
+  <h2 class="section-title">11. Glavni delovi sistema objašnjeni prostim jezikom</h2>
+  <p class="section-desc">
+    Ovde su objašnjeni najvažniji tehnički pojmovi, ali tako da svaki osnivač može da zna čemu služe.
+  </p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>AI Chat Engine (AI sistem za tekstualni razgovor)</h3>
+      <p>
+        Ovo je deo sistema koji vodi razgovor sa korisnikom preko teksta.
+        Na primer: preko sajta, poruka ili drugih kanala.
+        Njegov zadatak je da razume pitanje, vodi korisnika kroz razgovor i pomogne mu da dođe do odgovora ili preporuke.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Voice AI Engine (AI sistem za glasovni razgovor)</h3>
+      <p>
+        Ovo je deo sistema koji omogućava da korisnik priča glasom, a ne samo tekstom.
+        Drugim rečima: korisnik može da razgovara sa AI glasovnim asistentom kao preko poziva.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Sales Funnel AI (AI prodajni tok)</h3>
+      <p>
+        Ovo je deo koji vodi korisnika kroz niz pitanja kako bi sistem razumeo šta mu tačno treba.
+        Na primer: za koga je usluga, koliko uređaja koristi, koje potrebe ima i koja ponuda mu najviše odgovara.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Knowledge Base (baza znanja)</h3>
+      <p>
+        To je uređena baza informacija iz koje AI uzima podatke.
+        U njoj mogu biti cene, ponude, pravila, odgovori na česta pitanja, karakteristike proizvoda i slične stvari.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Lead Management System (sistem za upravljanje kontaktima i prodajnim tragovima)</h3>
+      <p>
+        „Lead“ znači kontakt ili potencijalni kupac koji je pokazao interesovanje.
+        Ovaj sistem beleži ko je korisnik, šta ga zanima, dokle je stigao u razgovoru i šta je sledeći korak.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Analytics (analitika, odnosno praćenje rezultata)</h3>
+      <p>
+        Ovo je deo koji pokazuje šta se dešava u sistemu:
+        koliko je bilo razgovora, koliko kontakata, koliko uspešnih preporuka i gde postoje problemi ili gubici.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="technical-flow">
+  <h2 class="section-title">12. Kako korisnik prolazi kroz sistem</h2>
+  <p class="section-desc">
+    Ovo je „tok korisnika“ (put kojim korisnik ide kroz sistem od prvog kontakta do mogućeg ishoda).
+  </p>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Primer toka korisnika</div>
+        <div class="panel-sub">Od prvog javljanja do konkretne prodajne prilike</div>
+      </div>
+      <span class="status s-amber">Primer procesa</span>
+    </div>
+    <div class="panel-body">
+      <div class="card">
+        <pre style="white-space:pre-wrap;color:#d7ecff;font-family:Consolas,Monaco,'Courier New',monospace;">
+Korisnik dolazi na sajt
+        ↓
+AI započinje razgovor
+        ↓
+AI postavlja nekoliko važnih pitanja
+        ↓
+Sistem razume potrebe korisnika
+        ↓
+Sistem daje preporuku
+        ↓
+Korisnik ostavlja broj telefona ili drugi kontakt
+        ↓
+Kontakt se beleži u bazi
+        ↓
+Firma ili AI nastavljaju obradu tog kontakta
+        ↓
+Kontakt može da pređe u prodaju ili dalji razgovor
+        </pre>
+      </div>
+
+      <div class="phase">
+        <strong>Suština</strong>
+        Ovo osnivačima pokazuje da projekat nije samo „AI koji priča“, nego sistem koji razgovor pretvara u konkretan poslovni rezultat.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="technical-multitenant">
+  <h2 class="section-title">13. Jedna platforma za više klijenata</h2>
+  <p class="section-desc">
+    Ovde objašnjavamo izraz <strong>multi-tenant</strong> (jedna ista platforma koja može služiti za više različitih klijenata, a da svaki ima svoje podatke i svoja podešavanja).
+  </p>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Multi-tenant model</div>
+        <div class="panel-sub">Jedna osnova sistema, više različitih partnera ili klijenata</div>
+      </div>
+      <span class="status s-blue">Model budućeg širenja</span>
+    </div>
+    <div class="panel-body">
+      <div class="card">
+        <pre style="white-space:pre-wrap;color:#d7ecff;font-family:Consolas,Monaco,'Courier New',monospace;">
+JEDNA GLAVNA PLATFORMA
+         │
+   ┌─────┼─────┐
+   │     │     │
+Klijent A  Klijent B  Klijent C
+   │     │     │
+Svoja pravila
+Svoje cene
+Svoji podaci
+Svoj prodajni tok
+        </pre>
+      </div>
+
+      <div class="grid g2" style="margin-top:18px;">
+        <div class="card">
+          <h3>Šta ovo znači za osnivače</h3>
+          <ul class="list">
+            <li>ne pravi se svaki put ceo sistem ispočetka</li>
+            <li>jedna osnova može služiti za više partnera</li>
+            <li>svaki partner ipak ima svoj odvojen prostor i svoje podatke</li>
+            <li>to povećava mogućnost rasta bez potpunog dupliranja rada</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Zašto je ovo važno</h3>
+          <ul class="list">
+            <li>pokazuje kako sistem može rasti</li>
+            <li>pokazuje da ZOTA može imati širu primenu</li>
+            <li>pokazuje razliku između jednog proizvoda i platforme</li>
+            <li>pomaže osnivačima da razumeju dugoročniji pravac</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="technical-callback">
+  <h2 class="section-title">14. Automatski povratni poziv kao sledeći nivo</h2>
+  <p class="section-desc">
+    Ovde objašnjavamo deo koji je posebno vredan za budući razvoj:
+    <strong>callback system</strong> (sistem za automatski povratni poziv korisniku).
+  </p>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Callback system</div>
+        <div class="panel-sub">Korisnik ostavi broj, sistem kasnije nastavlja kontakt</div>
+      </div>
+      <span class="status s-green">Mogući sledeći razvojni pravac</span>
+    </div>
+    <div class="panel-body grid g2">
+      <div class="card">
+        <h3>Kako to radi prostim jezikom</h3>
+        <ul class="list">
+          <li>korisnik ostavi broj telefona</li>
+          <li>sistem beleži taj kontakt</li>
+          <li>kontakt ulazi u red za dalju obradu</li>
+          <li>AI glasovni sistem ili tim mogu kasnije da nastave razgovor</li>
+          <li>to povećava šansu da interesovanje pređe u konkretan ishod</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Zašto je ovo važno</h3>
+        <ul class="list">
+          <li>pokazuje da AI ne mora stati na prvom razgovoru</li>
+          <li>uvodi sledeći nivo vrednosti sistema</li>
+          <li>pretvara kontakt u nastavljen prodajni proces</li>
+          <li>povezuje tekstualni i glasovni sloj sistema</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <pre style="white-space:pre-wrap;color:#d7ecff;font-family:Consolas,Monaco,'Courier New',monospace;">
+Korisnik ostavi broj telefona
+        ↓
+Sistem beleži kontakt
+        ↓
+Kontakt ulazi u red za obradu
+        ↓
+AI glasovni sistem ili tim pozivaju korisnika
+        ↓
+Razgovor se nastavlja
+        ↓
+Veća šansa za konkretan ishod
+      </pre>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="technical-scale">
+  <h2 class="section-title">15. Kako sistem može kasnije da raste</h2>
+  <p class="section-desc">
+    Ovde ne ulazimo duboko u tehničke detalje, nego prostim jezikom objašnjavamo ideju
+    <strong>skaliranja</strong> (širenja sistema tako da može da radi sa više korisnika i više opterećenja).
+  </p>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Skaliranje sistema</div>
+        <div class="panel-sub">Kako sistem može postepeno da izdrži veći broj razgovora i korisnika</div>
+      </div>
+      <span class="status s-amber">Dugoročna mogućnost</span>
+    </div>
+    <div class="panel-body grid g2">
+      <div class="card">
+        <h3>Šta ovo znači običnim jezikom</h3>
+        <p>
+          Ako broj korisnika raste, sistem mora biti organizovan tako da može da primi više razgovora,
+          više zahteva i više obrade, a da se ne raspadne ili uspori previše.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Šta osnivači treba da zapamte</h3>
+        <ul class="list">
+          <li>ne mora sve biti ogromno od prvog dana</li>
+          <li>ali sistem treba graditi tako da kasnije može da raste</li>
+          <li>dobar tehnički pravac pomaže da rast bude lakši</li>
+          <li>ovo je buduća sposobnost sistema, a ne trenutno obećanje</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase warning">
+      <strong>Važno upozorenje</strong>
+      Ovaj appendix ne znači da projekat sada odmah podržava ogroman broj klijenata ili razgovora.
+      On samo pokazuje kako bi sistem mogao da bude postavljen da kasnije raste uredno i smisleno.
+    </div>
+  </div>
+</section>
+
+<section class="section" id="technical-conclusion">
+  <h2 class="section-title">16. Završno objašnjenje ovog tehničkog dodatka</h2>
+  <p class="section-desc">
+    Ovaj završni deo povezuje tehnički appendix sa osnivačkom slikom treće grane.
+  </p>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Kako osnivači treba da čitaju ovaj dodatak</div>
+        <div class="panel-sub">Ne kao gotov sistem, nego kao razumljiv pravac razvoja</div>
+      </div>
+      <span class="status s-green">Osnivačko tumačenje</span>
+    </div>
+    <div class="panel-body">
+      <ul class="checklist" style="margin-top:0;">
+        <li>Ovaj appendix ne zamenjuje glavni founders dokument treće grane.</li>
+        <li>On služi da pokaže jedan mogući tehnički pravac razvoja posle Ana v2.</li>
+        <li>Najvažnije je razumeti logiku sistema, a ne pamtiti sve tehničke izraze.</li>
+        <li>Strani izrazi su dati samo zato da osnivači mogu da ih prepoznaju i kasnije provere.</li>
+        <li>Glavna vrednost ovog dodatka je da pokaže kako razgovor može da preraste u širi poslovni sistem.</li>
+      </ul>
+
+      <div class="phase">
+        <strong>Završna rečenica</strong>
+        Za osnivače je najvažnije da razumeju sledeće: Ana v2 može biti početni motor, a ZOTA može postati širi sistem oko tog motora — ali samo ako se razvoj širi uredno, korak po korak i bez preskakanja temelja.
+      </div>
+    </div>
+  </div>
+</section>
     <section class="section" id="closing">
       <h2 class="section-title">8. Završni plan treće faze</h2>
       <p class="section-desc">Ovo je završni blok koji osnivačima daje jednostavan plan: šta tačno treba zaključiti kada se uđe u treću fazu.</p>
