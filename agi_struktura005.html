@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZOTA — OÜ osnivanje | proceduralni checklist za osnivače</title>
+  <style>
+    :root{
+      --bg:#07101d;
+      --bg2:#0b1530;
+      --panel:#101a33;
+      --line:rgba(255,255,255,.09);
+      --line2:rgba(99,220,255,.18);
+      --text:#eef4ff;
+      --muted:#a5b7da;
+      --blue:#6d8cff;
+      --cyan:#63dcff;
+      --green:#33d69f;
+      --amber:#ffbf69;
+      --red:#ff6b6b;
+      --shadow:0 18px 44px rgba(0,0,0,.28);
+      --radius:24px;
+      --max:1320px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      color:var(--text);
+      line-height:1.62;
+      background:
+        radial-gradient(circle at top right, rgba(109,140,255,.12), transparent 24%),
+        radial-gradient(circle at top left, rgba(99,220,255,.08), transparent 20%),
+        linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
+    }
+
+    body::before{
+      content:"";
+      position:fixed; inset:0; pointer-events:none;
+      background:
+        linear-gradient(rgba(99,220,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,220,255,.035) 1px, transparent 1px);
+      background-size:30px 30px;
+      opacity:.45;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.85), rgba(0,0,0,.20));
+    }
+
+    .wrap{max-width:var(--max);margin:0 auto;padding:22px}
+
+    .topbar{
+      position:sticky;top:12px;z-index:30;
+      display:flex;justify-content:space-between;align-items:center;gap:16px;
+      background:rgba(10,18,28,.82);
+      backdrop-filter:blur(12px);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px 18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+
+    .brand{display:flex;align-items:center;gap:14px;min-width:0}
+    .logo{
+      width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
+      font-weight:900;letter-spacing:.08em;color:#071018;
+      background:linear-gradient(135deg,var(--cyan),#c6f7ff);
+      box-shadow:0 0 24px rgba(99,220,255,.26);
+      flex:0 0 auto;
+    }
+    .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:4px}
+    .title{font-size:24px;font-weight:850;line-height:1.1}
+    .subtitle{font-size:13px;color:var(--muted)}
+
+    .badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;
+      border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:12px;color:var(--text)
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px currentColor}
+    .dot.cyan{background:var(--cyan)}
+    .dot.amber{background:var(--amber)}
+    .dot.red{background:var(--red)}
+
+    .hero{
+      position:relative;overflow:hidden;
+      background:linear-gradient(135deg,#111b37 0%,#21366d 58%,#5b4df0 100%);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:30px;
+      padding:36px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .hero::after{
+      content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;
+      background:radial-gradient(circle, rgba(255,255,255,.18), transparent 65%);pointer-events:none;
+    }
+    .hero .pill{
+      display:inline-block;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.35px;
+      background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);margin-bottom:16px;
+    }
+    .hero h1{font-size:clamp(31px,4.5vw,52px);line-height:1.05;letter-spacing:-.03em;margin-bottom:14px;max-width:980px}
+    .hero p{font-size:17px;color:#dbe5ff;max-width:1000px}
+
+    .navcards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}
+    .navcard{
+      text-decoration:none;color:var(--text);background:linear-gradient(180deg, rgba(18,31,61,.96), rgba(14,24,46,.96));
+      border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);transition:.22s ease;
+    }
+    .navcard:hover{transform:translateY(-4px);border-color:rgba(99,220,255,.24)}
+    .navcard strong{display:block;font-size:16px;margin-bottom:6px}
+    .navcard span{display:block;font-size:13px;color:var(--muted)}
+
+    .section{margin-bottom:18px}
+    .section-title{font-size:28px;margin-bottom:8px}
+    .section-desc{color:var(--muted);margin-bottom:16px}
+
+    .panel{
+      background:linear-gradient(180deg, rgba(18,31,61,.96), rgba(14,24,46,.96));
+      border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
+    }
+    .panel-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .panel-title{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+    .panel-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .panel-body{padding:22px}
+
+    .grid{display:grid;gap:18px}
+    .g2{grid-template-columns:repeat(2,1fr)}
+    .g3{grid-template-columns:repeat(3,1fr)}
+    .g4{grid-template-columns:repeat(4,1fr)}
+
+    .card{
+      padding:20px;border-radius:18px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      min-height:150px;
+    }
+    .card h3,.card h4{margin-bottom:10px}
+    .card p{color:#d7e6f5}
+
+    .metric{
+      background:#0d1630;border:1px solid var(--line);border-radius:18px;padding:18px;text-align:center;
+    }
+    .metric .value{font-size:30px;font-weight:800;color:#a6beff;margin-bottom:6px}
+    .metric .label{font-size:13px;color:#a8badf}
+
+    .list{list-style:none;margin-top:8px}
+    .list li{position:relative;padding-left:18px;margin:8px 0;color:#e5edff}
+    .list li::before{content:"•";position:absolute;left:0;color:#8fb0ff;font-weight:800}
+
+    .checklist{display:grid;gap:10px;margin-top:12px;list-style:none}
+    .checklist li{
+      padding:12px 14px 12px 42px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.03);position:relative;color:#dbe8f4
+    }
+    .checklist li::before{content:"●";position:absolute;left:16px;top:11px;color:var(--green);font-size:16px}
+
+    .phase{margin-top:14px;border-left:4px solid var(--blue);background:#0b1430;border-radius:14px;padding:16px 16px 16px 18px}
+    .phase strong{display:block;margin-bottom:8px;font-size:17px;color:#fff}
+
+    .warning{border-left-color:var(--red)}
+    .warning strong{color:#ffd6d6}
+
+    .timeline{display:grid;gap:14px}
+    .step{border:1px solid var(--line);border-radius:16px;padding:16px;background:rgba(255,255,255,.025)}
+    .step h4{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .step-num{
+      width:28px;height:28px;border-radius:10px;display:grid;place-items:center;font-weight:800;
+      background:linear-gradient(135deg,var(--cyan),#b8f5ff);color:#081018;font-size:13px
+    }
+
+    table{width:100%;border-collapse:collapse;margin-top:12px;overflow:hidden;border-radius:16px}
+    th,td{padding:13px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;vertical-align:top}
+    th{background:#19284c;color:#fff}
+    td{background:#0d1630;color:#ebf2ff}
+    tr:last-child td{border-bottom:none}
+
+    .status{display:inline-block;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.2px;white-space:nowrap}
+    .s-green{background:rgba(51,214,159,.14);color:#caffea}
+    .s-amber{background:rgba(255,191,105,.14);color:#ffe6b8}
+    .s-red{background:rgba(255,107,107,.14);color:#ffd8d8}
+    .s-blue{background:rgba(99,220,255,.14);color:#d6f7ff}
+
+    code.inline{
+      font-family:Consolas,Monaco,'Courier New',monospace;
+      background:rgba(255,255,255,.06);
+      padding:2px 6px;border-radius:8px;border:1px solid rgba(255,255,255,.06);
+      color:#dff3ff;
+    }
+
+    .footer{
+      margin-top:20px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;
+      background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;
+    }
+
+    @media(max-width:1100px){
+      .navcards,.g4,.g3,.g2{grid-template-columns:1fr}
+    }
+    @media(max-width:900px){
+      .topbar{flex-direction:column;align-items:flex-start}
+      .hero{padding:26px}
+      .panel-body{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">ZO</div>
+        <div>
+          <div class="eyebrow">Founder Execution Document</div>
+          <div class="title">ZOTA — OÜ osnivanje i founders execution checklist</div>
+          <div class="subtitle">Polu-operativni dokument za osnivače • spreman za advokata i izvršenje</div>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge"><span class="dot"></span>4 osnivača</span>
+        <span class="badge"><span class="dot cyan"></span>25% svakome</span>
+        <span class="badge"><span class="dot amber"></span>OÜ prvo</span>
+        <span class="badge"><span class="dot red"></span>DOO posle</span>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="pill">Founders / Legal Prep / Execution</div>
+      <h1>Ovaj dokument služi da sva 4 osnivača, advokat i izvršni tim tačno znaju šta se radi prvo, ko je za šta odgovoran i koji su konkretni koraci za osnivanje Estonia OÜ.</h1>
+      <p>
+        Ovo nije pitch deck i nije tehnička prezentacija proizvoda. Ovo je radni dokument za osnivače:
+        redosled osnivanja, definicija pojmova, tačan proceduralni checklist, spisak dokumenata,
+        ko šta priprema, šta mora da odobri svih 4 i koje stvari se ne smeju raditi pre vremena.
+      </p>
+    </section>
+
+    <div class="navcards">
+      <a class="navcard" href="#purpose"><strong>1. Svrha</strong><span>Šta rešava ovaj dokument</span></a>
+      <a class="navcard" href="#glossary"><strong>2. Rečnik</strong><span>Skraćenice i izrazi</span></a>
+      <a class="navcard" href="#decisions"><strong>3. Šta je već odlučeno</strong><span>Zaključane stvari</span></a>
+      <a class="navcard" href="#procedure"><strong>4. OÜ procedura</strong><span>Korak po korak</span></a>
+      <a class="navcard" href="#documents"><strong>5. Dokumenti</strong><span>Šta ide advokatu</span></a>
+      <a class="navcard" href="#roles"><strong>6. Uloge</strong><span>Ko šta vodi</span></a>
+      <a class="navcard" href="#approvals"><strong>7. Saglasnosti</strong><span>Šta traži sva 4</span></a>
+      <a class="navcard" href="#next"><strong>8. Sledeće</strong><span>Šta zaključiti odmah</span></a>
+    </div>
+
+    <section class="section" id="purpose">
+      <h2 class="section-title">1. Šta ovaj dokument znači</h2>
+      <p class="section-desc">Ovo je početni izvršni dokument. Njegov cilj je da se interni founders dogovor prevede u uredan postupak osnivanja OÜ i pripremu kasnijeg DOO-a.</p>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Zašto postoji</div>
+            <div class="panel-sub">Prvo red, pa osnivanje, pa finansiranje</div>
+          </div>
+          <span class="status s-amber">Interni radni dokument</span>
+        </div>
+        <div class="panel-body grid g2">
+          <div class="card">
+            <h3>Ovaj dokument radi</h3>
+            <ul class="list">
+              <li>pretvara founders dogovor u praktičan plan</li>
+              <li>objašnjava OÜ osnivanje prostim jezikom</li>
+              <li>daje checklist za advokata i izvršenje</li>
+              <li>pokazuje gde je potreban oprez i saglasnost svih</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Ovaj dokument ne radi</h3>
+            <ul class="list">
+              <li>nije konačan statut ni konačni shareholders agreement</li>
+              <li>nije zamena za advokata ili poreskog savetnika</li>
+              <li>nije investitorski dokument</li>
+              <li>nije finalni SAFE ugovor</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="glossary">
+      <h2 class="section-title">2. Rečnik skraćenica i izraza</h2>
+      <p class="section-desc">Sve ključne reči moraju biti jasne svakom osnivaču.</p>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Glossary</div>
+            <div class="panel-sub">Bez klimanja glavom na nerazumljive termine</div>
+          </div>
+          <span class="status s-blue">Osnova razumevanja</span>
+        </div>
+        <div class="panel-body">
+          <table>
+            <thead>
+              <tr>
+                <th>Izraz</th>
+                <th>Šta znači</th>
+                <th>Jednostavno objašnjenje</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="inline">OÜ</code></td>
+                <td>Estonsko društvo sa ograničenom odgovornošću</td>
+                <td>Glavna vlasnička i investiciona firma u planiranoj strukturi.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">DOO</code></td>
+                <td>Društvo sa ograničenom odgovornošću u Srbiji</td>
+                <td>Lokalna operativna firma za tim, troškove, ugovore i izvršenje.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">Holding</code></td>
+                <td>Vlasnički sloj iznad operative</td>
+                <td>Firma koja drži vlasništvo, investitore i stratešku kontrolu.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">Cap table</code></td>
+                <td>Tabela vlasništva</td>
+                <td>Ko koliko procenata ima u firmi.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">Governance</code></td>
+                <td>Pravila upravljanja</td>
+                <td>Ko odlučuje, ko potpisuje, šta može većinom a šta mora jednoglasno.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">Reserved matters</code></td>
+                <td>Zaštićene odluke</td>
+                <td>Odluke koje ne smeju proći bez saglasnosti svih osnivača.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">SAFE</code></td>
+                <td>Simple Agreement for Future Equity</td>
+                <td>Investitor daje novac sada, a udeo se računa kasnije po unapred zadatim pravilima.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">IP</code></td>
+                <td>Intellectual Property</td>
+                <td>Kod, brend, dizajn, know-how, dokumentacija i ostala intelektualna svojina.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">Runway</code></td>
+                <td>Vreme rada sa postojećim novcem</td>
+                <td>Kod vas: cilj je prva 3 meseca do izlaska Ana v2.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">Founder consent</code></td>
+                <td>Saglasnost svih osnivača</td>
+                <td>Bez saglasnosti svih 4 odluka ne sme da prođe ako je strateška.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="decisions">
+      <h2 class="section-title">3. Šta je već odlučeno</h2>
+      <p class="section-desc">Ovaj deo sprečava vraćanje unazad i ponovno otvaranje već zatvorenih stvari.</p>
+      <div class="grid g4">
+        <div class="metric">
+          <div class="value">4</div>
+          <div class="label">osnivača</div>
+        </div>
+        <div class="metric">
+          <div class="value">25%</div>
+          <div class="label">svakome</div>
+        </div>
+        <div class="metric">
+          <div class="value">OÜ</div>
+          <div class="label">ide prvo</div>
+        </div>
+        <div class="metric">
+          <div class="value">DOO</div>
+          <div class="label">ide posle</div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:18px;">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Zaključane tačke</div>
+            <div class="panel-sub">Ovo se tretira kao radna osnova za naredni korak</div>
+          </div>
+          <span class="status s-green">Polazna baza</span>
+        </div>
+        <div class="panel-body">
+          <ul class="checklist" style="margin-top:0;">
+            <li>Postoje 4 core osnivača.</li>
+            <li>Startna raspodela je 25% / 25% / 25% / 25%.</li>
+            <li>Founders memo je već urađen.</li>
+            <li>Estonia OÜ ide prvo kao holding i investicioni entry point.</li>
+            <li>Srbija DOO dolazi kasnije kao lokalna operativna firma.</li>
+            <li>Prvi cilj finansiranja je 9–12 miliona RSD za prva 3 meseca i izlazak Ana v2.</li>
+            <li>Ne uvodi se investitor, advisory equity ili option pool bez founder consent mehanizma.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="procedure">
+      <h2 class="section-title">4. Tačan proceduralni checklist za OÜ osnivanje</h2>
+      <p class="section-desc">Ovo je centralni deo dokumenta. Napisan je tako da može da ga razumeju osnivači, a da advokat odmah vidi šta treba da pretvori u formalnu dokumentaciju.</p>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Execution sequence</div>
+            <div class="panel-sub">Od pripreme do registrovane OÜ firme</div>
+          </div>
+          <span class="status s-amber">Checklist za izvršenje</span>
+        </div>
+        <div class="panel-body timeline">
+
+          <div class="step">
+            <h4><span class="step-num">1</span>Potvrditi osnivačku bazu</h4>
+            <p>Pre bilo kakvog pravnog rada potvrđuje se da su 4 osnivača definitivni, da svi ulaze sa po 25% i da nema otvorene rasprave o procentima u ovoj fazi.</p>
+            <ul class="list">
+              <li>potvrditi konačan spisak osnivača</li>
+              <li>potvrditi pravopis punih imena i ličnih podataka</li>
+              <li>potvrditi da nema dodatnih skrivenih obećanja prema trećim licima</li>
+            </ul>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">2</span>Odrediti ko vodi proces</h4>
+            <p>Mora biti jasno ko je glavni koordinator procesa. To ne znači da on sam odlučuje o strateškim stvarima, nego da vodi administraciju i komunikaciju.</p>
+            <ul class="list">
+              <li>imenovati jednog glavnog koordinatora</li>
+              <li>imenovati rezervnu osobu za administraciju</li>
+              <li>potvrditi ko komunicira sa advokatom i računovođom</li>
+            </ul>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">3</span>Zaključati minimalni OÜ osnivački paket</h4>
+            <p>Ovo je prvi sledeći dokument posle founders memo-a. On nije još investitorski dokument, nego paket za osnivanje firme.</p>
+            <ul class="list">
+              <li>naziv firme</li>
+              <li>osnivači i procenti</li>
+              <li>ko je board / managing role</li>
+              <li>ko ima pravo potpisa za administrativne korake</li>
+              <li>koje odluke traže saglasnost sva 4 osnivača</li>
+            </ul>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">4</span>Pripremiti lične i administrativne podatke</h4>
+            <p>Svaki osnivač mora dostaviti sve što je potrebno za pravno i administrativno otvaranje firme.</p>
+            <ul class="list">
+              <li>puno ime i prezime</li>
+              <li>datum rođenja</li>
+              <li>državljanstvo</li>
+              <li>adresa prebivališta</li>
+              <li>kopija pasoša ili drugog prihvatljivog dokumenta</li>
+              <li>kontakt podaci za formalnu komunikaciju</li>
+            </ul>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">5</span>Pokrenuti e-Residency / digitalni identitet gde je potrebno</h4>
+            <p>Ako je potreban estonski digitalni identitet za praktično vođenje procesa, taj deo mora krenuti dovoljno rano jer može trajati neko vreme.</p>
+            <ul class="list">
+              <li>proveriti ko od osnivača mora imati e-Residency</li>
+              <li>pokrenuti prijavu gde je potrebno</li>
+              <li>pratiti status i rokove preuzimanja</li>
+            </ul>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">6</span>Odlučiti osnovnu upravljačku strukturu OÜ</h4>
+            <p>Ovde se ne rešava sve zauvek, ali mora biti jasno ko formalno sedi u upravljačkoj ulozi pri osnivanju.</p>
+            <ul class="list">
+              <li>ko je direktor / board member</li>
+              <li>da li je jedan ili više board članova</li>
+              <li>ko ima administrativno pravo potpisa</li>
+              <li>šta ipak ostaje pod founder consent pravilom</li>
+            </ul>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">7</span>Potvrditi da OÜ nije operativni haos sloj</h4>
+            <p>OÜ mora biti postavljen kao holding i investicioni vrh, a ne kao mesto za neuređenu svakodnevnu operativu.</p>
+            <ul class="list">
+              <li>OÜ drži ownership i cap table</li>
+              <li>OÜ je budući entry point za SAFE</li>
+              <li>DOO kasnije preuzima lokalnu operativu</li>
+              <li>IP logika se rešava pažljivo uz pravnika</li>
+            </ul>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">8</span>Registracija OÜ</h4>
+            <p>Kada je sve prethodno zaključano, advokat ili ovlašćeni izvršilac radi formalnu registraciju firme.</p>
+            <ul class="list">
+              <li>predaja osnivačkih podataka</li>
+              <li>potpisivanje potrebnih dokumenata</li>
+              <li>registracija firme</li>
+              <li>dobijanje formalne potvrde o osnivanju</li>
+            </ul>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">9</span>Post-formation setup</h4>
+            <p>Posle registracije kreću administrativni koraci bez kojih firma nije praktično spremna.</p>
+            <ul class="list">
+              <li>računovodstvo</li>
+              <li>adresa i administrativna podrška</li>
+              <li>banking / payment setup</li>
+              <li>osnovna interna dokumentacija i arhiva</li>
+            </ul>
+          </div>
+
+          <div class="step">
+            <h4><span class="step-num">10</span>Priprema za sledeći sloj: investicioni okvir pa DOO</h4>
+            <p>Tek kada OÜ postoji i administrativno je postavljen, prelazi se na interni SAFE okvir, pa zatim na DOO kada operativa realno kreće.</p>
+            <ul class="list">
+              <li>SAFE policy / investment terms memo</li>
+              <li>use-of-funds dokument</li>
+              <li>DOO setup checklist</li>
+              <li>odnos OÜ ↔ DOO uz pravni i poreski pregled</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="documents">
+      <h2 class="section-title">5. Koji dokumenti idu advokatu i izvršenju</h2>
+      <p class="section-desc">Ovaj blok je namerno praktičan. Pokazuje koji dokument postoji, koji treba da nastane i čemu služi.</p>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Document pack</div>
+            <div class="panel-sub">Minimalni redosled dokumenata</div>
+          </div>
+          <span class="status s-green">Spremno za organizaciju rada</span>
+        </div>
+        <div class="panel-body">
+          <table>
+            <thead>
+              <tr>
+                <th>Dokument</th>
+                <th>Svrha</th>
+                <th>Status</th>
+                <th>Napomena</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Founders Memo</td>
+                <td>Osnovni interni dogovor među osnivačima</td>
+                <td><span class="status s-green">Već urađeno</span></td>
+                <td>Oslonac za sve sledeće korake</td>
+              </tr>
+              <tr>
+                <td>OÜ Formation &amp; Founder Resolution Pack</td>
+                <td>Prvi sledeći dokument za osnivanje OÜ</td>
+                <td><span class="status s-amber">Treba izraditi</span></td>
+                <td>Ovo ide prvo advokatu</td>
+              </tr>
+              <tr>
+                <td>Founder Approval Matrix</td>
+                <td>Jasno piše šta traži sva 4, a šta operativni potpis</td>
+                <td><span class="status s-amber">Treba izraditi</span></td>
+                <td>Važno da se ne pomešaju administracija i kontrola</td>
+              </tr>
+              <tr>
+                <td>SAFE Policy / Investment Terms Memo</td>
+                <td>Interni okvir za prvo finansiranje</td>
+                <td><span class="status s-blue">Posle OÜ</span></td>
+                <td>Ne ide pre registrovane OÜ</td>
+              </tr>
+              <tr>
+                <td>DOO Setup Checklist</td>
+                <td>Operativni paket za srpski DOO</td>
+                <td><span class="status s-blue">Kasnije</span></td>
+                <td>Aktivira se kada tim i troškovi kreću</td>
+              </tr>
+              <tr>
+                <td>IP / intercompany dokumenti</td>
+                <td>Uređuju odnos OÜ i DOO</td>
+                <td><span class="status s-blue">Kasnije uz stručnjake</span></td>
+                <td>Ovde je greška posebno skupa</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roles">
+      <h2 class="section-title">6. Ko šta vodi</h2>
+      <p class="section-desc">Jednaki procenti ne znače da svi rade sve. Potrebna je jasna podela odgovornosti da bi proces išao bez haosa.</p>
+      <div class="grid g2">
+        <div class="card">
+          <h3>Obavezne uloge u ovoj fazi</h3>
+          <ul class="list">
+            <li><strong>Founder Coordinator:</strong> vodi ceo proces i prati checklist</li>
+            <li><strong>Legal Contact:</strong> komunicira sa advokatom</li>
+            <li><strong>Finance Contact:</strong> komunicira sa računovođom i prati troškove</li>
+            <li><strong>Records Keeper:</strong> čuva dokumenta, verzije i potpise</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Važno ograničenje</h3>
+          <ul class="list">
+            <li>koordinator ne sme sam menjati ownership</li>
+            <li>legal kontakt ne sme sam prihvatiti investitorski dokument</li>
+            <li>finansijski kontakt ne sme sam preuzeti obaveze koje menjaju kontrolu</li>
+            <li>strateške odluke ostaju pod founder consent logikom</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="approvals">
+      <h2 class="section-title">7. Koje odluke traže saglasnost sva 4 osnivača</h2>
+      <p class="section-desc">Ovde se odvajaju administrativni koraci od stvarno strateških odluka.</p>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Approval rules</div>
+            <div class="panel-sub">Šta može operativno, a šta mora jednoglasno</div>
+          </div>
+          <span class="status s-red">Zaštita founders bloka</span>
+        </div>
+        <div class="panel-body">
+          <table>
+            <thead>
+              <tr>
+                <th>Tip odluke</th>
+                <th>Ko odobrava</th>
+                <th>Napomena</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Prikupljanje dokumenata i administracija</td>
+                <td>Koordinator / ovlašćena osoba</td>
+                <td>Ne menja ownership niti kontrolu</td>
+              </tr>
+              <tr>
+                <td>Izbor advokata i računovođe</td>
+                <td>Dogovor osnivača ili definisani operativni prag</td>
+                <td>Preporučeno da svi znaju i potvrde</td>
+              </tr>
+              <tr>
+                <td>Promena ownership strukture</td>
+                <td>Sva 4 osnivača</td>
+                <td>Nema preglasavanja</td>
+              </tr>
+              <tr>
+                <td>Ulazak investitora / SAFE</td>
+                <td>Sva 4 osnivača</td>
+                <td>Naročito u ranoj fazi</td>
+              </tr>
+              <tr>
+                <td>Option pool / advisory equity</td>
+                <td>Sva 4 osnivača</td>
+                <td>Ne uvodi se napamet</td>
+              </tr>
+              <tr>
+                <td>Prodaja firme, IP-a ili kontrole</td>
+                <td>Sva 4 osnivača</td>
+                <td>Najstroža zaštita</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="phase warning">
+            <strong>Važno upozorenje</strong>
+            Najveća rana greška je da se administrativno ovlašćenje pomeša sa pravom da neko sam menja kontrolu, ownership ili investicione uslove. To mora ostati strogo odvojeno.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="next">
+      <h2 class="section-title">8. Šta mora odmah da se zaključi</h2>
+      <p class="section-desc">Ovo je završni blok koji vodi u stvarni rad sa advokatom.</p>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Immediate action list</div>
+            <div class="panel-sub">Bez ovoga ne treba otvarati sledeću fazu</div>
+          </div>
+          <span class="status s-green">Sledeći koraci</span>
+        </div>
+        <div class="panel-body">
+          <ul class="checklist" style="margin-top:0;">
+            <li>Uneti puna imena sva 4 osnivača i osnovne identifikacione podatke.</li>
+            <li>Zaključiti ko je Founder Coordinator za OÜ proces.</li>
+            <li>Zaključiti ko formalno komunicira sa advokatom i računovođom.</li>
+            <li>Potvrditi radni naziv OÜ firme ili listu mogućih naziva.</li>
+            <li>Zaključiti ko ulazi u početnu board / managing strukturu.</li>
+            <li>Napraviti OÜ Formation &amp; Founder Resolution Pack kao sledeći formalni dokument.</li>
+            <li>Tek posle registrovane OÜ pripremiti interni SAFE okvir i use-of-funds.</li>
+          </ul>
+
+          <div class="phase">
+            <strong>Praktičan zaključak</strong>
+            Sledeći dokument posle ovog HTML-a nije nova prezentacija, nego konkretan <em>OÜ Formation &amp; Founder Resolution Pack</em> sa imenima, procentima, upravljačkom logikom i founder approval pravilima.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <strong>ZOTA — OÜ osnivanje i founders execution checklist</strong><br/>
+      Ovaj dokument je napravljen kao prelaz između internog founders razumevanja i formalnog rada sa advokatom. Njegov cilj je da proces bude jasan, uredan i kontrolisan.
+      <br/><br/>
+      Sledeći dokument: <strong>OÜ Formation &amp; Founder Resolution Pack</strong>.
+    </div>
+  </div>
+</body>
+</html>
