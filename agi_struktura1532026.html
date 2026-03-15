@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Telecom Sales Platform – Production Architecture</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#0f172a;color:#e5e7eb;margin:0;padding:40px;line-height:1.6}
+h1,h2,h3{color:#ffffff}
+.section{margin-bottom:60px}
+.card{background:#111827;border:1px solid #1f2937;border-radius:10px;padding:20px;margin-top:15px}
+pre{background:#020617;border:1px solid #1e293b;padding:20px;border-radius:8px;overflow:auto;color:#a5f3fc}
+.diagram{background:#020617;border:1px solid #1e293b;padding:25px;border-radius:10px;font-size:14px}
+.small{color:#94a3b8}
+</style>
+</head>
+<body>
+
+<h1>AI Telecom Sales Platform</h1>
+<p class="small">Production architecture capable of supporting 100+ telecom operators.</p>
+
+<div class="section">
+<h2>1. High Level System Architecture</h2>
+<div class="diagram">
+<pre>
+                 INTERNET USERS
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+    Website Chat   Telegram Bot    Voice AI
+        │              │              │
+        └──────────────┴──────────────┘
+                       │
+                API Gateway
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+   Chat Service    Voice Service   Channel Router
+        │              │              │
+        └──────────────┴──────────────┘
+                       │
+                   AI Engine
+                       │
+       ┌───────────────┼────────────────┐
+       │               │                │
+ Knowledge Base   Sales Funnel AI   Lead Detector
+       │               │                │
+       └───────────────┴────────────────┘
+                       │
+                Lead Processing
+                       │
+                Lead Database
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+     CRM Export    Analytics     Callback Engine
+
+</pre>
+</div>
+</div>
+
+<div class="section">
+<h2>2. Core Platform Modules</h2>
+
+<div class="card">
+<h3>AI Chat Engine</h3>
+<p>Handles website chat, Telegram bot, and future channels like WhatsApp and Messenger. Responsible for conversation flow and AI interaction.</p>
+</div>
+
+<div class="card">
+<h3>Voice AI Engine</h3>
+<p>Voice interface allowing customers to speak with an AI assistant that recommends telecom packages and captures leads.</p>
+</div>
+
+<div class="card">
+<h3>Sales Funnel AI</h3>
+<p>Guides the customer through structured questions to identify the best telecom package.</p>
+
+<pre>
+User enters site
+      ↓
+AI asks: Home or Business?
+      ↓
+How many devices?
+      ↓
+Need TV channels?
+      ↓
+Recommended package
+      ↓
+Lead capture
+</pre>
+</div>
+
+<div class="card">
+<h3>Knowledge Base</h3>
+<p>Structured database containing telecom package data, pricing, speeds, coverage, and frequently asked questions.</p>
+</div>
+
+<div class="card">
+<h3>Lead Management System</h3>
+<p>Stores all customer interactions across channels and converts them into structured sales leads.</p>
+</div>
+
+</div>
+
+<div class="section">
+<h2>3. Multi‑Tenant Architecture (100+ Operators)</h2>
+
+<div class="diagram">
+<pre>
+                SaaS Platform
+                     │
+      ┌──────────────┼──────────────┐
+      │              │              │
+  Operator A     Operator B     Operator C
+      │              │              │
+ Custom AI KB    Custom AI KB    Custom AI KB
+      │              │              │
+ Lead DB A       Lead DB B       Lead DB C
+</pre>
+</div>
+
+<p>Each telecom operator runs on the same platform but has its own configuration, pricing data, and lead database.</p>
+
+</div>
+
+<div class="section">
+<h2>4. Production Backend Architecture</h2>
+
+<div class="diagram">
+<pre>
+             Load Balancer
+                   │
+         ┌─────────┼─────────┐
+         │         │         │
+     API Server  API Server  API Server
+         │         │         │
+         └─────────┴─────────┘
+                   │
+            Message Queue
+                   │
+        ┌──────────┼──────────┐
+        │          │          │
+   AI Workers   Voice Workers  Lead Workers
+        │          │          │
+        └──────────┴──────────┘
+                   │
+                Database
+</pre>
+</div>
+
+<p>This architecture allows horizontal scaling to handle thousands of conversations simultaneously.</p>
+
+</div>
+
+<div class="section">
+<h2>5. AI Callback System (Automated Sales Calls)</h2>
+
+<p>This system automatically calls users who leave their phone number and continues the sales conversation using Voice AI.</p>
+
+<div class="diagram">
+<pre>
+User leaves phone number
+        │
+        ▼
+Lead created in database
+        │
+        ▼
+Callback Queue
+        │
+        ▼
+Voice Dialer Service
+        │
+        ▼
+AI Voice Agent
+        │
+        ▼
+Phone Call to Customer
+</pre>
+</div>
+
+<div class="card">
+<h3>Example Call Flow</h3>
+<pre>
+AI: Hello, this is Ana AI from TVInternetSBB.
+
+You recently asked about internet packages.
+Would you like help choosing the best option?
+
+Customer: Yes.
+
+AI: Is the internet for home or business?
+
+Customer: Business.
+
+AI: I recommend the Biznis Net 3 package.
+Would you like us to schedule installation?
+</pre>
+</div>
+
+<div class="card">
+<h3>Voice AI Components</h3>
+<ul>
+<li>Speech‑to‑Text engine</li>
+<li>AI conversation engine</li>
+<li>Text‑to‑Speech voice synthesis</li>
+<li>Telephony integration (SIP / VoIP provider)</li>
+<li>Call analytics and logging</li>
+</ul>
+</div>
+
+</div>
+
+<div class="section">
+<h2>6. Data Flow Example</h2>
+
+<pre>
+User opens website
+        ↓
+AI chat conversation
+        ↓
+AI recommends package
+        ↓
+User enters phone number
+        ↓
+Lead stored in database
+        ↓
+Callback AI schedules phone call
+        ↓
+Voice AI calls customer
+        ↓
+Lead converted to sale
+</pre>
+
+</div>
+
+<div class="section">
+<h2>7. Scalability</h2>
+
+<ul>
+<li>Stateless API servers</li>
+<li>Message queue for asynchronous processing</li>
+<li>AI workers scaling independently</li>
+<li>Separate tenant databases</li>
+<li>Cloud deployment (Kubernetes or Docker clusters)</li>
+</ul>
+
+</div>
+
+<div class="section">
+<h2>8. Result</h2>
+
+<p>The platform becomes a full AI‑driven telecom sales system capable of:</p>
+
+<ul>
+<li>Handling thousands of customer conversations</li>
+<li>Automatically recommending telecom packages</li>
+<li>Collecting and managing sales leads</li>
+<li>Calling customers automatically with AI voice agents</li>
+<li>Supporting many telecom operators on the same infrastructure</li>
+</ul>
+
+</div>
+
+</body>
+</html>
