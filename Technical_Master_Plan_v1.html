@@ -1,0 +1,458 @@
+from pathlib import Path
+
+html = r"""<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technical Master Plan v1 — ZOTA + ANA v2 Retail Core</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --bg2:#121a31;
+      --card:#ffffff;
+      --ink:#1b2340;
+      --muted:#5b678a;
+      --line:#dfe5f5;
+      --accent:#2155ff;
+      --accent2:#00a3ff;
+      --good:#0f9d58;
+      --warn:#c18400;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg,var(--bg),#0f1530 40%, #f5f7fc 40%, #f5f7fc 100%);
+      color:#18213d;
+      line-height:1.55;
+    }
+    .wrap{max-width:1180px;margin:0 auto;padding:32px 20px 64px}
+    .hero{
+      color:#fff;
+      padding:24px 4px 32px;
+    }
+    .hero h1{font-size:38px;line-height:1.12;margin:0 0 10px;font-weight:800;letter-spacing:-0.02em}
+    .hero p{max-width:900px;font-size:17px;color:#dbe4ff;margin:0}
+    .meta{
+      display:flex;flex-wrap:wrap;gap:12px;margin-top:18px
+    }
+    .chip{
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.14);
+      color:#eef3ff;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:13px;
+    }
+    .grid{display:grid;grid-template-columns:280px 1fr;gap:22px;align-items:start}
+    .nav{
+      position:sticky;top:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;
+      box-shadow:0 10px 28px rgba(22,33,75,.08)
+    }
+    .nav h3{margin:0 0 10px;font-size:15px;color:var(--ink)}
+    .nav a{display:block;text-decoration:none;color:var(--muted);padding:7px 0;font-size:14px}
+    .nav a:hover{color:var(--accent)}
+    .card{
+      background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;
+      box-shadow:0 10px 28px rgba(22,33,75,.06);margin-bottom:20px
+    }
+    h2{font-size:28px;line-height:1.15;margin:0 0 14px;color:var(--ink);letter-spacing:-0.02em}
+    h3{font-size:20px;margin:22px 0 10px;color:var(--ink)}
+    h4{font-size:16px;margin:18px 0 8px;color:var(--ink)}
+    p{margin:0 0 12px}
+    ul{margin:8px 0 14px 22px}
+    li{margin:4px 0}
+    .note,.callout{
+      border-left:4px solid var(--accent);background:#f4f8ff;padding:14px 16px;border-radius:12px;margin:14px 0
+    }
+    .warn{border-left-color:var(--warn);background:#fff8e8}
+    .good{border-left-color:var(--good);background:#eefaf3}
+    table{width:100%;border-collapse:collapse;margin:12px 0 18px;background:#fff}
+    th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;font-size:14px}
+    th{background:#f7f9fe;color:var(--ink)}
+    .kpi{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 6px
+    }
+    .kpi .box{
+      background:linear-gradient(180deg,#f9fbff,#eef3ff);
+      border:1px solid var(--line);border-radius:16px;padding:14px
+    }
+    .box b{display:block;font-size:24px;color:var(--ink)}
+    .box span{font-size:13px;color:var(--muted)}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, monospace;background:#f3f5fa;padding:2px 6px;border-radius:8px}
+    .small{font-size:13px;color:var(--muted)}
+    .footer{color:#6a7699;font-size:13px;padding-top:10px}
+    @media (max-width: 960px){
+      .grid{grid-template-columns:1fr}
+      .nav{position:relative;top:auto}
+      .kpi{grid-template-columns:repeat(2,1fr)}
+      .hero h1{font-size:31px}
+    }
+    @media (max-width: 560px){
+      .kpi{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Technical Master Plan v1</h1>
+      <p>Profesionalni master dokument za glavni razvojni tim: ZOTA kao centralni case/decision/process sistem i ANA v2 Retail Core kao fizički AI interfejs za trafike, prodavnice, QR ulaze i reklamne touchpoint-e.</p>
+      <div class="meta">
+        <div class="chip">Dokument: CTO / Lead Engineer brief</div>
+        <div class="chip">Fokus: ZOTA + ANA v2 Retail Core</div>
+        <div class="chip">Pristup: modularni monolit → scale platform</div>
+        <div class="chip">Preporučeni stack: Python / FastAPI / PostgreSQL / Redis</div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <aside class="nav">
+        <h3>Sadržaj</h3>
+        <a href="#executive">1. Executive Summary</a>
+        <a href="#principles">2. Arhitektonski principi</a>
+        <a href="#system">3. Ciljna arhitektura sistema</a>
+        <a href="#phases">4. Razvoj po fazama</a>
+        <a href="#stack">5. Jezik, framework i infrastruktura</a>
+        <a href="#voice">6. Voice i Twilio odluka</a>
+        <a href="#zota">7. ZOTA Core moduli</a>
+        <a href="#retail">8. ANA v2 Retail Core</a>
+        <a href="#tables">9. Tabele i modeli podataka</a>
+        <a href="#apis">10. API sloj</a>
+        <a href="#devices">11. Device fleet i QR logika</a>
+        <a href="#security">12. Security, audit i compliance</a>
+        <a href="#ops">13. Operativa, monitoring i SLA</a>
+        <a href="#roadmap">14. Prioriteti i roadmap</a>
+      </aside>
+
+      <main>
+        <section id="executive" class="card">
+          <h2>1. Executive Summary</h2>
+          <p><b>ZOTA</b> je centralni operativni sistem firme. Njegov posao je da svaki događaj iz bilo kog kanala pretvori u <b>Case</b>, prati stanje tog Case-a, odluči šta je sledeći korak i aktivira proces do ishoda.</p>
+          <p><b>ANA v2</b> je fizički prisutan AI interfejs: tablet, kiosk, ekran, QR ulaz ili bilbord gateway. Njena uloga je da komunicira sa korisnikom, prikuplja signal, vodi razgovor i svaku važnu interakciju prosledi ZOTA sloju.</p>
+          <div class="callout">
+            <b>Osnovna formula:</b><br>
+            Kanal / Uređaj → ANA v2 → ZOTA → ponuda / lead / task / ugovor / proces / završetak
+          </div>
+          <div class="kpi">
+            <div class="box"><b>1</b><span>Centralna jedinica sistema: <b>Case</b></span></div>
+            <div class="box"><b>2</b><span>Glavni backend jezik: <b>Python</b></span></div>
+            <div class="box"><b>3</b><span>Glavni source of truth: <b>PostgreSQL</b></span></div>
+            <div class="box"><b>4</b><span>Voice gateway ostaje: <b>Twilio</b></span></div>
+          </div>
+        </section>
+
+        <section id="principles" class="card">
+          <h2>2. Arhitektonski principi</h2>
+          <ul>
+            <li><b>Case je centralna poslovna jedinica.</b> Ne lead, ne chat sesija, ne form run.</li>
+            <li><b>Ana je interfejs, ne izvor istine.</b> Sve trajno važno mora biti u ZOTA sloju.</li>
+            <li><b>AI nije vlasnik odluke.</b> LLM može predlagati, ali state transition i workflow kontrola ostaju u policy/rule sloju.</li>
+            <li><b>Svaka akcija mora biti auditabilna.</b> Ko, kada, zašto i nad kojim slučajem.</li>
+            <li><b>Modularni monolit prvo.</b> Mikroservisi tek posle dokaza proizvoda i realnog opterećenja.</li>
+            <li><b>Retail katalog i znanje moraju imati source of truth.</b> Ana v2 ne sme improvizovati cene, zalihe ili dozvoljene odgovore.</li>
+          </ul>
+          <div class="note">
+            <b>Najvažnija granica sistema:</b> Ana v2 sluša, govori i vodi prvi kontakt. ZOTA pamti, odlučuje, meri i pokreće proces.
+          </div>
+        </section>
+
+        <section id="system" class="card">
+          <h2>3. Ciljna arhitektura sistema</h2>
+          <table>
+            <tr><th>Sloj</th><th>Uloga</th><th>Šta sadrži</th></tr>
+            <tr><td>Channel Layer</td><td>Ulazni kanali</td><td>Web, voice/Twilio, tablet, kiosk, QR continuation, telefon, bilbord gateway</td></tr>
+            <tr><td>ANA Interface Layer</td><td>Komunikacija</td><td>Avatar, TTS/STT, touch UI, FAQ, retail razgovor, sales tok, QR transfer</td></tr>
+            <tr><td>ZOTA Control Layer</td><td>Operativna logika</td><td>Case engine, state machine, decision engine, next action, orchestration</td></tr>
+            <tr><td>Business Layer</td><td>Poslovni izvori</td><td>Product catalog, service catalog, pricing, promotions, campaign engine</td></tr>
+            <tr><td>Process Layer</td><td>Izvršenje</td><td>Lead handling, callback, ugovor, verifikacija, taskovi, closing</td></tr>
+            <tr><td>Data Layer</td><td>Istina i trag</td><td>PostgreSQL, event log, messages, decisions, device sessions, analytics</td></tr>
+            <tr><td>Security & Ops</td><td>Zaštita i pouzdanost</td><td>RBAC, audit, backup, monitoring, alerting, health checks</td></tr>
+          </table>
+        </section>
+
+        <section id="phases" class="card">
+          <h2>4. Razvoj po fazama</h2>
+
+          <h3>Faza A — Foundation Core</h3>
+          <p><b>Cilj:</b> stabilna osnova za ZOTA i osnovni channel intake.</p>
+          <ul>
+            <li>Postaviti novu DB šemu: persons, cases, case_events, case_messages, case_decisions, case_tasks</li>
+            <li>Napraviti <span class="mono">/zota/events</span> intake</li>
+            <li>Napraviti osnovnu state machine logiku</li>
+            <li>Integrisati postojeći web i Twilio voice u isti case sloj</li>
+          </ul>
+
+          <h3>Faza B — ANA v2 Pilot</h3>
+          <p><b>Cilj:</b> prvi kiosk/tablet scenario sa QR continuation.</p>
+          <ul>
+            <li>Device registry i heartbeat</li>
+            <li>Kiosk UI + avatar states + voice/touch flow</li>
+            <li>Retail pitanja, FAQ i prikupljanje interesovanja</li>
+            <li>QR transfer na telefon</li>
+          </ul>
+
+          <h3>Faza C — Decision & Process</h3>
+          <p><b>Cilj:</b> ozbiljna automatizacija i vođenje slučaja.</p>
+          <ul>
+            <li>Decision engine: rules + scoring + AI assist</li>
+            <li>Action engine: message, offer, callback, task, process trigger</li>
+            <li>Case timeline i admin pregled</li>
+            <li>Retail + telecom + reklamni tokovi kroz jednu arhitekturu</li>
+          </ul>
+
+          <h3>Faza D — Fleet, Scale, Governance</h3>
+          <p><b>Cilj:</b> više lokacija, više uređaja, jača operativa.</p>
+          <ul>
+            <li>Remote config po lokaciji i uređaju</li>
+            <li>Campaign management i reklamni scheduling</li>
+            <li>Advanced analytics po lokaciji, uređaju i toku</li>
+            <li>HA infrastruktura i servisno razdvajanje po potrebi</li>
+          </ul>
+        </section>
+
+        <section id="stack" class="card">
+          <h2>5. Jezik, framework i infrastruktura</h2>
+          <table>
+            <tr><th>Oblast</th><th>Preporuka</th><th>Zašto</th></tr>
+            <tr><td>Backend</td><td>Python 3.12+ / FastAPI</td><td>Brz razvoj, jaka AI integracija, odličan API-first pristup</td></tr>
+            <tr><td>Baza</td><td>PostgreSQL</td><td>Relacijski model, audit, case/state/decision logika</td></tr>
+            <tr><td>Cache / Queue</td><td>Redis</td><td>Session state, cache, background jobs, throttling</td></tr>
+            <tr><td>Device frontend</td><td>React kiosk app</td><td>Brz razvoj i lako održavanje na tabletima/kioscima</td></tr>
+            <tr><td>Avatar sloj</td><td>WebGL / state-driven avatar</td><td>Dovoljno živ za pilot bez prevelike 3D kompleksnosti</td></tr>
+            <tr><td>Async jobs</td><td>Celery ili RQ</td><td>Voice obrada, slanje taskova, kampanje, batch zadaci</td></tr>
+            <tr><td>Reverse proxy</td><td>Nginx</td><td>Routing, TLS termination, static delivery</td></tr>
+            <tr><td>Storage</td><td>Object storage</td><td>Audio fajlovi, dokumenti, artefakti, log export</td></tr>
+          </table>
+          <div class="good">
+            <b>Preporučeni početni deploy:</b> Docker + 1 app server + managed PostgreSQL + Redis + object storage.
+          </div>
+          <div class="warn">
+            <b>Ne preporučuje se u startu:</b> više jezika, rani mikroservisi, Kubernetes pre dokaza, hiper-real 3D avatar kao prva tema.
+          </div>
+        </section>
+
+        <section id="voice" class="card">
+          <h2>6. Voice i Twilio odluka</h2>
+          <p><b>Twilio broj ostaje.</b> Ne menja se dok jezgro sistema ne bude stabilno.</p>
+          <table>
+            <tr><th>Element</th><th>Odluka</th><th>Obrazloženje</th></tr>
+            <tr><td>Broj</td><td>Zadržati postojeći Twilio broj</td><td>Već radi kao voice entry point i nije sada usko grlo</td></tr>
+            <tr><td>Uloga Twilio</td><td>Voice gateway</td><td>Twilio prima poziv i prosleđuje webhook vašem backend-u</td></tr>
+            <tr><td>Logika razgovora</td><td>Prebaciti u voice-service + ZOTA</td><td>Twilio nije logika, ZOTA jeste</td></tr>
+            <tr><td>Fallback</td><td>Zadržati deterministic mode</td><td>Ako AI ili backend deo padne, sistem mora da nastavi minimalnu funkciju</td></tr>
+          </table>
+        </section>
+
+        <section id="zota" class="card">
+          <h2>7. ZOTA Core moduli</h2>
+          <table>
+            <tr><th>Modul</th><th>Opis</th><th>Prioritet</th></tr>
+            <tr><td>Case Engine</td><td>Create/update/merge/reopen/close case</td><td>Critical</td></tr>
+            <tr><td>State Engine</td><td>Status, stage, allowed transitions, blocked states</td><td>Critical</td></tr>
+            <tr><td>Decision Engine</td><td>Rules, scoring, AI suggestions, next action</td><td>Critical</td></tr>
+            <tr><td>Action Orchestrator</td><td>Send message, create task, price call, process trigger</td><td>High</td></tr>
+            <tr><td>Event Ledger</td><td>Audit svih događaja i promena</td><td>Critical</td></tr>
+            <tr><td>Task & Process Layer</td><td>Operativni taskovi i lifecycle procesa</td><td>High</td></tr>
+            <tr><td>Admin Timeline</td><td>Prikaz slučaja, istorije i odluka</td><td>High</td></tr>
+          </table>
+        </section>
+
+        <section id="retail" class="card">
+          <h2>8. Tačna arhitektura ANA v2 Retail Core</h2>
+          <p><b>ANA v2 Retail Core</b> je AI retail interfejs koji mora istovremeno da radi četiri posla:</p>
+          <ul>
+            <li>prodaja i pomoć za artikle trafike ili prodavnice,</li>
+            <li>prodaja internet/TV i drugih usluga,</li>
+            <li>promocije i reklamne pauze kada nema korisnika,</li>
+            <li>pretvaranje relevantne interakcije u lead/case za ZOTA.</li>
+          </ul>
+
+          <h3>8.1 Obavezni servisni slojevi</h3>
+          <table>
+            <tr><th>Servis</th><th>Šta radi</th></tr>
+            <tr><td>Retail Catalog Service</td><td>Artikli, cene, kategorije, zalihe, dostupnost, lokacijske razlike</td></tr>
+            <tr><td>Service Catalog Service</td><td>Internet/TV paketi, dopune, servisne ponude, bundle logika</td></tr>
+            <tr><td>Knowledge Service</td><td>FAQ, radno vreme, lokacija proizvoda, pravila odgovora</td></tr>
+            <tr><td>Campaign & Ad Engine</td><td>Reklame, raspored prikaza, promo sekvence, idle mode sadržaj</td></tr>
+            <tr><td>Conversation Service</td><td>Razgovor, intent, FAQ, retail preporuke, lead detekcija</td></tr>
+            <tr><td>QR Bridge Service</td><td>Nastavak sa uređaja na telefon kroz jedinstvenu sesiju</td></tr>
+            <tr><td>ZOTA Connector</td><td>Slanje case event-a, otvaranje slučaja, follow-up logika</td></tr>
+          </table>
+
+          <h3>8.2 Retail Core funkcionalni tok</h3>
+          <ol>
+            <li>Korisnik prilazi uređaju ili skenira QR.</li>
+            <li>Ana v2 prepoznaje ulaz i otvara sesiju.</li>
+            <li>Conversation service prepoznaje intent: retail, paket, informacija, reklamni klik, zahtev.</li>
+            <li>Ana odgovara iz odgovarajućeg source of truth sloja.</li>
+            <li>Ako postoji interesovanje ili potreba za nastavkom, generiše se QR transfer ili se uzima kontakt.</li>
+            <li>ZOTA dobija event i po potrebi otvara ili ažurira Case.</li>
+          </ol>
+
+          <div class="note">
+            <b>Ključna poslovna istina:</b> bez centralnog kataloga i knowledge baze, Ana v2 je samo ekran koji govori. Sa Retail Core slojem postaje pravi AI prodajni asistent.
+          </div>
+        </section>
+
+        <section id="tables" class="card">
+          <h2>9. Tabele i modeli podataka</h2>
+
+          <h3>9.1 ZOTA Core tabele</h3>
+          <table>
+            <tr><th>Tabela</th><th>Ključna polja</th><th>Uloga</th></tr>
+            <tr><td>persons</td><td>id, full_name, phone, email, external_refs_json</td><td>Jedinstveni identitet osobe</td></tr>
+            <tr><td>cases</td><td>id, person_id, channel_origin, intent_type, status, stage, next_action</td><td>Centralna poslovna jedinica</td></tr>
+            <tr><td>case_events</td><td>id, case_id, event_type, source, payload_json</td><td>Audit log događaja</td></tr>
+            <tr><td>case_messages</td><td>id, case_id, direction, channel, message_text</td><td>Poruke po slučaju</td></tr>
+            <tr><td>case_decisions</td><td>id, case_id, decision_type, reason, decision_by</td><td>Zabeležene odluke</td></tr>
+            <tr><td>case_tasks</td><td>id, case_id, task_type, status, assigned_to</td><td>Operativni taskovi</td></tr>
+            <tr><td>case_artifacts</td><td>id, case_id, artifact_type, storage_url</td><td>Dokumenti, snimci, eksporti</td></tr>
+          </table>
+
+          <h3>9.2 ANA v2 Retail Core tabele</h3>
+          <table>
+            <tr><th>Tabela</th><th>Ključna polja</th><th>Uloga</th></tr>
+            <tr><td>devices</td><td>id, device_code, device_type, location_id, status, software_version</td><td>Registrovani uređaji</td></tr>
+            <tr><td>locations</td><td>id, name, type, address, city, country</td><td>Fizičke lokacije</td></tr>
+            <tr><td>device_sessions</td><td>id, device_id, started_at, ended_at, person_id, case_id, session_token</td><td>Sesije na uređaju</td></tr>
+            <tr><td>device_messages</td><td>id, session_id, direction, message_text, intent, confidence</td><td>Poruke i intent signal</td></tr>
+            <tr><td>device_events</td><td>id, device_id, session_id, event_type, payload_json</td><td>Event log uređaja</td></tr>
+            <tr><td>qr_transfers</td><td>id, session_id, qr_token, opened_at, phone_session_id</td><td>Prenos sa kioska na telefon</td></tr>
+            <tr><td>products</td><td>id, sku, name, category_id, brand_id, default_price, active</td><td>Katalog artikala</td></tr>
+            <tr><td>product_prices</td><td>id, product_id, location_id, price, valid_from, valid_to</td><td>Lokacijske cene</td></tr>
+            <tr><td>inventory_snapshots</td><td>id, product_id, location_id, qty, snapshot_at</td><td>Dostupnost i procena zaliha</td></tr>
+            <tr><td>service_offers</td><td>id, code, name, type, description, base_price, active</td><td>Internet/TV/uslužne ponude</td></tr>
+            <tr><td>campaigns</td><td>id, name, campaign_type, active_from, active_to, priority</td><td>Promotivne kampanje</td></tr>
+            <tr><td>ad_slots</td><td>id, location_id, device_id, campaign_id, schedule_json</td><td>Reklamni raspored</td></tr>
+            <tr><td>knowledge_answers</td><td>id, question_type, answer_template, language, active</td><td>FAQ i dozvoljeni odgovori</td></tr>
+            <tr><td>recommendation_rules</td><td>id, trigger_type, condition_json, action_json, active</td><td>Cross-sell/up-sell pravila</td></tr>
+          </table>
+        </section>
+
+        <section id="apis" class="card">
+          <h2>10. API sloj</h2>
+
+          <h3>10.1 ZOTA Core API</h3>
+          <table>
+            <tr><th>Ruta</th><th>Svrha</th></tr>
+            <tr><td><span class="mono">POST /zota/events</span></td><td>Prijem standardizovanog događaja iz bilo kog kanala</td></tr>
+            <tr><td><span class="mono">POST /zota/cases/{id}/evaluate</span></td><td>Evaluacija stanja slučaja i donošenje sledeće odluke</td></tr>
+            <tr><td><span class="mono">POST /zota/cases/{id}/execute</span></td><td>Izvršenje sledeće akcije</td></tr>
+            <tr><td><span class="mono">GET /zota/cases/{id}</span></td><td>Prikaz detalja slučaja</td></tr>
+            <tr><td><span class="mono">GET /zota/cases/{id}/timeline</span></td><td>Kompletna istorija događaja, poruka, taskova i odluka</td></tr>
+            <tr><td><span class="mono">POST /zota/cases/{id}/transition</span></td><td>Ručno menjanje stanja uz audit</td></tr>
+          </table>
+
+          <h3>10.2 ANA v2 Retail API</h3>
+          <table>
+            <tr><th>Ruta</th><th>Svrha</th></tr>
+            <tr><td><span class="mono">POST /ana/devices/register</span></td><td>Registracija uređaja</td></tr>
+            <tr><td><span class="mono">POST /ana/devices/{id}/heartbeat</span></td><td>Health ping uređaja</td></tr>
+            <tr><td><span class="mono">POST /ana/interactions/start</span></td><td>Otvaranje sesije na uređaju</td></tr>
+            <tr><td><span class="mono">POST /ana/interactions/{id}/utterance</span></td><td>Slanje korisničkog upita</td></tr>
+            <tr><td><span class="mono">POST /ana/interactions/{id}/generate-qr</span></td><td>Kreiranje QR transfera</td></tr>
+            <tr><td><span class="mono">POST /ana/qr/{token}/resume</span></td><td>Nastavak sesije na telefonu</td></tr>
+            <tr><td><span class="mono">POST /ana/interactions/{id}/push-case-event</span></td><td>Slanje relevantnog signala ka ZOTA</td></tr>
+            <tr><td><span class="mono">GET /ana/devices/{id}/config</span></td><td>Konfiguracija uređaja, kampanja i persona podešavanja</td></tr>
+          </table>
+        </section>
+
+        <section id="devices" class="card">
+          <h2>11. Device fleet i QR logika</h2>
+          <h3>11.1 Uređaji</h3>
+          <ul>
+            <li>Svaki uređaj mora imati jedinstveni <span class="mono">device_code</span></li>
+            <li>Svaki uređaj pripada lokaciji i ima verziju softvera</li>
+            <li>Remote config mora kontrolisati: jezik, persona, kampanje, radno vreme, dozvoljene tokove</li>
+          </ul>
+
+          <h3>11.2 QR continuation</h3>
+          <ul>
+            <li>QR nije zaseban kanal, već nastavak iste sesije</li>
+            <li>QR token mora biti kratak, potpisan i vremenski ograničen</li>
+            <li>Posle skeniranja, korisnik nastavlja razgovor na telefonu bez gubitka konteksta</li>
+            <li>Ista interakcija ostaje vezana za isti <b>Case</b> kad god je to moguće</li>
+          </ul>
+
+          <div class="callout">
+            <b>Pravilo:</b> Uređaj otvara kontakt. Telefon završava privatno i praktično. ZOTA spaja oba toka u isti poslovni slučaj.
+          </div>
+        </section>
+
+        <section id="security" class="card">
+          <h2>12. Security, audit i compliance</h2>
+          <table>
+            <tr><th>Oblast</th><th>Obavezna mera</th></tr>
+            <tr><td>Transport</td><td>TLS/HTTPS svuda</td></tr>
+            <tr><td>Admin pristup</td><td>RBAC, session auth, kasnije SSO</td></tr>
+            <tr><td>Secrets</td><td>Secrets manager ili environment vault politika</td></tr>
+            <tr><td>QR token</td><td>Signed token + short expiration</td></tr>
+            <tr><td>Audit</td><td>Svaka odluka, state transition i ručna intervencija mora ostati zabeležena</td></tr>
+            <tr><td>Backup</td><td>Dnevni backup baze, rotacija i restore test</td></tr>
+            <tr><td>Retail ograničenja</td><td>Dozvoljeni odgovori za osetljive kategorije; bez slobodne improvizacije modela</td></tr>
+            <tr><td>Monitoring</td><td>Greške, downtime, device health, API latency, queue backlog</td></tr>
+          </table>
+        </section>
+
+        <section id="ops" class="card">
+          <h2>13. Operativa, monitoring i SLA</h2>
+          <h3>Minimum operativne vidljivosti</h3>
+          <ul>
+            <li>Broj otvorenih case-ova po statusu</li>
+            <li>Broj aktivnih uređaja i health stanje</li>
+            <li>Broj interakcija po lokaciji</li>
+            <li>QR conversion rate</li>
+            <li>Lead/case conversion rate</li>
+            <li>Top pitanja i drop-off tačke</li>
+            <li>Twilio call success/failure</li>
+            <li>Latency za STT/TTS i core API</li>
+          </ul>
+          <div class="note">
+            <b>Cilj:</b> sistem mora biti merljiv i objašnjiv od prvog dana. Bez toga nema ozbiljne operacije ni skaliranja.
+          </div>
+        </section>
+
+        <section id="roadmap" class="card">
+          <h2>14. Prioriteti i roadmap</h2>
+          <table>
+            <tr><th>Prioritet</th><th>Šta se radi prvo</th><th>Zašto</th></tr>
+            <tr><td>1</td><td>Case model + event log + state machine</td><td>Bez ovoga nema ZOTA jezgra</td></tr>
+            <tr><td>2</td><td>Twilio/web ulaz u isti case sloj</td><td>Svi kanali moraju ulaziti u isti sistem</td></tr>
+            <tr><td>3</td><td>ANA v2 interaction flow + session logging</td><td>Fizički interfejs mora biti merljiv i povezan</td></tr>
+            <tr><td>4</td><td>QR bridge</td><td>Najveća praktična vrednost fizičkog → mobilnog prelaza</td></tr>
+            <tr><td>5</td><td>Retail catalog + service catalog + knowledge base</td><td>Ana mora govoriti iz činjenica, ne iz improvizacije</td></tr>
+            <tr><td>6</td><td>Decision engine + action orchestration</td><td>Prelaz iz razgovora u vođenje posla</td></tr>
+            <tr><td>7</td><td>Campaign/ad engine</td><td>Reklame tek kad core radi stabilno</td></tr>
+            <tr><td>8</td><td>Fleet management + analytics</td><td>Više lokacija zahteva operativnu kontrolu</td></tr>
+          </table>
+
+          <h3>Procena trajanja</h3>
+          <table>
+            <tr><th>Faza</th><th>Realna procena</th></tr>
+            <tr><td>Foundation Core</td><td>3–5 nedelja</td></tr>
+            <tr><td>ANA v2 pilot</td><td>4–6 nedelja</td></tr>
+            <tr><td>QR bridge + retail integration</td><td>2–4 nedelje</td></tr>
+            <tr><td>Decision/process layer</td><td>3–5 nedelja</td></tr>
+            <tr><td>Fleet, analytics, polish</td><td>3–6 nedelja</td></tr>
+            <tr><td><b>Ukupno za prvu ozbiljnu verziju</b></td><td><b>3–5 meseci</b></td></tr>
+          </table>
+
+          <div class="good">
+            <b>Konačna preporuka za lead kodera:</b><br>
+            Graditi ZOTA i ANA v2 kao jedinstven sistem sa jasnom podelom odgovornosti. Python/FastAPI ostaje glavni backend, PostgreSQL je source of truth, Redis služi za session/queue, Twilio ostaje kao voice gateway, a ANA v2 Retail Core dobija svoj catalog/knowledge/campaign/QR sloj iznad fizičkih uređaja.
+          </div>
+
+          <p class="footer">Verzija dokumenta: Technical Master Plan v1 · Namenjeno za CTO / Lead Engineer / Architecture alignment</p>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
+"""
+
+path = Path("/mnt/data/technical_master_plan_v1.html")
+path.write_text(html, encoding="utf-8")
+print(f"Saved to {path}")
