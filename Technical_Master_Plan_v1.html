@@ -1,6 +1,4 @@
-from pathlib import Path
-
-html = r"""<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sr">
 <head>
   <meta charset="UTF-8" />
@@ -124,6 +122,8 @@ html = r"""<!DOCTYPE html>
         <a href="#security">12. Security, audit i compliance</a>
         <a href="#ops">13. Operativa, monitoring i SLA</a>
         <a href="#roadmap">14. Prioriteti i roadmap</a>
+        <a href="#routes-hosting">15. Rute i production hosting</a>
+        <a href="#appendix-zota">16. Appendix: ZOTA implementacija</a>
       </aside>
 
       <main>
@@ -446,13 +446,80 @@ html = r"""<!DOCTYPE html>
 
           <p class="footer">Verzija dokumenta: Technical Master Plan v1 · Namenjeno za CTO / Lead Engineer / Architecture alignment</p>
         </section>
+      
+        <section id="routes-hosting" class="card">
+          <h2>15. Production rute i profesionalno okruženje</h2>
+
+          <h3>15.1 Preporučena struktura ruta</h3>
+          <table>
+            <tr><th>Grupa ruta</th><th>Primeri</th><th>Svrha</th></tr>
+            <tr><td>ZOTA Core</td><td><span class="mono">/zota/events</span>, <span class="mono">/zota/cases/{id}</span>, <span class="mono">/zota/cases/{id}/timeline</span>, <span class="mono">/zota/cases/{id}/evaluate</span>, <span class="mono">/zota/cases/{id}/execute</span></td><td>Case intake, state, decision i orchestration</td></tr>
+            <tr><td>ANA Device</td><td><span class="mono">/ana/devices/register</span>, <span class="mono">/ana/devices/{id}/heartbeat</span>, <span class="mono">/ana/interactions/start</span>, <span class="mono">/ana/interactions/{id}/utterance</span></td><td>Upravljanje uređajima i sesijama</td></tr>
+            <tr><td>QR Bridge</td><td><span class="mono">/ana/interactions/{id}/generate-qr</span>, <span class="mono">/ana/qr/{token}/resume</span></td><td>Prenos razgovora sa uređaja na telefon</td></tr>
+            <tr><td>Voice</td><td><span class="mono">/voice/inbound</span>, <span class="mono">/voice/status</span>, <span class="mono">/voice/fallback</span></td><td>Twilio webhook ulaz, status poziva i fallback tokovi</td></tr>
+            <tr><td>Retail Core</td><td><span class="mono">/retail/products</span>, <span class="mono">/retail/prices</span>, <span class="mono">/retail/inventory</span>, <span class="mono">/retail/campaigns</span></td><td>Katalog, cene, zalihe i promo engine</td></tr>
+            <tr><td>Knowledge</td><td><span class="mono">/knowledge/answers</span>, <span class="mono">/knowledge/search</span></td><td>FAQ i kontrolisani odgovori</td></tr>
+            <tr><td>Admin / Ops</td><td><span class="mono">/admin/cases</span>, <span class="mono">/admin/devices</span>, <span class="mono">/admin/analytics</span>, <span class="mono">/admin/audit</span></td><td>Operativni pregled i kontrola</td></tr>
+          </table>
+
+          <h3>15.2 Gde graditi — production preporuka</h3>
+          <p><b>Za prvu ozbiljnu verziju:</b> profesionalni cloud VPS ili managed cloud okruženje, ne shared hosting.</p>
+          <table>
+            <tr><th>Sloj</th><th>Preporuka</th><th>Napomena</th></tr>
+            <tr><td>App server</td><td>Hetzner Cloud, AWS EC2, DigitalOcean Droplet ili Azure VM</td><td>Minimum 4 vCPU / 8 GB RAM za pilot</td></tr>
+            <tr><td>Baza</td><td>Managed PostgreSQL</td><td>Poželjno odvojena od app servera</td></tr>
+            <tr><td>Cache / Queue</td><td>Managed Redis ili poseban Redis node</td><td>Za session, queue i cache</td></tr>
+            <tr><td>Storage</td><td>S3-compatible object storage</td><td>Audio, dokumenta, artefakti, backup export</td></tr>
+            <tr><td>Proxy / TLS</td><td>Nginx + Cloudflare</td><td>SSL, caching, zaštita javnog sloja</td></tr>
+            <tr><td>Monitoring</td><td>Grafana + Prometheus + error tracking</td><td>Device health, API latency, queue backlog</td></tr>
+          </table>
+
+          <div class="good">
+            <b>Preporučeni produkcioni start:</b><br>
+            1 app server + 1 managed PostgreSQL + 1 Redis + object storage + Cloudflare + dnevni backup.
+          </div>
+
+          <h3>15.3 Kada preći na jače okruženje</h3>
+          <ul>
+            <li>Kada imate više desetina uređaja i više lokacija</li>
+            <li>Kada voice, QR i kiosk rade paralelno pod većim opterećenjem</li>
+            <li>Kada downtime direktno utiče na prodaju i operativu</li>
+            <li>Kada se uvodi HA, load balancer i worker separation</li>
+          </ul>
+        </section>
+
+        <section id="appendix-zota" class="card">
+          <h2>16. Appendix — ZOTA operativna definicija za implementaciju</h2>
+          <p><b>ZOTA nije chatbot, frontend ili AI koji samo odgovara.</b> ZOTA je centralni operativni mozak firme koji prima događaje iz svih kanala, pretvara ih u <b>Case</b>, pamti stanje tog Case-a, odlučuje šta je sledeća najbolja akcija, aktivira procese i prati rezultat.</p>
+
+          <h3>16.1 Event-driven model</h3>
+          <div class="callout">
+            <b>Osnovni tok:</b><br>
+            event → case → decision → action → result → next state
+          </div>
+
+          <h3>16.2 Pet unutrašnjih jezgara ZOTA sistema</h3>
+          <table>
+            <tr><th>Jezgro</th><th>Opis</th></tr>
+            <tr><td>Case Engine</td><td>Create, merge, reopen, update i close poslovnog slučaja</td></tr>
+            <tr><td>State Engine</td><td>Business stanje: gde je case, šta čeka, šta je sledeće dozvoljeno</td></tr>
+            <tr><td>Decision Engine</td><td>Rules + state + scoring + AI assist za next action</td></tr>
+            <tr><td>Action Orchestrator</td><td>Izvršava odluku: poruka, task, pricing, proces, eskalacija</td></tr>
+            <tr><td>Memory / Event Ledger</td><td>Kompletan trag svega što se desilo nad slučajem</td></tr>
+          </table>
+
+          <h3>16.3 Obavezna stanja slučaja</h3>
+          <p class="small">Primer minimalnih business stanja:</p>
+          <p><span class="mono">NEW_INQUIRY</span>, <span class="mono">QUALIFYING</span>, <span class="mono">WAITING_FOR_DATA</span>, <span class="mono">READY_FOR_OFFER</span>, <span class="mono">OFFER_SENT</span>, <span class="mono">WAITING_CUSTOMER_CONFIRMATION</span>, <span class="mono">PROCESSING_INTERNAL</span>, <span class="mono">VERIFICATION_PENDING</span>, <span class="mono">COMPLETED</span>, <span class="mono">LOST</span>, <span class="mono">ON_HOLD</span></p>
+
+          <h3>16.4 Implementaciona poruka za glavni tim</h3>
+          <div class="note">
+            Ne gradimo više chatbot sistem. Gradimo case-driven operating system u kome svaki događaj ulazi u Case, ZOTA donosi odluku nad stanjem Case-a, aktivira sledeću akciju i vodi ceo proces do ishoda.
+          </div>
+        </section>
+
       </main>
     </div>
   </div>
 </body>
 </html>
-"""
-
-path = Path("/mnt/data/technical_master_plan_v1.html")
-path.write_text(html, encoding="utf-8")
-print(f"Saved to {path}")
