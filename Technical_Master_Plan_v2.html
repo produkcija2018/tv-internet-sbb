@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technical Master Plan v2 — ZOTA + ANA v2 Retail Core</title>
+  <style>
+    :root{
+      --bg:#07111f;
+      --bg2:#0e1b33;
+      --surface:#ffffff;
+      --surface2:#f7f9fe;
+      --ink:#18243f;
+      --muted:#607092;
+      --line:#d9e2f1;
+      --primary:#2563eb;
+      --primary2:#00b3ff;
+      --green:#0f9d58;
+      --amber:#b7791f;
+      --red:#c0392b;
+      --shadow:0 18px 42px rgba(16,32,72,.12);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 480px at 20% 0%, rgba(37,99,235,.25), transparent 50%),
+        radial-gradient(900px 420px at 80% 10%, rgba(0,179,255,.18), transparent 45%),
+        linear-gradient(180deg, var(--bg), var(--bg2) 28%, #eef3fb 28%, #eef3fb 100%);
+      line-height:1.55;
+    }
+    .wrap{max-width:1280px;margin:0 auto;padding:26px 22px 72px}
+    .hero{
+      color:#fff;
+      padding:18px 4px 34px;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    .hero-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:28px;
+      padding:28px;
+      backdrop-filter: blur(8px);
+      box-shadow:0 24px 50px rgba(0,0,0,.16);
+    }
+    .hero h1{
+      font-size:42px; line-height:1.05; margin:0 0 10px;
+      letter-spacing:-0.03em; font-weight:850;
+    }
+    .hero p{font-size:17px; color:#dce8ff; margin:0 0 12px; max-width:820px}
+    .hero .meta{
+      display:flex; flex-wrap:wrap; gap:10px; margin-top:12px
+    }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 13px; border-radius:999px; font-size:13px;
+      color:#eef4ff; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.08)
+    }
+    .summary-grid{
+      display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:6px
+    }
+    .mini{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      border-radius:18px; padding:16px
+    }
+    .mini b{display:block; font-size:13px; color:#cfe0ff; text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px}
+    .mini span{font-size:15px; color:#fff}
+    .layout{display:grid;grid-template-columns:290px 1fr;gap:22px}
+    .nav{
+      position:sticky; top:16px; background:rgba(255,255,255,.95); border:1px solid var(--line);
+      border-radius:22px; padding:20px; box-shadow:var(--shadow)
+    }
+    .nav h3{margin:0 0 12px; font-size:15px}
+    .nav a{
+      display:block; text-decoration:none; color:var(--muted);
+      padding:7px 0; font-size:14px
+    }
+    .nav a:hover{color:var(--primary)}
+    .section{
+      background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+      box-shadow:var(--shadow); padding:26px; margin-bottom:20px
+    }
+    h2{font-size:30px; line-height:1.08; letter-spacing:-0.025em; margin:0 0 14px}
+    h3{font-size:21px; margin:20px 0 10px}
+    h4{font-size:16px; margin:16px 0 8px}
+    p{margin:0 0 12px}
+    ul,ol{margin:8px 0 14px 22px}
+    li{margin:4px 0}
+    .lead{font-size:17px; color:#334566}
+    .callout{
+      background:#f4f8ff; border:1px solid #d6e4ff; border-left:4px solid var(--primary);
+      padding:15px 16px; border-radius:14px; margin:14px 0
+    }
+    .warn{background:#fff8eb; border-color:#f3dfae; border-left-color:var(--amber)}
+    .good{background:#eef9f2; border-color:#cdebd7; border-left-color:var(--green)}
+    .danger{background:#fff2f0; border-color:#f3d0cb; border-left-color:var(--red)}
+    .pillrow{display:flex; flex-wrap:wrap; gap:10px; margin:10px 0 6px}
+    .pill{padding:8px 12px; border-radius:999px; background:#edf4ff; color:#2953a6; font-size:13px; border:1px solid #d7e5ff}
+    .metric-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px}
+    .metric{
+      background:linear-gradient(180deg,#fbfdff,#f0f5ff);
+      border:1px solid var(--line); border-radius:18px; padding:16px
+    }
+    .metric .n{font-size:28px; font-weight:800; color:var(--ink)}
+    .metric .l{font-size:13px; color:var(--muted)}
+    .flow{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:16px 0 6px
+    }
+    .node{
+      min-width:140px; text-align:center; padding:14px 16px; border-radius:18px;
+      background:#fff; border:1px solid var(--line); box-shadow:0 10px 22px rgba(16,32,72,.05); font-weight:700
+    }
+    .node.primary{background:linear-gradient(180deg,#edf4ff,#dceaff); color:#1846a8; border-color:#c8dbff}
+    .node.dark{background:linear-gradient(180deg,#1f3b76,#11264d); color:#fff; border-color:#2a4f98}
+    .arrow{font-size:24px; color:#7a8caf; font-weight:700}
+    table{width:100%; border-collapse:collapse; margin:12px 0 18px}
+    th,td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; font-size:14px}
+    th{background:#f6f9ff}
+    .cards{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:12px
+    }
+    .box{
+      border:1px solid var(--line); border-radius:18px; padding:16px; background:var(--surface2)
+    }
+    .box h4{margin:0 0 8px; font-size:15px}
+    .box p{font-size:14px; color:#48597b}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background:#f1f4f9; padding:2px 7px; border-radius:8px}
+    .diagram{
+      background:linear-gradient(180deg,#fbfdff,#f4f8ff);
+      border:1px solid var(--line); border-radius:22px; padding:18px; margin:14px 0
+    }
+    .diagram-grid{
+      display:grid; grid-template-columns:repeat(5,1fr); gap:12px; align-items:stretch
+    }
+    .dg{
+      border:1px solid #d8e2f2; border-radius:18px; padding:14px; background:#fff
+    }
+    .dg b{display:block; margin-bottom:6px; font-size:14px}
+    .roadmap{
+      display:grid; grid-template-columns:repeat(4,1fr); gap:14px
+    }
+    .phase{
+      border:1px solid var(--line); border-radius:18px; padding:16px; background:#fff
+    }
+    .phase .tag{
+      display:inline-block; padding:5px 9px; border-radius:999px; background:#edf4ff; color:#20469f; font-size:12px; margin-bottom:8px
+    }
+    .footer{color:#6d7b99; font-size:13px; margin-top:8px}
+    @media (max-width:1100px){
+      .hero{grid-template-columns:1fr}
+      .layout{grid-template-columns:1fr}
+      .nav{position:relative; top:auto}
+      .diagram-grid,.roadmap,.metric-grid,.cards{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:720px){
+      .diagram-grid,.roadmap,.metric-grid,.cards,.summary-grid{grid-template-columns:1fr}
+      .hero h1{font-size:34px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Technical Master Plan v2</h1>
+        <p>ZOTA kao centralni case/decision/process sistem i ANA v2 Retail Core kao fizički AI interfejs za trafike, prodavnice, QR ulaze, voice kanale i reklamne touchpoint-e.</p>
+        <div class="meta">
+          <div class="chip">CTO Blueprint</div>
+          <div class="chip">Lead Engineer Document</div>
+          <div class="chip">Production-first</div>
+          <div class="chip">Case-driven architecture</div>
+        </div>
+        <div class="pillrow">
+          <div class="pill">Python / FastAPI</div>
+          <div class="pill">PostgreSQL</div>
+          <div class="pill">Redis</div>
+          <div class="pill">Twilio gateway</div>
+          <div class="pill">React kiosk</div>
+          <div class="pill">QR continuation</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="summary-grid">
+          <div class="mini"><b>ZOTA</b><span>Operativni mozak: case, state, decision, process</span></div>
+          <div class="mini"><b>ANA v2</b><span>Fizički AI interfejs: uređaj, glas, QR, retail</span></div>
+          <div class="mini"><b>Twilio</b><span>Ostaje kao voice gateway u ranoj i srednjoj fazi</span></div>
+          <div class="mini"><b>Source of truth</b><span>PostgreSQL + centralni katalog + audit log</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="nav">
+        <h3>Sadržaj</h3>
+        <a href="#summary">1. Executive Summary</a>
+        <a href="#northstar">2. North Star arhitektura</a>
+        <a href="#split">3. Podela: Ana vs ZOTA</a>
+        <a href="#stack">4. Tehnološki stack</a>
+        <a href="#infra">5. Production infrastruktura</a>
+        <a href="#routes">6. Core rute i servisne grupe</a>
+        <a href="#zota">7. ZOTA Core</a>
+        <a href="#retail">8. ANA v2 Retail Core</a>
+        <a href="#data">9. Data model i tabele</a>
+        <a href="#voice">10. Voice i Twilio plan</a>
+        <a href="#security">11. Security i governance</a>
+        <a href="#ops">12. Monitoring i operativa</a>
+        <a href="#roadmap">13. Roadmap po fazama</a>
+        <a href="#handoff">14. Finalni handoff za master kodera</a>
+      </aside>
+
+      <main>
+        <section id="summary" class="section">
+          <h2>1. Executive Summary</h2>
+          <p class="lead">Ovaj dokument definiše ciljnu arhitekturu za sistem u kome <b>ANA v2</b> postaje fizički i digitalni AI interfejs, dok <b>ZOTA</b> postaje centralni case-driven operating system firme.</p>
+          <div class="flow">
+            <div class="node">Web / Voice / Tablet / QR</div>
+            <div class="arrow">→</div>
+            <div class="node primary">ANA v2</div>
+            <div class="arrow">→</div>
+            <div class="node dark">ZOTA</div>
+            <div class="arrow">→</div>
+            <div class="node">Offer / Lead / Task / Process</div>
+          </div>
+          <div class="metric-grid">
+            <div class="metric"><div class="n">1</div><div class="l">Centralna jedinica: <b>Case</b></div></div>
+            <div class="metric"><div class="n">2</div><div class="l">Glavni backend: <b>Python/FastAPI</b></div></div>
+            <div class="metric"><div class="n">3</div><div class="l">Glavna baza: <b>PostgreSQL</b></div></div>
+            <div class="metric"><div class="n">4</div><div class="l">Voice gateway: <b>Twilio</b></div></div>
+          </div>
+        </section>
+
+        <section id="northstar" class="section">
+          <h2>2. North Star arhitektura</h2>
+          <div class="diagram">
+            <div class="diagram-grid">
+              <div class="dg"><b>Channel Layer</b>Web, voice, Telegram, forms, kiosk, QR, bilbord gateway</div>
+              <div class="dg"><b>ANA Interface</b>Avatar, TTS/STT, touch UI, FAQ, retail interakcija, capture</div>
+              <div class="dg"><b>ZOTA Control</b>Case engine, state engine, decision engine, next action</div>
+              <div class="dg"><b>Business & Process</b>Pricing, catalog, campaigns, taskovi, ugovori, workflow</div>
+              <div class="dg"><b>Data & Security</b>PostgreSQL, audit log, analytics, auth, backup, monitoring</div>
+            </div>
+          </div>
+          <div class="callout">
+            <b>Najvažniji princip:</b> svaka ozbiljna interakcija mora završiti u ZOTA kao događaj nad slučajem, a ne ostati samo na nivou razgovora.
+          </div>
+        </section>
+
+        <section id="split" class="section">
+          <h2>3. Podela: Ana vs ZOTA</h2>
+          <table>
+            <tr><th>Komponenta</th><th>Šta radi</th><th>Šta ne sme da bude</th></tr>
+            <tr><td>ANA v2</td><td>Komunikuje, sluša, govori, prikazuje, vodi prvi kontakt, nudi QR nastavak</td><td>Ne sme biti vlasnik case istine, state tranzicija i procesa</td></tr>
+            <tr><td>ZOTA</td><td>Pamti slučaj, vodi stanje, odlučuje next action, otvara taskove, aktivira procese</td><td>Ne sme biti samo UI, avatar ili chat persona</td></tr>
+          </table>
+          <div class="good callout">
+            <b>Jedna rečenica za tim:</b> Ana govori. ZOTA odlučuje.
+          </div>
+        </section>
+
+        <section id="stack" class="section">
+          <h2>4. Tehnološki stack</h2>
+          <div class="cards">
+            <div class="box"><h4>Backend Core</h4><p>Python 3.12+ i FastAPI za ZOTA, Ana conversation layer, pricing, admin i orchestraciju.</p></div>
+            <div class="box"><h4>Data</h4><p>PostgreSQL kao source of truth za case, retail, decisions, audit i analytics agregate.</p></div>
+            <div class="box"><h4>Session/Queue</h4><p>Redis za session cache, short-lived state, queue signalizaciju i rate limiting.</p></div>
+            <div class="box"><h4>Device Frontend</h4><p>React kiosk app za tablete i ekrane; kasnije Flutter/native ako zatreba dublja hardverska kontrola.</p></div>
+            <div class="box"><h4>Voice</h4><p>Twilio kao gateway + STT/TTS servis + voice session backend.</p></div>
+            <div class="box"><h4>Assets</h4><p>CDN + object storage za audio, avatar assete, dokumenta i artefakte.</p></div>
+          </div>
+          <div class="danger callout">
+            <b>Ne preporučuje se odmah:</b> više jezika, rani mikroservisi, Kubernetes bez potrebe, hiper-kompleksan 3D avatar pre core logike.
+          </div>
+        </section>
+
+        <section id="infra" class="section">
+          <h2>5. Production infrastruktura</h2>
+          <h3>Pilot / rana produkcija</h3>
+          <table>
+            <tr><th>Sloj</th><th>Preporuka</th><th>Minimum</th></tr>
+            <tr><td>App server</td><td>AWS EC2 / Hetzner Cloud / DigitalOcean / Azure VM</td><td>4 vCPU / 8 GB RAM</td></tr>
+            <tr><td>Database</td><td>Managed PostgreSQL</td><td>2–4 vCPU / 8–16 GB RAM</td></tr>
+            <tr><td>Redis</td><td>Managed Redis ili poseban node</td><td>2 GB RAM</td></tr>
+            <tr><td>Storage</td><td>S3-compatible storage</td><td>Audio, dokumenta, export</td></tr>
+            <tr><td>Edge</td><td>Cloudflare + Nginx</td><td>DNS, TLS, WAF basic</td></tr>
+          </table>
+          <h3>Kada preći na jače okruženje</h3>
+          <ul>
+            <li>Više desetina uređaja i više lokacija</li>
+            <li>Paralelan voice + kiosk + QR promet</li>
+            <li>Potrebni HA, load balancing i worker separation</li>
+            <li>Downtime direktno pogađa prodaju i operativu</li>
+          </ul>
+          <div class="good callout">
+            <b>Production start preporuka:</b> modularni monolit u Docker-u + managed Postgres + Redis + object storage + dnevni backup.
+          </div>
+        </section>
+
+        <section id="routes" class="section">
+          <h2>6. Core rute i servisne grupe</h2>
+          <table>
+            <tr><th>Grupa</th><th>Primer ruta</th><th>Opis</th></tr>
+            <tr><td>ZOTA Core</td><td><span class="mono">/zota/events</span>, <span class="mono">/zota/cases/{id}</span>, <span class="mono">/zota/cases/{id}/evaluate</span>, <span class="mono">/zota/cases/{id}/execute</span></td><td>Intake, case detalji, odluka, izvršenje</td></tr>
+            <tr><td>ANA Device</td><td><span class="mono">/ana/devices/register</span>, <span class="mono">/ana/interactions/start</span>, <span class="mono">/ana/interactions/{id}/utterance</span></td><td>Uređaji i razgovori</td></tr>
+            <tr><td>QR Bridge</td><td><span class="mono">/ana/interactions/{id}/generate-qr</span>, <span class="mono">/ana/qr/{token}/resume</span></td><td>Nastavak razgovora na telefonu</td></tr>
+            <tr><td>Voice</td><td><span class="mono">/voice/inbound</span>, <span class="mono">/voice/status</span>, <span class="mono">/voice/fallback</span></td><td>Twilio webhook i fallback logika</td></tr>
+            <tr><td>Retail</td><td><span class="mono">/retail/products</span>, <span class="mono">/retail/prices</span>, <span class="mono">/retail/campaigns</span></td><td>Katalog, cene, promo</td></tr>
+            <tr><td>Admin/Ops</td><td><span class="mono">/admin/cases</span>, <span class="mono">/admin/devices</span>, <span class="mono">/admin/analytics</span></td><td>Operativni pregled i kontrola</td></tr>
+          </table>
+        </section>
+
+        <section id="zota" class="section">
+          <h2>7. ZOTA Core</h2>
+          <h3>Obavezna unutrašnja jezgra</h3>
+          <table>
+            <tr><th>Jezgro</th><th>Opis</th><th>Prioritet</th></tr>
+            <tr><td>Case Engine</td><td>Create, merge, reopen, update, close</td><td>Critical</td></tr>
+            <tr><td>State Engine</td><td>Status/stage i dozvoljene tranzicije</td><td>Critical</td></tr>
+            <tr><td>Decision Engine</td><td>Hard rules + scoring + AI assist</td><td>Critical</td></tr>
+            <tr><td>Action Orchestrator</td><td>Poruke, taskovi, pricing, process triggeri</td><td>High</td></tr>
+            <tr><td>Event Ledger</td><td>Kompletan audit trag</td><td>Critical</td></tr>
+          </table>
+          <div class="flow">
+            <div class="node">Event</div><div class="arrow">→</div>
+            <div class="node">Case</div><div class="arrow">→</div>
+            <div class="node primary">Decision</div><div class="arrow">→</div>
+            <div class="node">Action</div><div class="arrow">→</div>
+            <div class="node dark">Next State</div>
+          </div>
+          <div class="callout">
+            <b>Pravilo implementacije:</b> AI ne donosi finalnu state odluku sam. Finalni control layer ostaje u rule/policy motoru.
+          </div>
+        </section>
+
+        <section id="retail" class="section">
+          <h2>8. ANA v2 Retail Core</h2>
+          <p class="lead">ANA v2 u trafici ili prodavnici nije samo paket prodavac. Ona je retail AI prodajni interfejs koji zna artikle, cene, akcije, reklame, pakete i QR nastavak.</p>
+          <div class="cards">
+            <div class="box"><h4>Retail Catalog Service</h4><p>Artikli, cene, kategorije, brendovi, akcije, lokacijske razlike i dostupnost.</p></div>
+            <div class="box"><h4>Service Catalog Service</h4><p>Internet/TV/uslužne ponude, bundle logika i prodajni tokovi.</p></div>
+            <div class="box"><h4>Knowledge Service</h4><p>FAQ, lokacijski odgovori, radno vreme, pravilne formulacije i ogranicenja.</p></div>
+            <div class="box"><h4>Campaign & Ad Engine</h4><p>Idle mode reklame, raspored prikaza, prioritet kampanja i promo sadržaj.</p></div>
+            <div class="box"><h4>Conversation Service</h4><p>Voice/text interakcija, intent detection, FAQ, up-sell i capture logika.</p></div>
+            <div class="box"><h4>QR Bridge + ZOTA Connector</h4><p>Prenos sesije na telefon i slanje svega važnog u ZOTA case sloj.</p></div>
+          </div>
+
+          <h3>Retail funkcionalni tok</h3>
+          <ol>
+            <li>Korisnik prilazi uređaju ili skenira QR.</li>
+            <li>Ana v2 otvara sesiju i prepoznaje intent: retail, paket, informacija, reklamni klik, zahtev.</li>
+            <li>Odgovor dolazi iz source of truth sloja: katalog, znanje, service catalog.</li>
+            <li>Ako postoji interesovanje ili potreba za privatnim nastavkom, generiše se QR continuation.</li>
+            <li>Relevantni signal ide u ZOTA kao događaj nad slučajem.</li>
+          </ol>
+
+          <div class="warn callout">
+            <b>Kritično:</b> Ana v2 ne sme improvizovati cene, dostupnost ili zabranjene odgovore. Sve mora doći iz kontrolisanog backend sloja.
+          </div>
+        </section>
+
+        <section id="data" class="section">
+          <h2>9. Data model i tabele</h2>
+          <h3>ZOTA Core</h3>
+          <table>
+            <tr><th>Tabela</th><th>Ključna polja</th></tr>
+            <tr><td>persons</td><td>id, full_name, phone, email, external_refs_json</td></tr>
+            <tr><td>cases</td><td>id, person_id, channel_origin, intent_type, status, stage, next_action, metadata_json</td></tr>
+            <tr><td>case_events</td><td>id, case_id, event_type, source, payload_json, created_at</td></tr>
+            <tr><td>case_messages</td><td>id, case_id, direction, channel, message_text</td></tr>
+            <tr><td>case_decisions</td><td>id, case_id, decision_type, decision_reason, decision_by, confidence_score</td></tr>
+            <tr><td>case_tasks</td><td>id, case_id, task_type, status, assigned_to</td></tr>
+          </table>
+
+          <h3>ANA v2 Retail Core</h3>
+          <table>
+            <tr><th>Tabela</th><th>Ključna polja</th></tr>
+            <tr><td>devices</td><td>id, device_code, device_type, location_id, status, software_version</td></tr>
+            <tr><td>locations</td><td>id, name, type, address, city, country</td></tr>
+            <tr><td>device_sessions</td><td>id, device_id, started_at, ended_at, person_id, case_id, session_token</td></tr>
+            <tr><td>device_messages</td><td>id, session_id, direction, message_text, intent, confidence</td></tr>
+            <tr><td>device_events</td><td>id, device_id, session_id, event_type, payload_json</td></tr>
+            <tr><td>qr_transfers</td><td>id, session_id, qr_token, opened_at, phone_session_id</td></tr>
+            <tr><td>products</td><td>id, sku, name, category_id, default_price, active</td></tr>
+            <tr><td>product_prices</td><td>id, product_id, location_id, price, valid_from, valid_to</td></tr>
+            <tr><td>inventory_snapshots</td><td>id, product_id, location_id, qty, snapshot_at</td></tr>
+            <tr><td>service_offers</td><td>id, code, name, type, base_price, active</td></tr>
+            <tr><td>campaigns</td><td>id, name, campaign_type, active_from, active_to, priority</td></tr>
+            <tr><td>ad_slots</td><td>id, location_id, device_id, campaign_id, schedule_json</td></tr>
+            <tr><td>knowledge_answers</td><td>id, question_type, answer_template, language, active</td></tr>
+            <tr><td>recommendation_rules</td><td>id, trigger_type, condition_json, action_json, active</td></tr>
+          </table>
+        </section>
+
+        <section id="voice" class="section">
+          <h2>10. Voice i Twilio plan</h2>
+          <table>
+            <tr><th>Element</th><th>Odluka</th><th>Napomena</th></tr>
+            <tr><td>Twilio broj</td><td>Ostaje</td><td>Ne menjati dok jezgro ne postane stabilno</td></tr>
+            <tr><td>Uloga Twilio</td><td>Voice gateway</td><td>Poziv dolazi, webhook ide backend-u</td></tr>
+            <tr><td>Voice logika</td><td>Voice-service + ZOTA</td><td>Twilio nije business logic sloj</td></tr>
+            <tr><td>Fallback</td><td>Da</td><td>Deterministički tok kada AI ili backend zakaže</td></tr>
+          </table>
+        </section>
+
+        <section id="security" class="section">
+          <h2>11. Security i governance</h2>
+          <table>
+            <tr><th>Oblast</th><th>Obavezna mera</th></tr>
+            <tr><td>Transport</td><td>TLS/HTTPS svuda</td></tr>
+            <tr><td>Admin pristup</td><td>RBAC, sesije, kasnije SSO</td></tr>
+            <tr><td>Audit</td><td>Svaka odluka i state transition moraju ostati zabeleženi</td></tr>
+            <tr><td>QR token</td><td>Potpisan i vremenski ograničen</td></tr>
+            <tr><td>Secrets</td><td>Secrets manager / vault politika</td></tr>
+            <tr><td>Backup</td><td>Dnevni backup + restore test</td></tr>
+            <tr><td>Retail compliance</td><td>Kontrolisani odgovori za osetljive kategorije i zabrane</td></tr>
+          </table>
+        </section>
+
+        <section id="ops" class="section">
+          <h2>12. Monitoring i operativa</h2>
+          <div class="cards">
+            <div class="box"><h4>Case Monitoring</h4><p>Open cases, blocked cases, cases by stage, lost reasons, avg time per stage.</p></div>
+            <div class="box"><h4>Device Monitoring</h4><p>Heartbeat, offline uređaji, verzija softvera, error rate po lokaciji.</p></div>
+            <div class="box"><h4>Voice Monitoring</h4><p>Call success/failure, Twilio status, voice latency, fallback aktivacije.</p></div>
+            <div class="box"><h4>Retail Analytics</h4><p>Interakcije po lokaciji, top pitanja, QR conversion, lead conversion.</p></div>
+            <div class="box"><h4>Platform Health</h4><p>API latency, queue backlog, DB health, storage usage, error tracking.</p></div>
+            <div class="box"><h4>Business Visibility</h4><p>Kampanje, prodajni tokovi, performance po uređaju i traffic point-u.</p></div>
+          </div>
+        </section>
+
+        <section id="roadmap" class="section">
+          <h2>13. Roadmap po fazama</h2>
+          <div class="roadmap">
+            <div class="phase">
+              <div class="tag">Faza A</div>
+              <h4>Foundation Core</h4>
+              <ul>
+                <li>Case model</li>
+                <li>Event log</li>
+                <li>State machine</li>
+                <li>Twilio/web intake</li>
+              </ul>
+            </div>
+            <div class="phase">
+              <div class="tag">Faza B</div>
+              <h4>ANA v2 Pilot</h4>
+              <ul>
+                <li>Kiosk UI</li>
+                <li>Voice/touch tok</li>
+                <li>Avatar states</li>
+                <li>Session logging</li>
+              </ul>
+            </div>
+            <div class="phase">
+              <div class="tag">Faza C</div>
+              <h4>QR + Retail Core</h4>
+              <ul>
+                <li>QR bridge</li>
+                <li>Catalog integration</li>
+                <li>Knowledge service</li>
+                <li>ZOTA handoff</li>
+              </ul>
+            </div>
+            <div class="phase">
+              <div class="tag">Faza D</div>
+              <h4>Decision & Scale</h4>
+              <ul>
+                <li>Decision engine</li>
+                <li>Campaign engine</li>
+                <li>Fleet management</li>
+                <li>HA i observability</li>
+              </ul>
+            </div>
+          </div>
+          <table>
+            <tr><th>Segment</th><th>Procena</th></tr>
+            <tr><td>Foundation Core</td><td>3–5 nedelja</td></tr>
+            <tr><td>ANA v2 pilot</td><td>4–6 nedelja</td></tr>
+            <tr><td>QR + retail integration</td><td>2–4 nedelje</td></tr>
+            <tr><td>Decision/process layer</td><td>3–5 nedelja</td></tr>
+            <tr><td>Fleet, analytics, polish</td><td>3–6 nedelja</td></tr>
+            <tr><td><b>Ukupno za ozbiljnu prvu verziju</b></td><td><b>3–5 meseci</b></td></tr>
+          </table>
+        </section>
+
+        <section id="handoff" class="section">
+          <h2>14. Finalni handoff za master kodera</h2>
+          <div class="callout">
+            <b>Finalna implementaciona poruka:</b><br>
+            Ne gradimo više chatbot sistem. Gradimo case-driven operating platformu. ANA v2 je device/channel interface koji vodi razgovor, beleži sesiju i po potrebi prebacuje korisnika na telefon preko QR-a. ZOTA je centralni case/decision/process sloj koji svaku relevantnu interakciju pretvara u poslovni slučaj, određuje sledeću akciju i vodi ceo tok do ishoda.
+          </div>
+          <div class="good callout">
+            <b>Konačna tehnološka odluka:</b><br>
+            Python/FastAPI ostaje glavni backend, PostgreSQL je source of truth, Redis služi za session i queue, Twilio ostaje voice gateway, ANA v2 Retail Core dobija centralni katalog, knowledge base, campaign engine i QR bridge, a sve ozbiljno završava u ZOTA case sloju.
+          </div>
+          <p class="footer">Technical Master Plan v2 · CTO Blueprint · Namenjeno za Lead Engineer, CTO alignment i osnivački technical review.</p>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
