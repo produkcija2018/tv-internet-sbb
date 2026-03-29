@@ -284,7 +284,7 @@
         <h2>10. Decision Ownership Matrix</h2>
         <table>
           <tr><th>Vrsta odluke</th><th>Vlasnik</th><th>Napomena</th></tr>
-          <tr><td>Response phrasing i ton</td><td>Ana layer</td><td>Interfejs odlučuje kako govori, ne šta je poslovna istina</td></tr>
+          <tr><td>Response phrasing i ton</td><td>Ana layer</td><td>Interfejs odlučuje kako govori</td></tr>
           <tr><td>Case routing</td><td>ZOTA rules</td><td>Deterministički ili rules-first</td></tr>
           <tr><td>State transition</td><td>ZOTA state engine</td><td>Dozvoljene tranzicije su kontrolisane</td></tr>
           <tr><td>Next action selection</td><td>ZOTA decision engine</td><td>AI assist može predložiti, ne odobriti</td></tr>
@@ -315,12 +315,12 @@
           <div class="box"><h4>Stale case</h4><p>Case ide u ON_HOLD ili reopen logiku sa reason trace.</p></div>
           <div class="box"><h4>Manual escalation</h4><p>Ops može da preuzme case uz audit događaj i reason field.</p></div>
         </div>
-        <div class="warn callout"><b>Ozbiljan sistem nije happy-path-only.</b> Exception model je deo jezgra, ne dodatak.</div>
+        <div class="warn callout"><b>Sistem nije path-only.</b> Exception model je deo jezgra.</div>
       </section>
 
       <section id="retail" class="section">
         <h2>13. ANA v2 Retail Core</h2>
-        <p class="lead">ANA v2 u trafici ili prodavnici je retail AI interfejs koji zna artikle, cene, akcije, pakete i QR nastavak. Nije samo prodavac paketa i nije mesto gde živi poslovna istina.</p>
+        <p class="lead">ANA v2 u trafici ili prodavnici je retail AI interfejs koji zna artikle, cene, akcije, pakete i QR nastavak. Nije samo prodavac paketa.</p>
         <div class="cards">
           <div class="box"><h4>Retail Catalog Service</h4><p>Artikli, cene, kategorije, zalihe i lokacijske razlike.</p></div>
           <div class="box"><h4>Service Catalog Service</h4><p>Internet/TV/uslužne ponude, bundle logika i prodajni tokovi.</p></div>
@@ -329,7 +329,7 @@
           <div class="box"><h4>QR Bridge</h4><p>Prenos sesije na telefon bez gubitka konteksta.</p></div>
           <div class="box"><h4>ZOTA Connector</h4><p>Slanje svih relevantnih događaja u ZOTA case sloj.</p></div>
         </div>
-        <div class="warn callout"><b>Kritično:</b> Ana v2 ne sme improvizovati cene, dostupnost ili osetljive odgovore. Sve dolazi iz kontrolisanog source-of-truth backend-a.</div>
+        <div class="warn callout"><b>Kritično:</b> Sve dolazi iz kontrolisanog source-of-truth backend-a.</div>
       </section>
 
       <section id="data" class="section">
@@ -366,7 +366,7 @@
         <h2>15. Voice i Twilio plan</h2>
         <table>
           <tr><th>Element</th><th>Odluka</th><th>Napomena</th></tr>
-          <tr><td>Twilio broj</td><td>Ostaje</td><td>Ne menjati dok jezgro ne postane stabilno</td></tr>
+          <tr><td>Twilio broj</td><td>Ostaje</td><td>Ne menja se dok jezgro ne postane stabilno</td></tr>
           <tr><td>Uloga Twilio</td><td>Voice gateway</td><td>Poziv dolazi, webhook ide backend-u</td></tr>
           <tr><td>Voice logika</td><td>Voice-service + ZOTA</td><td>Twilio nije business logic sloj</td></tr>
           <tr><td>Fallback</td><td>Da</td><td>Deterministički tok kada AI ili backend zakaže</td></tr>
@@ -401,7 +401,7 @@
 
       <section id="team" class="section">
         <h2>18. Timska struktura i senioriteti</h2>
-        <p class="lead">Za profesionalni tim ne treba gomila ljudi, već jasno podeljene odgovornosti. Model ispod je namenjen timu koji želi da izgradi ozbiljan sistem bez haosa.</p>
+        <p class="lead">Profesionalni tim jasno podeljene odgovornosti. </p>
         <div class="orggrid">
           <div class="org"><h4>Lead Architect / CTO</h4><p>Vlasnik arhitekture, standarda i kritičnih tehničkih odluka.</p></div>
           <div class="org"><h4>Senior Backend Engineer — ZOTA Core</h4><p>Case engine, state machine, decision layer, orchestration, admin API.</p></div>
@@ -410,7 +410,7 @@
           <div class="org"><h4>Senior Platform / DevOps Engineer</h4><p>Deploy, CI/CD, observability, backup, secrets, environments i uptime.</p></div>
           <div class="org"><h4>Product / Delivery Owner</h4><p>Prioriteti, acceptance kriterijumi, scope kontrola i cross-team koordinacija.</p></div>
         </div>
-        <div class="good callout"><b>Realna preporuka za početak:</b> 5 ključnih ljudi full-time + 1 product owner + po potrebi part-time security/QA podrška.</div>
+        <div class="good callout"><b>Zaključak:</b> 5 ključnih ljudi full-time + 1 product owner + po potrebi part-time security/QA podrška.</div>
       </section>
 
       <section id="roadmap" class="section">
@@ -448,7 +448,7 @@
 
       <section id="budget" class="section">
         <h2>21. Okvir budžeta i runway</h2>
-        <p class="lead">Tačan budžet zavisi od senioriteta i tržišta rada, ali za profesionalni start treba planirati i ljude i infrastrukturu kao jednu celinu.</p>
+        <p class="lead">Razmatranje i planiranje ljudi kao infrastrukturu i jednu celinu.</p>
         <table>
           <tr><th>Rola</th><th>Broj</th><th>Model</th></tr>
           <tr><td>Lead Architect / CTO</td><td>1</td><td>Full-time ili founder-lead</td></tr>
@@ -465,8 +465,8 @@
           <li>Voice/STT/TTS operativni trošak</li>
           <li>Pilot uređaji, tableti, stalci, audio periferija</li>
         </ul>
-        <div class="warn callout"><b>Praktičan savet:</b> Planirati najmanje <b>6 meseci runway-a</b> za ozbiljan start i idealno <b>9–12 meseci</b> ako želite da od proof-of-concept-a stignete do stabilnog pilota bez paničnih rezova.</div>
-        <p class="footer">Technical Master Plan v3.1 Professional · Namenjeno za founderski alignment, savetničke razgovore, lead engineering handoff i ozbiljan CTO review.</p>
+        <div class="warn callout"><b>Zaključak:</b> Planirati najmanje <b>6 meseci runway-a</b>, a idealno <b>9–12 meseci</b>, kako bi projekat iz proof-of-concept faze mogao da preraste u stabilan pilot.</div>
+        <p class="footer">Technical Master Plan v3.1 </p>
       </section>
     </main>
   </div>
