@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ana v2 — 3D primena</title>
+  <style>
+    :root{
+      --bg:#07101d;
+      --bg2:#0b1530;
+      --panel:#101a33;
+      --line:rgba(255,255,255,.10);
+      --text:#eef4ff;
+      --muted:#a5b7da;
+      --blue:#6d8cff;
+      --cyan:#63dcff;
+      --green:#33d69f;
+      --amber:#ffbf69;
+      --red:#ff6b6b;
+      --shadow:0 18px 44px rgba(0,0,0,.28);
+      --radius:24px;
+      --max:1320px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      color:var(--text);
+      line-height:1.65;
+      background:
+        radial-gradient(circle at top right, rgba(109,140,255,.12), transparent 24%),
+        radial-gradient(circle at top left, rgba(99,220,255,.08), transparent 20%),
+        linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(99,220,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,220,255,.035) 1px, transparent 1px);
+      background-size:30px 30px;
+      opacity:.45;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.85), rgba(0,0,0,.20));
+    }
+
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:22px}
+
+    .topbar{
+      position:sticky;top:0;z-index:30;
+      display:flex;justify-content:space-between;align-items:center;gap:16px;
+      background:rgba(2,6,23,.84);
+      backdrop-filter:blur(10px);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:14px 18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+
+    .brand{display:flex;align-items:center;gap:14px;min-width:0}
+    .logo{
+      width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
+      font-weight:900;letter-spacing:.08em;color:#071018;
+      background:linear-gradient(135deg,var(--cyan),#c6f7ff);
+      box-shadow:0 0 24px rgba(99,220,255,.26);
+      flex:0 0 auto;
+    }
+    .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:4px}
+    .title{font-size:24px;font-weight:850;line-height:1.1}
+    .subtitle{font-size:13px;color:var(--muted)}
+
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:10px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);font-weight:800;font-size:13px;
+      transition:.2s ease;
+    }
+    .btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.10)}
+
+    .hero{
+      position:relative;overflow:hidden;
+      background:linear-gradient(135deg,#111b37 0%,#21366d 58%,#5b4df0 100%);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:30px;
+      padding:34px;
+      box-shadow:var(--shadow);
+      margin-bottom:20px;
+    }
+    .hero::after{
+      content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;
+      background:radial-gradient(circle, rgba(255,255,255,.18), transparent 65%);pointer-events:none;
+    }
+    .hero .pill{
+      display:inline-block;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.35px;
+      background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);margin-bottom:16px;
+    }
+    .hero h1{font-size:clamp(30px,4.4vw,50px);line-height:1.08;letter-spacing:-.03em;margin-bottom:14px;max-width:1000px}
+    .hero p{font-size:17px;color:#dbe5ff;max-width:1020px}
+
+    .section{margin-bottom:18px}
+    .section-title{font-size:28px;margin-bottom:8px}
+    .section-desc{color:var(--muted);margin-bottom:16px}
+
+    .panel{
+      background:linear-gradient(180deg, rgba(18,31,61,.96), rgba(14,24,46,.96));
+      border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
+    }
+    .panel-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .panel-title{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+    .panel-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .panel-body{padding:22px}
+
+    .grid{display:grid;gap:18px}
+    .g3{grid-template-columns:repeat(3,1fr)}
+    .g2{grid-template-columns:repeat(2,1fr)}
+
+    .card{
+      padding:20px;border-radius:20px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+    }
+    .card h3{margin-bottom:10px;font-size:18px}
+    .card p{color:#d7e6f5}
+
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);font-size:12px;color:var(--text)
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px currentColor}
+    .dot.cyan{background:var(--cyan)}
+    .dot.amber{background:var(--amber)}
+    .dot.red{background:var(--red)}
+
+    .video-grid{display:grid;grid-template-columns:1fr;gap:18px}
+    .video-card{
+      border:1px solid var(--line);border-radius:24px;overflow:hidden;
+      background:linear-gradient(180deg, rgba(18,31,61,.96), rgba(14,24,46,.96));
+      box-shadow:var(--shadow);
+    }
+    .video-head{
+      padding:18px 20px;border-bottom:1px solid var(--line);
+      display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;
+    }
+    .video-head h3{margin:0;font-size:20px}
+    .video-head p{margin:6px 0 0;color:var(--muted);max-width:760px}
+
+    .video-shell{
+      position:relative;
+      background:#020817;
+      min-height:440px;
+      display:flex;align-items:center;justify-content:center;
+      border-bottom:1px solid var(--line);
+      overflow:hidden;
+    }
+
+    video{
+      width:100%;
+      height:auto;
+      max-height:72vh;
+      background:#000;
+      display:block;
+    }
+
+    .placeholder{
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:28px;
+      background:
+        radial-gradient(circle at center, rgba(99,220,255,.08), transparent 30%),
+        linear-gradient(180deg, rgba(2,8,23,.76), rgba(2,8,23,.88));
+    }
+
+    .placeholder-icon{
+      width:78px;height:78px;border-radius:24px;
+      display:grid;place-items:center;
+      margin-bottom:16px;
+      border:1px solid rgba(99,220,255,.18);
+      background:rgba(99,220,255,.08);
+      box-shadow:0 0 26px rgba(99,220,255,.10);
+      font-size:32px;
+    }
+
+    .placeholder h4{
+      font-size:24px;
+      margin-bottom:10px;
+      letter-spacing:.2px;
+    }
+
+    .placeholder p{
+      max-width:640px;
+      color:#d2ddf7;
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .video-meta{
+      padding:18px 20px;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:18px;
+    }
+
+    .meta-box{
+      padding:16px;border-radius:18px;border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+    }
+    .meta-box h4{margin-bottom:8px;font-size:15px}
+    .meta-box ul{margin:8px 0 0 18px;color:#dce6ff}
+    .meta-box li{margin:4px 0}
+
+    .callout{
+      background:#0b1430;border:1px solid var(--line);border-left:4px solid var(--cyan);
+      padding:16px 18px;border-radius:16px;color:#dbe8f4;margin-top:16px;
+    }
+
+    .footer{
+      margin-top:20px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;
+      background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;
+    }
+
+    @media(max-width:1100px){
+      .g3,.g2,.video-meta{grid-template-columns:1fr}
+    }
+    @media(max-width:900px){
+      .topbar{flex-direction:column;align-items:flex-start}
+      .hero{padding:26px}
+      .panel-body{padding:18px}
+      .video-shell{min-height:280px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="logo">A2</div>
+          <div>
+            <div class="eyebrow">Visual Experience Layer</div>
+            <div class="title">Ana v2 — 3D primena</div>
+            <div class="subtitle">Realni scenariji primene • video prozori spremni za MP4 • premium placeholder dok su animacije u izradi</div>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn" href="/director">⬅ Nazad</a>
+        <a class="btn" href="#scenarios">Scenariji</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="pill">ZOTA STRATEŠKI SLOJ — VIZUELNA PRIMENA</div>
+      <h1>Ova stranica prikazuje kako Ana v2 izgleda u stvarnim okruženjima i kako se interfejs prevodi u operativni tok.</h1>
+      <p>
+        Stranica je pripremljena tako da odmah može da primi MP4 animacije sa punim video kontrolama: play, pause, premotavanje, fullscreen, zvuk i progress bar.
+        Dok su animacije u izradi, svaki prozor prikazuje jasan premium placeholder umesto praznog prostora.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">1. Uloga ove stranice</h2>
+      <p class="section-desc">Ovo nije galerija radi lepote. Ovo je vizuelni dokaz gde i kako Ana v2 ulazi u stvarni korisnički tok.</p>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Šta ova stranica treba da pokaže</div>
+            <div class="panel-sub">Vizuelni sloj mora da prati sistemsku logiku, ne samo avatar</div>
+          </div>
+          <span class="badge"><span class="dot cyan"></span> Visual Proof</span>
+        </div>
+        <div class="panel-body grid g3">
+          <div class="card">
+            <h3>Realan touchpoint</h3>
+            <p>Ana v2 je prikazana u prostoru gde korisnik stvarno prilazi interfejsu i pokreće kontakt.</p>
+          </div>
+          <div class="card">
+            <h3>Kontakt → signal</h3>
+            <p>Scena mora da pokaže da interakcija nije samo razgovor, već ulaz u sledeći korak sistema.</p>
+          </div>
+          <div class="card">
+            <h3>Case logika u pozadini</h3>
+            <p>I kada je fokus na vizuelnom doživljaju, poruka mora ostati ista: Ana je interfejs, ZOTA vodi tok.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scenarios" class="section">
+      <h2 class="section-title">2. Scenariji primene</h2>
+      <p class="section-desc">Pripremljena su tri glavna prozora za animacije: trafika, trgovinski lanac i transit lokacija.</p>
+
+      <div class="video-grid">
+        <article class="video-card">
+          <div class="video-head">
+            <div>
+              <h3>Ana v2 u trafici</h3>
+              <p>Brzi retail kontakt, kratka kvalifikacija i mogućnost da se korisnik prebaci na sledeći korak bez gužve i zastoja.</p>
+            </div>
+            <span class="badge"><span class="dot amber"></span> Trafika Scenario</span>
+          </div>
+          <div class="video-shell">
+            <video controls preload="metadata" playsinline>
+              <source src="" type="video/mp4" />
+              Vaš browser ne podržava HTML5 video.
+            </video>
+            <div class="placeholder">
+              <div class="placeholder-icon">🎬</div>
+              <h4>Animacija u izradi</h4>
+              <p>Ovde će biti prikazana 3D animacija Ane v2 u trafici. Kada MP4 bude spreman, dovoljno je ubaciti video source bez izmene dizajna ili kontrola.</p>
+            </div>
+          </div>
+          <div class="video-meta">
+            <div class="meta-box">
+              <h4>Šta scena treba da pokaže</h4>
+              <ul>
+                <li>korisnik prilazi interfejsu u brzom retail okruženju</li>
+                <li>Ana vodi prvi kontakt i kratku kvalifikaciju</li>
+                <li>interakcija ostaje kratka, jasna i operativna</li>
+                <li>moguć QR continuation ili capture sledećeg koraka</li>
+              </ul>
+            </div>
+            <div class="meta-box">
+              <h4>Status</h4>
+              <ul>
+                <li>video prozor spreman</li>
+                <li>kontrole aktivne</li>
+                <li>placeholder aktivan dok source ne bude dodat</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-head">
+            <div>
+              <h3>Ana v2 u trgovinskom lancu</h3>
+              <p>Ozbiljniji retail prostor sa dužom interakcijom, širom ponudom i jačim vizuelnim prisustvom interfejsa.</p>
+            </div>
+            <span class="badge"><span class="dot green"></span> Retail Chain Scenario</span>
+          </div>
+          <div class="video-shell">
+            <video controls preload="metadata" playsinline>
+              <source src="" type="video/mp4" />
+              Vaš browser ne podržava HTML5 video.
+            </video>
+            <div class="placeholder">
+              <div class="placeholder-icon">🧩</div>
+              <h4>Animacija u izradi</h4>
+              <p>Ovde će biti prikazana 3D animacija Ane v2 u trgovinskom lancu, sa fokusom na retail iskustvo, vođeni razgovor i nastavak korisničkog toka.</p>
+            </div>
+          </div>
+          <div class="video-meta">
+            <div class="meta-box">
+              <h4>Šta scena treba da pokaže</h4>
+              <ul>
+                <li>jasan retail corner ili kiosk prisustvo</li>
+                <li>korisnik dobija pomoć kroz strukturisanu interakciju</li>
+                <li>Ana ostaje interfejs, ne business logika</li>
+                <li>poruka prelazi u case / continuation signal</li>
+              </ul>
+            </div>
+            <div class="meta-box">
+              <h4>Status</h4>
+              <ul>
+                <li>video prozor spreman</li>
+                <li>fullscreen i seek podržani</li>
+                <li>kasnije samo ubaciti MP4 source</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-head">
+            <div>
+              <h3>Ana v2 u transit lokaciji</h3>
+              <p>High-traffic scenario za aerodrom, stanicu ili drugi prometni prostor gde je potreban brz info + nastavak na telefonu.</p>
+            </div>
+            <span class="badge"><span class="dot red"></span> Transit Scenario</span>
+          </div>
+          <div class="video-shell">
+            <video controls preload="metadata" playsinline>
+              <source src="" type="video/mp4" />
+              Vaš browser ne podržava HTML5 video.
+            </video>
+            <div class="placeholder">
+              <div class="placeholder-icon">✈️</div>
+              <h4>Animacija u izradi</h4>
+              <p>Ovde će biti prikazana 3D animacija Ane v2 u transit okruženju, sa fokusom na brzu interakciju, informisanje i QR/mobile continuation.</p>
+            </div>
+          </div>
+          <div class="video-meta">
+            <div class="meta-box">
+              <h4>Šta scena treba da pokaže</h4>
+              <ul>
+                <li>high-traffic lokaciju sa kratkim attention span-om</li>
+                <li>jasan i brz info sloj</li>
+                <li>nastavak razgovora preko telefona ili QR mosta</li>
+                <li>operativni signal ide dalje u sistem</li>
+              </ul>
+            </div>
+            <div class="meta-box">
+              <h4>Status</h4>
+              <ul>
+                <li>prozor spreman za finalni MP4</li>
+                <li>native browser kontrole uključene</li>
+                <li>placeholder zadržava premium izgled dok traje izrada</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="callout">
+        <b>Napomena za kasnije:</b> kada animacije budu gotove, dovoljno je u svakom <code>&lt;source src="" type="video/mp4" /&gt;</code> polju dodati putanju do MP4 fajla. Kontrole za play, pause, premotavanje, zvuk i fullscreen već postoje kroz ugrađeni HTML5 video player.
+      </div>
+    </section>
+
+    <div class="footer">
+      Ana v2 — 3D primena · Stranica pripremljena za kasnije ubacivanje MP4 animacija bez dodatnog redizajna.
+    </div>
+  </div>
+</body>
+</html>
