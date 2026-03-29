@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Director | TVInternetSBB</title>
+  <style>
+    :root{
+      --bg0:#070914;
+      --bg1:#0b1024;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.08);
+      --line:rgba(255,255,255,.14);
+      --txt:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+      --muted2:rgba(255,255,255,.55);
+      --accent:#a78bfa;
+      --blue:#38bdf8;
+      --green:#22c55e;
+      --cyan:#06b6d4;
+      --amber:#f59e0b;
+      --red:#ef4444;
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+      --shadow-soft:0 12px 30px rgba(0,0,0,.28);
+      --r:22px;
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--txt);
+      min-height:100vh;
+      background:
+        radial-gradient(900px 420px at 10% 0%, rgba(167,139,250,.25), transparent 55%),
+        radial-gradient(900px 420px at 90% 10%, rgba(56,189,248,.18), transparent 55%),
+        linear-gradient(180deg,var(--bg0),var(--bg1));
+    }
+
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 18px 34px}
+
+    .hero{
+      background:rgba(2,6,23,.45);
+      backdrop-filter:blur(8px);
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
+
+    .hero-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      padding:6px 0;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:0;
+    }
+
+    .brand-top{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .brand-title{
+      font-size:20px;
+      font-weight:900;
+      letter-spacing:.2px;
+      line-height:1.05;
+      margin:0;
+    }
+
+    .brand-sub{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(167,139,250,.35);
+      background:rgba(167,139,250,.12);
+      color:var(--accent);
+      font-weight:900;
+      font-size:12px;
+    }
+
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);
+      font-weight:800;
+      font-size:13px;
+      transition:.2s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.10);
+      border-color:rgba(255,255,255,.28);
+    }
+
+    .btn.logout{
+      border-color:rgba(239,68,68,.28);
+      background:rgba(239,68,68,.10);
+    }
+
+    .btn.logout:hover{
+      background:rgba(239,68,68,.16);
+      border-color:rgba(239,68,68,.42);
+    }
+
+    h1{
+      margin:26px 0 8px;
+      font-size:28px;
+      letter-spacing:.2px;
+    }
+
+    p.lead{
+      margin:0 0 18px;
+      color:var(--muted);
+      max-width:90ch;
+      line-height:1.6;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+      margin-top:8px;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:17px;
+      letter-spacing:.2px;
+    }
+
+    .section-head .desc{
+      margin:6px 0 0;
+      color:var(--muted2);
+      font-size:13px;
+      max-width:90ch;
+      line-height:1.6;
+    }
+
+    .divider{
+      margin:26px 0 16px;
+      border:0;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin:18px 0 22px;
+    }
+
+    .card{
+      position:relative;
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:var(--r);
+      padding:16px;
+      box-shadow:var(--shadow-soft);
+      transition:.22s ease;
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 40%);
+      pointer-events:none;
+    }
+
+    .card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(167,139,250,.42);
+      box-shadow:var(--shadow);
+      background:var(--card2);
+    }
+
+    .card-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      margin-bottom:8px;
+    }
+
+    .card h3{
+      margin:0;
+      font-size:15px;
+      line-height:1.35;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .tagrow{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .tag{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      font-size:12px;
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+    }
+
+    .tag.blue{border-color:rgba(56,189,248,.35);background:rgba(56,189,248,.10);color:var(--blue)}
+    .tag.green{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.10);color:var(--green)}
+    .tag.purple{border-color:rgba(167,139,250,.35);background:rgba(167,139,250,.12);color:var(--accent)}
+    .tag.cyan{border-color:rgba(6,182,212,.35);background:rgba(6,182,212,.10);color:var(--cyan)}
+    .tag.amber{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.10);color:var(--amber)}
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      font-size:11px;
+      font-weight:900;
+      color:rgba(255,255,255,.88);
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      white-space:nowrap;
+    }
+
+    .dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      display:inline-block;
+      box-shadow:0 0 10px currentColor;
+    }
+
+    .dot.green{background:var(--green); color:var(--green);}
+    .dot.blue{background:var(--blue); color:var(--blue);}
+    .dot.amber{background:var(--amber); color:var(--amber);}
+    .dot.cyan{background:var(--cyan); color:var(--cyan);}
+    .dot.purple{background:var(--accent); color:var(--accent);}
+
+    .links{
+      margin:16px 0 28px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+
+    .linkbtn{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(167,139,250,.28);
+      background:linear-gradient(180deg, rgba(167,139,250,.12), rgba(255,255,255,.04));
+      transition:.22s ease;
+      min-height:86px;
+      box-shadow:0 16px 45px rgba(0,0,0,.28);
+    }
+
+    .linkbtn:hover{
+      transform:translateY(-3px);
+      border-color:rgba(167,139,250,.52);
+      background:linear-gradient(180deg, rgba(167,139,250,.18), rgba(56,189,248,.06));
+      box-shadow:0 22px 60px rgba(0,0,0,.42);
+    }
+
+    .linkbtn .left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .num{
+      width:38px;
+      height:38px;
+      border-radius:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:14px;
+      border:1px solid rgba(167,139,250,.35);
+      background:rgba(167,139,250,.18);
+      color:rgba(255,255,255,.95);
+      flex:0 0 auto;
+    }
+
+    .ltitle{
+      font-weight:900;
+      font-size:15px;
+      letter-spacing:.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .lmeta{
+      font-size:13px;
+      color:rgba(255,255,255,.70);
+      margin-top:3px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .arrow{
+      opacity:.92;
+      font-weight:900;
+      font-size:18px;
+      flex:0 0 auto;
+    }
+
+    .badge-new{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:900;
+      border:1px solid rgba(34,197,94,.35);
+      background:rgba(34,197,94,.12);
+      color:rgba(34,197,94,.95);
+      margin-left:10px;
+      vertical-align:middle;
+    }
+
+    .badge-dev{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:900;
+      border:1px solid rgba(245,158,11,.35);
+      background:rgba(245,158,11,.12);
+      color:rgba(245,158,11,.98);
+      margin-left:10px;
+      vertical-align:middle;
+    }
+
+    .space{height:10px}
+
+    /* ===== ZOTA FEATURED SECTION ===== */
+
+    .zota-feature{
+      position:relative;
+      margin:30px 0 34px;
+      padding:24px 20px 14px;
+      border-radius:28px;
+      border:1px solid rgba(167,139,250,.16);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+      box-shadow:
+        0 24px 70px rgba(0,0,0,.34),
+        inset 0 1px 0 rgba(255,255,255,.05);
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .zota-feature::before{
+      content:"";
+      position:absolute;
+      inset:-80px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(167,139,250,.18), transparent 28%),
+        radial-gradient(circle at 80% 15%, rgba(56,189,248,.14), transparent 26%),
+        radial-gradient(circle at 50% 85%, rgba(6,182,212,.10), transparent 24%);
+      filter:blur(16px);
+      z-index:-2;
+      pointer-events:none;
+    }
+
+    .zota-feature::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 34%);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .zota-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:8px;
+    }
+
+    .zota-title-wrap h2{
+      margin:0;
+      font-size:20px;
+      letter-spacing:.25px;
+    }
+
+    .zota-desc{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.65;
+      max-width:84ch;
+    }
+
+    .zota-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(167,139,250,.30);
+      background:rgba(167,139,250,.12);
+      color:#d7ccff;
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .zota-grid{
+      position:relative;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin:18px 0 10px;
+    }
+
+    .zota-card{
+      position:relative;
+      min-height:152px;
+      border:1px solid rgba(167,139,250,.18);
+      background:
+        linear-gradient(180deg, rgba(167,139,250,.10), rgba(255,255,255,.04));
+      box-shadow:
+        0 14px 38px rgba(0,0,0,.30),
+        inset 0 1px 0 rgba(255,255,255,.05);
+      opacity:0;
+      transform:translateY(12px) scale(.985);
+      animation:zotaReveal .72s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    .zota-card::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      border-radius:inherit;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.08), transparent 35%);
+      pointer-events:none;
+    }
+
+    .zota-card:hover{
+      transform:translateY(-6px) scale(1.01);
+      border-color:rgba(167,139,250,.46);
+      background:
+        linear-gradient(180deg, rgba(167,139,250,.18), rgba(56,189,248,.06));
+      box-shadow:
+        0 22px 56px rgba(0,0,0,.40),
+        0 0 26px rgba(167,139,250,.14);
+    }
+
+    .zota-card .card-top h3{
+      font-size:16px;
+    }
+
+    .zota-card p{
+      min-height:42px;
+    }
+
+    .zota-card .status{
+      background:rgba(255,255,255,.06);
+    }
+
+    .zota-card:nth-child(1){animation-delay:.10s}
+    .zota-card:nth-child(2){animation-delay:.28s}
+    .zota-card:nth-child(3){animation-delay:.46s}
+    .zota-card:nth-child(4){animation-delay:.64s}
+    .zota-card:nth-child(5){animation-delay:.82s}
+    .zota-card:nth-child(6){animation-delay:1s}
+
+    @keyframes zotaReveal{
+      0%{
+        opacity:0;
+        transform:translateY(14px) scale(.985);
+        box-shadow:0 10px 28px rgba(0,0,0,.22);
+      }
+      55%{
+        opacity:1;
+        transform:translateY(-3px) scale(1.003);
+        box-shadow:
+          0 18px 44px rgba(0,0,0,.34),
+          0 0 26px rgba(167,139,250,.10);
+      }
+      100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+      }
+    }
+
+    .zota-feature .divider-soft{
+      margin:8px 0 0;
+      border:0;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
+    }
+
+    @media(max-width:1050px){
+      .links{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media(max-width:900px){
+      .hero-row{flex-direction:column;align-items:flex-start}
+      .grid{grid-template-columns:1fr}
+      .links{grid-template-columns:1fr}
+      .zota-grid{grid-template-columns:1fr}
+      .zota-head{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-row">
+        <div class="brand">
+          <div class="brand-top">
+            <div class="brand-title">TVInternetSBB – Executive Hub</div>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <a class="btn" href="/admin" target="_blank" rel="noopener">Admin</a>
+          <a class="btn" href="/telegram/status" target="_blank" rel="noopener">Telegram</a>
+          <a class="btn logout" href="/logout">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <h1>Krucijalni linkovi</h1>
+
+    <div class="grid">
+      <a class="card" href="/director/github-hub" rel="noopener">
+        <div class="card-top">
+          <h3>SKS / SEO / Migracija mailbox / Competitor / PDF / Gl.Reference</h3>
+          <span class="status"><span class="dot blue"></span> Hub</span>
+        </div>
+        <p>Interna mapa i direktorijum ključnih plan/analiza stranica.</p>
+        <div class="tagrow">
+          <span class="tag purple">Executive</span>
+          <span class="tag blue">Internal</span>
+        </div>
+      </a>
+
+      <a class="card" href="/admin" target="_blank" rel="noopener">
+        <div class="card-top">
+          <h3>Admin Panel</h3>
+          <span class="status"><span class="dot green"></span> Active</span>
+        </div>
+        <p>Kontrolni centar sistema, administracija i operativni pristup.</p>
+        <div class="tagrow">
+          <span class="tag purple">Internal</span>
+        </div>
+      </a>
+
+      <a class="card" href="/admin/leads" target="_blank" rel="noopener">
+        <div class="card-top">
+          <h3>Leadovi</h3>
+          <span class="status"><span class="dot cyan"></span> Ops</span>
+        </div>
+        <p>Pregled leadova i osnovni operativni rad nad zapisima.</p>
+        <div class="tagrow">
+          <span class="tag blue">O-p-s</span>
+        </div>
+      </a>
+
+      <a class="card" href="/health/business" target="_blank" rel="noopener">
+        <div class="card-top">
+          <h3>Business Health</h3>
+          <span class="status"><span class="dot green"></span> Health</span>
+        </div>
+        <p>DB write/read/verify provera i osnovni signal poslovnog toka.</p>
+        <div class="tagrow">
+          <span class="tag green">Health</span>
+        </div>
+      </a>
+
+      <a class="card" href="/login?next=/technician" target="_blank" rel="noopener">
+        <div class="card-top">
+          <h3>Technician Portal</h3>
+          <span class="status"><span class="dot amber"></span> Login</span>
+        </div>
+        <p>Koaks / Optika alati za tehnički tim. Trenutno traži poseban login.</p>
+        <div class="tagrow">
+          <span class="tag blue">Field</span>
+          <span class="tag amber">Access</span>
+        </div>
+      </a>
+
+      <a class="card" href="/telegram/status" target="_blank" rel="noopener">
+        <div class="card-top">
+          <h3>Telegram Status</h3>
+          <span class="status"><span class="dot green"></span> Bot</span>
+        </div>
+        <p>Status bota i webhooka.</p>
+        <div class="tagrow">
+          <span class="tag purple">Bot</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="zota-feature">
+      <div class="zota-head">
+        <div class="zota-title-wrap">
+          <h2>ZOTA-PUT OSNIVAČA</h2>
+          <p class="zota-desc">
+            Strukturiran osnivački put od ideje do operativnog AI sistema.
+            Ovaj blok je izdvojen kao centralni founders modul za prezentaciju osnivačima, savetnicima i strateškim partnerima.
+          </p>
+        </div>
+        <div class="zota-badge">FOUNDERS CORE</div>
+      </div>
+
+      <hr class="divider-soft" />
+
+      <div class="zota-grid">
+        <a class="card zota-card" href="/director/zota-put-1">
+          <div class="card-top">
+            <h3>ZOTA-PUT 1 <span class="badge-new">AKTIVNO</span></h3>
+            <span class="status"><span class="dot green"></span> Live</span>
+          </div>
+          <p>Početni osnivački okvir i ulazak u logiku sistema.</p>
+          <div class="tagrow">
+            <span class="tag cyan">Founder</span>
+            <span class="tag green">Page 1</span>
+          </div>
+        </a>
+
+        <a class="card zota-card" href="/director/zota-put-2">
+          <div class="card-top">
+            <h3>ZOTA-PUT 2 <span class="badge-new">AKTIVNO</span></h3>
+            <span class="status"><span class="dot blue"></span> Live</span>
+          </div>
+          <p>Drugi korak: produbljenje modela i strateškog razumevanja.</p>
+          <div class="tagrow">
+            <span class="tag cyan">Founder</span>
+            <span class="tag blue">Page 2</span>
+          </div>
+        </a>
+
+        <a class="card zota-card" href="/director/zota-put-3">
+          <div class="card-top">
+            <h3>ZOTA-PUT 3 <span class="badge-new">AKTIVNO</span></h3>
+            <span class="status"><span class="dot cyan"></span> Live</span>
+          </div>
+          <p>Treći korak: konsolidacija i operativna slika sledeće faze.</p>
+          <div class="tagrow">
+            <span class="tag cyan">Founder</span>
+            <span class="tag purple">Page 3</span>
+          </div>
+        </a>
+
+        <a class="card zota-card" href="/director/zota-put-4">
+          <div class="card-top">
+            <h3>ZOTA-PUT 4 <span class="badge-dev">NOVO</span></h3>
+            <span class="status"><span class="dot purple"></span> Next</span>
+          </div>
+          <p>Četvrti korak: širenje founders narrative u viši sistemski nivo.</p>
+          <div class="tagrow">
+            <span class="tag cyan">Founder</span>
+            <span class="tag amber">Page 4</span>
+          </div>
+        </a>
+
+        <a class="card zota-card" href="/director/zota-put-5">
+          <div class="card-top">
+            <h3>ZOTA-PUT 5 <span class="badge-dev">NOVO</span></h3>
+            <span class="status"><span class="dot blue"></span> Next</span>
+          </div>
+          <p>Peti korak: strateško usmerenje i usklađivanje sa savetnicima.</p>
+          <div class="tagrow">
+            <span class="tag cyan">Founder</span>
+            <span class="tag blue">Page 5</span>
+          </div>
+        </a>
+
+        <a class="card zota-card" href="/director/zota-put-6">
+          <div class="card-top">
+            <h3>ZOTA-PUT 6 <span class="badge-dev">NOVO</span></h3>
+            <span class="status"><span class="dot green"></span> Vision</span>
+          </div>
+          <p>Završni founders pogled: kompletna slika puta i završna poruka.</p>
+          <div class="tagrow">
+            <span class="tag cyan">Founder</span>
+            <span class="tag green">Page 6</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="section-head">
+      <div>
+        <h2>Dodatni linkovi</h2>
+      </div>
+    </div>
+
+    <div class="space"></div>
+
+    <div class="links">
+      <a class="linkbtn" href="/director/predlog-sks">
+        <div class="left">
+          <span class="num">1</span>
+          <div style="min-width:0;">
+            <div class="ltitle">
+              PREDLOG SKS <span class="badge-new">SKS</span>
+            </div>
+            <div class="lmeta">Draft / predlog strukture</div>
+          </div>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+
+      <a class="linkbtn" href="/director/legal-advokat">
+        <div class="left">
+          <span class="num">2</span>
+          <div style="min-width:0;">
+            <div class="ltitle">
+              LEGAL / ADVOKAT <span class="badge-new">LEGAL</span>
+            </div>
+            <div class="lmeta">Pravna pitanja</div>
+          </div>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+
+      <a class="linkbtn" href="/director/plan-ana-v2">
+        <div class="left">
+          <span class="num">3</span>
+          <div style="min-width:0;">
+            <div class="ltitle">
+              PLAN ANA V.2. <span class="badge-new">NEW</span>
+            </div>
+            <div class="lmeta">Strategija razvoja AI sistema</div>
+          </div>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+
+      <a class="linkbtn" href="/director/izvestaj-seo">
+        <div class="left">
+          <span class="num">4</span>
+          <div style="min-width:0;">
+            <div class="ltitle">IZVEŠTAJ SEO</div>
+            <div class="lmeta">Interna analiza i KPI performansi</div>
+          </div>
+        </div>
+        <div class="arrow">↗</div>
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>
