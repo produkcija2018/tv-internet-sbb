@@ -94,7 +94,7 @@
   <section class="hero">
     <div class="hero-card">
       <h1>Technical Master Plan v3.1 </h1>
-      <p>Nacrt sistema</p>
+      <p></Nacrt sistema></p>
       <p>CTO blueprint za ZOTA operativni sistem i ANA v2 retail interfejs. Fokus je na Case jezgru, odluci, procesu i kontrolisanoj isporuci.</p>
       <div class="meta">
         <div class="chip">CTO Blueprint Professional</div>
@@ -160,7 +160,7 @@
           <div class="arrow">→</div>
           <div class="node">Decision / Process / Outcome</div>
         </div>
-        <div class="good callout"><b>Ključna poruka:</b> Ana govori. ZOTA odlučuje. Case pamti. Process završava posao.</div>
+        <div class="good callout"><b>Zaključak:</b> Ana govori. ZOTA odlučuje. Case pamti. Process završava posao.</div>
         <div class="metric-grid">
           <div class="metric"><div class="n">1</div><div class="l">Centralna jedinica: <b>Case</b></div></div>
           <div class="metric"><div class="n">2</div><div class="l">Glavni backend: <b>Python/FastAPI</b></div></div>
@@ -185,16 +185,16 @@
       <section id="split" class="section">
         <h2>3. Podela: Ana vs ZOTA</h2>
         <table>
-          <tr><th>Komponenta</th><th>Šta radi</th><th>Šta ne sme da bude</th></tr>
-          <tr><td>ANA v2</td><td>Komunikuje, sluša, govori, vodi prvi kontakt, nudi QR nastavak, vodi retail i info tok</td><td>Ne sme biti vlasnik state istine, case logike ili procesa</td></tr>
+          <tr><th>Komponenta</th><th>Šta radi</th><th>Šta se izbegava</th></tr>
+          <tr><td>ANA v2</td><td>Komunicira, sluša, govori, vodi prvi kontakt, nudi QR nastavak, vodi retail i info tok</td><td>Ne sme biti vlasnik state istine, case logike ili procesa</td></tr>
           <tr><td>ZOTA</td><td>Pamti slučaj, vodi stanje, odlučuje next action, aktivira procese i taskove</td><td>Ne sme biti samo chat persona ili frontend maska</td></tr>
         </table>
-        <div class="good callout"><b>Jedna rečenica za ceo tim:</b> Ana govori. ZOTA odlučuje.</div>
+        <div class="good callout"><b>Zaključak:</b> Ana govori. ZOTA odlučuje.</div>
       </section>
 
       <section id="wedge" class="section">
         <h2>4. Phase 1 fokus</h2>
-        <p class="lead">Prva ozbiljna verzija ne sme pokušavati da bude sve. Prvi dokazni klin je zatvaranje jednog jasnog vertikalnog toka: <b>kontakt → case → odluka → proces → ishod</b>.</p>
+        <p class="lead">Prvi dokazni klin je zatvaranje jednog jasnog vertikalnog toka: <b>kontakt → case → odluka → proces → ishod</b>.</p>
         <table>
           <tr><th>Oblast</th><th>Phase 1 obavezno</th><th>Kasnije širenje</th></tr>
           <tr><td>Kanali</td><td>Web + Voice + Tablet/QR</td><td>Dodatni touchpoint-i i širi channel mix</td></tr>
@@ -215,21 +215,21 @@
           <div class="box"><h4>Voice</h4><p>Twilio kao gateway + voice-service + STT/TTS provider + fallback tok.</p></div>
           <div class="box"><h4>Assets</h4><p>Object storage i CDN za audio, avatar assete, dokumenta i export.</p></div>
         </div>
-        <div class="danger callout"><b>Ne raditi prerano:</b> rani mikroservisi, Kubernetes bez potrebe, tri jezika i hiper-kompleksan 3D avatar pre core logike.</div>
+        <div class="danger callout"><b>Strateška odluka da li?:</b> rani mikroservisi, Kubernetes, tri jezika i hiper-kompleksan 3D avatar pre core logike.</div>
       </section>
 
       <section id="infra" class="section">
         <h2>6. Production infrastruktura</h2>
         <h3>Pilot / rana produkcija</h3>
         <table>
-          <tr><th>Sloj</th><th>Preporuka</th><th>Minimum</th></tr>
+          <tr><th>Sloj</th><th>Razmatrati</th><th>Minimum</th></tr>
           <tr><td>App server</td><td>AWS / Hetzner / DigitalOcean / Azure VM</td><td>4 vCPU / 8 GB RAM</td></tr>
           <tr><td>Database</td><td>Managed PostgreSQL</td><td>2–4 vCPU / 8–16 GB RAM</td></tr>
           <tr><td>Redis</td><td>Managed Redis ili poseban node</td><td>2 GB RAM</td></tr>
           <tr><td>Storage</td><td>S3-compatible storage</td><td>Audio, dokumenta, export</td></tr>
           <tr><td>Edge</td><td>Cloudflare + Nginx</td><td>DNS, TLS, WAF basic</td></tr>
         </table>
-        <div class="good callout"><b>Production start preporuka:</b> modularni monolit u Docker-u + managed Postgres + Redis + object storage + dnevni backup + Cloudflare.</div>
+        <div class="good callout"><b>Production start :</b> modularni monolit u Docker-u + managed Postgres + Redis + object storage + dnevni backup + Cloudflare.</div>
       </section>
 
       <section id="routes" class="section">
@@ -268,7 +268,7 @@
 
       <section id="identity" class="section">
         <h2>9. Case Creation Policy</h2>
-        <p class="lead">Tvrdnja da je Case centralna jedinica nema vrednost bez jasne politike nastanka, povezivanja i merge logike.</p>
+        <p class="lead">Case centralna jedinica nema vrednost bez jasne politike nastanka, povezivanja i merge logike.</p>
         <table>
           <tr><th>Događaj</th><th>Akcija</th><th>Rezultat</th></tr>
           <tr><td>Novi web inquiry sa dovoljnim signalom</td><td>Create case</td><td>Otvara se novi case sa channel origin = web</td></tr>
