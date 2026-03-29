@@ -1,814 +1,470 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="sr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Director | TVInternetSBB</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technical Master Plan v3.1 Professional — ZOTA CTO Blueprint</title>
   <style>
     :root{
-      --bg0:#070914;
-      --bg1:#0b1024;
-      --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.08);
-      --line:rgba(255,255,255,.14);
-      --txt:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.70);
-      --muted2:rgba(255,255,255,.55);
-      --accent:#a78bfa;
-      --blue:#38bdf8;
-      --green:#22c55e;
-      --cyan:#06b6d4;
-      --amber:#f59e0b;
-      --red:#ef4444;
-      --shadow:0 20px 60px rgba(0,0,0,.45);
-      --shadow-soft:0 12px 30px rgba(0,0,0,.28);
-      --r:22px;
-      --max:1180px;
+      --bg:#07111f; --bg2:#0f1f3a; --surface:#ffffff; --surface2:#f7f9fe;
+      --ink:#18243f; --muted:#607092; --line:#d9e2f1; --primary:#2563eb; --primary2:#00b3ff;
+      --green:#0f9d58; --amber:#b7791f; --red:#c0392b; --shadow:0 18px 42px rgba(16,32,72,.12);
+      --radius:22px;
     }
-
     *{box-sizing:border-box}
-
+    html{scroll-behavior:smooth}
     body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--txt);
-      min-height:100vh;
+      margin:0; font-family:Inter, Arial, Helvetica, sans-serif; color:var(--ink);
       background:
-        radial-gradient(900px 420px at 10% 0%, rgba(167,139,250,.25), transparent 55%),
-        radial-gradient(900px 420px at 90% 10%, rgba(56,189,248,.18), transparent 55%),
-        linear-gradient(180deg,var(--bg0),var(--bg1));
-    }
-
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:var(--max);margin:0 auto;padding:0 18px 34px}
-
-    .hero{
-      background:rgba(2,6,23,.45);
-      backdrop-filter:blur(8px);
-      position:sticky;
-      top:0;
-      z-index:20;
-    }
-
-    .hero-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:18px;
-      padding:6px 0;
-    }
-
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:0;
-    }
-
-    .brand-top{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .brand-title{
-      font-size:20px;
-      font-weight:900;
-      letter-spacing:.2px;
-      line-height:1.05;
-      margin:0;
-    }
-
-    .brand-sub{
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(167,139,250,.35);
-      background:rgba(167,139,250,.12);
-      color:var(--accent);
-      font-weight:900;
-      font-size:12px;
-    }
-
-    .header-actions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:8px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.06);
-      font-weight:800;
-      font-size:13px;
-      transition:.2s ease;
-    }
-
-    .btn:hover{
-      transform:translateY(-1px);
-      background:rgba(255,255,255,.10);
-      border-color:rgba(255,255,255,.28);
-    }
-
-    .btn.logout{
-      border-color:rgba(239,68,68,.28);
-      background:rgba(239,68,68,.10);
-    }
-
-    .btn.logout:hover{
-      background:rgba(239,68,68,.16);
-      border-color:rgba(239,68,68,.42);
-    }
-
-    h1{
-      margin:26px 0 8px;
-      font-size:28px;
-      letter-spacing:.2px;
-    }
-
-    p.lead{
-      margin:0 0 18px;
-      color:var(--muted);
-      max-width:90ch;
-      line-height:1.6;
-    }
-
-    .section-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:14px;
-      margin-top:8px;
-    }
-
-    .section-head h2{
-      margin:0;
-      font-size:17px;
-      letter-spacing:.2px;
-    }
-
-    .section-head .desc{
-      margin:6px 0 0;
-      color:var(--muted2);
-      font-size:13px;
-      max-width:90ch;
-      line-height:1.6;
-    }
-
-    .divider{
-      margin:26px 0 16px;
-      border:0;
-      height:1px;
-      background:linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-      margin:18px 0 22px;
-    }
-
-    .card{
-      position:relative;
-      background:var(--card);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:var(--r);
-      padding:16px;
-      box-shadow:var(--shadow-soft);
-      transition:.22s ease;
-      overflow:hidden;
-    }
-
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 40%);
-      pointer-events:none;
-    }
-
-    .card:hover{
-      transform:translateY(-4px);
-      border-color:rgba(167,139,250,.42);
-      box-shadow:var(--shadow);
-      background:var(--card2);
-    }
-
-    .card-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:10px;
-      margin-bottom:8px;
-    }
-
-    .card h3{
-      margin:0;
-      font-size:15px;
-      line-height:1.35;
-    }
-
-    .card p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
+        radial-gradient(1200px 480px at 20% 0%, rgba(37,99,235,.24), transparent 50%),
+        radial-gradient(900px 420px at 80% 10%, rgba(0,179,255,.18), transparent 45%),
+        linear-gradient(180deg,var(--bg),var(--bg2) 26%, #eef3fb 26%, #eef3fb 100%);
       line-height:1.55;
     }
-
-    .tagrow{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:12px;
+    .wrap{max-width:1320px;margin:0 auto;padding:26px 22px 72px}
+    .hero{color:#fff;padding:18px 4px 34px;display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+    .hero-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.12); border-radius:28px; padding:28px;
+      backdrop-filter: blur(8px); box-shadow:0 24px 50px rgba(0,0,0,.16);
     }
-
-    .tag{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      font-size:12px;
-      font-weight:900;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06);
+    .hero h1{font-size:44px;line-height:1.03;margin:0 0 10px;letter-spacing:-0.03em;font-weight:850}
+    .hero p{font-size:17px;color:#dce8ff;margin:0 0 12px;max-width:820px}
+    .meta,.pillrow{display:flex;flex-wrap:wrap;gap:10px}
+    .meta{margin-top:12px}.pillrow{margin-top:8px}
+    .chip,.pill{display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;font-size:13px}
+    .chip{color:#eef4ff;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08)}
+    .pill{background:#edf4ff;color:#20469f;border:1px solid #d7e5ff}
+    .summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .mini{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);border-radius:18px;padding:16px}
+    .mini b{display:block;font-size:13px;color:#cfe0ff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+    .mini span{font-size:15px;color:#fff}
+    .layout{display:grid;grid-template-columns:290px 1fr;gap:22px}
+    .nav{position:sticky;top:16px;background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow)}
+    .nav h3{margin:0 0 12px;font-size:15px}
+    .nav a{display:block;text-decoration:none;color:var(--muted);padding:7px 0;font-size:14px}
+    .nav a:hover{color:var(--primary)}
+    .section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px;margin-bottom:20px}
+    h2{font-size:30px;line-height:1.08;letter-spacing:-0.025em;margin:0 0 14px}
+    h3{font-size:21px;margin:20px 0 10px} h4{font-size:16px;margin:16px 0 8px}
+    p{margin:0 0 12px} ul,ol{margin:8px 0 14px 22px} li{margin:4px 0}
+    .lead{font-size:17px;color:#334566}
+    .callout{background:#f4f8ff;border:1px solid #d6e4ff;border-left:4px solid var(--primary);padding:15px 16px;border-radius:14px;margin:14px 0}
+    .warn{background:#fff8eb;border-color:#f3dfae;border-left-color:var(--amber)}
+    .good{background:#eef9f2;border-color:#cdebd7;border-left-color:var(--green)}
+    .danger{background:#fff2f0;border-color:#f3d0cb;border-left-color:var(--red)}
+    .metric-grid,.cards,.roadmap,.orggrid{display:grid;gap:14px}
+    .metric-grid{grid-template-columns:repeat(4,1fr);margin-top:12px}
+    .cards{grid-template-columns:repeat(3,1fr);margin-top:12px}
+    .roadmap{grid-template-columns:repeat(4,1fr)}
+    .orggrid{grid-template-columns:repeat(3,1fr)}
+    .metric,.box,.phase,.org{border:1px solid var(--line);border-radius:18px;background:#fff}
+    .metric{padding:16px;background:linear-gradient(180deg,#fbfdff,#f0f5ff)}
+    .metric .n{font-size:28px;font-weight:800;color:var(--ink)} .metric .l{font-size:13px;color:var(--muted)}
+    .box,.phase,.org{padding:16px}
+    .box p,.org p{font-size:14px;color:#48597b}
+    .phase .tag{display:inline-block;padding:5px 9px;border-radius:999px;background:#edf4ff;color:#20469f;font-size:12px;margin-bottom:8px}
+    .flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0 6px}
+    .node{min-width:140px;text-align:center;padding:14px 16px;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:0 10px 22px rgba(16,32,72,.05);font-weight:700}
+    .node.primary{background:linear-gradient(180deg,#edf4ff,#dceaff);color:#1846a8;border-color:#c8dbff}
+    .node.dark{background:linear-gradient(180deg,#1f3b76,#11264d);color:#fff;border-color:#2a4f98}
+    .arrow{font-size:24px;color:#7a8caf;font-weight:700}
+    table{width:100%;border-collapse:collapse;margin:12px 0 18px}
+    th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;font-size:14px}
+    th{background:#f6f9ff}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#f1f4f9;padding:2px 7px;border-radius:8px}
+    .footer{color:#6d7b99;font-size:13px;margin-top:8px}
+    .source-list li{font-size:14px}
+    @media (max-width:1100px){
+      .hero{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.nav{position:relative;top:auto}
+      .metric-grid,.cards,.roadmap,.orggrid,.summary-grid{grid-template-columns:repeat(2,1fr)}
     }
-
-    .tag.blue{border-color:rgba(56,189,248,.35);background:rgba(56,189,248,.10);color:var(--blue)}
-    .tag.green{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.10);color:var(--green)}
-    .tag.purple{border-color:rgba(167,139,250,.35);background:rgba(167,139,250,.12);color:var(--accent)}
-    .tag.cyan{border-color:rgba(6,182,212,.35);background:rgba(6,182,212,.10);color:var(--cyan)}
-    .tag.amber{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.10);color:var(--amber)}
-
-    .status{
-      display:inline-flex;
-      align-items:center;
-      gap:7px;
-      font-size:11px;
-      font-weight:900;
-      color:rgba(255,255,255,.88);
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      white-space:nowrap;
-    }
-
-    .dot{
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      display:inline-block;
-      box-shadow:0 0 10px currentColor;
-    }
-
-    .dot.green{background:var(--green); color:var(--green);}
-    .dot.blue{background:var(--blue); color:var(--blue);}
-    .dot.amber{background:var(--amber); color:var(--amber);}
-    .dot.cyan{background:var(--cyan); color:var(--cyan);}
-    .dot.purple{background:var(--accent); color:var(--accent);}
-
-    .links{
-      margin:16px 0 28px;
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
-    }
-
-    .linkbtn{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:16px;
-      border-radius:18px;
-      border:1px solid rgba(167,139,250,.28);
-      background:linear-gradient(180deg, rgba(167,139,250,.12), rgba(255,255,255,.04));
-      transition:.22s ease;
-      min-height:86px;
-      box-shadow:0 16px 45px rgba(0,0,0,.28);
-    }
-
-    .linkbtn:hover{
-      transform:translateY(-3px);
-      border-color:rgba(167,139,250,.52);
-      background:linear-gradient(180deg, rgba(167,139,250,.18), rgba(56,189,248,.06));
-      box-shadow:0 22px 60px rgba(0,0,0,.42);
-    }
-
-    .linkbtn .left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
-
-    .num{
-      width:38px;
-      height:38px;
-      border-radius:14px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      font-size:14px;
-      border:1px solid rgba(167,139,250,.35);
-      background:rgba(167,139,250,.18);
-      color:rgba(255,255,255,.95);
-      flex:0 0 auto;
-    }
-
-    .ltitle{
-      font-weight:900;
-      font-size:15px;
-      letter-spacing:.2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .lmeta{
-      font-size:13px;
-      color:rgba(255,255,255,.70);
-      margin-top:3px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .arrow{
-      opacity:.92;
-      font-weight:900;
-      font-size:18px;
-      flex:0 0 auto;
-    }
-
-    .badge-new{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:900;
-      border:1px solid rgba(34,197,94,.35);
-      background:rgba(34,197,94,.12);
-      color:rgba(34,197,94,.95);
-      margin-left:10px;
-      vertical-align:middle;
-    }
-
-    .badge-dev{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:900;
-      border:1px solid rgba(245,158,11,.35);
-      background:rgba(245,158,11,.12);
-      color:rgba(245,158,11,.98);
-      margin-left:10px;
-      vertical-align:middle;
-    }
-
-    .space{height:10px}
-
-    /* ===== ZOTA FEATURED SECTION ===== */
-
-    .zota-feature{
-      position:relative;
-      margin:30px 0 34px;
-      padding:24px 20px 14px;
-      border-radius:28px;
-      border:1px solid rgba(167,139,250,.16);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
-      box-shadow:
-        0 24px 70px rgba(0,0,0,.34),
-        inset 0 1px 0 rgba(255,255,255,.05);
-      overflow:hidden;
-      isolation:isolate;
-    }
-
-    .zota-feature::before{
-      content:"";
-      position:absolute;
-      inset:-80px;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(167,139,250,.18), transparent 28%),
-        radial-gradient(circle at 80% 15%, rgba(56,189,248,.14), transparent 26%),
-        radial-gradient(circle at 50% 85%, rgba(6,182,212,.10), transparent 24%);
-      filter:blur(16px);
-      z-index:-2;
-      pointer-events:none;
-    }
-
-    .zota-feature::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 34%);
-      pointer-events:none;
-      z-index:-1;
-    }
-
-    .zota-head{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:14px;
-      margin-bottom:8px;
-    }
-
-    .zota-title-wrap h2{
-      margin:0;
-      font-size:20px;
-      letter-spacing:.25px;
-    }
-
-    .zota-desc{
-      margin:8px 0 0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.65;
-      max-width:84ch;
-    }
-
-    .zota-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(167,139,250,.30);
-      background:rgba(167,139,250,.12);
-      color:#d7ccff;
-      font-size:12px;
-      font-weight:900;
-      white-space:nowrap;
-    }
-
-    .zota-grid{
-      position:relative;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-      margin:18px 0 10px;
-    }
-
-    .zota-card{
-      position:relative;
-      min-height:152px;
-      border:1px solid rgba(167,139,250,.18);
-      background:
-        linear-gradient(180deg, rgba(167,139,250,.10), rgba(255,255,255,.04));
-      box-shadow:
-        0 14px 38px rgba(0,0,0,.30),
-        inset 0 1px 0 rgba(255,255,255,.05);
-      opacity:0;
-      transform:translateY(12px) scale(.985);
-      animation:zotaReveal .72s cubic-bezier(.2,.8,.2,1) forwards;
-    }
-
-    .zota-card::after{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      border-radius:inherit;
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,.08), transparent 35%);
-      pointer-events:none;
-    }
-
-    .zota-card:hover{
-      transform:translateY(-6px) scale(1.01);
-      border-color:rgba(167,139,250,.46);
-      background:
-        linear-gradient(180deg, rgba(167,139,250,.18), rgba(56,189,248,.06));
-      box-shadow:
-        0 22px 56px rgba(0,0,0,.40),
-        0 0 26px rgba(167,139,250,.14);
-    }
-
-    .zota-card .card-top h3{
-      font-size:16px;
-    }
-
-    .zota-card p{
-      min-height:42px;
-    }
-
-    .zota-card .status{
-      background:rgba(255,255,255,.06);
-    }
-
-    .zota-card:nth-child(1){animation-delay:.10s}
-    .zota-card:nth-child(2){animation-delay:.28s}
-    .zota-card:nth-child(3){animation-delay:.46s}
-    .zota-card:nth-child(4){animation-delay:.64s}
-    .zota-card:nth-child(5){animation-delay:.82s}
-    .zota-card:nth-child(6){animation-delay:1s}
-
-    @keyframes zotaReveal{
-      0%{
-        opacity:0;
-        transform:translateY(14px) scale(.985);
-        box-shadow:0 10px 28px rgba(0,0,0,.22);
-      }
-      55%{
-        opacity:1;
-        transform:translateY(-3px) scale(1.003);
-        box-shadow:
-          0 18px 44px rgba(0,0,0,.34),
-          0 0 26px rgba(167,139,250,.10);
-      }
-      100%{
-        opacity:1;
-        transform:translateY(0) scale(1);
-      }
-    }
-
-    .zota-feature .divider-soft{
-      margin:8px 0 0;
-      border:0;
-      height:1px;
-      background:linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
-    }
-
-    @media(max-width:1050px){
-      .links{grid-template-columns:repeat(2,1fr)}
-    }
-
-    @media(max-width:900px){
-      .hero-row{flex-direction:column;align-items:flex-start}
-      .grid{grid-template-columns:1fr}
-      .links{grid-template-columns:1fr}
-      .zota-grid{grid-template-columns:1fr}
-      .zota-head{flex-direction:column;align-items:flex-start}
+    @media (max-width:720px){
+      .metric-grid,.cards,.roadmap,.orggrid,.summary-grid{grid-template-columns:1fr}
+      .hero h1{font-size:34px}
     }
   </style>
 </head>
 <body>
-
-  <div class="hero">
-    <div class="wrap">
-      <div class="hero-row">
-        <div class="brand">
-          <div class="brand-top">
-            <div class="brand-title">TVInternetSBB – Executive Hub</div>
-          </div>
-        </div>
-
-        <div class="header-actions">
-          <a class="btn" href="/admin" target="_blank" rel="noopener">Admin</a>
-          <a class="btn" href="/telegram/status" target="_blank" rel="noopener">Telegram</a>
-          <a class="btn logout" href="/logout">Logout</a>
-        </div>
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-card">
+      <h1>Technical Master Plan v3.1 Professional</h1>
+      <p>Jedinstveni CTO blueprint za ZOTA operativni sistem i ANA v2 retail interfejs, zategnut za founderski, savetnički i lead-engineering nivo. Fokus je na Case jezgru, odluci, procesu i kontrolisanoj isporuci.</p>
+      <div class="meta">
+        <div class="chip">CTO Blueprint Professional</div>
+        <div class="chip">Case-driven architecture</div>
+        <div class="chip">Production-first</div>
+        <div class="chip">Advisor-ready</div>
+      </div>
+      <div class="pillrow">
+        <div class="pill">Python / FastAPI</div>
+        <div class="pill">PostgreSQL</div>
+        <div class="pill">Redis</div>
+        <div class="pill">Twilio gateway</div>
+        <div class="pill">React kiosk</div>
+        <div class="pill">QR continuation</div>
       </div>
     </div>
+    <div class="hero-card">
+      <div class="summary-grid">
+        <div class="mini"><b>ZOTA</b><span>Case, state, decision i process control layer</span></div>
+        <div class="mini"><b>ANA v2</b><span>Interface/device layer: tablet, voice, QR, retail</span></div>
+        <div class="mini"><b>Centralna istina</b><span>Case je write target svih kanala</span></div>
+        <div class="mini"><b>Delivery model</b><span>Modularni monolit → scale platform</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="layout">
+    <aside class="nav">
+      <h3>Sadržaj</h3>
+      <a href="#summary">1. Executive Summary</a>
+      <a href="#northstar">2. North Star arhitektura</a>
+      <a href="#split">3. Podela: Ana vs ZOTA</a>
+      <a href="#wedge">4. Phase 1 fokus</a>
+      <a href="#stack">5. Tehnološki stack</a>
+      <a href="#infra">6. Production infrastruktura</a>
+      <a href="#routes">7. Core rute i servisne grupe</a>
+      <a href="#zota">8. ZOTA Core</a>
+      <a href="#identity">9. Case Creation Policy</a>
+      <a href="#ownership">10. Decision Ownership Matrix</a>
+      <a href="#triggers">11. Process Trigger Map</a>
+      <a href="#exceptions">12. Exception Model</a>
+      <a href="#retail">13. ANA v2 Retail Core</a>
+      <a href="#data">14. Data model i tabele</a>
+      <a href="#voice">15. Voice i Twilio plan</a>
+      <a href="#security">16. Security i governance</a>
+      <a href="#ops">17. Monitoring i operativa</a>
+      <a href="#team">18. Timska struktura i senioriteti</a>
+      <a href="#roadmap">19. Roadmap po fazama i trajanje</a>
+      <a href="#dod">20. Definition of Done</a>
+      <a href="#budget">21. Budžet i runway</a>
+    </aside>
+
+    <main>
+      <section id="summary" class="section">
+        <h2>1. Executive Summary</h2>
+        <p class="lead">Sistem se gradi kao platforma u kojoj <b>ANA v2</b> služi kao fizički i digitalni interfejs, a <b>ZOTA</b> kao centralni control/state/case/decision/process sloj. Najvažnija arhitektonska odluka: <b>Case</b> je centralna jedinica sistema i jedini write target koji zatvara lanac od kontakta do ishoda.</p>
+        <div class="flow">
+          <div class="node">Web / Voice / Tablet / QR</div>
+          <div class="arrow">→</div>
+          <div class="node primary">ANA v2</div>
+          <div class="arrow">→</div>
+          <div class="node dark">ZOTA</div>
+          <div class="arrow">→</div>
+          <div class="node">Decision / Process / Outcome</div>
+        </div>
+        <div class="good callout"><b>Ključna poruka:</b> Ana govori. ZOTA odlučuje. Case pamti. Process završava posao.</div>
+        <div class="metric-grid">
+          <div class="metric"><div class="n">1</div><div class="l">Centralna jedinica: <b>Case</b></div></div>
+          <div class="metric"><div class="n">2</div><div class="l">Glavni backend: <b>Python/FastAPI</b></div></div>
+          <div class="metric"><div class="n">3</div><div class="l">Glavna baza: <b>PostgreSQL</b></div></div>
+          <div class="metric"><div class="n">4</div><div class="l">Voice gateway: <b>Twilio</b></div></div>
+        </div>
+      </section>
+
+      <section id="northstar" class="section">
+        <h2>2. North Star arhitektura</h2>
+        <table>
+          <tr><th>Sloj</th><th>Uloga</th><th>Šta sadrži</th></tr>
+          <tr><td>Channel Layer</td><td>Ulazni kanali</td><td>Web, voice, forms, kiosk/tablet, QR continuation</td></tr>
+          <tr><td>ANA Interface Layer</td><td>Komunikacija i capture</td><td>Avatar, STT/TTS, touch UI, FAQ, retail razgovor, capture tokovi</td></tr>
+          <tr><td>ZOTA Control Layer</td><td>Operativni mozak</td><td>Case engine, state engine, decision engine, action orchestration</td></tr>
+          <tr><td>Business Layer</td><td>Poslovni izvori</td><td>Catalog, pricing, service offers, campaigns, knowledge base</td></tr>
+          <tr><td>Process Layer</td><td>Izvršenje</td><td>Taskovi, callback, ugovor, follow-up, closing, verification</td></tr>
+          <tr><td>Data & Security</td><td>Istina i zaštita</td><td>PostgreSQL, audit log, analytics, auth, backup, monitoring</td></tr>
+        </table>
+      </section>
+
+      <section id="split" class="section">
+        <h2>3. Podela: Ana vs ZOTA</h2>
+        <table>
+          <tr><th>Komponenta</th><th>Šta radi</th><th>Šta ne sme da bude</th></tr>
+          <tr><td>ANA v2</td><td>Komunikuje, sluša, govori, vodi prvi kontakt, nudi QR nastavak, vodi retail i info tok</td><td>Ne sme biti vlasnik state istine, case logike ili procesa</td></tr>
+          <tr><td>ZOTA</td><td>Pamti slučaj, vodi stanje, odlučuje next action, aktivira procese i taskove</td><td>Ne sme biti samo chat persona ili frontend maska</td></tr>
+        </table>
+        <div class="good callout"><b>Jedna rečenica za ceo tim:</b> Ana govori. ZOTA odlučuje.</div>
+      </section>
+
+      <section id="wedge" class="section">
+        <h2>4. Phase 1 fokus</h2>
+        <p class="lead">Prva ozbiljna verzija ne sme pokušavati da bude sve. Prvi dokazni klin je zatvaranje jednog jasnog vertikalnog toka: <b>kontakt → case → odluka → proces → ishod</b>.</p>
+        <table>
+          <tr><th>Oblast</th><th>Phase 1 obavezno</th><th>Kasnije širenje</th></tr>
+          <tr><td>Kanali</td><td>Web + Voice + Tablet/QR</td><td>Dodatni touchpoint-i i širi channel mix</td></tr>
+          <tr><td>ZOTA</td><td>Case, state, decision, timeline, task trigger</td><td>Napredniji scoring, fleet orchestration, campaign expansion</td></tr>
+          <tr><td>Ana v2</td><td>Capture, guided conversation, QR continuation</td><td>Napredniji avatar polish i šira experience logika</td></tr>
+          <tr><td>Retail</td><td>Source-of-truth odgovori za artikle i ponude</td><td>Ad slots, šire kampanje, veći merchandising sloj</td></tr>
+        </table>
+        <div class="warn callout"><b>Važno:</b> reklame, 3D složenost i široka campaign logika nisu jezgro prve verzije. Jezgro prve verzije je zatvoren operativni lanac.</div>
+      </section>
+
+      <section id="stack" class="section">
+        <h2>5. Tehnološki stack</h2>
+        <div class="cards">
+          <div class="box"><h4>Backend Core</h4><p>Python 3.12+ i FastAPI za ZOTA, Ana conversation layer, pricing, admin i orchestraciju.</p></div>
+          <div class="box"><h4>Data</h4><p>PostgreSQL kao source of truth za case, retail, decisions, audit i agregate.</p></div>
+          <div class="box"><h4>Session / Queue</h4><p>Redis za session cache, short-lived state, queue signalizaciju i rate limiting.</p></div>
+          <div class="box"><h4>Device Frontend</h4><p>React kiosk app za tablete i ekrane; kasnije Flutter/native samo ako zatreba.</p></div>
+          <div class="box"><h4>Voice</h4><p>Twilio kao gateway + voice-service + STT/TTS provider + fallback tok.</p></div>
+          <div class="box"><h4>Assets</h4><p>Object storage i CDN za audio, avatar assete, dokumenta i export.</p></div>
+        </div>
+        <div class="danger callout"><b>Ne raditi prerano:</b> rani mikroservisi, Kubernetes bez potrebe, tri jezika i hiper-kompleksan 3D avatar pre core logike.</div>
+      </section>
+
+      <section id="infra" class="section">
+        <h2>6. Production infrastruktura</h2>
+        <h3>Pilot / rana produkcija</h3>
+        <table>
+          <tr><th>Sloj</th><th>Preporuka</th><th>Minimum</th></tr>
+          <tr><td>App server</td><td>AWS / Hetzner / DigitalOcean / Azure VM</td><td>4 vCPU / 8 GB RAM</td></tr>
+          <tr><td>Database</td><td>Managed PostgreSQL</td><td>2–4 vCPU / 8–16 GB RAM</td></tr>
+          <tr><td>Redis</td><td>Managed Redis ili poseban node</td><td>2 GB RAM</td></tr>
+          <tr><td>Storage</td><td>S3-compatible storage</td><td>Audio, dokumenta, export</td></tr>
+          <tr><td>Edge</td><td>Cloudflare + Nginx</td><td>DNS, TLS, WAF basic</td></tr>
+        </table>
+        <div class="good callout"><b>Production start preporuka:</b> modularni monolit u Docker-u + managed Postgres + Redis + object storage + dnevni backup + Cloudflare.</div>
+      </section>
+
+      <section id="routes" class="section">
+        <h2>7. Core rute i servisne grupe</h2>
+        <table>
+          <tr><th>Grupa</th><th>Primer ruta</th><th>Opis</th></tr>
+          <tr><td>ZOTA Core</td><td><span class="mono">/zota/events</span>, <span class="mono">/zota/cases/{id}</span>, <span class="mono">/zota/cases/{id}/evaluate</span>, <span class="mono">/zota/cases/{id}/execute</span>, <span class="mono">/zota/cases/{id}/timeline</span></td><td>Intake, case, state, odluka, izvršenje</td></tr>
+          <tr><td>ANA Device</td><td><span class="mono">/ana/devices/register</span>, <span class="mono">/ana/devices/{id}/heartbeat</span>, <span class="mono">/ana/interactions/start</span>, <span class="mono">/ana/interactions/{id}/utterance</span></td><td>Uređaji i sesije</td></tr>
+          <tr><td>QR Bridge</td><td><span class="mono">/ana/interactions/{id}/generate-qr</span>, <span class="mono">/ana/qr/{token}/resume</span></td><td>Prenos razgovora na telefon</td></tr>
+          <tr><td>Voice</td><td><span class="mono">/voice/inbound</span>, <span class="mono">/voice/status</span>, <span class="mono">/voice/fallback</span></td><td>Twilio webhook i fallback logika</td></tr>
+          <tr><td>Retail</td><td><span class="mono">/retail/products</span>, <span class="mono">/retail/prices</span>, <span class="mono">/retail/inventory</span>, <span class="mono">/retail/offers</span></td><td>Katalog, cene, zalihe i ponude</td></tr>
+          <tr><td>Knowledge</td><td><span class="mono">/knowledge/answers</span>, <span class="mono">/knowledge/search</span></td><td>FAQ i kontrolisani odgovori</td></tr>
+          <tr><td>Admin/Ops</td><td><span class="mono">/admin/cases</span>, <span class="mono">/admin/devices</span>, <span class="mono">/admin/analytics</span>, <span class="mono">/admin/audit</span></td><td>Operativni pregled i kontrola</td></tr>
+        </table>
+      </section>
+
+      <section id="zota" class="section">
+        <h2>8. ZOTA Core</h2>
+        <table>
+          <tr><th>Jezgro</th><th>Opis</th><th>Prioritet</th></tr>
+          <tr><td>Case Engine</td><td>Create, merge, reopen, update, close poslovnog slučaja</td><td>Critical</td></tr>
+          <tr><td>State Engine</td><td>Status/stage i dozvoljene tranzicije</td><td>Critical</td></tr>
+          <tr><td>Decision Engine</td><td>Hard rules + scoring + AI assist</td><td>Critical</td></tr>
+          <tr><td>Action Orchestrator</td><td>Poruke, taskovi, pricing, process triggeri</td><td>High</td></tr>
+          <tr><td>Event Ledger</td><td>Kompletan audit trag</td><td>Critical</td></tr>
+        </table>
+        <div class="flow">
+          <div class="node">Event</div><div class="arrow">→</div>
+          <div class="node">Case</div><div class="arrow">→</div>
+          <div class="node primary">Decision</div><div class="arrow">→</div>
+          <div class="node">Action</div><div class="arrow">→</div>
+          <div class="node dark">Next State</div>
+        </div>
+        <div class="callout"><b>Pravilo:</b> AI može da predloži, ali finalni control layer mora ostati u policy/rule motoru.</div>
+      </section>
+
+      <section id="identity" class="section">
+        <h2>9. Case Creation Policy</h2>
+        <p class="lead">Tvrdnja da je Case centralna jedinica nema vrednost bez jasne politike nastanka, povezivanja i merge logike.</p>
+        <table>
+          <tr><th>Događaj</th><th>Akcija</th><th>Rezultat</th></tr>
+          <tr><td>Novi web inquiry sa dovoljnim signalom</td><td>Create case</td><td>Otvara se novi case sa channel origin = web</td></tr>
+          <tr><td>Voice poziv sa prepoznatim interesovanjem i kontakt signalom</td><td>Create or attach</td><td>Novi ili postojeći case po phone identity pravilima</td></tr>
+          <tr><td>QR continuation sa postojećim session tokenom</td><td>Attach to existing</td><td>Postojeći case dobija continuation event</td></tr>
+          <tr><td>Ponovni kontakt iste osobe u aktivnom lifecycle-u</td><td>Update existing</td><td>Event i poruka ulaze u isti case</td></tr>
+          <tr><td>Jasan duplicate signal iz više kanala</td><td>Merge case review</td><td>System suggestion + human approval kada je rizik visok</td></tr>
+        </table>
+        <div class="good callout"><b>Pravilo identiteta:</b> U ranoj fazi case ključ se oslanja na najjači dostupni identitet: telefon → QR token/session → email → manual merge review.</div>
+      </section>
+
+      <section id="ownership" class="section">
+        <h2>10. Decision Ownership Matrix</h2>
+        <table>
+          <tr><th>Vrsta odluke</th><th>Vlasnik</th><th>Napomena</th></tr>
+          <tr><td>Response phrasing i ton</td><td>Ana layer</td><td>Interfejs odlučuje kako govori, ne šta je poslovna istina</td></tr>
+          <tr><td>Case routing</td><td>ZOTA rules</td><td>Deterministički ili rules-first</td></tr>
+          <tr><td>State transition</td><td>ZOTA state engine</td><td>Dozvoljene tranzicije su kontrolisane</td></tr>
+          <tr><td>Next action selection</td><td>ZOTA decision engine</td><td>AI assist može predložiti, ne odobriti</td></tr>
+          <tr><td>Human override</td><td>Ops/Admin</td><td>Svaki override ostavlja reason trace</td></tr>
+          <tr><td>Pricing truth</td><td>Business layer</td><td>Ana ne improvizuje ponudu</td></tr>
+        </table>
+      </section>
+
+      <section id="triggers" class="section">
+        <h2>11. Process Trigger Map</h2>
+        <table>
+          <tr><th>Event</th><th>Current state</th><th>Decision</th><th>Triggered action</th><th>Resulting state</th></tr>
+          <tr><td>Lead data complete</td><td>WAITING_FOR_DATA</td><td>Ready for offer</td><td>Create offer task / pricing call</td><td>READY_FOR_OFFER</td></tr>
+          <tr><td>Offer generated</td><td>READY_FOR_OFFER</td><td>Send offer</td><td>Message / callback / device prompt</td><td>OFFER_SENT</td></tr>
+          <tr><td>Customer confirms</td><td>OFFER_SENT</td><td>Start internal process</td><td>Create process task / ticket</td><td>PROCESSING_INTERNAL</td></tr>
+          <tr><td>Verification blocked</td><td>PROCESSING_INTERNAL</td><td>Needs review</td><td>Escalate to human ops</td><td>VERIFICATION_PENDING</td></tr>
+          <tr><td>Process success</td><td>PROCESSING_INTERNAL</td><td>Complete case</td><td>Close tasks / archive artifacts</td><td>COMPLETED</td></tr>
+        </table>
+      </section>
+
+      <section id="exceptions" class="section">
+        <h2>12. Exception Model</h2>
+        <div class="cards">
+          <div class="box"><h4>Duplicate person / duplicate case</h4><p>ZOTA predlaže merge, ali visoko-rizični merge ide na human review.</p></div>
+          <div class="box"><h4>Failed QR resume</h4><p>Fallback: nova mobile session + attach review, nikad tihi gubitak konteksta.</p></div>
+          <div class="box"><h4>Voice no-input / recognition fail</h4><p>Deterministički fallback tok i mogućnost human callback capture.</p></div>
+          <div class="box"><h4>Pricing unavailable</h4><p>Ana ne improvizuje cenu. Sistem prelazi u callback / pending offer stanje.</p></div>
+          <div class="box"><h4>Stale case</h4><p>Case ide u ON_HOLD ili reopen logiku sa reason trace.</p></div>
+          <div class="box"><h4>Manual escalation</h4><p>Ops može da preuzme case uz audit događaj i reason field.</p></div>
+        </div>
+        <div class="warn callout"><b>Ozbiljan sistem nije happy-path-only.</b> Exception model je deo jezgra, ne dodatak.</div>
+      </section>
+
+      <section id="retail" class="section">
+        <h2>13. ANA v2 Retail Core</h2>
+        <p class="lead">ANA v2 u trafici ili prodavnici je retail AI interfejs koji zna artikle, cene, akcije, pakete i QR nastavak. Nije samo prodavac paketa i nije mesto gde živi poslovna istina.</p>
+        <div class="cards">
+          <div class="box"><h4>Retail Catalog Service</h4><p>Artikli, cene, kategorije, zalihe i lokacijske razlike.</p></div>
+          <div class="box"><h4>Service Catalog Service</h4><p>Internet/TV/uslužne ponude, bundle logika i prodajni tokovi.</p></div>
+          <div class="box"><h4>Knowledge Service</h4><p>FAQ, radno vreme, lokacijski odgovori i dozvoljene formulacije.</p></div>
+          <div class="box"><h4>Conversation Service</h4><p>Voice/text interakcija, intent detection, FAQ, up-sell i capture logika.</p></div>
+          <div class="box"><h4>QR Bridge</h4><p>Prenos sesije na telefon bez gubitka konteksta.</p></div>
+          <div class="box"><h4>ZOTA Connector</h4><p>Slanje svih relevantnih događaja u ZOTA case sloj.</p></div>
+        </div>
+        <div class="warn callout"><b>Kritično:</b> Ana v2 ne sme improvizovati cene, dostupnost ili osetljive odgovore. Sve dolazi iz kontrolisanog source-of-truth backend-a.</div>
+      </section>
+
+      <section id="data" class="section">
+        <h2>14. Data model i tabele</h2>
+        <h3>ZOTA Core</h3>
+        <table>
+          <tr><th>Tabela</th><th>Ključna polja</th></tr>
+          <tr><td>persons</td><td>id, full_name, phone, email, external_refs_json</td></tr>
+          <tr><td>cases</td><td>id, person_id, channel_origin, intent_type, status, stage, next_action, metadata_json</td></tr>
+          <tr><td>case_events</td><td>id, case_id, event_type, source, payload_json, created_at</td></tr>
+          <tr><td>case_messages</td><td>id, case_id, direction, channel, message_text</td></tr>
+          <tr><td>case_decisions</td><td>id, case_id, decision_type, decision_reason, decision_by, confidence_score</td></tr>
+          <tr><td>case_tasks</td><td>id, case_id, task_type, status, assigned_to</td></tr>
+          <tr><td>case_artifacts</td><td>id, case_id, artifact_type, storage_url</td></tr>
+        </table>
+        <h3>ANA v2 Retail Core</h3>
+        <table>
+          <tr><th>Tabela</th><th>Ključna polja</th></tr>
+          <tr><td>devices</td><td>id, device_code, device_type, location_id, status, software_version</td></tr>
+          <tr><td>locations</td><td>id, name, type, address, city, country</td></tr>
+          <tr><td>device_sessions</td><td>id, device_id, started_at, ended_at, person_id, case_id, session_token</td></tr>
+          <tr><td>device_messages</td><td>id, session_id, direction, message_text, intent, confidence</td></tr>
+          <tr><td>device_events</td><td>id, device_id, session_id, event_type, payload_json</td></tr>
+          <tr><td>qr_transfers</td><td>id, session_id, qr_token, opened_at, phone_session_id</td></tr>
+          <tr><td>products</td><td>id, sku, name, category_id, default_price, active</td></tr>
+          <tr><td>product_prices</td><td>id, product_id, location_id, price, valid_from, valid_to</td></tr>
+          <tr><td>inventory_snapshots</td><td>id, product_id, location_id, qty, snapshot_at</td></tr>
+          <tr><td>service_offers</td><td>id, code, name, type, base_price, active</td></tr>
+          <tr><td>knowledge_answers</td><td>id, question_type, answer_template, language, active</td></tr>
+        </table>
+      </section>
+
+      <section id="voice" class="section">
+        <h2>15. Voice i Twilio plan</h2>
+        <table>
+          <tr><th>Element</th><th>Odluka</th><th>Napomena</th></tr>
+          <tr><td>Twilio broj</td><td>Ostaje</td><td>Ne menjati dok jezgro ne postane stabilno</td></tr>
+          <tr><td>Uloga Twilio</td><td>Voice gateway</td><td>Poziv dolazi, webhook ide backend-u</td></tr>
+          <tr><td>Voice logika</td><td>Voice-service + ZOTA</td><td>Twilio nije business logic sloj</td></tr>
+          <tr><td>Fallback</td><td>Da</td><td>Deterministički tok kada AI ili backend zakaže</td></tr>
+        </table>
+      </section>
+
+      <section id="security" class="section">
+        <h2>16. Security i governance</h2>
+        <table>
+          <tr><th>Oblast</th><th>Obavezna mera</th></tr>
+          <tr><td>Transport</td><td>TLS/HTTPS svuda</td></tr>
+          <tr><td>Admin pristup</td><td>RBAC, sesije, kasnije SSO</td></tr>
+          <tr><td>Audit</td><td>Svaka odluka i state transition moraju ostati zabeleženi</td></tr>
+          <tr><td>QR token</td><td>Potpisan i vremenski ograničen</td></tr>
+          <tr><td>Secrets</td><td>Secrets manager / vault politika</td></tr>
+          <tr><td>Backup</td><td>Dnevni backup + restore test</td></tr>
+          <tr><td>Retail compliance</td><td>Kontrolisani odgovori za osetljive kategorije i zabrane</td></tr>
+        </table>
+      </section>
+
+      <section id="ops" class="section">
+        <h2>17. Monitoring i operativa</h2>
+        <div class="cards">
+          <div class="box"><h4>Case Monitoring</h4><p>Open cases, blocked cases, by stage, lost reasons, avg time per stage.</p></div>
+          <div class="box"><h4>Device Monitoring</h4><p>Heartbeat, offline uređaji, verzija softvera, error rate po lokaciji.</p></div>
+          <div class="box"><h4>Voice Monitoring</h4><p>Call success/failure, Twilio status, latency i fallback aktivacije.</p></div>
+          <div class="box"><h4>Retail Analytics</h4><p>Interakcije po lokaciji, top pitanja, QR conversion i lead conversion.</p></div>
+          <div class="box"><h4>Platform Health</h4><p>API latency, queue backlog, DB health, storage usage, error tracking.</p></div>
+          <div class="box"><h4>Business Visibility</h4><p>Performance po toku, uređaju, lokaciji i process step-u.</p></div>
+        </div>
+      </section>
+
+      <section id="team" class="section">
+        <h2>18. Timska struktura i senioriteti</h2>
+        <p class="lead">Za profesionalni tim ne treba gomila ljudi, već jasno podeljene odgovornosti. Model ispod je namenjen timu koji želi da izgradi ozbiljan sistem bez haosa.</p>
+        <div class="orggrid">
+          <div class="org"><h4>Lead Architect / CTO</h4><p>Vlasnik arhitekture, standarda i kritičnih tehničkih odluka.</p></div>
+          <div class="org"><h4>Senior Backend Engineer — ZOTA Core</h4><p>Case engine, state machine, decision layer, orchestration, admin API.</p></div>
+          <div class="org"><h4>Senior Full-Stack / Device Engineer</h4><p>ANA v2 kiosk app, device lifecycle, QR bridge, frontend state i device UX.</p></div>
+          <div class="org"><h4>Senior Voice / Conversation Engineer</h4><p>Twilio integracija, STT/TTS, voice session flow i fallback logika.</p></div>
+          <div class="org"><h4>Senior Platform / DevOps Engineer</h4><p>Deploy, CI/CD, observability, backup, secrets, environments i uptime.</p></div>
+          <div class="org"><h4>Product / Delivery Owner</h4><p>Prioriteti, acceptance kriterijumi, scope kontrola i cross-team koordinacija.</p></div>
+        </div>
+        <div class="good callout"><b>Realna preporuka za početak:</b> 5 ključnih ljudi full-time + 1 product owner + po potrebi part-time security/QA podrška.</div>
+      </section>
+
+      <section id="roadmap" class="section">
+        <h2>19. Roadmap po fazama i trajanje</h2>
+        <div class="roadmap">
+          <div class="phase"><div class="tag">Faza A</div><h4>Foundation Core</h4><ul><li>Case model</li><li>Event log</li><li>State machine</li><li>Twilio/web intake</li></ul></div>
+          <div class="phase"><div class="tag">Faza B</div><h4>ANA v2 Pilot</h4><ul><li>Kiosk UI</li><li>Voice/touch tok</li><li>Session logging</li><li>QR continuation</li></ul></div>
+          <div class="phase"><div class="tag">Faza C</div><h4>Retail Core</h4><ul><li>Catalog integration</li><li>Knowledge service</li><li>Source-of-truth odgovori</li><li>ZOTA handoff</li></ul></div>
+          <div class="phase"><div class="tag">Faza D</div><h4>Decision & Scale</h4><ul><li>Decision engine</li><li>Task/process layer</li><li>HA i observability</li><li>Controlled expansion</li></ul></div>
+        </div>
+        <table>
+          <tr><th>Segment</th><th>Sa jakim timom</th><th>Sa manjim timom</th></tr>
+          <tr><td>Foundation Core</td><td>3–5 nedelja</td><td>5–8 nedelja</td></tr>
+          <tr><td>ANA v2 pilot</td><td>4–6 nedelja</td><td>6–9 nedelja</td></tr>
+          <tr><td>QR + retail integration</td><td>2–4 nedelje</td><td>4–6 nedelja</td></tr>
+          <tr><td>Decision/process layer</td><td>3–5 nedelja</td><td>5–8 nedelja</td></tr>
+          <tr><td>Hardening i polish</td><td>3–6 nedelja</td><td>6–10 nedelja</td></tr>
+          <tr><td><b>Ukupno za ozbiljnu prvu verziju</b></td><td><b>3–5 meseci</b></td><td><b>5–8 meseci</b></td></tr>
+        </table>
+      </section>
+
+      <section id="dod" class="section">
+        <h2>20. Definition of Done</h2>
+        <table>
+          <tr><th>Faza</th><th>Done znači</th></tr>
+          <tr><td>Foundation Core</td><td>Case može da se otvori, menja, prati i auditira; web i voice događaji ulaze u isti sistem.</td></tr>
+          <tr><td>ANA v2 Pilot</td><td>Uređaj može da otvori sesiju, vodi osnovni razgovor, loguje interakciju i pošalje signal u backend.</td></tr>
+          <tr><td>QR Continuation</td><td>Korisnik bez gubitka konteksta nastavlja razgovor na telefonu, uz isti session/case trag.</td></tr>
+          <tr><td>Retail Core v1</td><td>Ana odgovara iz pravih retail i service izvora, bez improvizacije nad cenama i ponudama.</td></tr>
+          <tr><td>Decision Layer</td><td>Sistem ume da izabere sledeću akciju rule-based i ostavi reason trace.</td></tr>
+          <tr><td>Pilot Ready</td><td>Monitoring, backup, fallback, audit i minimalna sigurnost su aktivni i provereni.</td></tr>
+        </table>
+        <div class="good callout"><b>Pravilo:</b> faza nije završena kada radi demo, nego kada ima trag, fallback, monitoring i jasno stanje kvaliteta.</div>
+      </section>
+
+      <section id="budget" class="section">
+        <h2>21. Okvir budžeta i runway</h2>
+        <p class="lead">Tačan budžet zavisi od senioriteta i tržišta rada, ali za profesionalni start treba planirati i ljude i infrastrukturu kao jednu celinu.</p>
+        <table>
+          <tr><th>Rola</th><th>Broj</th><th>Model</th></tr>
+          <tr><td>Lead Architect / CTO</td><td>1</td><td>Full-time ili founder-lead</td></tr>
+          <tr><td>Senior Backend Engineer — ZOTA</td><td>1</td><td>Full-time</td></tr>
+          <tr><td>Senior Full-Stack / Device Engineer</td><td>1</td><td>Full-time</td></tr>
+          <tr><td>Senior Voice / Conversation Engineer</td><td>1</td><td>Full-time ili strong contractor</td></tr>
+          <tr><td>Platform / DevOps</td><td>1</td><td>Part-time → Full-time kako sistem raste</td></tr>
+          <tr><td>Product / Delivery Owner</td><td>1</td><td>Founder ili dedicated PM</td></tr>
+          <tr><td>QA / Automation</td><td>1</td><td>Part-time → Mid engagement pre pilota</td></tr>
+        </table>
+        <ul>
+          <li>App server + managed DB + Redis + storage + Cloudflare</li>
+          <li>Monitoring stack i backup politika</li>
+          <li>Voice/STT/TTS operativni trošak</li>
+          <li>Pilot uređaji, tableti, stalci, audio periferija</li>
+        </ul>
+        <div class="warn callout"><b>Praktičan savet:</b> Planirati najmanje <b>6 meseci runway-a</b> za ozbiljan start i idealno <b>9–12 meseci</b> ako želite da od proof-of-concept-a stignete do stabilnog pilota bez paničnih rezova.</div>
+        <p class="footer">Technical Master Plan v3.1 Professional · Namenjeno za founderski alignment, savetničke razgovore, lead engineering handoff i ozbiljan CTO review.</p>
+      </section>
+    </main>
   </div>
-
-  <div class="wrap">
-    <h1>Krucijalni linkovi</h1>
-
-    <div class="grid">
-      <a class="card" href="/director/github-hub" rel="noopener">
-        <div class="card-top">
-          <h3>SKS / SEO / Migracija mailbox / Competitor / PDF / Gl.Reference</h3>
-          <span class="status"><span class="dot blue"></span> Hub</span>
-        </div>
-        <p>Interna mapa i direktorijum ključnih plan/analiza stranica.</p>
-        <div class="tagrow">
-          <span class="tag purple">Executive</span>
-          <span class="tag blue">Internal</span>
-        </div>
-      </a>
-
-      <a class="card" href="/admin" target="_blank" rel="noopener">
-        <div class="card-top">
-          <h3>Admin Panel</h3>
-          <span class="status"><span class="dot green"></span> Active</span>
-        </div>
-        <p>Kontrolni centar sistema, administracija i operativni pristup.</p>
-        <div class="tagrow">
-          <span class="tag purple">Internal</span>
-        </div>
-      </a>
-
-      <a class="card" href="/admin/leads" target="_blank" rel="noopener">
-        <div class="card-top">
-          <h3>Leadovi</h3>
-          <span class="status"><span class="dot cyan"></span> Ops</span>
-        </div>
-        <p>Pregled leadova i osnovni operativni rad nad zapisima.</p>
-        <div class="tagrow">
-          <span class="tag blue">O-p-s</span>
-        </div>
-      </a>
-
-      <a class="card" href="/health/business" target="_blank" rel="noopener">
-        <div class="card-top">
-          <h3>Business Health</h3>
-          <span class="status"><span class="dot green"></span> Health</span>
-        </div>
-        <p>DB write/read/verify provera i osnovni signal poslovnog toka.</p>
-        <div class="tagrow">
-          <span class="tag green">Health</span>
-        </div>
-      </a>
-
-      <a class="card" href="/login?next=/technician" target="_blank" rel="noopener">
-        <div class="card-top">
-          <h3>Technician Portal</h3>
-          <span class="status"><span class="dot amber"></span> Login</span>
-        </div>
-        <p>Koaks / Optika alati za tehnički tim. Trenutno traži poseban login.</p>
-        <div class="tagrow">
-          <span class="tag blue">Field</span>
-          <span class="tag amber">Access</span>
-        </div>
-      </a>
-
-      <a class="card" href="/telegram/status" target="_blank" rel="noopener">
-        <div class="card-top">
-          <h3>Telegram Status</h3>
-          <span class="status"><span class="dot green"></span> Bot</span>
-        </div>
-        <p>Status bota i webhooka.</p>
-        <div class="tagrow">
-          <span class="tag purple">Bot</span>
-        </div>
-      </a>
-    </div>
-
-    <div class="zota-feature">
-      <div class="zota-head">
-        <div class="zota-title-wrap">
-          <h2>ZOTA-PUT OSNIVAČA</h2>
-          <p class="zota-desc">
-            Strukturiran osnivački put od ideje do operativnog AI sistema.
-            Ovaj blok je izdvojen kao centralni founders modul za prezentaciju osnivačima, savetnicima i strateškim partnerima.
-          </p>
-        </div>
-        <div class="zota-badge">FOUNDERS CORE</div>
-      </div>
-
-      <hr class="divider-soft" />
-
-      <div class="zota-grid">
-        <a class="card zota-card" href="/director/zota-put-1">
-          <div class="card-top">
-            <h3>ZOTA-PUT 1 <span class="badge-new">AKTIVNO</span></h3>
-            <span class="status"><span class="dot green"></span> Live</span>
-          </div>
-          <p>Početni osnivački okvir i ulazak u logiku sistema.</p>
-          <div class="tagrow">
-            <span class="tag cyan">Founder</span>
-            <span class="tag green">Page 1</span>
-          </div>
-        </a>
-
-        <a class="card zota-card" href="/director/zota-put-2">
-          <div class="card-top">
-            <h3>ZOTA-PUT 2 <span class="badge-new">AKTIVNO</span></h3>
-            <span class="status"><span class="dot blue"></span> Live</span>
-          </div>
-          <p>Drugi korak: produbljenje modela i strateškog razumevanja.</p>
-          <div class="tagrow">
-            <span class="tag cyan">Founder</span>
-            <span class="tag blue">Page 2</span>
-          </div>
-        </a>
-
-        <a class="card zota-card" href="/director/zota-put-3">
-          <div class="card-top">
-            <h3>ZOTA-PUT 3 <span class="badge-new">AKTIVNO</span></h3>
-            <span class="status"><span class="dot cyan"></span> Live</span>
-          </div>
-          <p>Treći korak: konsolidacija i operativna slika sledeće faze.</p>
-          <div class="tagrow">
-            <span class="tag cyan">Founder</span>
-            <span class="tag purple">Page 3</span>
-          </div>
-        </a>
-
-        <a class="card zota-card" href="/director/zota-put-4">
-          <div class="card-top">
-            <h3>ZOTA-PUT 4 <span class="badge-dev">NOVO</span></h3>
-            <span class="status"><span class="dot purple"></span> Next</span>
-          </div>
-          <p>Četvrti korak: širenje founders narrative u viši sistemski nivo.</p>
-          <div class="tagrow">
-            <span class="tag cyan">Founder</span>
-            <span class="tag amber">Page 4</span>
-          </div>
-        </a>
-
-        <a class="card zota-card" href="/director/zota-put-5">
-          <div class="card-top">
-            <h3>ZOTA-PUT 5 <span class="badge-dev">NOVO</span></h3>
-            <span class="status"><span class="dot blue"></span> Next</span>
-          </div>
-          <p>Peti korak: strateško usmerenje i usklađivanje sa savetnicima.</p>
-          <div class="tagrow">
-            <span class="tag cyan">Founder</span>
-            <span class="tag blue">Page 5</span>
-          </div>
-        </a>
-
-        <a class="card zota-card" href="/director/zota-put-6">
-          <div class="card-top">
-            <h3>ZOTA-PUT 6 <span class="badge-dev">NOVO</span></h3>
-            <span class="status"><span class="dot green"></span> Vision</span>
-          </div>
-          <p>Završni founders pogled: kompletna slika puta i završna poruka.</p>
-          <div class="tagrow">
-            <span class="tag cyan">Founder</span>
-            <span class="tag green">Page 6</span>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <hr class="divider" />
-
-    <div class="section-head">
-      <div>
-        <h2>Dodatni linkovi</h2>
-      </div>
-    </div>
-
-    <div class="space"></div>
-
-    <div class="links">
-      <a class="linkbtn" href="/director/predlog-sks">
-        <div class="left">
-          <span class="num">1</span>
-          <div style="min-width:0;">
-            <div class="ltitle">
-              PREDLOG SKS <span class="badge-new">SKS</span>
-            </div>
-            <div class="lmeta">Draft / predlog strukture</div>
-          </div>
-        </div>
-        <div class="arrow">↗</div>
-      </a>
-
-      <a class="linkbtn" href="/director/legal-advokat">
-        <div class="left">
-          <span class="num">2</span>
-          <div style="min-width:0;">
-            <div class="ltitle">
-              LEGAL / ADVOKAT <span class="badge-new">LEGAL</span>
-            </div>
-            <div class="lmeta">Pravna pitanja</div>
-          </div>
-        </div>
-        <div class="arrow">↗</div>
-      </a>
-
-      <a class="linkbtn" href="/director/plan-ana-v2">
-        <div class="left">
-          <span class="num">3</span>
-          <div style="min-width:0;">
-            <div class="ltitle">
-              PLAN ANA V.2. <span class="badge-new">NEW</span>
-            </div>
-            <div class="lmeta">Strategija razvoja AI sistema</div>
-          </div>
-        </div>
-        <div class="arrow">↗</div>
-      </a>
-
-      <a class="linkbtn" href="/director/izvestaj-seo">
-        <div class="left">
-          <span class="num">4</span>
-          <div style="min-width:0;">
-            <div class="ltitle">IZVEŠTAJ SEO</div>
-            <div class="lmeta">Interna analiza i KPI performansi</div>
-          </div>
-        </div>
-        <div class="arrow">↗</div>
-      </a>
-    </div>
-  </div>
-
+</div>
 </body>
 </html>
