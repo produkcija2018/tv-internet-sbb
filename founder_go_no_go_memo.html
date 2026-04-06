@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Founder Go/No-Go Memo - Holding izbor</title>
+<style>
+  :root{
+    --bg:#081120; --bg2:#10213f; --card:#ffffff; --ink:#18243f; --muted:#61708c;
+    --line:#dbe4f2; --blue:#2563eb; --cyan:#06b6d4; --green:#15915a; --amber:#b7791f; --red:#c0392b;
+    --shadow:0 18px 42px rgba(16,32,72,.12); --radius:22px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:Inter, Arial, sans-serif; color:var(--ink); line-height:1.55;
+    background: radial-gradient(1200px 420px at 15% 0%, rgba(37,99,235,.22), transparent 50%),
+                radial-gradient(900px 380px at 85% 8%, rgba(6,182,212,.16), transparent 42%),
+                linear-gradient(180deg,var(--bg),var(--bg2) 24%, #eef3fb 24%, #eef3fb 100%);
+  }
+  .wrap{max-width:1280px; margin:0 auto; padding:28px 22px 72px}
+  .hero{
+    color:#fff; border:1px solid rgba(255,255,255,.12); border-radius:28px; padding:30px;
+    background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+    box-shadow:0 24px 54px rgba(0,0,0,.18); margin-bottom:22px;
+  }
+  .hero h1{font-size:42px; line-height:1.05; letter-spacing:-.03em; margin:0 0 10px}
+  .hero p{font-size:17px; color:#dce8ff; max-width:980px; margin:0 0 10px}
+  .chips{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+  .chip{padding:9px 13px; border-radius:999px; font-size:13px; color:#eef4ff; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.08)}
+  .section{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:26px; margin-bottom:20px;
+  }
+  h2{font-size:30px; line-height:1.08; letter-spacing:-0.025em; margin:0 0 14px}
+  h3{font-size:20px; margin:16px 0 10px}
+  p{margin:0 0 12px}
+  .lead{font-size:17px; color:#334566}
+  .callout{background:#f4f8ff; border:1px solid #d6e4ff; border-left:4px solid var(--blue); padding:15px 16px; border-radius:14px; margin:14px 0}
+  .good{background:#eef9f2; border-color:#cdebd7; border-left-color:var(--green)}
+  .warn{background:#fff8eb; border-color:#f3dfae; border-left-color:var(--amber)}
+  .danger{background:#fff2f0; border-color:#f3d0cb; border-left-color:var(--red)}
+  table{width:100%; border-collapse:collapse; margin:12px 0 18px}
+  th,td{border:1px solid var(--line); padding:11px 12px; text-align:left; vertical-align:top; font-size:14px}
+  th{background:#f6f9ff}
+  td.center, th.center{text-align:center}
+  .score{font-weight:800}
+  .yes{color:var(--green)}
+  .mid{color:var(--amber)}
+  .no{color:var(--red)}
+  .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+  .box{border:1px solid var(--line); border-radius:18px; padding:16px; background:#f7fafe}
+  .box h4{margin:0 0 8px; font-size:15px}
+  .box p{font-size:14px; color:#46597c}
+  ul{margin:8px 0 14px 22px}
+  li{margin:4px 0}
+  .footer{color:#667792; font-size:13px}
+  .tag{display:inline-block; padding:5px 9px; border-radius:999px; background:#edf4ff; color:#20469f; font-size:12px; margin-left:8px}
+  @media (max-width:900px){ .grid{grid-template-columns:1fr} .hero h1{font-size:34px} }
+  @media print{
+    body{background:white}
+    .wrap{padding:0}
+    .hero,.section{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <h1>Founder Go / No-Go Memo</h1>
+    <p>Izbor holding jurisdikcije za model: <b>4 osnivača → Holding → Srbija DOO</b>. Dokument je namenjen founders razgovoru i investitorskoj pripremi za AI ANA v2 bridge period od 6-9 meseci.</p>
+    <div class="chips">
+      <div class="chip">Estonia OÜ</div>
+      <div class="chip">Cyprus Ltd</div>
+      <div class="chip">Ireland LTD</div>
+      <div class="chip">Lithuania UAB</div>
+      <div class="chip">Founder control</div>
+      <div class="chip">Investor optics</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>1. Jedna rečenica za sastanak</h2>
+    <div class="callout good">
+      <b>Osnovna preporuka:</b> Ako možete disciplinovano da zatvorite compliance, banking plan i OÜ ↔ DOO intercompany logiku, <b>Estonia OÜ je i dalje najbolji praktični holding za vaš trenutni stage</b>. Ako to ne možete ili želite da unapred uklonite investitorski i banking otpor, <b>Cyprus Ltd je najbolja EU alternativa</b>.
+    </div>
+    <p class="lead">Drugim rečima: Estonia je najbolja kada je držite kao ozbiljan holding; Cyprus je najbolji kada želite da smanjite friction i povećate investitorsku čitljivost bez velikog kompromisa.</p>
+  </section>
+
+  <section class="section">
+    <h2>2. Decision matrix</h2>
+    <table>
+      <tr>
+        <th>Jurisdikcija</th>
+        <th class="center">Founder control fit</th>
+        <th class="center">Remote legitimacy</th>
+        <th class="center">Banking/KYC</th>
+        <th class="center">Tax/substance risk</th>
+        <th class="center">Investor optics</th>
+        <th class="center">Trošak / admin</th>
+        <th>Prava uloga za vas</th>
+      </tr>
+      <tr>
+        <td><b>Estonia OÜ</b></td>
+        <td class="center score yes">Vrlo jak</td>
+        <td class="center score mid">Legalno da, ali uz address + contact person</td>
+        <td class="center score no">Najveći friction</td>
+        <td class="center score mid">Srednje do visoko ako je sav management iz Srbije</td>
+        <td class="center score mid">Dobar, ali traži objašnjenje</td>
+        <td class="center score yes">Vrlo racionalan</td>
+        <td>Founder-first digital holding za bridge fazu</td>
+      </tr>
+      <tr>
+        <td><b>Cyprus Ltd</b></td>
+        <td class="center score yes">Jak</td>
+        <td class="center score yes">Stabilan EU holding signal</td>
+        <td class="center score mid">Manje friction od Estonije</td>
+        <td class="center score mid">I dalje traži disciplinu, ali optics su bolji</td>
+        <td class="center score yes">Vrlo dobar</td>
+        <td class="center score mid">Srednji</td>
+        <td>Najbolji holding + investor entry point</td>
+      </tr>
+      <tr>
+        <td><b>Ireland LTD</b></td>
+        <td class="center score yes">Jak</td>
+        <td class="center score yes">Vrlo čitljivo</td>
+        <td class="center score mid">Generalno dobro, ali formalnije</td>
+        <td class="center score mid">Traži uredan setup</td>
+        <td class="center score yes">Najjači US/UK signal</td>
+        <td class="center score no">Skuplje / formalnije</td>
+        <td>Holding kada je anglo-investor optics presudan</td>
+      </tr>
+      <tr>
+        <td><b>Lithuania UAB</b></td>
+        <td class="center score yes">Jak</td>
+        <td class="center score yes">EU i racionalno</td>
+        <td class="center score mid">Bolje od Estonije, slabije od Cyprus/Ireland optics</td>
+        <td class="center score mid">Srednje</td>
+        <td class="center score mid">Korektno, ali ne premium</td>
+        <td class="center score yes">Racionalno</td>
+        <td>Najbliža EU zamena za OÜ logiku</td>
+      </tr>
+    </table>
+  
+  </section>
+
+  <section class="section">
+    <h2>2A. Realni troškovi iz ZOTA Put 1 <span class="tag">Estonia OÜ cost layer</span></h2>
+    <p class="lead">Ovo je finansijski appendix koji je falio u memo-u: ne samo da li je jurisdikcija dobra, nego koliko stvarno košta za model 4 osnivača iz Srbije → holding gore → operativa dole.</p>
+
+    <div class="callout warn"><b>Ključ za večerašnji sastanak:</b> u ZOTA Put 1 je preporučena <b>realna i zdrava</b> varijanta za Estonia OÜ, ne ultra-lean i ne premium. To znači da odluku ne treba donositi po minimumu, nego po zdravom godišnjem budžetu holdinga.</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Stavka</th>
+          <th>Ultra-lean</th>
+          <th>Realna / zdrava</th>
+          <th>Komfornija</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>e-Residency (4 osobe)</td>
+          <td>€600</td>
+          <td>€600</td>
+          <td>€600</td>
+        </tr>
+        <tr>
+          <td>Registracija OÜ</td>
+          <td>€265</td>
+          <td>€265</td>
+          <td>€699</td>
+        </tr>
+        <tr>
+          <td>Address + contact</td>
+          <td>~ €153.76</td>
+          <td>~ €199</td>
+          <td>~ €396</td>
+        </tr>
+        <tr>
+          <td>Accounting</td>
+          <td>€0 do minimuma</td>
+          <td>€480 godišnje</td>
+          <td>€1,116 godišnje</td>
+        </tr>
+        <tr>
+          <td><b>Ukupno za prvu godinu</b></td>
+          <td><b>~ €1,018.76–€1,065</b></td>
+          <td><b>~ €1,544</b></td>
+          <td><b>~ €2,811+</b></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="grid">
+      <div class="box">
+        <h4>Preporučena varijanta</h4>
+        <p><b>Realna / zdrava</b> je preporučena u ZOTA Put 1 kao najbolji odnos cene, sigurnosti i founders mira. To je nivo na kom holding više nije samo prazna ljuštura, nego uredno administriran sloj.</p>
+      </div>
+      <div class="box">
+        <h4>Šta se često zaboravi</h4>
+        <p>Annual report, dodatni accounting kada firma postane aktivnija, doplate za više shareholder-a/board članova, promene u registru, pomoć oko banke ili fintech naloga, investitorski i intercompany papiri, IP transfer i dodatni compliance.</p>
+      </div>
+      <div class="box">
+        <h4>Closure rezerva</h4>
+        <p>Minimalni dissolution/liquidation servis: <b>~ €310–€350</b>. Realniji closure budžet: <b>~ €350–€800+</b>. Zdrav founders pristup je da postoji i ova rezerva, umesto da se holding gleda kao trošak samo osnivanja.</p>
+      </div>
+      <div class="box">
+        <h4>Prag za founders odluku</h4>
+        <p>Po istoj logici iz ZOTA Put 1, zdrava procena za Estonia holding sloj je: <b>~ €1,500–€1,800</b> za prvu godinu urednog održavanja, uz dodatnu rezervu <b>~ €500–€800</b> ako jednog dana bude trebalo zatvaranje ili komplikovaniji izlaz.</p>
+      </div>
+    </div>
+
+    <div class="callout good"><b>Šta ovo znači u odnosu na bridge rundu:</b> ako je cilj oko <b>10.000.000 RSD / ~ €85.000</b> za 6–9 meseci AI ANA v2, onda zdrava godišnja cena Estonia holding sloja nije velika sama po sebi. Problem nije cena OÜ, nego banking, KYC, substance i investor optics.</div>
+  </section>
+
+  <section class="section">
+    <h2>2B. Šta ove cene menjaju u odluci <span class="tag">Decision impact</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Pitanje</th>
+          <th>Šta pokazuju realne cene</th>
+          <th>Founders zaključak</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Da li je Estonia OÜ preskupa za naš stage?</td>
+          <td>Ne. Realna i zdrava prva godina je oko <b>€1,544</b>, a preporučeni raspon urednog održavanja je <b>~ €1,500–€1,800</b>.</td>
+          <td>Trošak sam po sebi nije razlog za odbacivanje Estonije.</td>
+        </tr>
+        <tr>
+          <td>Da li ultra-lean model ima smisla?</td>
+          <td>Samo ako OÜ ostaje skoro neaktivan, bez ozbiljnijeg kretanja novca i bez aktivne međufirmske logike.</td>
+          <td>Za bridge rundu i investitorski holding to nije preporučeni put.</td>
+        </tr>
+        <tr>
+          <td>Da li premium setup odmah ima smisla?</td>
+          <td>Komfornija varijanta ide na <b>€2,811+</b> i raste ako uđu pravne usluge, investitorski papiri ili složeniji OÜ ↔ DOO odnos.</td>
+          <td>Ne treba ići u premium prerano, osim ako investitorski proces to odmah traži.</td>
+        </tr>
+        <tr>
+          <td>Šta je stvarni razlog za Go/No-Go?</td>
+          <td>Ne cena. Pravi razlog su bankarski friction, tax substance, licensed provider dependency i optics prema investitoru.</td>
+          <td>Estonia otpada samo ako ne možemo disciplinovano da zatvorimo compliance i banking.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>3. Go / No-Go po zemlji</h2>
+    <table>
+      <tr>
+        <th>Opcija</th>
+        <th>GO ako...</th>
+        <th>NO-GO ako...</th>
+      </tr>
+      <tr>
+        <td><b>Estonia OÜ</b></td>
+        <td>
+          <ul>
+            <li>imate licensed address i contact person</li>
+            <li>imate dobrog estonskog accountant-a</li>
+            <li>imate plan B za banking / EMI</li>
+            <li>možete uredno dokumentovati odnos OÜ ↔ DOO</li>
+            <li>možete investitoru jasno objasniti zašto je holding u Estoniji</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li>računate da ćete lako otvoriti estonsku banku bez veze sa Estonijom</li>
+            <li>nemate ko vodi compliance i filings</li>
+            <li>sav management je u Srbiji, a nemate intercompany disciplinu</li>
+            <li>investitori već sada izražavaju stvarni otpor prema estonskom setup-u</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><b>Cyprus Ltd</b></td>
+        <td>
+          <ul>
+            <li>želite EU holding koji zvuči investitorski čitljivije</li>
+            <li>želite manje objašnjavanja na sastancima</li>
+            <li>hoćete čist investor entry point iznad Srbija DOO</li>
+            <li>spremni ste na nešto formalniji i skuplji setup od Estonije</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li>glavni cilj vam je minimalan trošak po svaku cenu</li>
+            <li>ne želite dodatni administrativni sloj u holdingu</li>
+            <li>bridge je toliko mali da vam i srednji compliance trošak smeta</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><b>Ireland LTD</b></td>
+        <td>
+          <ul>
+            <li>većina ozbiljnih razgovora će biti sa US/UK investorima</li>
+            <li>želite najpoznatiji corporate signal</li>
+            <li>spremni ste na formalniji režim i potencijalno više troškove</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li>nemate potrebu za anglo-premium optics</li>
+            <li>bridge runda je mala i treba vam lean holding</li>
+            <li>tražite najviše praktičnosti za founders, ne najviše prestiža</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><b>Lithuania UAB</b></td>
+        <td>
+          <ul>
+            <li>želite OÜ-sličan model, ali bez Estonije</li>
+            <li>tražite racionalnu EU alternativu</li>
+            <li>investitorima nije presudan prestige signal</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li>želite najjači investor optics</li>
+            <li>tražite holding koji odmah deluje premium i globalno poznato</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>4. Šta je stvarni problem sa Estonijom</h2>
+    <div class="grid">
+      <div class="box">
+        <h4>Nije problem: legalnost</h4>
+        <p>Estonia OÜ je legitiman EU holding i ne traži da sva 4 osnivača fizički žive tamo. Remote model je moguć.</p>
+      </div>
+      <div class="box">
+        <h4>Jeste problem: banking</h4>
+        <p>Ako nemate realnu vezu sa Estonijom, najveći practical blocker može biti bank account / KYC, a ne samo registracija.</p>
+      </div>
+      <div class="box">
+        <h4>Jeste problem: tax substance</h4>
+        <p>Ako se sve ključne odluke i realna operativa vode iz Srbije, morate imati čistu OÜ ↔ DOO logiku i ne sme delovati kao remote shell.</p>
+      </div>
+      <div class="box">
+        <h4>Jeste problem: investor friction</h4>
+        <p>Neki investitori će prihvatiti Estoniju bez problema; drugi će tražiti više objašnjenja nego kod Cyprus/Ireland modela.</p>
+      </div>
+    </div>
+    <div class="callout warn"><b>Pravo pitanje za founders:</b> da li želite da večeras branite Estoniju kao najbolji founder-first model, ili želite da unapred uklonite friction i pređete na Cyprus kao najčistiji investor-grade holding?</div>
+  </section>
+
+  <section class="section">
+    <h2>5. Konačna preporuka za vaš konkretan slučaj</h2>
+    <table>
+      <tr>
+        <th>Scenario</th>
+        <th>Preporuka</th>
+        <th>Zašto</th>
+      </tr>
+      <tr>
+        <td><b>Scenario A - founder-first pragmatični bridge</b></td>
+        <td><b>Estonia OÜ + Srbija DOO</b></td>
+        <td>Najbolji ako možete da zatvorite compliance, accounting, contact person, banking plan i intercompany disciplinu. Najviše odgovara lean founder-controlled fazi od 6-9 meseci.</td>
+      </tr>
+      <tr>
+        <td><b>Scenario B - investor-first i manje friction</b></td>
+        <td><b>Cyprus Ltd + Srbija DOO</b></td>
+        <td>Najbolji ako želite jači holding optics, manje objašnjavanja na sastancima i čistiji međunarodni signal bez odustajanja od OÜ → DOO filozofije.</td>
+      </tr>
+      <tr>
+        <td><b>Scenario C - prestige optics preko okeana</b></td>
+        <td><b>Ireland LTD + Srbija DOO</b></td>
+        <td>Najbolje kada je anglo-investor signal važniji od lean strukture i minimalnog troška.</td>
+      </tr>
+    </table>
+
+    <div class="callout good">
+      <b>Moj završni founders savet:</b><br/>
+      Ako večeras želite najiskreniji i najpraktičniji zaključak, recite ovo:<br/><br/>
+      <b>"Estonia OÜ ostaje naš prvi izbor samo ako možemo da ga vodimo kao stvarno uređen holding. Ako ne možemo da zatvorimo banking, compliance i OÜ ↔ DOO disciplinu bez rizika, onda prelazimo na Cyprus Ltd kao najčistiju EU alternativu."</b>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>6. Founder vote template</h2>
+    <table>
+      <tr>
+        <th>Pitanje</th>
+        <th class="center">Da</th>
+        <th class="center">Ne</th>
+        <th>Napomena</th>
+      </tr>
+      <tr>
+        <td>Možemo li da obezbedimo dobar estonski contact + address + accounting setup?</td>
+        <td class="center">□</td>
+        <td class="center">□</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Imamo li realan banking plan ako estonska banka odbije?</td>
+        <td class="center">□</td>
+        <td class="center">□</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Možemo li jasno da dokumentujemo OÜ ↔ Srbija DOO odnos?</td>
+        <td class="center">□</td>
+        <td class="center">□</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Da li investitorski signal zahteva jači optics od Estonije?</td>
+        <td class="center">□</td>
+        <td class="center">□</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Da li želimo founder-first lean model ili investor-first signal?</td>
+        <td class="center">□</td>
+        <td class="center">□</td>
+        <td></td>
+      </tr>
+    </table>
+    <p class="footer">Preporučena odluka: ako su prva tri odgovora "Da", Estonia ostaje ozbiljan izbor. Ako je četvrto pitanje "Da" i ne želite dodatni friction, Cyprus postaje bolji finalni izbor.</p>
+  </section>
+</div>
+</body>
+</html>
