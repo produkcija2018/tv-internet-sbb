@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Founder Go / No-Go Memo — Price Matrix</title>
+<style>
+:root{
+  --bg:#0a1222; --bg2:#122445; --card:#ffffff; --ink:#1a2742; --muted:#5f708f;
+  --line:#dbe4f2; --blue:#2563eb; --cyan:#0ea5e9; --green:#15803d; --amber:#b7791f; --red:#b91c1c;
+  --shadow:0 18px 42px rgba(16,32,72,.10); --radius:22px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; font-family:Inter, Arial, sans-serif; color:var(--ink); line-height:1.55;
+  background: radial-gradient(1200px 420px at 15% 0%, rgba(37,99,235,.22), transparent 50%),
+              radial-gradient(900px 380px at 85% 8%, rgba(14,165,233,.16), transparent 42%),
+              linear-gradient(180deg,var(--bg),var(--bg2) 24%, #eef3fb 24%, #eef3fb 100%);
+}
+.wrap{max-width:1280px; margin:0 auto; padding:28px 22px 72px}
+.hero{
+  color:#fff; border:1px solid rgba(255,255,255,.12); border-radius:28px; padding:30px;
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+  box-shadow:0 24px 54px rgba(0,0,0,.18); margin-bottom:22px;
+}
+.hero h1{font-size:42px; line-height:1.05; letter-spacing:-.03em; margin:0 0 10px}
+.hero p{font-size:17px; color:#dce8ff; max-width:1050px; margin:0 0 10px}
+.chips{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+.chip{padding:9px 13px; border-radius:999px; font-size:13px; color:#eef4ff; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.08)}
+.section{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:26px; margin-bottom:20px;
+}
+h2{font-size:30px; line-height:1.08; letter-spacing:-.025em; margin:0 0 14px}
+h3{font-size:22px; margin:0 0 10px}
+p{margin:0 0 12px}
+.lead{font-size:17px; color:#334566}
+.callout{background:#f4f8ff; border:1px solid #d6e4ff; border-left:4px solid var(--blue); padding:15px 16px; border-radius:14px; margin:14px 0}
+.good{background:#eef9f2; border-color:#cdebd7; border-left-color:var(--green)}
+.warn{background:#fff8eb; border-color:#f3dfae; border-left-color:var(--amber)}
+.bad{background:#fff3f2; border-color:#f5d3cf; border-left-color:var(--red)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+table{width:100%; border-collapse:collapse; margin:12px 0 18px; font-size:14px}
+th,td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top}
+th{background:#f6f9ff}
+.small{font-size:13px; color:var(--muted)}
+.tag{display:inline-block;padding:6px 10px;border-radius:999px;background:#edf4ff;color:#1947a8;font-size:12px;font-weight:700;margin-bottom:10px}
+.footer{color:#6c7b97;font-size:12px;margin-top:10px}
+ul{margin:8px 0 14px 22px}
+li{margin:4px 0}
+@media (max-width:900px){.grid2{grid-template-columns:1fr} .hero h1{font-size:34px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <h1>Founder Go / No-Go Memo</h1>
+    <p>Direktna founders tabela za večerašnji Zoom: Estonia OÜ vs Cyprus Ltd vs Ireland LTD vs Lithuania UAB, sa troškovima prve godine u istom formatu kao ZOTA Put 1. Fokus je na holdingu za 4 osnivača + kasniji Srbija DOO execution layer.</p>
+    <div class="chips">
+      <div class="chip">4 founders</div>
+      <div class="chip">Holding layer</div>
+      <div class="chip">Bridge round 6–9 meseci</div>
+      <div class="chip">Go / No-Go</div>
+      <div class="chip">Visible price tables</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>1. Finalna founders poruka</h2>
+    <div class="callout good"><b>Ako nema stvarnog investitorskog otpora:</b> Estonia OÜ i dalje ostaje najlakša founders-first opcija za vaš stage.</div>
+    <div class="callout warn"><b>Ako želite jači investor optics:</b> Cyprus Ltd je najjači holding kompromis.</div>
+    <div class="callout"><b>Ako želite najpoznatiji anglo signal:</b> Ireland LTD, ali samo ako prihvatate veći compliance i potencijalno skuplji setup.</div>
+    <div class="callout bad"><b>Glavna opasnost kod Estonije:</b> ne legitimnost jurisdikcije, već banking/KYC, tax substance i dependency na local provider ako niko od founders tima nije tamo.</div>
+  </section>
+
+  <section class="section">
+    <h2>2. Numbers-only pregled</h2>
+    <table>
+      <tr>
+        <th>Jurisdikcija</th>
+        <th>Ultra-lean</th>
+        <th>Realna / zdrava</th>
+        <th>Komfornija</th>
+        <th>Najvažnija napomena</th>
+      </tr>
+      <tr>
+        <td><b>Estonia OÜ</b></td>
+        <td>~ €1,018.76–€1,065</td>
+        <td>~ €1,544</td>
+        <td>~ €2,811+</td>
+        <td>Najjeftinija founders-first opcija, ali uz banking/tax substance rizik ako ste svi van Estonije.</td>
+      </tr>
+      <tr>
+        <td><b>Cyprus Ltd</b></td>
+        <td>~ €1,635</td>
+        <td>~ €2,785</td>
+        <td>~ €4,420+</td>
+        <td>Najbolji holding optics za investitora, ali sa obaveznim levy + jačim accounting/audit slojem.</td>
+      </tr>
+      <tr>
+        <td><b>Ireland LTD</b></td>
+        <td>~ €620*</td>
+        <td>~ €3,070</td>
+        <td>~ €4,770+</td>
+        <td>*Ultra-lean važi samo ako imate EEA resident direktor rešenje; inače bond diže cenu.</td>
+      </tr>
+      <tr>
+        <td><b>Lithuania UAB</b></td>
+        <td>~ €407 + €1,000 share capital</td>
+        <td>~ €1,187 + €1,000 share capital</td>
+        <td>~ €2,427 + €1,000 share capital</td>
+        <td>Najbliža EU zamena za OÜ, ali share capital nije trošak već vezani kapital.</td>
+      </tr>
+    </table>
+  </section>
+
+  <section class="section">
+    <div class="tag">2A. Realni troškovi iz ZOTA Put 1 logike</div>
+    <h2>3. Estonia OÜ</h2>
+    <p class="lead">Ovo je referentna tabela, direktno u istom founders-budgeting formatu koji si tražio.</p>
+    <table>
+      <tr>
+        <th>Stavka</th>
+        <th>Ultra-lean</th>
+        <th>Realna / zdrava</th>
+        <th>Komfornija</th>
+      </tr>
+      <tr>
+        <td>e-Residency (4 osobe)</td>
+        <td>€600</td>
+        <td>€600</td>
+        <td>€600</td>
+      </tr>
+      <tr>
+        <td>Registracija OÜ</td>
+        <td>€265</td>
+        <td>€265</td>
+        <td>€699</td>
+      </tr>
+      <tr>
+        <td>Address + contact</td>
+        <td>~ €153.76</td>
+        <td>~ €199</td>
+        <td>~ €396</td>
+      </tr>
+      <tr>
+        <td>Accounting</td>
+        <td>€0 do minimuma</td>
+        <td>€480 godišnje</td>
+        <td>€1,116 godišnje</td>
+      </tr>
+      <tr>
+        <td><b>Ukupno za prvu godinu</b></td>
+        <td><b>~ €1,018.76–€1,065</b></td>
+        <td><b>~ €1,544</b></td>
+        <td><b>~ €2,811+</b></td>
+      </tr>
+    </table>
+    <p class="small">Napomena: ovo je founders budgeting model koji je već usklađen sa vašim internim ZOTA Put 1 formatom.</p>
+  </section>
+
+  <section class="section">
+    <div class="tag">2A. Ekvivalentni troškovi u istom formatu</div>
+    <h2>4. Cyprus Ltd</h2>
+    <table>
+      <tr>
+        <th>Stavka</th>
+        <th>Ultra-lean</th>
+        <th>Realna / zdrava</th>
+        <th>Komfornija</th>
+      </tr>
+      <tr>
+        <td>Registracija Ltd + filing</td>
+        <td>€165</td>
+        <td>€265</td>
+        <td>€450</td>
+      </tr>
+      <tr>
+        <td>Annual levy + annual return</td>
+        <td>€370</td>
+        <td>€370</td>
+        <td>€370</td>
+      </tr>
+      <tr>
+        <td>Registered office + secretary</td>
+        <td>~ €300</td>
+        <td>~ €650</td>
+        <td>~ €1,200</td>
+      </tr>
+      <tr>
+        <td>Accounting + audit</td>
+        <td>~ €800</td>
+        <td>~ €1,500</td>
+        <td>~ €2,400</td>
+      </tr>
+      <tr>
+        <td><b>Ukupno za prvu godinu</b></td>
+        <td><b>~ €1,635</b></td>
+        <td><b>~ €2,785</b></td>
+        <td><b>~ €4,420+</b></td>
+      </tr>
+    </table>
+    <p class="small">Napomena: Kipar je jači kao investor-grade holding, ali skuplji od Estonije zbog sekretarskog i audit/compliance sloja.</p>
+  </section>
+
+  <section class="section">
+    <div class="tag">2A. Ekvivalentni troškovi u istom formatu</div>
+    <h2>5. Ireland LTD</h2>
+    <table>
+      <tr>
+        <th>Stavka</th>
+        <th>Ultra-lean</th>
+        <th>Realna / zdrava</th>
+        <th>Komfornija</th>
+      </tr>
+      <tr>
+        <td>Registracija LTD</td>
+        <td>€50</td>
+        <td>€50</td>
+        <td>€50</td>
+      </tr>
+      <tr>
+        <td>Annual return</td>
+        <td>€20</td>
+        <td>€20</td>
+        <td>€20</td>
+      </tr>
+      <tr>
+        <td>Registered office + secretary</td>
+        <td>~ €250</td>
+        <td>~ €500</td>
+        <td>~ €900</td>
+      </tr>
+      <tr>
+        <td>EEA director workaround / Section 137 bond</td>
+        <td>€0*</td>
+        <td>~ €1,600</td>
+        <td>~ €2,000</td>
+      </tr>
+      <tr>
+        <td>Accounting</td>
+        <td>~ €300</td>
+        <td>~ €900</td>
+        <td>~ €1,800</td>
+      </tr>
+      <tr>
+        <td><b>Ukupno za prvu godinu</b></td>
+        <td><b>~ €620*</b></td>
+        <td><b>~ €3,070</b></td>
+        <td><b>~ €4,770+</b></td>
+      </tr>
+    </table>
+    <p class="small">*Ultra-lean scenarijo važi samo ako već imate EEA-resident direktora ili drugi validan workaround. Bez toga, Irska vrlo brzo prestaje da bude jeftina opcija.</p>
+  </section>
+
+  <section class="section">
+    <div class="tag">2A. Ekvivalentni troškovi u istom formatu</div>
+    <h2>6. Lithuania UAB</h2>
+    <table>
+      <tr>
+        <th>Stavka</th>
+        <th>Ultra-lean</th>
+        <th>Realna / zdrava</th>
+        <th>Komfornija</th>
+      </tr>
+      <tr>
+        <td>Name reservation + registracija</td>
+        <td>~ €46.83</td>
+        <td>~ €86.83</td>
+        <td>~ €166.83</td>
+      </tr>
+      <tr>
+        <td>Legal address / provider</td>
+        <td>~ €120</td>
+        <td>~ €240</td>
+        <td>~ €480</td>
+      </tr>
+      <tr>
+        <td>Formation support / notary / translation</td>
+        <td>€0 do minimuma</td>
+        <td>~ €260</td>
+        <td>~ €580</td>
+      </tr>
+      <tr>
+        <td>Accounting</td>
+        <td>~ €240</td>
+        <td>~ €600</td>
+        <td>~ €1,200</td>
+      </tr>
+      <tr>
+        <td><b>Ukupno za prvu godinu</b></td>
+        <td><b>~ €406.83</b></td>
+        <td><b>~ €1,186.83</b></td>
+        <td><b>~ €2,426.83+</b></td>
+      </tr>
+      <tr>
+        <td>Obavezni share capital</td>
+        <td>€1,000</td>
+        <td>€1,000</td>
+        <td>€1,000</td>
+      </tr>
+    </table>
+    <p class="small">Napomena: €1,000 share capital je kapital, ne čisti trošak; ipak je praktično važan jer vezuje cash odmah na početku.</p>
+  </section>
+
+  <section class="section">
+    <h2>7. Go / No-Go odluka</h2>
+    <div class="grid2">
+      <div>
+        <h3>GO za Estonia OÜ ako:</h3>
+        <ul>
+          <li>imate dobar licensed address + contact provider</li>
+          <li>imate plan za banking / EMI ako estonska banka odbije</li>
+          <li>imate uredan OÜ ↔ Srbija DOO intercompany model</li>
+          <li>nema stvarnog investitorskog otpora prema Estoniji</li>
+        </ul>
+      </div>
+      <div>
+        <h3>NO-GO za Estonia OÜ ako:</h3>
+        <ul>
+          <li>već sada investitori traže drugu jurisdikciju</li>
+          <li>nemate rešen tax substance narativ</li>
+          <li>niko neće da vodi compliance disciplinu</li>
+          <li>ceo model zavisi od “videćemo kasnije”</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout good"><b>Founders recommendation:</b> Estonia OÜ ostaje #1 ako želite najefikasniji founders-first holding. Cyprus Ltd postaje #1 samo ako želite da unapred kupite jači investor optics.</div>
+  </section>
+  <section class="section">
+    <h2>2. Decision matrix</h2>
+    <table>
+      <tr>
+        <th>Jurisdikcija</th>
+        <th class="center">Founder control fit</th>
+        <th class="center">Remote legitimacy</th>
+        <th class="center">Banking/KYC</th>
+        <th class="center">Tax/substance risk</th>
+        <th class="center">Investor optics</th>
+        <th class="center">Trošak / admin</th>
+        <th>Prava uloga za vas</th>
+      </tr>
+      <tr>
+        <td><b>Estonia OÜ</b></td>
+        <td class="center score yes">Vrlo jak</td>
+        <td class="center score mid">Legalno da, ali uz address + contact person</td>
+        <td class="center score no">Najveći friction</td>
+        <td class="center score mid">Srednje do visoko ako je sav management iz Srbije</td>
+        <td class="center score mid">Dobar, ali traži objašnjenje</td>
+        <td class="center score yes">Vrlo racionalan</td>
+        <td>Founder-first digital holding za bridge fazu</td>
+      </tr>
+      <tr>
+        <td><b>Cyprus Ltd</b></td>
+        <td class="center score yes">Jak</td>
+        <td class="center score yes">Stabilan EU holding signal</td>
+        <td class="center score mid">Manje friction od Estonije</td>
+        <td class="center score mid">I dalje traži disciplinu, ali optics su bolji</td>
+        <td class="center score yes">Vrlo dobar</td>
+        <td class="center score mid">Srednji</td>
+        <td>Najbolji holding + investor entry point</td>
+      </tr>
+      <tr>
+        <td><b>Ireland LTD</b></td>
+        <td class="center score yes">Jak</td>
+        <td class="center score yes">Vrlo čitljivo</td>
+        <td class="center score mid">Generalno dobro, ali formalnije</td>
+        <td class="center score mid">Traži uredan setup</td>
+        <td class="center score yes">Najjači US/UK signal</td>
+        <td class="center score no">Skuplje / formalnije</td>
+        <td>Holding kada je anglo-investor optics presudan</td>
+      </tr>
+      <tr>
+        <td><b>Lithuania UAB</b></td>
+        <td class="center score yes">Jak</td>
+        <td class="center score yes">EU i racionalno</td>
+        <td class="center score mid">Bolje od Estonije, slabije od Cyprus/Ireland optics</td>
+        <td class="center score mid">Srednje</td>
+        <td class="center score mid">Korektno, ali ne premium</td>
+        <td class="center score yes">Racionalno</td>
+        <td>Najbliža EU zamena za OÜ logiku</td>
+      </tr>
+    </table>
+  
+  </section>
+  <section class="section">
+    <h2>8. Predlog za večerašnji Zoom vote</h2>
+    <table>
+      <tr><th>Pitanje</th><th>Da / Ne</th><th>Napomena</th></tr>
+      <tr><td>Da li imamo realan investitorski otpor prema Estonia OÜ?</td><td></td><td></td></tr>
+      <tr><td>Da li možemo disciplinovano da zatvorimo OÜ compliance setup?</td><td></td><td></td></tr>
+      <tr><td>Da li nam je investor optics važniji od nižeg troška?</td><td></td><td></td></tr>
+      <tr><td>Da li biramo Estonia OÜ kao default ili odmah idemo na Cyprus Ltd?</td><td></td><td></td></tr>
+    </table>
+    <p class="footer">Interni radni founders memo • namenjeno za Zoom sastanak • brojke za Cyprus / Ireland / Lithuania su budgeting procene u istom formatu kao Estonia blok, ne pojedinačne obavezujuće ponude providera.</p>
+  </section>
+</div>
+</body>
+</html>
