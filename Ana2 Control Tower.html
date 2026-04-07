@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANA 2 — Kontrolna Tabla Izgradnje</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg2: #0d1b33;
+      --panel: #ffffff;
+      --panel-soft: #f6f9ff;
+      --ink: #16233d;
+      --muted: #627391;
+      --line: #d8e2f0;
+      --primary: #2563eb;
+      --cyan: #06b6d4;
+      --green: #16a34a;
+      --amber: #d97706;
+      --red: #dc2626;
+      --shadow: 0 18px 42px rgba(16,32,72,.12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1000px 460px at 20% 0%, rgba(37,99,235,.22), transparent 52%),
+        radial-gradient(900px 420px at 80% 10%, rgba(6,182,212,.16), transparent 44%),
+        linear-gradient(180deg, var(--bg), var(--bg2) 24%, #eef3fb 24%, #eef3fb 100%);
+    }
+
+    .wrap { max-width: 1440px; margin: 0 auto; padding: 24px; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 28px;
+      padding: 28px;
+      color: white;
+      box-shadow: 0 24px 50px rgba(0,0,0,.16);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero h1 { margin: 0 0 10px; font-size: 42px; line-height: 1.03; letter-spacing: -0.03em; }
+    .hero p { margin: 0 0 12px; color: #dce8ff; font-size: 17px; }
+
+    .chip-row, .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .chip, .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 13px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+    .chip {
+      background: rgba(255,255,255,.08);
+      color: #eef4ff;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .meta-pill {
+      background: #edf4ff;
+      color: #20469f;
+      border: 1px solid #d4e3ff;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .mini {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .mini b { display: block; margin-bottom: 6px; font-size: 13px; color: #d8e7ff; text-transform: uppercase; letter-spacing: .08em; }
+    .mini span { color: white; font-size: 15px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 18px;
+      background: rgba(255,255,255,.96);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar h3 { margin: 0 0 12px; font-size: 15px; }
+    .sidebar a {
+      display: block;
+      text-decoration: none;
+      color: var(--muted);
+      padding: 8px 0;
+      font-size: 14px;
+    }
+    .sidebar a:hover { color: var(--primary); }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    h2 { margin: 0 0 12px; font-size: 30px; line-height: 1.08; letter-spacing: -0.025em; }
+    h3 { margin: 18px 0 10px; font-size: 20px; }
+    p { margin: 0 0 12px; }
+
+    .lead { color: #39506f; font-size: 17px; }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fbfdff, #f1f6ff);
+    }
+    .metric .n { font-size: 30px; font-weight: 800; }
+    .metric .l { color: var(--muted); font-size: 13px; }
+
+    .callout {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid #dbe5f2;
+      box-shadow: 0 10px 26px rgba(16,32,72,.08);
+      padding: 16px 18px;
+      border-radius: 14px;
+      margin: 16px 0;
+      color: #22324d;
+      line-height: 1.7;
+    }
+
+    .good { background: linear-gradient(180deg, #f1fbf5 0%, #e6f6ec 100%); border-color: #c9e7d3; color: #1d4d32; }
+    .warn { background: linear-gradient(180deg, #fffaf0 0%, #fff4df 100%); border-color: #efd9a6; color: #5f4715; }
+
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .phase {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+      background: #fff;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #edf4ff;
+      color: #20469f;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 14px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .s-todo { background: #eef2ff; color: #374151; }
+    .s-doing { background: #ecfeff; color: #155e75; }
+    .s-done { background: #f0fdf4; color: #166534; }
+    .s-blocked { background: #fef2f2; color: #991b1b; }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .task {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel-soft);
+    }
+
+    .task input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      accent-color: var(--green);
+    }
+
+    .task b { display: block; margin-bottom: 3px; }
+    .task span { color: var(--muted); font-size: 14px; }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 11px 12px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th { background: #f6f9ff; }
+    td[contenteditable="true"] { background: #fcfdff; }
+    td[contenteditable="true"]:focus, .note-box:focus {
+      outline: 2px solid rgba(37,99,235,.18);
+      background: #fff;
+    }
+
+    .next-step {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .note-box {
+      min-height: 120px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fcfdff;
+    }
+
+    .footer-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--line);
+      margin-top: 16px;
+      padding-top: 16px;
+    }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 11px 16px;
+      border-radius: 12px;
+      font-weight: 800;
+      transition: .2s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), #4f46e5); color: white; }
+    .btn-secondary { background: linear-gradient(135deg, var(--cyan), #2563eb); color: white; }
+    .btn-light { background: #eef4ff; color: #21408a; border: 1px solid #d7e5ff; }
+
+    .small { color: var(--muted); font-size: 13px; }
+
+    @media (max-width: 1120px) {
+      .hero, .layout, .phase-grid, .next-step { grid-template-columns: 1fr; }
+      .metric-grid { grid-template-columns: repeat(2, 1fr); }
+      .sidebar { position: relative; top: auto; }
+    }
+
+    @media (max-width: 720px) {
+      .metric-grid, .summary-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 34px; }
+      .wrap { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>ANA 2 — Kontrolna Tabla Izgradnje</h1>
+        <p>Operativna tabla za praćenje izgradnje ANA 2 od današnjeg dana. Fokus: tablet interfejs, QR continuation, ZOTA case engine, retail tok i procesna orkestracija.</p>
+        <div class="chip-row">
+          <div class="chip">ANA 2 = Interface</div>
+          <div class="chip">ZOTA = Decision + Memory + Process</div>
+          <div class="chip">QR = Continuity Bridge</div>
+          <div class="chip">Case-driven Build</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-pill">Backend: Python / FastAPI</div>
+          <div class="meta-pill">DB: PostgreSQL</div>
+          <div class="meta-pill">Cache: Redis</div>
+          <div class="meta-pill">Tablet UI: React</div>
+          <div class="meta-pill">Voice: Twilio</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="summary-grid">
+          <div class="mini"><b>Početak</b><span>07.04.2026</span></div>
+          <div class="mini"><b>Jezik interfejsa</b><span>Srpski</span></div>
+          <div class="mini"><b>Jezik koda</b><span>Engleski standard</span></div>
+          <div class="mini"><b>Primarni uređaj</b><span>Tablet / kiosk</span></div>
+          <div class="mini"><b>Centralna istina</b><span>Case + case events</span></div>
+          <div class="mini"><b>Avatar pravilo</b><span>Light animated now, full 3D later</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h3>Sadržaj</h3>
+        <a href="#overview">1. Pregled</a>
+        <a href="#stack">2. Stack i serveri</a>
+        <a href="#timeline">3. Faze i datumi</a>
+        <a href="#phase-a">4. Foundation Core</a>
+        <a href="#phase-b">5. ANA 2 Pilot</a>
+        <a href="#phase-c">6. Retail Core</a>
+        <a href="#phase-d">7. Decision & Scale</a>
+        <a href="#phase-e">8. Avatar Polish</a>
+        <a href="#tracking">9. Praćenje rada</a>
+        <a href="#next">10. Sledeći korak</a>
+      </aside>
+
+      <main>
+        <section class="panel" id="overview">
+          <h2>1. Pregled</h2>
+          <p class="lead">Ova kontrolna tabla služi da tim vidi šta je zaključano, šta se radi sada, šta je završeno i koji je sledeći operativni korak.</p>
+          <div class="callout good"><b>North Star:</b> Korisnik počinje na tabletu sa Anom, nastavlja preko QR-a na telefonu, a ZOTA iza toga pamti case, dodaje evente i odlučuje sledeću akciju.</div>
+          <div class="metric-grid">
+            <div class="metric"><div class="n">5</div><div class="l">Glavnih faza</div></div>
+            <div class="metric"><div class="n">1</div><div class="l">Primarni QR po aktivnom case-u</div></div>
+            <div class="metric"><div class="n">1</div><div class="l">Codebase jezik</div></div>
+            <div class="metric"><div class="n">1</div><div class="l">Centralna istina: case</div></div>
+          </div>
+        </section>
+
+        <section class="panel" id="stack">
+          <h2>2. Stack i serveri</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Sloj</th>
+                  <th>Izbor</th>
+                  <th>Zašto</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Backend</td>
+                  <td>Python + FastAPI</td>
+                  <td>Brz development za case orchestration i API sloj</td>
+                  <td contenteditable="true">Zaključano</td>
+                </tr>
+                <tr>
+                  <td>Baza</td>
+                  <td>PostgreSQL</td>
+                  <td>Source of truth za case, event i process stanje</td>
+                  <td contenteditable="true">Zaključano</td>
+                </tr>
+                <tr>
+                  <td>Cache / session</td>
+                  <td>Redis</td>
+                  <td>Resume tokeni, kratka stanja, rate limit, queue signal</td>
+                  <td contenteditable="true">Zaključano</td>
+                </tr>
+                <tr>
+                  <td>Tablet UI</td>
+                  <td>React kiosk app</td>
+                  <td>Brz interfejs i kontrolisana ANA 2 tablet isporuka</td>
+                  <td contenteditable="true">Zaključano</td>
+                </tr>
+                <tr>
+                  <td>Voice</td>
+                  <td>Twilio</td>
+                  <td>Postojeći voice ulaz i dalja nadogradnja</td>
+                  <td contenteditable="true">U planu</td>
+                </tr>
+                <tr>
+                  <td>Object storage</td>
+                  <td>S3-compatible</td>
+                  <td>Audio, asseti, export, avatar media</td>
+                  <td contenteditable="true">Potrebno</td>
+                </tr>
+                <tr>
+                  <td>CDN</td>
+                  <td>Cloudflare / CDN</td>
+                  <td>Brz prikaz statike i asseta</td>
+                  <td contenteditable="true">Potrebno</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" id="timeline">
+          <h2>3. Faze i datumi</h2>
+          <div class="phase-grid">
+            <div class="phase">
+              <div class="tag">Faza 0</div>
+              <h3>Lock & Setup</h3>
+              <p><b>07.04.2026 – 13.04.2026</b></p>
+              <p>Zaključavanje stack-a, pravila, domena, modela i acceptance kriterijuma.</p>
+              <div class="status-row"><span class="status s-doing">U toku</span></div>
+            </div>
+            <div class="phase">
+              <div class="tag">Faza A</div>
+              <h3>Foundation Core</h3>
+              <p><b>14.04.2026 – 15.05.2026</b></p>
+              <p>Case engine, case events, QR continuation contract, device session i decision router.</p>
+              <div class="status-row"><span class="status s-todo">Sledeće</span></div>
+            </div>
+            <div class="phase">
+              <div class="tag">Faza B</div>
+              <h3>ANA 2 Pilot</h3>
+              <p><b>18.05.2026 – 26.06.2026</b></p>
+              <p>Tablet kiosk, touch/voice tok, QR ekran, mobile resume i Ana visual shell.</p>
+              <div class="status-row"><span class="status s-todo">Planirano</span></div>
+            </div>
+            <div class="phase">
+              <div class="tag">Faza C</div>
+              <h3>Retail Core</h3>
+              <p><b>29.06.2026 – 24.07.2026</b></p>
+              <p>Knowledge, pricing adapter, offer readiness, retail source of truth.</p>
+              <div class="status-row"><span class="status s-todo">Planirano</span></div>
+            </div>
+            <div class="phase">
+              <div class="tag">Faza D</div>
+              <h3>Decision & Scale</h3>
+              <p><b>27.07.2026 – 28.08.2026</b></p>
+              <p>Decision rules, ops dashboard, process tasks, monitoring i HA.</p>
+              <div class="status-row"><span class="status s-todo">Planirano</span></div>
+            </div>
+            <div class="phase">
+              <div class="tag">Faza E</div>
+              <h3>Avatar Polish</h3>
+              <p><b>31.08.2026 – 25.09.2026</b></p>
+              <p>Bolji facial states, lagana gestikulacija i jače prisustvo bez rušenja prioriteta.</p>
+              <div class="status-row"><span class="status s-todo">Kasnije</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="phase-a">
+          <h2>4. Foundation Core</h2>
+          <div class="callout warn"><b>Pravilo:</b> Pre bilo kakvog ozbiljnog avatar polisha, mora da radi case continuity.</div>
+          <div class="checklist">
+            <label class="task"><input type="checkbox"><div><b>Case tabela</b><span>Jedna centralna jedinica za sve kanale.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Case events</b><span>tablet_started, qr_generated, mobile_resumed, voice_finished i ostali eventi.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Case phases</b><span>Procesni statusi i sledeće akcije.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Device sessions</b><span>Veza između tableta i konkretnog korisničkog toka.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Continuation token</b><span>Jedan QR continuity token po aktivnom session/case-u.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Decision router</b><span>Odlučuje sledeći korak, ne samo odgovor.</span></div></label>
+          </div>
+        </section>
+
+        <section class="panel" id="phase-b">
+          <h2>5. ANA 2 Pilot</h2>
+          <div class="checklist">
+            <label class="task"><input type="checkbox"><div><b>Welcome screen</b><span>Jasan prvi ekran sa jednim glavnim CTA-om.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Touch flow</b><span>Internet / TV / paket / podrška.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Voice flow</b><span>Osnovni voice ulaz kao dopunski kanal.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>QR screen</b><span>Resume razgovora na telefonu bez gubitka konteksta.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Mobile continuation</b><span>Otvaranje istog case-a na korisnikovom telefonu.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Ana visual shell</b><span>2D / 2.5D prisustvo, blink, mouth sync, light motion.</span></div></label>
+          </div>
+        </section>
+
+        <section class="panel" id="phase-c">
+          <h2>6. Retail Core</h2>
+          <div class="checklist">
+            <label class="task"><input type="checkbox"><div><b>Pricing adapter</b><span>Pouzdan pristup cenama bez izmišljanja odgovora.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Catalog service</b><span>Paket, opcije, dostupnost, pravila ponude.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Knowledge service</b><span>Ana daje source-of-truth retail odgovore.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Offer readiness</b><span>Jasno stanje kada se može formirati ponuda.</span></div></label>
+          </div>
+        </section>
+
+        <section class="panel" id="phase-d">
+          <h2>7. Decision & Scale</h2>
+          <div class="checklist">
+            <label class="task"><input type="checkbox"><div><b>Ops dashboard</b><span>Pregled case-a, blokada, reopen i handoff stanja.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Monitoring</b><span>Device, QR transfer, voice i business health.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>Task engine</b><span>Procesni zadaci vezani za sledeću akciju.</span></div></label>
+            <label class="task"><input type="checkbox"><div><b>HA / backup</b><span>Stabilnost pre šireg rollout-a.</span></div></label>
+          </div>
+        </section>
+
+        <section class="panel" id="phase-e">
+          <h2>8. Avatar Polish</h2>
+          <div class="callout"><b>Važno:</b> Lice i gestikulacija su važni za prisustvo, ali nisu iznad continuity, case i process logike.</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Element</th>
+                  <th>Faza</th>
+                  <th>Opis</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2D / 2.5D lice</td>
+                  <td>Pilot</td>
+                  <td>Prisutnost, blink, light motion, mouth sync</td>
+                  <td contenteditable="true">Potrebno</td>
+                </tr>
+                <tr>
+                  <td>Light gestikulacija</td>
+                  <td>Kasnije</td>
+                  <td>Diskretni pokreti ruku/glave</td>
+                  <td contenteditable="true">Kasnije</td>
+                </tr>
+                <tr>
+                  <td>Real-time 3D avatar</td>
+                  <td>Tek posle stabilnog core-a</td>
+                  <td>Nije prioritet prve operativne pobede</td>
+                  <td contenteditable="true">Ne sada</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" id="tracking">
+          <h2>9. Praćenje rada</h2>
+          <p class="small">Možeš direktno da upisuješ status, napomene i vlasništvo po stavkama.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Modul</th>
+                  <th>Vlasnik</th>
+                  <th>Status</th>
+                  <th>Datum završetka</th>
+                  <th>Napomena</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Case schema</td>
+                  <td contenteditable="true"></td>
+                  <td contenteditable="true">U toku</td>
+                  <td contenteditable="true"></td>
+                  <td contenteditable="true">Kreće od centralne istine.</td>
+                </tr>
+                <tr>
+                  <td>QR continuation</td>
+                  <td contenteditable="true"></td>
+                  <td contenteditable="true">Planirano</td>
+                  <td contenteditable="true"></td>
+                  <td contenteditable="true">Jedan QR po aktivnom case/session toku.</td>
+                </tr>
+                <tr>
+                  <td>Tablet React app</td>
+                  <td contenteditable="true"></td>
+                  <td contenteditable="true">Planirano</td>
+                  <td contenteditable="true"></td>
+                  <td contenteditable="true">Welcome + izbor toka + QR ekran.</td>
+                </tr>
+                <tr>
+                  <td>Ana visual shell</td>
+                  <td contenteditable="true"></td>
+                  <td contenteditable="true">Planirano</td>
+                  <td contenteditable="true"></td>
+                  <td contenteditable="true">Light animated presence, ne puni 3D.</td>
+                </tr>
+                <tr>
+                  <td>Retail knowledge</td>
+                  <td contenteditable="true"></td>
+                  <td contenteditable="true">Planirano</td>
+                  <td contenteditable="true"></td>
+                  <td contenteditable="true">Source-of-truth odgovori.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" id="next">
+          <h2>10. Sledeći korak</h2>
+          <div class="next-step">
+            <div>
+              <h3>Aktivni sledeći korak</h3>
+              <div class="note-box" contenteditable="true">Zaključati backend contract za: cases, case_events, case_phases, device_sessions i continuation_tokens.</div>
+            </div>
+            <div>
+              <h3>Blokatori / napomene</h3>
+              <div class="note-box" contenteditable="true">Ovde upiši šta blokira tim, šta je završeno i šta mora da se odluči danas.</div>
+            </div>
+          </div>
+
+          <div class="footer-bar">
+            <div class="small">Tabela je lokalno editabilna u browseru. Dugme ispod čuva stanje u Local Storage u okviru browser sesije.</div>
+            <div class="btn-row">
+              <button class="btn-primary" onclick="saveBoard()">Sačuvaj stanje</button>
+              <button class="btn-secondary" onclick="loadBoard()">Učitaj stanje</button>
+              <button class="btn-light" onclick="resetBoard()">Resetuj</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'ana2_control_dashboard_v1';
+
+    function collectState() {
+      const checks = [...document.querySelectorAll('input[type="checkbox"]')].map(el => el.checked);
+      const editables = [...document.querySelectorAll('[contenteditable="true"]')].map(el => el.innerHTML);
+      return { checks, editables };
+    }
+
+    function applyState(state) {
+      if (!state) return;
+      const checks = [...document.querySelectorAll('input[type="checkbox"]')];
+      const editables = [...document.querySelectorAll('[contenteditable="true"]')];
+      (state.checks || []).forEach((val, i) => { if (checks[i]) checks[i].checked = !!val; });
+      (state.editables || []).forEach((val, i) => { if (editables[i]) editables[i].innerHTML = val; });
+    }
+
+    function saveBoard() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState()));
+      alert('Stanje je sačuvano u browseru.');
+    }
+
+    function loadBoard() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        alert('Nema sačuvanog stanja.');
+        return;
+      }
+      applyState(JSON.parse(raw));
+      alert('Stanje je učitano.');
+    }
+
+    function resetBoard() {
+      if (!confirm('Da li sigurno želiš reset?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+
+    window.addEventListener('load', loadBoard);
+  </script>
+</body>
+</html>
