@@ -133,7 +133,7 @@
 
     .metric-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       margin-top: 14px;
     }
@@ -491,6 +491,7 @@
         <h2>📊 Dnevni unos</h2>
         <div class="form-grid">
           <div class="field"><label>Jutarnja težina (kg)</label><input id="weight" type="number" step="0.1" placeholder="112.0" /></div>
+          <div class="field"><label>Obim stomaka (cm)</label><input id="waist" type="number" step="0.1" placeholder="118" /></div>
           <div class="field"><label>Koraci</label><input id="steps" type="number" placeholder="8000" /></div>
           <div class="field"><label>Kilometri šetnje</label><input id="km" type="number" step="0.1" placeholder="3.0" /></div>
           <div class="field"><label>Aktivne kalorije sa sata</label><input id="calories" type="number" placeholder="762" /></div>
@@ -531,9 +532,26 @@
           <div class="metric"><span class="small">Trenutni streak</span><strong id="streakNow">0 dana</strong></div>
           <div class="metric"><span class="small">Najbolji streak</span><strong id="streakBest">0 dana</strong></div>
           <div class="metric"><span class="small">Promena 30 dana</span><strong id="weightDelta">-</strong></div>
+          <div class="metric"><span class="small">Streak freeze</span><strong id="freezeCount">1</strong></div>
         </div>
         <canvas id="weightChart" width="900" height="260"></canvas>
+        <canvas id="waistChart" width="900" height="220"></canvas>
         <div id="historyTable"></div>
+        <div class="pill" id="riskPattern">📊 Sistem prati ritam energije, sna i aktivnosti.</div>
+      </section>
+
+      <section class="card span-6">
+        <h2>🏆 Achievement sistem</h2>
+        <div class="task-list" id="achievementList"></div>
+      </section>
+
+      <section class="card span-6">
+        <h2>📅 Plan za sutra</h2>
+        <div class="form-grid">
+          <div class="field"><label>Kada šetnja?</label><input id="tomorrowWalk" type="time" /></div>
+          <div class="field"><label>Kada sprava?</label><input id="tomorrowWorkout" type="time" /></div>
+        </div>
+        <div class="field" style="margin-top:10px;"><label>Sutrašnji fokus</label><textarea id="tomorrowFocus" placeholder="Npr. bez piva, zatvoriti šetnju rano, više vode..."></textarea></div>
       </section>
 
       <section class="card span-12">
@@ -599,6 +617,7 @@
 
     const key = () => 'medscan-day-' + new Date().toISOString().slice(0,10);
     const recordsKey = 'medscan-records';
+    const freezeKey = 'medscan-freeze';
     const dismissedAlarmKey = () => 'medscan-alarm-dismissed-' + new Date().toISOString().slice(0,10);
     const TRANSFORMATION_START = '2026-05-11';
 
@@ -612,6 +631,14 @@
 
     function saveState(state) {
       localStorage.setItem(key(), JSON.stringify(state));
+    }
+
+    function loadFreeze() {
+      return Number(localStorage.getItem(freezeKey) || '1');
+    }
+
+    function saveFreeze(v) {
+      localStorage.setItem(freezeKey, String(v));
     }
 
     function loadRecords() {
@@ -657,7 +684,7 @@
     }
 
     function bindFields() {
-      const ids = ['weight','steps','km','calories','hunger','energy','sleep','dinnerTime','hang','pull','knee','dip','armNote','note'];
+      const ids = ['weight','waist','steps','km','calories','hunger','energy','sleep','dinnerTime','hang','pull','knee','dip','armNote','note','tomorrowWalk','tomorrowWorkout','tomorrowFocus'];
       const state = loadState();
       ids.forEach(id => {
         const el = document.getElementById(id);
@@ -832,6 +859,11 @@
       return completionPercent(state) >= 90 && riskCount(state) === 0;
     }
 
+    function isAlmostClean(state) {
+      if (!state) return false;
+      return completionPercent(state) >= 70 && riskCount(state) <= 1;
+    }
+
     function historyData() {
       return dayKeys(30).map(k => {
         const date = k.replace('medscan-day-', '');
@@ -843,18 +875,36 @@
 
     function streaks(data) {
       let current = 0;
+      let freeze = loadFreeze();
       for (let i = data.length - 1; i >= 0; i--) {
-        if (data[i].clean) current++; else break;
+        if (data[i].clean) {
+          current++;
+        } else if (freeze > 0 && isAlmostClean(data[i].state)) {
+          freeze--;
+          current++;
+        } else {
+          break;
+        }
       }
+
       let best = 0, run = 0;
-      data.forEach(d => { if (d.clean) { run++; best = Math.max(best, run); } else run = 0; });
-      return { current, best };
+      data.forEach(d => {
+        if (d.clean) {
+          run++;
+        } else {
+          run = 0;
+        }
+        best = Math.max(best, run);
+      });
+
+      return { current, best, freezeLeft: freeze };
     }
 
     function renderHistory() {
       const data = historyData();
       const s = streaks(data);
       document.getElementById('streakNow').textContent = s.current + ' dana';
+      document.getElementById('freezeCount').textContent = s.freezeLeft;
       document.getElementById('streakBest').textContent = s.best + ' dana';
       const weights = data.filter(d => d.weight !== null);
       if (weights.length >= 2) {
@@ -864,11 +914,62 @@
         document.getElementById('weightDelta').textContent = '-';
       }
       drawWeightChart(data);
+      drawWaistChart(data);
+      renderAchievements(data);
+      renderRiskPattern(data);
       document.getElementById('historyTable').innerHTML = `
         <table class="history-table">
           <thead><tr><th>Datum</th><th>Kg</th><th>Koraci</th><th>Status</th></tr></thead>
           <tbody>${data.slice(-10).reverse().map(d => `<tr><td>${d.date}</td><td>${d.weight ?? '-'}</td><td>${d.steps || '-'}</td><td>${d.status}</td></tr>`).join('')}</tbody>
         </table>`;
+    }
+
+    function drawWaistChart(data) {
+      const canvas = document.getElementById('waistChart');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = 'rgba(255,255,255,0.05)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      const points = data.map((d,i) => ({ ...d, i, waist: d.state?.fields?.waist ? Number(d.state.fields.waist) : null })).filter(d => d.waist !== null);
+      if (points.length < 2) {
+        ctx.fillStyle = '#9ca3af'; ctx.font = '16px system-ui'; ctx.fillText('Unesi obim stomaka za graf.', 34, 100); return;
+      }
+      const min = Math.min(...points.map(p => p.waist)) - 1;
+      const max = Math.max(...points.map(p => p.waist)) + 1;
+      const x = idx => 45 + (idx / 29) * (canvas.width - 75);
+      const y = w => 180 - ((w - min) / Math.max(1, max-min)) * 130;
+      ctx.strokeStyle = '#a78bfa'; ctx.lineWidth = 4; ctx.beginPath();
+      points.forEach((p, idx) => { const px = x(p.i), py = y(p.waist); if (idx === 0) ctx.moveTo(px,py); else ctx.lineTo(px,py); });
+      ctx.stroke();
+      points.forEach(p => { ctx.fillStyle = '#a78bfa'; ctx.beginPath(); ctx.arc(x(p.i), y(p.waist), 5, 0, Math.PI*2); ctx.fill(); });
+    }
+
+    function renderAchievements(data) {
+      const latestWeight = [...data].reverse().find(d => d.weight !== null)?.weight;
+      const achievements = [];
+      if (latestWeight !== undefined && latestWeight <= 110) achievements.push('🏆 Prvih -5 kg');
+      if (latestWeight !== undefined && latestWeight <= 105) achievements.push('🏆 Dvocifren pad težine');
+      const rec = loadRecords();
+      if (rec.pull >= 1) achievements.push('🏆 Prvi zgib uz pomoć');
+      if (rec.hang >= 30) achievements.push('🏆 30 sekundi visenja');
+      const s = streaks(data);
+      if (s.current >= 7) achievements.push('🏆 7 čistih dana');
+      document.getElementById('achievementList').innerHTML = achievements.length
+        ? achievements.map(a => `<div class="task done"><div>🔥</div><div>${a}</div><div class="time-tag">otključano</div></div>`).join('')
+        : '<div class="small">Achievement-i će se pojavljivati automatski kako napreduješ.</div>';
+    }
+
+    function renderRiskPattern(data) {
+      const last3 = data.slice(-3);
+      const lowEnergy = last3.filter(d => Number(d.state?.fields?.energy || 10) <= 4).length;
+      const badSleep = last3.filter(d => Number(d.state?.fields?.sleep || 10) <= 5).length;
+      const missedWalk = last3.filter(d => !d.state?.tasks?.walk).length;
+      let msg = '📊 Sistem prati ritam energije, sna i aktivnosti.';
+      if (lowEnergy >= 2) msg = '⚠️ Energija pada poslednjih dana — proveri san i unos hrane.';
+      if (badSleep >= 2) msg = '⚠️ San je nestabilan više dana — ne forsiraj kasne aktivnosti.';
+      if (missedWalk >= 2) msg = '⚠️ Šetnje padaju — ulaziš u zonu gubitka ritma.';
+      document.getElementById('riskPattern').textContent = msg;
     }
 
     function drawWeightChart(data) {
