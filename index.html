@@ -1,1 +1,643 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MEDSCAN Dnevni Panel</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --card2: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --green: #22c55e;
+      --yellow: #facc15;
+      --red: #ef4444;
+      --blue: #38bdf8;
+      --purple: #a78bfa;
+      --border: rgba(255,255,255,0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0%, #020617 60%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 18px;
+    }
+
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3 { margin: 0; }
+
+    h1 {
+      font-size: clamp(26px, 4vw, 42px);
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 6px;
+      font-size: 15px;
+    }
+
+    .date-pill {
+      background: rgba(56,189,248,0.12);
+      border: 1px solid rgba(56,189,248,0.35);
+      color: #bae6fd;
+      padding: 12px 14px;
+      border-radius: 18px;
+      text-align: right;
+      min-width: 210px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(31,41,55,0.96), rgba(17,24,39,0.96));
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.25);
+    }
+
+    .span-12 { grid-column: span 12; }
+    .span-8 { grid-column: span 8; }
+    .span-6 { grid-column: span 6; }
+    .span-4 { grid-column: span 4; }
+
+    .status-big {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .status-badge {
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .status-clean { background: rgba(34,197,94,0.16); color: #86efac; border: 1px solid rgba(34,197,94,0.4); }
+    .status-mid { background: rgba(250,204,21,0.16); color: #fde68a; border: 1px solid rgba(250,204,21,0.4); }
+    .status-risk { background: rgba(239,68,68,0.16); color: #fecaca; border: 1px solid rgba(239,68,68,0.4); }
+
+    .progress-wrap {
+      height: 14px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--red), var(--yellow), var(--green));
+      transition: width 0.3s ease;
+    }
+
+    .task-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .task {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(250,204,21,0.09);
+    }
+
+    .task.done {
+      background: rgba(34,197,94,0.12);
+      border-color: rgba(34,197,94,0.35);
+    }
+
+    .task.bad {
+      background: rgba(239,68,68,0.12);
+      border-color: rgba(239,68,68,0.35);
+    }
+
+    input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      accent-color: var(--green);
+    }
+
+    label { cursor: pointer; }
+
+    .time-tag {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      background: rgba(2,6,23,0.65);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 11px 12px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    textarea { min-height: 86px; resize: vertical; }
+
+    button {
+      border: 0;
+      border-radius: 15px;
+      padding: 12px 14px;
+      color: #051018;
+      font-weight: 800;
+      background: var(--blue);
+      cursor: pointer;
+      transition: transform 0.12s ease, opacity 0.12s ease;
+    }
+
+    button:hover { transform: translateY(-1px); opacity: 0.94; }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .danger { background: var(--red); color: white; }
+    .success { background: var(--green); color: #052e16; }
+    .warning { background: var(--yellow); color: #422006; }
+
+    .record-box {
+      position: sticky;
+      top: 14px;
+      border: 1px solid rgba(167,139,250,0.35);
+      background: linear-gradient(180deg, rgba(88,28,135,0.24), rgba(17,24,39,0.96));
+    }
+
+    .record-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .record-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 9px;
+    }
+
+    .record-item:last-child { border-bottom: 0; }
+
+    .record-value {
+      color: #ddd6fe;
+      font-weight: 800;
+    }
+
+    .alert {
+      display: none;
+      border: 1px solid rgba(239,68,68,0.55);
+      background: rgba(239,68,68,0.16);
+      color: #fecaca;
+      padding: 14px;
+      border-radius: 18px;
+      margin-top: 14px;
+      font-weight: 700;
+    }
+
+    .alert.show { display: block; }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .mini-chart {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 45px;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .bar-bg {
+      height: 10px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--purple);
+      width: 0%;
+      border-radius: 999px;
+    }
+
+    @media (max-width: 860px) {
+      header { grid-template-columns: 1fr; }
+      .date-pill { text-align: left; }
+      .span-8, .span-6, .span-4 { grid-column: span 12; }
+      .form-grid { grid-template-columns: 1fr; }
+      .record-box { position: static; }
+      body { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1>🩺 MEDSCAN Dnevni Panel</h1>
+        <div class="subtitle">Zatvori dan. Ne traži savršenstvo — traži izvršenje.</div>
+      </div>
+      <div class="date-pill">
+        <strong id="todayText"></strong><br />
+        <span id="timeText" class="small"></span>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card span-8">
+        <div class="status-big">
+          <div>
+            <h2>Dnevni status</h2>
+            <div class="small">Status se menja automatski prema obavezama, rizicima i vremenu.</div>
+          </div>
+          <div id="statusBadge" class="status-badge status-mid">🟡 DAN U TOKU</div>
+        </div>
+        <div class="progress-wrap"><div id="progressBar" class="progress-bar"></div></div>
+        <div id="redAlert" class="alert">🔴 POSLE 19:00 — dan nije zatvoren. Zatvori večeru, šetnju i korake ili upiši korekciju.</div>
+      </section>
+
+      <aside class="card span-4 record-box">
+        <h2>🏆 Trenutni rekordi</h2>
+        <div class="small">Ovo je tvoj motivacioni ugao. Svaki mali pomak se pamti.</div>
+        <div class="record-list">
+          <div class="record-item"><span>Visenje</span><span id="recHang" class="record-value">0 sek</span></div>
+          <div class="record-item"><span>Zgib uz pomoć</span><span id="recPull" class="record-value">0</span></div>
+          <div class="record-item"><span>Podizanje kolena</span><span id="recKnee" class="record-value">0</span></div>
+          <div class="record-item"><span>Propadanje / držanje</span><span id="recDip" class="record-value">0 sek</span></div>
+          <div class="record-item"><span>Koraci</span><span id="recSteps" class="record-value">0</span></div>
+        </div>
+        <div id="recordMessage" class="pill">🔥 Svaki rekord počinje od nule.</div>
+      </aside>
+
+      <section class="card span-6">
+        <h2>✅ Obavezno zatvaranje dana</h2>
+        <div class="task-list" id="taskList"></div>
+      </section>
+
+      <section class="card span-6">
+        <h2>📊 Dnevni unos</h2>
+        <div class="form-grid">
+          <div class="field"><label>Jutarnja težina (kg)</label><input id="weight" type="number" step="0.1" placeholder="112.0" /></div>
+          <div class="field"><label>Koraci</label><input id="steps" type="number" placeholder="8000" /></div>
+          <div class="field"><label>Kilometri šetnje</label><input id="km" type="number" step="0.1" placeholder="3.0" /></div>
+          <div class="field"><label>Aktivne kalorije sa sata</label><input id="calories" type="number" placeholder="762" /></div>
+          <div class="field"><label>Glad 1–10</label><input id="hunger" type="number" min="1" max="10" placeholder="5" /></div>
+          <div class="field"><label>Energija 1–10</label><input id="energy" type="number" min="1" max="10" placeholder="7" /></div>
+          <div class="field"><label>San prethodne noći (h)</label><input id="sleep" type="number" step="0.5" placeholder="6.5" /></div>
+          <div class="field"><label>Vreme glavnog obroka</label><input id="dinnerTime" type="time" /></div>
+        </div>
+      </section>
+
+      <section class="card span-8">
+        <h2>🏋️ Sprava — današnji trening</h2>
+        <div class="small">Unesi realno, bez foliranja. Danas 0 je početak. Za mesec dana 10 je pobeda.</div>
+        <div class="form-grid">
+          <div class="field"><label>Visenje — najbolje držanje (sek)</label><input id="hang" type="number" placeholder="15" /></div>
+          <div class="field"><label>Zgib uz pomoć — ponavljanja</label><input id="pull" type="number" placeholder="0" /></div>
+          <div class="field"><label>Podizanje kolena — ponavljanja</label><input id="knee" type="number" placeholder="5" /></div>
+          <div class="field"><label>Propadanje / držanje — sek</label><input id="dip" type="number" placeholder="5" /></div>
+        </div>
+        <div class="field" style="margin-top:10px;"><label>Napomena za ruku / osećaj</label><textarea id="armNote" placeholder="Npr. blago zatezanje u desnoj nadlaktici, bez bola..."></textarea></div>
+        <div class="mini-chart">
+          <div class="bar-row"><span>Visenje</span><div class="bar-bg"><div id="barHang" class="bar-fill"></div></div><span id="barHangText">0%</span></div>
+          <div class="bar-row"><span>Zgib</span><div class="bar-bg"><div id="barPull" class="bar-fill"></div></div><span id="barPullText">0%</span></div>
+          <div class="bar-row"><span>Kolena</span><div class="bar-bg"><div id="barKnee" class="bar-fill"></div></div><span id="barKneeText">0%</span></div>
+          <div class="bar-row"><span>Propadanje</span><div class="bar-bg"><div id="barDip" class="bar-fill"></div></div><span id="barDipText">0%</span></div>
+        </div>
+      </section>
+
+      <section class="card span-4">
+        <h2>⚠️ Rizici danas</h2>
+        <div class="task-list" id="riskList"></div>
+        <div class="small" style="margin-top:12px;">Ako se desi rizik, dan nije propao. Samo uradi korekciju: čista večera + dodatni koraci.</div>
+      </section>
+
+      <section class="card span-12">
+        <h2>📝 Zaključak dana</h2>
+        <div class="field" style="margin-top:12px;"><label>Kratka beleška</label><textarea id="note" placeholder="Kako je prošao dan, šta je bilo teško, šta popravljam sutra..."></textarea></div>
+        <div class="btn-row">
+          <button class="success" onclick="saveDay()">💾 Sačuvaj dan</button>
+          <button onclick="sendEmail()">📧 Pošalji izveštaj emailom</button>
+          <button class="warning" onclick="exportJSON()">⬇️ Izvezi podatke</button>
+          <button class="danger" onclick="resetToday()">🧹 Reset dana</button>
+        </div>
+        <div class="small" style="margin-top:12px;">Email dugme koristi tvoj email program. Za automatsko slanje preko forme kasnije možemo povezati EmailJS/Formspree.</div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const TASKS = [
+      { id: 'waterTea', text: 'Jutarnja voda + čaj bez šećera', time: '06:30–10:30' },
+      { id: 'smoothie', text: 'Smoothie popijen', time: '11:00–12:00' },
+      { id: 'almondsSmart', text: 'Bademi samo po potrebi, bez preterivanja', time: '13:00–14:00' },
+      { id: 'mainMeal', text: 'Glavni obrok zatvoren', time: '17:00–18:30' },
+      { id: 'noBread', text: 'Bez hleba', time: 'ceo dan' },
+      { id: 'noSugar', text: 'Bez šećera/sokova', time: 'ceo dan' },
+      { id: 'walk', text: 'Šetnja / 8–10k koraka', time: 'do kraja dana' },
+      { id: 'bars', text: 'Sprava 10–15 min, lagano', time: '17:30–18:30' },
+      { id: 'noLateFood', text: 'Bez kasnog jela', time: 'posle večere' }
+    ];
+
+    const RISKS = [
+      { id: 'beer', text: 'Pivo' },
+      { id: 'bread', text: 'Hleb/pecivo' },
+      { id: 'sweet', text: 'Slatko/sok/Cedevita' },
+      { id: 'lateFood', text: 'Kasno jelo' },
+      { id: 'missedWalk', text: 'Preskočena šetnja' }
+    ];
+
+    const key = () => 'medscan-day-' + new Date().toISOString().slice(0,10);
+    const recordsKey = 'medscan-records';
+
+    function defaultState() {
+      return { tasks: {}, risks: {}, fields: {} };
+    }
+
+    function loadState() {
+      return JSON.parse(localStorage.getItem(key()) || JSON.stringify(defaultState()));
+    }
+
+    function saveState(state) {
+      localStorage.setItem(key(), JSON.stringify(state));
+    }
+
+    function loadRecords() {
+      return JSON.parse(localStorage.getItem(recordsKey) || JSON.stringify({ hang:0, pull:0, knee:0, dip:0, steps:0 }));
+    }
+
+    function saveRecords(records) {
+      localStorage.setItem(recordsKey, JSON.stringify(records));
+    }
+
+    function renderLists() {
+      const state = loadState();
+      const taskList = document.getElementById('taskList');
+      const riskList = document.getElementById('riskList');
+      taskList.innerHTML = TASKS.map(t => `
+        <div class="task ${state.tasks[t.id] ? 'done' : ''}" id="task-${t.id}">
+          <input type="checkbox" id="${t.id}" ${state.tasks[t.id] ? 'checked' : ''} onchange="toggleTask('${t.id}')" />
+          <label for="${t.id}">${t.text}</label>
+          <span class="time-tag">${t.time}</span>
+        </div>
+      `).join('');
+      riskList.innerHTML = RISKS.map(r => `
+        <div class="task ${state.risks[r.id] ? 'bad' : ''}" id="risk-${r.id}">
+          <input type="checkbox" id="${r.id}" ${state.risks[r.id] ? 'checked' : ''} onchange="toggleRisk('${r.id}')" />
+          <label for="${r.id}">${r.text}</label>
+          <span class="time-tag">rizik</span>
+        </div>
+      `).join('');
+    }
+
+    function toggleTask(id) {
+      const state = loadState();
+      state.tasks[id] = !state.tasks[id];
+      saveState(state);
+      renderLists(); updateStatus();
+    }
+
+    function toggleRisk(id) {
+      const state = loadState();
+      state.risks[id] = !state.risks[id];
+      saveState(state);
+      renderLists(); updateStatus();
+    }
+
+    function bindFields() {
+      const ids = ['weight','steps','km','calories','hunger','energy','sleep','dinnerTime','hang','pull','knee','dip','armNote','note'];
+      const state = loadState();
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        el.value = state.fields[id] || '';
+        el.addEventListener('input', () => {
+          const s = loadState();
+          s.fields[id] = el.value;
+          saveState(s);
+          updateStatus(); updateRecords(false); updateBars();
+        });
+      });
+    }
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('todayText').textContent = now.toLocaleDateString('sr-RS', { weekday:'long', day:'2-digit', month:'2-digit', year:'numeric' });
+      document.getElementById('timeText').textContent = now.toLocaleTimeString('sr-RS', { hour:'2-digit', minute:'2-digit' });
+      updateStatus();
+    }
+
+    function completionPercent(state) {
+      const done = TASKS.filter(t => state.tasks[t.id]).length;
+      return Math.round(done / TASKS.length * 100);
+    }
+
+    function riskCount(state) {
+      return RISKS.filter(r => state.risks[r.id]).length;
+    }
+
+    function updateStatus() {
+      const state = loadState();
+      const pct = completionPercent(state);
+      const risks = riskCount(state);
+      const now = new Date();
+      const after19 = now.getHours() >= 19;
+      const mustClosed = state.tasks.mainMeal && state.tasks.walk && state.tasks.noLateFood;
+      const badge = document.getElementById('statusBadge');
+      const alert = document.getElementById('redAlert');
+      document.getElementById('progressBar').style.width = pct + '%';
+
+      badge.className = 'status-badge';
+      if (risks > 0 || (after19 && !mustClosed)) {
+        badge.classList.add('status-risk');
+        badge.textContent = '🔴 RIZIČAN DAN';
+      } else if (pct >= 90) {
+        badge.classList.add('status-clean');
+        badge.textContent = '🟢 ČIST DAN';
+      } else {
+        badge.classList.add('status-mid');
+        badge.textContent = '🟡 DAN U TOKU';
+      }
+
+      alert.classList.toggle('show', after19 && !mustClosed);
+    }
+
+    function updateRecords(showPopup = true) {
+      const state = loadState();
+      const rec = loadRecords();
+      const fields = state.fields;
+      const values = {
+        hang: Number(fields.hang || 0),
+        pull: Number(fields.pull || 0),
+        knee: Number(fields.knee || 0),
+        dip: Number(fields.dip || 0),
+        steps: Number(fields.steps || 0)
+      };
+      let newRecord = false;
+      Object.keys(values).forEach(k => {
+        if (values[k] > rec[k]) { rec[k] = values[k]; newRecord = true; }
+      });
+      saveRecords(rec);
+      renderRecords();
+      if (newRecord && showPopup) {
+        document.getElementById('recordMessage').textContent = '🔥 NOVI REKORD! Ovo je dokaz da se telo vraća.';
+      }
+    }
+
+    function renderRecords() {
+      const rec = loadRecords();
+      document.getElementById('recHang').textContent = rec.hang + ' sek';
+      document.getElementById('recPull').textContent = rec.pull;
+      document.getElementById('recKnee').textContent = rec.knee;
+      document.getElementById('recDip').textContent = rec.dip + ' sek';
+      document.getElementById('recSteps').textContent = rec.steps;
+    }
+
+    function updateBars() {
+      const rec = loadRecords();
+      const fields = loadState().fields;
+      const pairs = [
+        ['Hang','hang'], ['Pull','pull'], ['Knee','knee'], ['Dip','dip']
+      ];
+      pairs.forEach(([label, keyName]) => {
+        const current = Number(fields[keyName] || 0);
+        const max = Math.max(rec[keyName], current, 1);
+        const pct = Math.min(100, Math.round(current / max * 100));
+        document.getElementById('bar' + label).style.width = pct + '%';
+        document.getElementById('bar' + label + 'Text').textContent = pct + '%';
+      });
+    }
+
+    function saveDay() {
+      updateRecords(true);
+      updateStatus();
+      alert('Dan je sačuvan. Zatvaranje dana je najvažnija pobeda.');
+    }
+
+    function reportText() {
+      const state = loadState();
+      const f = state.fields;
+      const doneTasks = TASKS.filter(t => state.tasks[t.id]).map(t => '✓ ' + t.text).join('\n');
+      const risks = RISKS.filter(r => state.risks[r.id]).map(r => '⚠ ' + r.text).join('\n') || 'Nema rizika';
+      const status = document.getElementById('statusBadge').textContent;
+      return `MEDSCAN dnevni izveštaj\n\nDatum: ${new Date().toLocaleDateString('sr-RS')}\nStatus: ${status}\n\nTežina: ${f.weight || '-'} kg\nKoraci: ${f.steps || '-'}\nKm: ${f.km || '-'}\nKalorije: ${f.calories || '-'}\nGlad: ${f.hunger || '-'} / 10\nEnergija: ${f.energy || '-'} / 10\nSan: ${f.sleep || '-'} h\nVečera: ${f.dinnerTime || '-'}\n\nSprava:\nVisenje: ${f.hang || 0} sek\nZgib uz pomoć: ${f.pull || 0}\nPodizanje kolena: ${f.knee || 0}\nPropadanje/držanje: ${f.dip || 0} sek\nNapomena ruka: ${f.armNote || '-'}\n\nZavršeno:\n${doneTasks || '-'}\n\nRizici:\n${risks}\n\nBeleška:\n${f.note || '-'}`;
+    }
+
+    function sendEmail() {
+      const subject = encodeURIComponent('MEDSCAN dnevni izveštaj - ' + new Date().toLocaleDateString('sr-RS'));
+      const body = encodeURIComponent(reportText());
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    }
+
+    function exportJSON() {
+      const data = { today: loadState(), records: loadRecords() };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'medscan-dnevni-panel.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function resetToday() {
+      if (!confirm('Resetovati samo današnji unos?')) return;
+      localStorage.removeItem(key());
+      location.reload();
+    }
+
+    function init() {
+      renderLists();
+      bindFields();
+      renderRecords();
+      updateBars();
+      updateClock();
+      setInterval(updateClock, 30000);
+    }
+
+    init();
+  </script>
+</body>
+</html>
 
