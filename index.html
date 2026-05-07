@@ -320,6 +320,29 @@
       background: linear-gradient(180deg, rgba(88,28,135,0.24), rgba(17,24,39,0.96));
     }
 
+    .milestone {
+      border: 1px solid rgba(56,189,248,0.35);
+      background: linear-gradient(180deg, rgba(14,116,144,0.22), rgba(15,23,42,0.78));
+      border-radius: 20px;
+      padding: 14px;
+      margin: 14px 0;
+    }
+
+    .milestone-date {
+      font-size: 26px;
+      font-weight: 900;
+      color: #bae6fd;
+      letter-spacing: -0.03em;
+      margin-top: 4px;
+    }
+
+    .milestone-text {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 5px;
+      line-height: 1.45;
+    }
+
     .record-list {
       display: grid;
       gap: 10px;
@@ -433,7 +456,7 @@
         <div class="status-big">
           <div>
             <h2>Dnevni status</h2>
-            <div class="small">Status se menja automatski prema obavezama, rizicima i vremenu.</div>
+            <div class="small">Status se menja automatski prema obavezama, rizicima i vremenu. Praćenje transformacije počinje od 11.05.2026.</div>
           </div>
           <div id="statusBadge" class="status-badge status-mid">🟡 DAN U TOKU</div>
         </div>
@@ -442,6 +465,11 @@
       </section>
 
       <aside class="card span-4 record-box">
+        <div class="milestone">
+          <div class="small">🚀 Početak transformacije</div>
+          <div class="milestone-date">11.05.2026.</div>
+          <div class="milestone-text">Dan prekretnice. Od ovog datuma se trajno prate disciplina, razvoj, snaga i uspeh.</div>
+        </div>
         <h2>🏆 Trenutni rekordi</h2>
         <div class="small">Ovo je tvoj motivacioni ugao. Svaki mali pomak se pamti.</div>
         <div class="record-list">
@@ -572,6 +600,7 @@
     const key = () => 'medscan-day-' + new Date().toISOString().slice(0,10);
     const recordsKey = 'medscan-records';
     const dismissedAlarmKey = () => 'medscan-alarm-dismissed-' + new Date().toISOString().slice(0,10);
+    const TRANSFORMATION_START = '2026-05-11';
 
     function defaultState() {
       return { tasks: {}, risks: {}, fields: {} };
@@ -787,9 +816,12 @@
 
     function dayKeys(days = 30) {
       const keys = [];
-      for (let i = days - 1; i >= 0; i--) {
-        const d = new Date();
-        d.setDate(d.getDate() - i);
+      const today = new Date();
+      const start = new Date(TRANSFORMATION_START + 'T00:00:00');
+      const first = new Date(today);
+      first.setDate(today.getDate() - (days - 1));
+      const realStart = first < start ? start : first;
+      for (let d = new Date(realStart); d <= today; d.setDate(d.getDate() + 1)) {
         keys.push('medscan-day-' + d.toISOString().slice(0,10));
       }
       return keys;
