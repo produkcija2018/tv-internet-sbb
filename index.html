@@ -555,6 +555,31 @@
       </section>
 
       <section class="card span-12">
+        <h2>🧭 Terenski dnevnik</h2>
+        <div class="small">Brzi zapis svega što se desi na terenu. Klik na plus automatski upisuje trenutno vreme.</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Tip događaja</label>
+            <select id="fieldEventType">
+              <option value="info">Info / napomena</option>
+              <option value="water">Voda</option>
+              <option value="beer">Pivo</option>
+              <option value="soda">Gazirano / sok</option>
+              <option value="food">Hrana van plana</option>
+              <option value="walk">Šetnja / koraci</option>
+              <option value="symptom">Simptom / osećaj</option>
+            </select>
+          </div>
+          <div class="field"><label>Kratak unos</label><input id="fieldEventText" placeholder="Npr. popio Heineken 0.5, bez grickalica" /></div>
+        </div>
+        <div class="btn-row">
+          <button class="warning" onclick="addFieldEvent()">➕ Dodaj sa trenutnim vremenom</button>
+          <button onclick="clearFieldEvents()">🧹 Očisti današnji terenski dnevnik</button>
+        </div>
+        <div id="fieldLogTable"></div>
+      </section>
+
+      <section class="card span-12">
         <h2>📝 Zaključak dana</h2>
         <div class="field" style="margin-top:12px;"><label>Kratka beleška</label><textarea id="note" placeholder="Kako je prošao dan, šta je bilo teško, šta popravljam sutra..."></textarea></div>
         <div class="btn-row">
@@ -683,6 +708,58 @@
       renderLists(); updateStatus();
     }
 
+    function eventLabel(type) {
+      const map = {
+        info: 'ℹ️ Info', water: '💧 Voda', beer: '🍺 Pivo', soda: '🥤 Gazirano/sok',
+        food: '🍽️ Hrana van plana', walk: '🚶 Šetnja', symptom: '🩺 Simptom'
+      };
+      return map[type] || 'ℹ️ Info';
+    }
+
+    function addFieldEvent() {
+      const type = document.getElementById('fieldEventType').value;
+      const text = document.getElementById('fieldEventText').value.trim();
+      if (!text) { alert('Upiši kratak opis događaja.'); return; }
+      const state = loadState();
+      if (!state.fieldEvents) state.fieldEvents = [];
+      const now = new Date();
+      state.fieldEvents.push({
+        time: now.toLocaleTimeString('sr-RS', { hour: '2-digit', minute: '2-digit' }),
+        type,
+        text
+      });
+      if (type === 'beer') state.risks.beer = true;
+      if (type === 'soda') state.risks.sweet = true;
+      if (type === 'food') state.risks.bread = true;
+      saveState(state);
+      document.getElementById('fieldEventText').value = '';
+      renderFieldEvents(); renderLists(); updateStatus();
+    }
+
+    function clearFieldEvents() {
+      if (!confirm('Obrisati samo današnji terenski dnevnik?')) return;
+      const state = loadState();
+      state.fieldEvents = [];
+      saveState(state);
+      renderFieldEvents();
+    }
+
+    function renderFieldEvents() {
+      const state = loadState();
+      const events = state.fieldEvents || [];
+      const box = document.getElementById('fieldLogTable');
+      if (!box) return;
+      if (!events.length) {
+        box.innerHTML = '<div class="small" style="margin-top:12px;">Još nema terenskih zapisa za danas.</div>';
+        return;
+      }
+      box.innerHTML = `
+        <table class="history-table">
+          <thead><tr><th>Vreme</th><th>Tip</th><th>Opis</th></tr></thead>
+          <tbody>${events.slice().reverse().map(e => `<tr><td>${e.time}</td><td>${eventLabel(e.type)}</td><td>${e.text}</td></tr>`).join('')}</tbody>
+        </table>`;
+    }
+
     function bindFields() {
       const ids = ['weight','waist','steps','km','calories','hunger','energy','sleep','dinnerTime','hang','pull','knee','dip','armNote','note','tomorrowWalk','tomorrowWorkout','tomorrowFocus'];
       const state = loadState();
@@ -803,7 +880,13 @@
       const doneTasks = TASKS.filter(t => state.tasks[t.id]).map(t => '✓ ' + t.text).join('\n');
       const risks = RISKS.filter(r => state.risks[r.id]).map(r => '⚠ ' + r.text).join('\n') || 'Nema rizika';
       const status = document.getElementById('statusBadge').textContent;
-      return `MEDSCAN dnevni izveštaj\n\nDatum: ${new Date().toLocaleDateString('sr-RS')}\nStatus: ${status}\n\nTežina: ${f.weight || '-'} kg\nKoraci: ${f.steps || '-'}\nKm: ${f.km || '-'}\nKalorije: ${f.calories || '-'}\nGlad: ${f.hunger || '-'} / 10\nEnergija: ${f.energy || '-'} / 10\nSan: ${f.sleep || '-'} h\nVečera: ${f.dinnerTime || '-'}\n\nSprava:\nVisenje: ${f.hang || 0} sek\nZgib uz pomoć: ${f.pull || 0}\nPodizanje kolena: ${f.knee || 0}\nPropadanje/držanje: ${f.dip || 0} sek\nNapomena ruka: ${f.armNote || '-'}\n\nZavršeno:\n${doneTasks || '-'}\n\nRizici:\n${risks}\n\nBeleška:\n${f.note || '-'}`;
+      return `MEDSCAN dnevni izveštaj\n\nDatum: ${new Date().toLocaleDateString('sr-RS')}\nStatus: ${status}\n\nTežina: ${f.weight || '-'} kg\nKoraci: ${f.steps || '-'}\nKm: ${f.km || '-'}\nKalorije: ${f.calories || '-'}\nGlad: ${f.hunger || '-'} / 10\nEnergija: ${f.energy || '-'} / 10\nSan: ${f.sleep || '-'} h\nVečera: ${f.dinnerTime || '-'}\n\nSprava:\nVisenje: ${f.hang || 0} sek\nZgib uz pomoć: ${f.pull || 0}\nPodizanje kolena: ${f.knee || 0}\nPropadanje/držanje: ${f.dip || 0} sek\nNapomena ruka: ${f.armNote || '-'}
+
+Terenski dnevnik:
+${(state.fieldEvents || []).map(e => `${e.time} - ${eventLabel(e.type)} - ${e.text}`).join('
+') || '-'}
+
+Završeno:\n${doneTasks || '-'}\n\nRizici:\n${risks}\n\nBeleška:\n${f.note || '-'}`;
     }
 
     async function sendEmail() {
@@ -1019,6 +1102,7 @@
       renderLists();
       bindFields();
       renderRecords();
+      renderFieldEvents();
       updateBars();
       renderHistory();
       updateClock();
