@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MEDSCAN Dnevni Panel</title>
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     :root {
@@ -71,6 +74,101 @@
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 14px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      display: none;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 8px;
+      background: rgba(2,6,23,0.86);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+      border-radius: 22px;
+      z-index: 20;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.4);
+    }
+
+    .bottom-nav a {
+      color: var(--text);
+      text-decoration: none;
+      text-align: center;
+      padding: 10px 6px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 14px;
+    }
+
+    .history-table th, .history-table td {
+      border-bottom: 1px solid var(--border);
+      padding: 9px 7px;
+      font-size: 13px;
+      text-align: left;
+      color: var(--muted);
+    }
+
+    .history-table th { color: var(--text); background: rgba(255,255,255,0.05); }
+
+    canvas {
+      width: 100%;
+      max-height: 240px;
+      margin-top: 12px;
+      background: rgba(2,6,23,0.35);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 12px;
+    }
+
+    .metric strong { display:block; font-size: 22px; margin-top: 4px; }
+
+    .night-alarm {
+      display:none;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(2,6,23,0.88);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .night-alarm.show { display:flex; }
+
+    .alarm-box {
+      max-width: 520px;
+      width: 100%;
+      background: linear-gradient(180deg, rgba(127,29,29,0.96), rgba(17,24,39,0.98));
+      border: 1px solid rgba(239,68,68,0.55);
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.55);
     }
 
     .card {
@@ -309,7 +407,11 @@
       .span-8, .span-6, .span-4 { grid-column: span 12; }
       .form-grid { grid-template-columns: 1fr; }
       .record-box { position: static; }
-      body { padding: 12px; }
+      body { padding: 12px 12px 92px; }
+      .bottom-nav { display: grid; }
+      .metric-row { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+      .card { border-radius: 20px; padding: 14px; }
     }
   </style>
 </head>
@@ -327,7 +429,7 @@
     </header>
 
     <div class="grid">
-      <section class="card span-8">
+      <section class="card span-8" id="top">
         <div class="status-big">
           <div>
             <h2>Dnevni status</h2>
@@ -352,7 +454,7 @@
         <div id="recordMessage" class="pill">🔥 Svaki rekord počinje od nule.</div>
       </aside>
 
-      <section class="card span-6">
+      <section class="card span-6" id="tasks">
         <h2>✅ Obavezno zatvaranje dana</h2>
         <div class="task-list" id="taskList"></div>
       </section>
@@ -371,7 +473,7 @@
         </div>
       </section>
 
-      <section class="card span-8">
+      <section class="card span-8" id="training">
         <h2>🏋️ Sprava — današnji trening</h2>
         <div class="small">Unesi realno, bez foliranja. Danas 0 je početak. Za mesec dana 10 je pobeda.</div>
         <div class="form-grid">
@@ -395,6 +497,17 @@
         <div class="small" style="margin-top:12px;">Ako se desi rizik, dan nije propao. Samo uradi korekciju: čista večera + dodatni koraci.</div>
       </section>
 
+      <section class="card span-12" id="history">
+        <h2>📈 Težina, istorija i streak</h2>
+        <div class="metric-row">
+          <div class="metric"><span class="small">Trenutni streak</span><strong id="streakNow">0 dana</strong></div>
+          <div class="metric"><span class="small">Najbolji streak</span><strong id="streakBest">0 dana</strong></div>
+          <div class="metric"><span class="small">Promena 30 dana</span><strong id="weightDelta">-</strong></div>
+        </div>
+        <canvas id="weightChart" width="900" height="260"></canvas>
+        <div id="historyTable"></div>
+      </section>
+
       <section class="card span-12">
         <h2>📝 Zaključak dana</h2>
         <div class="field" style="margin-top:12px;"><label>Kratka beleška</label><textarea id="note" placeholder="Kako je prošao dan, šta je bilo teško, šta popravljam sutra..."></textarea></div>
@@ -406,6 +519,23 @@
         </div>
         <div class="small" style="margin-top:12px;">Email dugme koristi EmailJS ako su ključevi popunjeni u kodu. Ako nisu, otvara običan email program kao rezervu.</div>
       </section>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="#top">Status</a>
+    <a href="#tasks">Obaveze</a>
+    <a href="#training">Sprava</a>
+    <a href="#history">Graf</a>
+  </nav>
+
+  <div id="nightAlarm" class="night-alarm">
+    <div class="alarm-box">
+      <h2>🔴 Dan nije zatvoren</h2>
+      <p>Prošlo je 21:30, a ključne obaveze nisu završene. Nemoj da dan “procuri”. Zatvori minimum ili upiši realnu korekciju.</p>
+      <div class="btn-row">
+        <button class="success" onclick="dismissNightAlarm()">Razumem — zatvaram dan</button>
+      </div>
     </div>
   </div>
 
@@ -441,6 +571,7 @@
 
     const key = () => 'medscan-day-' + new Date().toISOString().slice(0,10);
     const recordsKey = 'medscan-records';
+    const dismissedAlarmKey = () => 'medscan-alarm-dismissed-' + new Date().toISOString().slice(0,10);
 
     function defaultState() {
       return { tasks: {}, risks: {}, fields: {} };
@@ -533,6 +664,7 @@
       const risks = riskCount(state);
       const now = new Date();
       const after19 = now.getHours() >= 19;
+      const after2130 = now.getHours() > 21 || (now.getHours() === 21 && now.getMinutes() >= 30);
       const mustClosed = state.tasks.mainMeal && state.tasks.walk && state.tasks.noLateFood;
       const badge = document.getElementById('statusBadge');
       const alert = document.getElementById('redAlert');
@@ -551,6 +683,9 @@
       }
 
       alert.classList.toggle('show', after19 && !mustClosed);
+      const dismissed = localStorage.getItem(dismissedAlarmKey()) === '1';
+      document.getElementById('nightAlarm').classList.toggle('show', after2130 && !mustClosed && !dismissed);
+      renderHistory();
     }
 
     function updateRecords(showPopup = true) {
@@ -602,6 +737,7 @@
     function saveDay() {
       updateRecords(true);
       updateStatus();
+      renderHistory();
       alert('Dan je sačuvan. Zatvaranje dana je najvažnija pobeda.');
     }
 
@@ -644,6 +780,91 @@
       }
     }
 
+    function dismissNightAlarm() {
+      localStorage.setItem(dismissedAlarmKey(), '1');
+      document.getElementById('nightAlarm').classList.remove('show');
+    }
+
+    function dayKeys(days = 30) {
+      const keys = [];
+      for (let i = days - 1; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        keys.push('medscan-day-' + d.toISOString().slice(0,10));
+      }
+      return keys;
+    }
+
+    function isCleanDay(state) {
+      if (!state) return false;
+      return completionPercent(state) >= 90 && riskCount(state) === 0;
+    }
+
+    function historyData() {
+      return dayKeys(30).map(k => {
+        const date = k.replace('medscan-day-', '');
+        const state = JSON.parse(localStorage.getItem(k) || 'null');
+        const weight = state?.fields?.weight ? Number(state.fields.weight) : null;
+        return { date, state, weight, clean: isCleanDay(state), steps: state?.fields?.steps || '', status: state ? (isCleanDay(state) ? '🟢' : '🟡/🔴') : '-' };
+      });
+    }
+
+    function streaks(data) {
+      let current = 0;
+      for (let i = data.length - 1; i >= 0; i--) {
+        if (data[i].clean) current++; else break;
+      }
+      let best = 0, run = 0;
+      data.forEach(d => { if (d.clean) { run++; best = Math.max(best, run); } else run = 0; });
+      return { current, best };
+    }
+
+    function renderHistory() {
+      const data = historyData();
+      const s = streaks(data);
+      document.getElementById('streakNow').textContent = s.current + ' dana';
+      document.getElementById('streakBest').textContent = s.best + ' dana';
+      const weights = data.filter(d => d.weight !== null);
+      if (weights.length >= 2) {
+        const delta = (weights[weights.length - 1].weight - weights[0].weight).toFixed(1);
+        document.getElementById('weightDelta').textContent = (delta > 0 ? '+' : '') + delta + ' kg';
+      } else {
+        document.getElementById('weightDelta').textContent = '-';
+      }
+      drawWeightChart(data);
+      document.getElementById('historyTable').innerHTML = `
+        <table class="history-table">
+          <thead><tr><th>Datum</th><th>Kg</th><th>Koraci</th><th>Status</th></tr></thead>
+          <tbody>${data.slice(-10).reverse().map(d => `<tr><td>${d.date}</td><td>${d.weight ?? '-'}</td><td>${d.steps || '-'}</td><td>${d.status}</td></tr>`).join('')}</tbody>
+        </table>`;
+    }
+
+    function drawWeightChart(data) {
+      const canvas = document.getElementById('weightChart');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = 'rgba(255,255,255,0.06)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      const points = data.map((d,i) => ({ ...d, i })).filter(d => d.weight !== null);
+      ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+      ctx.lineWidth = 1;
+      for (let y = 40; y < canvas.height; y += 45) { ctx.beginPath(); ctx.moveTo(40,y); ctx.lineTo(canvas.width-20,y); ctx.stroke(); }
+      if (points.length < 2) {
+        ctx.fillStyle = '#9ca3af'; ctx.font = '18px system-ui'; ctx.fillText('Unesi bar 2 težine da se pojavi graf.', 38, 135); return;
+      }
+      const min = Math.min(...points.map(p => p.weight)) - 0.5;
+      const max = Math.max(...points.map(p => p.weight)) + 0.5;
+      const x = idx => 45 + (idx / 29) * (canvas.width - 75);
+      const y = w => 220 - ((w - min) / Math.max(1, max-min)) * 170;
+      ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 4; ctx.beginPath();
+      points.forEach((p, idx) => { const px = x(p.i), py = y(p.weight); if (idx === 0) ctx.moveTo(px,py); else ctx.lineTo(px,py); });
+      ctx.stroke();
+      points.forEach(p => { ctx.fillStyle = p.clean ? '#22c55e' : '#facc15'; ctx.beginPath(); ctx.arc(x(p.i), y(p.weight), 6, 0, Math.PI*2); ctx.fill(); });
+      ctx.fillStyle = '#e5e7eb'; ctx.font = '13px system-ui';
+      ctx.fillText(max.toFixed(1)+' kg', 8, y(max)+5); ctx.fillText(min.toFixed(1)+' kg', 8, y(min)+5);
+    }
+
     function exportJSON() {
       const data = { today: loadState(), records: loadRecords() };
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -666,6 +887,7 @@
       bindFields();
       renderRecords();
       updateBars();
+      renderHistory();
       updateClock();
       setInterval(updateClock, 30000);
     }
