@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MEDSCAN Dnevni Panel</title>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     :root {
       --bg: #0f172a;
@@ -403,14 +404,23 @@
           <button class="warning" onclick="exportJSON()">⬇️ Izvezi podatke</button>
           <button class="danger" onclick="resetToday()">🧹 Reset dana</button>
         </div>
-        <div class="small" style="margin-top:12px;">Email dugme koristi tvoj email program. Za automatsko slanje preko forme kasnije možemo povezati EmailJS/Formspree.</div>
+        <div class="small" style="margin-top:12px;">Email dugme koristi EmailJS ako su ključevi popunjeni u kodu. Ako nisu, otvara običan email program kao rezervu.</div>
       </section>
     </div>
   </div>
 
   <script>
+    const EMAILJS_CONFIG = {
+      // Popuni ova tri podatka iz EmailJS naloga kada budeš spreman.
+      publicKey: '',
+      serviceId: '',
+      templateId: '',
+      toEmail: '2025produkcija@gmail.com'
+    };
+
     const TASKS = [
-      { id: 'waterTea', text: 'Jutarnja voda + čaj bez šećera', time: '06:30–10:30' },
+      { id: 'warmLemonWater', text: 'Čim ustanem: 500 ml tople vode + pola limuna', time: 'odmah po buđenju' },
+      { id: 'waterTea', text: 'Jutarnji čaj bez šećera', time: '06:30–10:30' },
       { id: 'smoothie', text: 'Smoothie popijen', time: '11:00–12:00' },
       { id: 'almondsSmart', text: 'Bademi samo po potrebi, bez preterivanja', time: '13:00–14:00' },
       { id: 'mainMeal', text: 'Glavni obrok zatvoren', time: '17:00–18:30' },
@@ -604,10 +614,34 @@
       return `MEDSCAN dnevni izveštaj\n\nDatum: ${new Date().toLocaleDateString('sr-RS')}\nStatus: ${status}\n\nTežina: ${f.weight || '-'} kg\nKoraci: ${f.steps || '-'}\nKm: ${f.km || '-'}\nKalorije: ${f.calories || '-'}\nGlad: ${f.hunger || '-'} / 10\nEnergija: ${f.energy || '-'} / 10\nSan: ${f.sleep || '-'} h\nVečera: ${f.dinnerTime || '-'}\n\nSprava:\nVisenje: ${f.hang || 0} sek\nZgib uz pomoć: ${f.pull || 0}\nPodizanje kolena: ${f.knee || 0}\nPropadanje/držanje: ${f.dip || 0} sek\nNapomena ruka: ${f.armNote || '-'}\n\nZavršeno:\n${doneTasks || '-'}\n\nRizici:\n${risks}\n\nBeleška:\n${f.note || '-'}`;
     }
 
-    function sendEmail() {
-      const subject = encodeURIComponent('MEDSCAN dnevni izveštaj - ' + new Date().toLocaleDateString('sr-RS'));
-      const body = encodeURIComponent(reportText());
-      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    async function sendEmail() {
+      const subjectRaw = 'MEDSCAN dnevni izveštaj - ' + new Date().toLocaleDateString('sr-RS');
+      const bodyRaw = reportText();
+
+      const emailReady = EMAILJS_CONFIG.publicKey && EMAILJS_CONFIG.serviceId && EMAILJS_CONFIG.templateId;
+
+      if (!emailReady) {
+        const subject = encodeURIComponent(subjectRaw);
+        const body = encodeURIComponent(bodyRaw);
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        return;
+      }
+
+      try {
+        emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
+        await emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
+          subject: subjectRaw,
+          message: bodyRaw,
+          to_email: EMAILJS_CONFIG.toEmail || undefined
+        });
+        alert('Email izveštaj je poslat automatski.');
+      } catch (err) {
+        console.error(err);
+        alert('Automatski email nije prošao. Otvaram običan email kao rezervu.');
+        const subject = encodeURIComponent(subjectRaw);
+        const body = encodeURIComponent(bodyRaw);
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      }
     }
 
     function exportJSON() {
@@ -640,4 +674,3 @@
   </script>
 </body>
 </html>
-
