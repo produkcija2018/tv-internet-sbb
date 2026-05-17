@@ -589,47 +589,47 @@
     }
 
     const LOCAL_QUOTES = [
-      'Mali koraci svaki dan. Velike promene zauvek.',
-      'Ne mora savršeno. Mora zatvoreno.',
-      'Danas ne juriš motivaciju — gradiš sistem.',
-      'Telo pamti disciplinu čak i kad vaga ćuti.',
-      'Jedan čist dan je cigla u novom životu.',
-      'Kad ti je teško, uradi minimum. Minimum čuva ritam.',
-      'Ne pobeđuje najjači dan, nego najdosledniji čovek.',
-      'Svaki zapis je dokaz da vodiš svoj proces.'
-    ];
+  "Mali koraci svaki dan. Velike promene zauvek.",
+  "Ne mora savršeno. Mora zatvoreno.",
+  "Danas ne juriš motivaciju — gradiš sistem.",
+  "Telo pamti disciplinu čak i kad vaga ćuti.",
+  "Jedan čist dan je cigla u novom životu.",
+  "Kad ti je teško, uradi minimum. Minimum čuva ritam.",
+  "Ne pobeđuje najjači dan, nego najdosledniji čovek.",
+  "Svaki zapis je dokaz da vodiš svoj proces.",
+  "Disciplina danas znači lakše telo sutra.",
+  "Zatvoren dan je pobeda čak i kad nije savršen.",
+  "Nije poenta brzina. Poenta je smer.",
+  "Tvoje telo već primećuje promene.",
+  "Ne odustaj zbog jednog lošeg dana.",
+  "Sistem je jači od motivacije.",
+  "Svaki kilogram dole menja budućnost.",
+  "San, voda i hodanje menjaju više nego ekstremi.",
+  "Tvoje sutra zavisi od današnjih malih odluka.",
+  "Doslednost pravi transformaciju.",
+  "Kad zatvoriš dan — pobedio si.",
+  "Telo voli ritam."
+];
 
-    async function loadDailyQuote(force = false) {
-      const today = new Date().toISOString().slice(0,10);
-      const cacheKey = 'medscan-quote-' + today;
-      const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
-      const quoteBox = document.getElementById('dailyQuote');
-      const authorBox = document.getElementById('dailyQuoteAuthor');
-      if (!quoteBox || !authorBox) return;
+function loadDailyQuote() {
+  const quoteBox = document.getElementById('dailyQuote');
+  const authorBox = document.getElementById('dailyQuoteAuthor');
 
-      if (cached && !force) {
-        quoteBox.textContent = '“' + cached.text + '”';
-        authorBox.textContent = cached.author || 'MEDSCAN';
-        return;
-      }
+  if (!quoteBox || !authorBox) return;
 
-      try {
-        const res = await fetch('https://zenquotes.io/api/today');
-        const data = await res.json();
-        const q = Array.isArray(data) && data[0] ? data[0] : null;
-        if (!q || !q.q) throw new Error('Nema citata');
-        const item = { text: q.q, author: (q.a || 'ZenQuotes') + ' · ZenQuotes' };
-        localStorage.setItem(cacheKey, JSON.stringify(item));
-        quoteBox.textContent = '“' + item.text + '”';
-        authorBox.textContent = item.author;
-      } catch (e) {
-        const text = LOCAL_QUOTES[Math.floor(Math.random() * LOCAL_QUOTES.length)];
-        const item = { text, author: 'MEDSCAN lokalna poruka' };
-        localStorage.setItem(cacheKey, JSON.stringify(item));
-        quoteBox.textContent = '“' + item.text + '”';
-        authorBox.textContent = item.author;
-      }
-    }
+  const today = new Date();
+  const index =
+    today.getFullYear() +
+    today.getMonth() +
+    today.getDate();
+
+  const quote =
+    LOCAL_QUOTES[index % LOCAL_QUOTES.length];
+
+  quoteBox.textContent = "“" + quote + "”";
+  authorBox.textContent =
+    "MEDSCAN dnevna poruka";
+}
 
     function eventLabel(type) {
       const map = {
