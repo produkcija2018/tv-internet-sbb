@@ -10,486 +10,329 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     :root {
-      --bg: #0f172a;
-      --card: #111827;
-      --card2: #1f2937;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
+      --bg: #050b16;
+      --panel: rgba(15, 23, 42, 0.78);
+      --panel2: rgba(15, 23, 42, 0.56);
+      --line: rgba(148, 163, 184, 0.18);
+      --text: #eef5ff;
+      --muted: #a7b5c9;
+      --blue: #38bdf8;
+      --blue2: #3b82f6;
       --green: #22c55e;
       --yellow: #facc15;
       --red: #ef4444;
-      --blue: #38bdf8;
-      --purple: #a78bfa;
-      --border: rgba(255,255,255,0.12);
+      --purple: #8b5cf6;
+      --shadow: 0 24px 80px rgba(0,0,0,0.35);
     }
 
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1e293b 0%, #020617 60%);
-      color: var(--text);
       min-height: 100vh;
-      padding: 18px;
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(59,130,246,0.18), transparent 32%),
+        radial-gradient(circle at 80% 5%, rgba(14,165,233,0.11), transparent 28%),
+        linear-gradient(180deg, #07101f 0%, #050b16 52%, #030712 100%);
+      padding: 20px;
     }
 
-    .app {
-      max-width: 1180px;
-      margin: 0 auto;
-    }
+    .app { max-width: 1500px; margin: 0 auto; }
 
     header {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
+      grid-template-columns: 1fr auto auto;
+      gap: 14px;
       align-items: center;
       margin-bottom: 18px;
     }
 
-    h1, h2, h3 { margin: 0; }
+    .brand { display:flex; align-items:flex-start; gap:14px; }
+    .logo { font-size: 56px; line-height: 1; filter: drop-shadow(0 8px 18px rgba(59,130,246,0.35)); }
+    h1 { margin:0; font-size: clamp(34px, 5vw, 64px); line-height: .95; letter-spacing:-.055em; text-shadow: 0 6px 18px rgba(0,0,0,.35); }
+    .subtitle { color: var(--muted); margin-top: 8px; font-size: 17px; }
 
-    h1 {
-      font-size: clamp(26px, 4vw, 42px);
-      letter-spacing: -0.04em;
+    .top-pill, .date-pill {
+      min-width: 150px;
+      border: 1px solid var(--line);
+      background: rgba(15,23,42,.56);
+      border-radius: 22px;
+      padding: 14px 18px;
+      box-shadow: var(--shadow);
+      color: var(--text);
+      text-align:center;
     }
-
-    .subtitle {
-      color: var(--muted);
-      margin-top: 6px;
-      font-size: 15px;
-    }
-
-    .date-pill {
-      background: rgba(56,189,248,0.12);
-      border: 1px solid rgba(56,189,248,0.35);
-      color: #bae6fd;
-      padding: 12px 14px;
-      border-radius: 18px;
-      text-align: right;
-      min-width: 210px;
-    }
+    .date-pill strong { font-size: 20px; }
+    .date-pill .small { color: var(--muted); }
 
     .grid {
-      display: grid;
+      display:grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
+      gap: 16px;
     }
-
-    .bottom-nav {
-      position: fixed;
-      left: 12px;
-      right: 12px;
-      bottom: 12px;
-      display: none;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      padding: 8px;
-      background: rgba(2,6,23,0.86);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(14px);
-      border-radius: 22px;
-      z-index: 20;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.4);
-    }
-
-    .bottom-nav a {
-      color: var(--text);
-      text-decoration: none;
-      text-align: center;
-      padding: 10px 6px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.06);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .history-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      overflow: hidden;
-      border-radius: 14px;
-    }
-
-    .history-table th, .history-table td {
-      border-bottom: 1px solid var(--border);
-      padding: 9px 7px;
-      font-size: 13px;
-      text-align: left;
-      color: var(--muted);
-    }
-
-    .history-table th { color: var(--text); background: rgba(255,255,255,0.05); }
-
-    canvas {
-      width: 100%;
-      max-height: 240px;
-      margin-top: 12px;
-      background: rgba(2,6,23,0.35);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-    }
-
-    .metric-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .metric {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 12px;
-    }
-
-    .metric strong { display:block; font-size: 22px; margin-top: 4px; }
-
-    .night-alarm {
-      display:none;
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      background: rgba(2,6,23,0.88);
-      backdrop-filter: blur(8px);
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-    }
-
-    .night-alarm.show { display:flex; }
-
-    .alarm-box {
-      max-width: 520px;
-      width: 100%;
-      background: linear-gradient(180deg, rgba(127,29,29,0.96), rgba(17,24,39,0.98));
-      border: 1px solid rgba(239,68,68,0.55);
-      border-radius: 26px;
-      padding: 22px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.55);
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(31,41,55,0.96), rgba(17,24,39,0.96));
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 16px;
-      box-shadow: 0 16px 50px rgba(0,0,0,0.25);
-    }
-
     .span-12 { grid-column: span 12; }
     .span-8 { grid-column: span 8; }
+    .span-7 { grid-column: span 7; }
     .span-6 { grid-column: span 6; }
+    .span-5 { grid-column: span 5; }
     .span-4 { grid-column: span 4; }
 
-    .status-big {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
+    .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(15,23,42,.82), rgba(8,13,27,.72));
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
     }
 
+    h2 { margin: 0 0 8px; font-size: 25px; letter-spacing: -.02em; }
+    h3 { margin: 0; }
+    .small { color: var(--muted); font-size: 14px; line-height: 1.45; }
+
+    .status-dashboard {
+      display:grid;
+      grid-template-columns: auto 1fr auto auto auto;
+      gap: 18px;
+      align-items:center;
+      margin-top: 18px;
+    }
     .status-badge {
-      padding: 12px 16px;
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 14px 18px;
       border-radius: 999px;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-    }
-
-    .status-clean { background: rgba(34,197,94,0.16); color: #86efac; border: 1px solid rgba(34,197,94,0.4); }
-    .status-mid { background: rgba(250,204,21,0.16); color: #fde68a; border: 1px solid rgba(250,204,21,0.4); }
-    .status-risk { background: rgba(239,68,68,0.16); color: #fecaca; border: 1px solid rgba(239,68,68,0.4); }
-
-    .progress-wrap {
-      height: 14px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 12px;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--red), var(--yellow), var(--green));
-      transition: width 0.3s ease;
-    }
-
-    .task-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .task {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 10px;
-      padding: 12px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(250,204,21,0.09);
-    }
-
-    .task.done {
-      background: rgba(34,197,94,0.12);
-      border-color: rgba(34,197,94,0.35);
-    }
-
-    .task.bad {
-      background: rgba(239,68,68,0.12);
-      border-color: rgba(239,68,68,0.35);
-    }
-
-    input[type="checkbox"] {
-      width: 22px;
-      height: 22px;
-      accent-color: var(--green);
-    }
-
-    label { cursor: pointer; }
-
-    .time-tag {
-      color: var(--muted);
-      font-size: 12px;
+      font-weight:900;
+      letter-spacing:.02em;
+      border: 1px solid rgba(250,204,21,.45);
+      background: rgba(250,204,21,.12);
+      color:#fde047;
       white-space: nowrap;
     }
+    .status-clean { border-color: rgba(34,197,94,.45); background: rgba(34,197,94,.14); color:#86efac; }
+    .status-risk { border-color: rgba(239,68,68,.45); background: rgba(239,68,68,.14); color:#fecaca; }
+    .status-mid { border-color: rgba(250,204,21,.45); background: rgba(250,204,21,.12); color:#fde047; }
+    .status-note { font-size: 19px; color: var(--text); }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 14px;
+    .mini-stat {
+      min-width: 215px;
+      display:flex; gap:12px; align-items:center;
+      border: 1px solid var(--line);
+      background: rgba(2,6,23,.36);
+      border-radius: 16px;
+      padding: 12px 16px;
     }
+    .mini-stat .icon { font-size: 28px; }
+    .mini-stat strong { display:block; font-size: 23px; }
 
-    .field {
-      display: grid;
-      gap: 6px;
+    .score-ring {
+      width: 86px; height:86px; border-radius:50%;
+      display:grid; place-items:center;
+      background: conic-gradient(#3b82f6 var(--score, 0%), rgba(148,163,184,.12) 0);
+      position:relative;
     }
+    .score-ring::before { content:""; position:absolute; inset:9px; border-radius:50%; background:#07101f; }
+    .score-ring strong { position:relative; font-size:23px; }
 
-    .field label {
-      color: var(--muted);
-      font-size: 13px;
-    }
+    .progress-wrap { height: 14px; background: rgba(148,163,184,.15); border-radius:999px; overflow:hidden; margin-top:18px; }
+    .progress-bar { height:100%; width:0%; border-radius:999px; background: linear-gradient(90deg,#facc15,#f59e0b); transition:.25s ease; }
 
-    input, textarea, select {
-      width: 100%;
-      background: rgba(2,6,23,0.65);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 11px 12px;
-      outline: none;
-      font-size: 15px;
-    }
+    .dashboard-columns { display:grid; grid-template-columns: 1.08fr .92fr; gap:16px; }
+    .stack { display:grid; gap:16px; }
 
-    textarea { min-height: 86px; resize: vertical; }
+    .warning-card h2 { color:#ff6b63; display:flex; align-items:center; gap:10px; }
+    .done-card h2 { color:#4ade80; display:flex; align-items:center; gap:10px; }
 
-    button {
-      border: 0;
-      border-radius: 15px;
+    .task-list { display:grid; gap:9px; margin-top:14px; }
+    .task {
+      display:grid;
+      grid-template-columns: auto 1fr auto;
+      align-items:center;
+      gap:12px;
       padding: 12px 14px;
-      color: #051018;
-      font-weight: 800;
-      background: var(--blue);
-      cursor: pointer;
-      transition: transform 0.12s ease, opacity 0.12s ease;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(15,23,42,.5);
+    }
+    .task.pending { border-color: rgba(250,204,21,.38); background: rgba(250,204,21,.08); }
+    .task.done { border-color: rgba(34,197,94,.32); background: rgba(34,197,94,.09); }
+    .task.bad { border-color: rgba(239,68,68,.45); background: rgba(239,68,68,.12); }
+    .task input[type="checkbox"] { width: 24px; height: 24px; accent-color: var(--green); }
+    .time-tag { color: var(--muted); font-size: 13px; white-space:nowrap; }
+
+    .quick-action {
+      border:1px solid rgba(239,68,68,.6);
+      color:#ff8a85;
+      background: rgba(239,68,68,.08);
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:800;
+      cursor:pointer;
     }
 
-    button:hover { transform: translateY(-1px); opacity: 0.94; }
-
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
+    .metric-cards { display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; margin-top:16px; }
+    .metric-card {
+      min-height: 128px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(15,23,42,.7), rgba(3,7,18,.55));
+      border-radius:16px;
+      padding:16px;
     }
+    .metric-card strong { display:block; font-size:32px; margin:12px 0 4px; letter-spacing:-.03em; }
+    .spark { height:28px; margin-top:10px; opacity:.9; background: linear-gradient(135deg, transparent 0 18%, rgba(34,197,94,.35) 18% 26%, transparent 26% 42%, rgba(34,197,94,.55) 42% 52%, transparent 52% 68%, rgba(34,197,94,.7) 68% 78%, transparent 78%); border-radius:8px; }
 
-    .danger { background: var(--red); color: white; }
-    .success { background: var(--green); color: #052e16; }
-    .warning { background: var(--yellow); color: #422006; }
+    .summary-row { display:grid; grid-template-columns: 130px 140px 1fr 55px; gap:12px; align-items:center; margin-top:18px; }
+    .summary-bar { height:10px; border-radius:999px; background: rgba(148,163,184,.18); overflow:hidden; }
+    .summary-fill { height:100%; border-radius:999px; background: var(--purple); }
+    .summary-fill.green { background: var(--green); }
+    .summary-fill.blue { background: var(--blue2); }
 
-    .record-box {
-      position: static;
-      border: 1px solid rgba(167,139,250,0.35);
-      background: linear-gradient(180deg, rgba(88,28,135,0.24), rgba(17,24,39,0.96));
+    .form-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:10px; margin-top:14px; }
+    .field { display:grid; gap:6px; }
+    .field label { color:var(--muted); font-size:13px; }
+    input, textarea, select {
+      width:100%; border:1px solid var(--line); border-radius:14px;
+      background: rgba(2,6,23,.6); color:var(--text); padding:11px 12px; font-size:15px; outline:none;
     }
-    @media (max-width: 1100px) {
-      .record-box {
-        position: static;
-        width: auto;
-      }
-    }
+    textarea { min-height:86px; resize:vertical; }
+    button { border:0; border-radius:15px; padding:12px 14px; color:#04111f; font-weight:900; background:var(--blue); cursor:pointer; }
+    .btn-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    .success { background:var(--green); color:#052e16; }
+    .danger { background:var(--red); color:white; }
+    .warning { background:var(--yellow); color:#3b2600; }
 
-    .milestone {
-      border: 1px solid rgba(56,189,248,0.35);
-      background: linear-gradient(180deg, rgba(14,116,144,0.22), rgba(15,23,42,0.78));
-      border-radius: 20px;
-      padding: 14px;
-      margin: 14px 0;
-    }
+    .milestone { border:1px solid rgba(56,189,248,.35); background:rgba(56,189,248,.08); border-radius:18px; padding:14px; margin-bottom:14px; }
+    .milestone-date { font-size:26px; color:#bae6fd; font-weight:900; margin-top:4px; }
+    .record-list { display:grid; gap:10px; margin-top:14px; }
+    .record-item { display:flex; justify-content:space-between; gap:10px; border-bottom:1px solid var(--line); padding-bottom:9px; }
+    .record-item:last-child { border-bottom:0; }
+    .record-value { color:#ddd6fe; font-weight:900; }
+    .record-box { position: static; }
 
-    .milestone-date {
-      font-size: 26px;
-      font-weight: 900;
-      color: #bae6fd;
-      letter-spacing: -0.03em;
-      margin-top: 4px;
-    }
+    .alert { display:none; border:1px solid rgba(239,68,68,.55); background:rgba(239,68,68,.13); color:#fecaca; padding:14px; border-radius:18px; margin-top:14px; font-weight:700; }
+    .alert.show { display:block; }
+    .pill { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.08); color:var(--muted); font-size:12px; margin-top:8px; }
 
-    .milestone-text {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 5px;
-      line-height: 1.45;
-    }
+    canvas { width:100%; max-height:240px; margin-top:12px; background:rgba(2,6,23,.35); border:1px solid var(--line); border-radius:18px; }
+    .history-table { width:100%; border-collapse:collapse; margin-top:12px; border-radius:14px; overflow:hidden; }
+    .history-table th,.history-table td { border-bottom:1px solid var(--line); padding:9px 7px; font-size:13px; text-align:left; color:var(--muted); }
+    .history-table th { color:var(--text); background:rgba(255,255,255,.05); }
 
-    .record-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
+    .night-alarm { display:none; position:fixed; inset:0; z-index:50; background:rgba(2,6,23,.88); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:18px; }
+    .night-alarm.show { display:flex; }
+    .alarm-box { max-width:520px; width:100%; background:linear-gradient(180deg, rgba(127,29,29,.96), rgba(17,24,39,.98)); border:1px solid rgba(239,68,68,.55); border-radius:26px; padding:22px; box-shadow:0 30px 80px rgba(0,0,0,.55); }
 
-    .record-item {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 9px;
-    }
+    .bottom-nav { position:fixed; left:12px; right:12px; bottom:12px; display:none; grid-template-columns:repeat(4,1fr); gap:8px; padding:8px; background:rgba(2,6,23,.86); border:1px solid var(--line); backdrop-filter:blur(14px); border-radius:22px; z-index:20; }
+    .bottom-nav a { color:var(--text); text-decoration:none; text-align:center; padding:10px 6px; border-radius:16px; background:rgba(255,255,255,.06); font-size:12px; font-weight:800; }
 
-    .record-item:last-child { border-bottom: 0; }
-
-    .record-value {
-      color: #ddd6fe;
-      font-weight: 800;
-    }
-
-    .alert {
-      display: none;
-      border: 1px solid rgba(239,68,68,0.55);
-      background: rgba(239,68,68,0.16);
-      color: #fecaca;
-      padding: 14px;
-      border-radius: 18px;
-      margin-top: 14px;
-      font-weight: 700;
-    }
-
-    .alert.show { display: block; }
-
-    .small {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 8px;
-    }
-
-    .mini-chart {
-      display: grid;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .bar-row {
-      display: grid;
-      grid-template-columns: 120px 1fr 45px;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .bar-bg {
-      height: 10px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      background: var(--purple);
-      width: 0%;
-      border-radius: 999px;
-    }
-
-    @media (max-width: 860px) {
+    @media (max-width:1100px) {
       header { grid-template-columns: 1fr; }
-      .date-pill { text-align: left; }
-      .span-8, .span-6, .span-4 { grid-column: span 12; }
-      .form-grid { grid-template-columns: 1fr; }
-      .record-box { position: static; }
-      body { padding: 12px 12px 92px; }
-      .bottom-nav { display: grid; }
-      .metric-row { grid-template-columns: 1fr; }
-      h1 { font-size: 30px; }
-      .card { border-radius: 20px; padding: 14px; }
+      .dashboard-columns { grid-template-columns:1fr; }
+      .status-dashboard { grid-template-columns:1fr; }
+      .metric-cards { grid-template-columns:repeat(2,1fr); }
+      .mini-stat { min-width:0; }
+    }
+    @media (max-width:860px) {
+      body { padding:12px 12px 92px; }
+      .span-8,.span-7,.span-6,.span-5,.span-4 { grid-column:span 12; }
+      .form-grid,.metric-cards { grid-template-columns:1fr; }
+      .summary-row { grid-template-columns:1fr; }
+      .bottom-nav { display:grid; }
+      h1 { font-size:38px; }
+      .logo { font-size:40px; }
+      .brand { align-items:center; }
     }
   </style>
 </head>
 <body>
   <div class="app">
     <header>
-      <div>
-        <h1>🩺 MEDSCAN Dnevni Panel</h1>
-        <div class="subtitle">Zatvori dan. Ne traži savršenstvo — traži izvršenje.</div>
+      <div class="brand">
+        <div class="logo">🩺</div>
+        <div>
+          <h1>MEDSCAN Dnevni Panel</h1>
+          <div class="subtitle">Zatvori dan. Ne traži savršenstvo — traži izvršenje.</div>
+        </div>
       </div>
       <div class="date-pill">
         <strong id="todayText"></strong><br />
         <span id="timeText" class="small"></span>
       </div>
+      <button onclick="document.getElementById('history').scrollIntoView()" class="top-pill">↩ Istorija</button>
     </header>
 
     <div class="grid">
-      <section class="card span-8" id="top">
-        <div class="status-big">
-          <div>
-            <h2>Dnevni status</h2>
-            <div class="small">Status se menja automatski prema obavezama, rizicima i vremenu. Praćenje transformacije počinje od 11.05.2026.</div>
-          </div>
+      <section class="card span-12" id="top">
+        <h2>Dnevni status</h2>
+        <div class="small">Status se menja automatski prema obavezama, rizicima i vremenu. Praćenje transformacije počinje od 13.05.2026.</div>
+        <div class="status-dashboard">
           <div id="statusBadge" class="status-badge status-mid">🟡 DAN U TOKU</div>
+          <div class="status-note">Dobro ide! Fokusiraj se na današnje obaveze.</div>
+          <div class="mini-stat"><div class="icon">🔥</div><div><span class="small">Kalorijski deficit</span><strong id="deficitText">— kcal</strong></div></div>
+          <div class="mini-stat"><div class="icon">🏃</div><div><span class="small">Koraci</span><strong id="stepsText">0 / 10.000</strong></div></div>
+          <div style="display:flex;align-items:center;gap:12px;"><div id="scoreRing" class="score-ring"><strong id="scoreText">0%</strong></div><span class="small">Dnevni skor</span></div>
         </div>
         <div class="progress-wrap"><div id="progressBar" class="progress-bar"></div></div>
         <div id="redAlert" class="alert">🔴 POSLE 19:00 — dan nije zatvoren. Zatvori večeru, šetnju i korake ili upiši korekciju.</div>
       </section>
 
-      <aside class="card span-4 record-box">
-        <div class="milestone">
-          <div class="small">🚀 Početak transformacije</div>
-          <div class="milestone-date">11.05.2026.</div>
-          <div class="milestone-text">Dan prekretnice. Od ovog datuma se trajno prate disciplina, razvoj, snaga i uspeh.</div>
-        </div>
-        <h2>🏆 Trenutni rekordi</h2>
-        <div class="small">Ovo je tvoj motivacioni ugao. Svaki mali pomak se pamti.</div>
-        <div class="record-list">
-          <div class="record-item"><span>Visenje</span><span id="recHang" class="record-value">0 sek</span></div>
-          <div class="record-item"><span>Zgib uz pomoć</span><span id="recPull" class="record-value">0</span></div>
-          <div class="record-item"><span>Podizanje kolena</span><span id="recKnee" class="record-value">0</span></div>
-          <div class="record-item"><span>Propadanje / držanje</span><span id="recDip" class="record-value">0 sek</span></div>
-          <div class="record-item"><span>Koraci</span><span id="recSteps" class="record-value">0</span></div>
-        </div>
-        <div id="recordMessage" class="pill">🔥 Svaki rekord počinje od nule.</div>
-      </aside>
+      <section class="span-12">
+        <div class="dashboard-columns">
+          <div class="stack">
+            <section class="card warning-card" id="tasks">
+              <h2>⚠️ PAŽNJA — NEDOVRŠENO</h2>
+              <div id="unfinishedList" class="task-list"></div>
+            </section>
 
-      <section class="card span-6" id="tasks">
-        <h2>✅ Obavezno zatvaranje dana</h2>
-        <div class="task-list" id="taskList"></div>
+            <section class="card done-card">
+              <h2>✅ ZAVRŠENO DANAS</h2>
+              <div id="finishedList" class="task-list"></div>
+              <button style="width:100%;margin-top:12px;background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--line);">＋ Dodaj napomenu / kako se osećaš</button>
+            </section>
+          </div>
+
+          <div class="stack">
+            <section class="card">
+              <h2 style="color:#7dd3fc;">❤️ VITALNI ZNACI</h2>
+              <div class="metric-cards">
+                <div class="metric-card"><span>Puls</span><strong id="pulseText">—</strong><span>bpm</span><div class="spark"></div></div>
+                <div class="metric-card"><span>Krvni pritisak</span><strong id="bpText">—</strong><span>mmHg</span><div class="spark"></div></div>
+                <div class="metric-card"><span>SpO₂</span><strong id="spo2Text">—%</strong><span>kiseonik</span><div class="spark"></div></div>
+                <div class="metric-card"><span>Temperatura</span><strong id="tempText">—°C</strong><span>telo</span><div class="spark"></div></div>
+              </div>
+              <div class="form-grid">
+                <div class="field"><label>Puls</label><input id="pulse" type="number" placeholder="68" /></div>
+                <div class="field"><label>Pritisak</label><input id="bp" placeholder="128/78" /></div>
+                <div class="field"><label>SpO₂</label><input id="spo2" type="number" placeholder="97" /></div>
+                <div class="field"><label>Temperatura</label><input id="temp" type="number" step="0.1" placeholder="36.6" /></div>
+              </div>
+            </section>
+
+            <section class="card">
+              <h2 style="color:#7dd3fc;">⚖️ TELESNE METRIKE</h2>
+              <div class="metric-cards" style="grid-template-columns:repeat(3,1fr);">
+                <div class="metric-card"><span>Težina</span><strong id="weightText">— kg</strong><span id="weightChangeText" style="color:#84cc16;">—</span></div>
+                <div class="metric-card"><span>Obim struka</span><strong id="waistText">— cm</strong><span>Nije uneto</span></div>
+                <div class="metric-card"><span>Telesna mast</span><strong id="fatText">—%</strong><span>Nije uneto</span></div>
+              </div>
+            </section>
+
+            <section class="card">
+              <h2 style="color:#7dd3fc;">🧾 DNEVNI REZIME</h2>
+              <div class="summary-row"><span>Unos kalorija</span><span id="calorieSummary">— / 2400 kcal</span><div class="summary-bar"><div id="calorieFill" class="summary-fill" style="width:0%"></div></div><span id="caloriePct">0%</span></div>
+              <div class="summary-row"><span>Proteini</span><span id="proteinSummary">— / 110 g</span><div class="summary-bar"><div id="proteinFill" class="summary-fill green" style="width:0%"></div></div><span id="proteinPct">0%</span></div>
+              <div class="summary-row"><span>Voda</span><span id="waterSummary">— / 3.0 L</span><div class="summary-bar"><div id="waterFill" class="summary-fill blue" style="width:0%"></div></div><span id="waterPct">0%</span></div>
+              <div class="form-grid">
+                <div class="field"><label>Unos kalorija</label><input id="calorieIn" type="number" placeholder="1780" /></div>
+                <div class="field"><label>Proteini (g)</label><input id="protein" type="number" placeholder="115" /></div>
+                <div class="field"><label>Voda (L)</label><input id="waterLiters" type="number" step="0.1" placeholder="1.8" /></div>
+                <div class="field"><label>Telesna mast (%)</label><input id="bodyFat" type="number" step="0.1" placeholder="" /></div>
+              </div>
+            </section>
+          </div>
+        </div>
       </section>
 
       <section class="card span-6">
@@ -507,6 +350,24 @@
         </div>
       </section>
 
+      <aside class="card span-6 record-box">
+        <div class="milestone">
+          <div class="small">🚀 Početak transformacije</div>
+          <div class="milestone-date">13.05.2026.</div>
+          <div class="small">Dan prekretnice. Od ovog datuma se trajno prate disciplina, razvoj, snaga i uspeh.</div>
+        </div>
+        <h2>🏆 Trenutni rekordi</h2>
+        <div class="small">Svaki mali pomak se pamti.</div>
+        <div class="record-list">
+          <div class="record-item"><span>Visenje</span><span id="recHang" class="record-value">0 sek</span></div>
+          <div class="record-item"><span>Zgib uz pomoć</span><span id="recPull" class="record-value">0</span></div>
+          <div class="record-item"><span>Podizanje kolena</span><span id="recKnee" class="record-value">0</span></div>
+          <div class="record-item"><span>Propadanje / držanje</span><span id="recDip" class="record-value">0 sek</span></div>
+          <div class="record-item"><span>Koraci</span><span id="recSteps" class="record-value">0</span></div>
+        </div>
+        <div id="recordMessage" class="pill">🔥 Svaki rekord počinje od nule.</div>
+      </aside>
+
       <section class="card span-8" id="training">
         <h2>🏋️ Sprava — današnji trening</h2>
         <div class="small">Unesi realno, bez foliranja. Danas 0 je početak. Za mesec dana 10 je pobeda.</div>
@@ -517,32 +378,24 @@
           <div class="field"><label>Propadanje / držanje — sek</label><input id="dip" type="number" placeholder="5" /></div>
         </div>
         <div class="field" style="margin-top:10px;"><label>Napomena za ruku / osećaj</label><textarea id="armNote" placeholder="Npr. blago zatezanje u desnoj nadlaktici, bez bola..."></textarea></div>
-        <div class="mini-chart">
-          <div class="bar-row"><span>Visenje</span><div class="bar-bg"><div id="barHang" class="bar-fill"></div></div><span id="barHangText">0%</span></div>
-          <div class="bar-row"><span>Zgib</span><div class="bar-bg"><div id="barPull" class="bar-fill"></div></div><span id="barPullText">0%</span></div>
-          <div class="bar-row"><span>Kolena</span><div class="bar-bg"><div id="barKnee" class="bar-fill"></div></div><span id="barKneeText">0%</span></div>
-          <div class="bar-row"><span>Propadanje</span><div class="bar-bg"><div id="barDip" class="bar-fill"></div></div><span id="barDipText">0%</span></div>
-        </div>
       </section>
 
       <section class="card span-4">
         <h2>⚠️ Rizici danas</h2>
         <div class="task-list" id="riskList"></div>
-        <div class="small" style="margin-top:12px;">Ako se desi rizik, dan nije propao. Samo uradi korekciju: čista večera + dodatni koraci.</div>
+        <div class="small" style="margin-top:12px;">Ako se desi rizik, dan nije propao. Samo uradi korekciju.</div>
       </section>
 
       <section class="card span-12" id="history">
         <h2>📈 Težina, istorija i streak</h2>
-        <div class="metric-row">
-          <div class="metric"><span class="small">Trenutni streak</span><strong id="streakNow">0 dana</strong></div>
-          <div class="metric"><span class="small">Najbolji streak</span><strong id="streakBest">0 dana</strong></div>
-          <div class="metric"><span class="small">Promena 30 dana</span><strong id="weightDelta">-</strong></div>
-          <div class="metric"><span class="small">Streak freeze</span><strong id="freezeCount">1</strong></div>
+        <div class="grid" style="margin-top:12px;">
+          <div class="card span-4"><span class="small">Trenutni streak</span><h2 id="streakNow">0 dana</h2></div>
+          <div class="card span-4"><span class="small">Najbolji streak</span><h2 id="streakBest">0 dana</h2></div>
+          <div class="card span-4"><span class="small">Promena 30 dana</span><h2 id="weightDelta">-</h2></div>
         </div>
         <canvas id="weightChart" width="900" height="260"></canvas>
         <canvas id="waistChart" width="900" height="220"></canvas>
         <div id="historyTable"></div>
-        <div class="pill" id="riskPattern">📊 Sistem prati ritam energije, sna i aktivnosti.</div>
       </section>
 
       <section class="card span-6">
@@ -563,24 +416,10 @@
         <h2>🧭 Terenski dnevnik</h2>
         <div class="small">Brzi zapis svega što se desi na terenu. Klik na plus automatski upisuje trenutno vreme.</div>
         <div class="form-grid">
-          <div class="field">
-            <label>Tip događaja</label>
-            <select id="fieldEventType">
-              <option value="info">Info / napomena</option>
-              <option value="water">Voda</option>
-              <option value="beer">Pivo</option>
-              <option value="soda">Gazirano / sok</option>
-              <option value="food">Hrana van plana</option>
-              <option value="walk">Šetnja / koraci</option>
-              <option value="symptom">Simptom / osećaj</option>
-            </select>
-          </div>
+          <div class="field"><label>Tip događaja</label><select id="fieldEventType"><option value="info">Info / napomena</option><option value="water">Voda</option><option value="beer">Pivo</option><option value="soda">Gazirano / sok</option><option value="food">Hrana van plana</option><option value="walk">Šetnja / koraci</option><option value="symptom">Simptom / osećaj</option></select></div>
           <div class="field"><label>Kratak unos</label><input id="fieldEventText" placeholder="Npr. popio Heineken 0.5, bez grickalica" /></div>
         </div>
-        <div class="btn-row">
-          <button class="warning" onclick="addFieldEvent()">➕ Dodaj sa trenutnim vremenom</button>
-          <button onclick="clearFieldEvents()">🧹 Očisti današnji terenski dnevnik</button>
-        </div>
+        <div class="btn-row"><button class="warning" onclick="addFieldEvent()">➕ Dodaj sa trenutnim vremenom</button><button onclick="clearFieldEvents()">🧹 Očisti današnji terenski dnevnik</button></div>
         <div id="fieldLogTable"></div>
       </section>
 
@@ -649,7 +488,7 @@
     const recordsKey = 'medscan-records';
     const freezeKey = 'medscan-freeze';
     const dismissedAlarmKey = () => 'medscan-alarm-dismissed-' + new Date().toISOString().slice(0,10);
-    const TRANSFORMATION_START = '2026-05-11';
+    const TRANSFORMATION_START = '2026-05-13';
 
     function defaultState() {
       return { tasks: {}, risks: {}, fields: {} };
@@ -683,13 +522,16 @@
       const state = loadState();
       const taskList = document.getElementById('taskList');
       const riskList = document.getElementById('riskList');
-      taskList.innerHTML = TASKS.map(t => `
-        <div class="task ${state.tasks[t.id] ? 'done' : ''}" id="task-${t.id}">
+      if (taskList) {
+        taskList.innerHTML = TASKS.map(t => `
+        <div class="task ${state.tasks[t.id] ? 'done' : 'pending'}" id="task-${t.id}">
           <input type="checkbox" id="${t.id}" ${state.tasks[t.id] ? 'checked' : ''} onchange="toggleTask('${t.id}')" />
           <label for="${t.id}">${t.text}</label>
           <span class="time-tag">${t.time}</span>
         </div>
       `).join('');
+      }
+      renderTaskSections();
       riskList.innerHTML = RISKS.map(r => `
         <div class="task ${state.risks[r.id] ? 'bad' : ''}" id="risk-${r.id}">
           <input type="checkbox" id="${r.id}" ${state.risks[r.id] ? 'checked' : ''} onchange="toggleRisk('${r.id}')" />
@@ -704,6 +546,27 @@
       state.tasks[id] = !state.tasks[id];
       saveState(state);
       renderLists(); updateStatus();
+    }
+
+    function renderTaskSections() {
+      const state = loadState();
+      const unfinished = document.getElementById('unfinishedList');
+      const finished = document.getElementById('finishedList');
+      if (!unfinished || !finished) return;
+      const undone = TASKS.filter(t => !state.tasks[t.id]);
+      const done = TASKS.filter(t => state.tasks[t.id]);
+      unfinished.innerHTML = undone.length ? undone.map(t => `
+        <div class="task bad">
+          <div style="font-size:24px;">⚠️</div>
+          <div><strong>${t.text}</strong><div class="small">${t.time}</div></div>
+          <button class="quick-action" onclick="toggleTask('${t.id}')">Zabeleži</button>
+        </div>`).join('') : '<div class="task done"><div>✅</div><div><strong>Sve obaveze su zatvorene.</strong><div class="small">Dnevni sistem je pod kontrolom.</div></div><span></span></div>';
+      finished.innerHTML = done.length ? done.map(t => `
+        <div class="task done">
+          <div style="font-size:24px;">✅</div>
+          <div><strong>${t.text}</strong><div class="small">Zabeleženo</div></div>
+          <span class="time-tag">›</span>
+        </div>`).join('') : '<div class="small">Još nema završenih stavki danas.</div>';
     }
 
     function toggleRisk(id) {
@@ -766,7 +629,7 @@
     }
 
     function bindFields() {
-      const ids = ['weight','waist','steps','km','calories','hunger','energy','sleep','dinnerTime','hang','pull','knee','dip','armNote','note','tomorrowWalk','tomorrowWorkout','tomorrowFocus'];
+      const ids = ['weight','waist','steps','km','calories','hunger','energy','sleep','dinnerTime','hang','pull','knee','dip','armNote','note','tomorrowWalk','tomorrowWorkout','tomorrowFocus','pulse','bp','spo2','temp','calorieIn','protein','waterLiters','bodyFat'];
       const state = loadState();
       ids.forEach(id => {
         const el = document.getElementById(id);
@@ -807,6 +670,20 @@
       const badge = document.getElementById('statusBadge');
       const alert = document.getElementById('redAlert');
       document.getElementById('progressBar').style.width = pct + '%';
+      document.getElementById('scoreText').textContent = pct + '%';
+      document.getElementById('scoreRing').style.setProperty('--score', pct + '%');
+      const f = state.fields || {};
+      const steps = Number(f.steps || 0);
+      document.getElementById('stepsText').textContent = steps.toLocaleString('sr-RS') + ' / 10.000';
+      document.getElementById('deficitText').textContent = (f.calories || '—') + ' kcal';
+      document.getElementById('pulseText').textContent = f.pulse || '—';
+      document.getElementById('bpText').textContent = f.bp || '—';
+      document.getElementById('spo2Text').textContent = f.spo2 ? f.spo2 + '%' : '—%';
+      document.getElementById('tempText').textContent = f.temp ? f.temp + '°C' : '—°C';
+      document.getElementById('weightText').textContent = f.weight ? f.weight + ' kg' : '— kg';
+      document.getElementById('waistText').textContent = f.waist ? f.waist + ' cm' : '— cm';
+      document.getElementById('fatText').textContent = f.bodyFat ? f.bodyFat + '%' : '—%';
+      updateSummaryBars(f);
 
       badge.className = 'status-badge';
       if (risks > 0 || (after19 && !mustClosed)) {
@@ -821,9 +698,53 @@
       }
 
       alert.classList.toggle('show', after19 && !mustClosed);
+      renderTaskWarnings(state);
       const dismissed = localStorage.getItem(dismissedAlarmKey()) === '1';
       document.getElementById('nightAlarm').classList.toggle('show', after2130 && !mustClosed && !dismissed);
       renderHistory();
+    }
+
+    function renderTaskWarnings(state) {
+      const box = document.getElementById('taskWarnings');
+      if (!box) return;
+      const now = new Date();
+      const hour = now.getHours();
+      const missing = [];
+
+      if (hour >= 7 && !state.tasks.warmLemonWater) missing.push('500 ml tople vode + pola limuna');
+      if (hour >= 10 && !state.tasks.waterTea) missing.push('jutarnji čaj bez šećera');
+      if (hour >= 12 && !state.tasks.smoothie) missing.push('smoothie 11–12h');
+      if (hour >= 15 && !state.tasks.almondsSmart) missing.push('bademi — potvrdi samo ako su potrebni ili označi kao kontrolisano');
+      if (hour >= 18 && !state.tasks.mainMeal) missing.push('glavni obrok 17–18:30');
+      if (hour >= 19 && !state.tasks.walk) missing.push('šetnja / koraci');
+      if (hour >= 20 && !state.tasks.bars) missing.push('sprava 10–15 min ili aktivan odmor');
+      if (!state.tasks.noBread) missing.push('potvrdi: bez hleba');
+      if (!state.tasks.noSugar) missing.push('potvrdi: bez šećera/sokova');
+
+      if (!missing.length) {
+        box.classList.remove('show');
+        box.innerHTML = '';
+        return;
+      }
+
+      box.classList.add('show');
+      box.innerHTML = '⚠️ <strong>PAŽNJA — NEDOVRŠENO:</strong><br>' + missing.map(m => '• ' + m).join('<br>');
+    }
+
+    function updateSummaryBars(f) {
+      const cal = Number(f.calorieIn || 0), protein = Number(f.protein || 0), water = Number(f.waterLiters || 0);
+      const calPct = Math.min(100, Math.round(cal / 2400 * 100));
+      const proPct = Math.min(140, Math.round(protein / 110 * 100));
+      const waterPct = Math.min(100, Math.round(water / 3 * 100));
+      document.getElementById('calorieSummary').textContent = (cal || '—') + ' / 2400 kcal';
+      document.getElementById('proteinSummary').textContent = (protein || '—') + ' / 110 g';
+      document.getElementById('waterSummary').textContent = (water || '—') + ' / 3.0 L';
+      document.getElementById('calorieFill').style.width = calPct + '%';
+      document.getElementById('proteinFill').style.width = Math.min(100, proPct) + '%';
+      document.getElementById('waterFill').style.width = waterPct + '%';
+      document.getElementById('caloriePct').textContent = calPct + '%';
+      document.getElementById('proteinPct').textContent = proPct + '%';
+      document.getElementById('waterPct').textContent = waterPct + '%';
     }
 
     function updateRecords(showPopup = true) {
