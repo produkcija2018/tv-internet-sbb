@@ -1195,7 +1195,55 @@ ${f.note || '-'}`;
       localStorage.removeItem(key());
       location.reload();
     }
+    function loadLoserDays() {
+  return JSON.parse(localStorage.getItem('medscan-loser-days') || '[]');
+}
 
+function saveLoserDays(days) {
+  localStorage.setItem('medscan-loser-days', JSON.stringify(days));
+}
+
+function addLoserDay() {
+  const date = document.getElementById('loserDate').value;
+  const reason = document.getElementById('loserReason').value.trim();
+
+  if (!date || !reason) {
+    alert('Upiši datum i razlog.');
+    return;
+  }
+
+  const days = loadLoserDays();
+  days.push({ date, reason });
+  saveLoserDays(days);
+
+  document.getElementById('loserDate').value = '';
+  document.getElementById('loserReason').value = '';
+
+  renderLoserDays();
+}
+
+function renderLoserDays() {
+  const box = document.getElementById('loserDaysList');
+  if (!box) return;
+
+  const days = loadLoserDays();
+
+  if (!days.length) {
+    box.innerHTML = '<div class="small" style="margin-top:10px;">Još nema loser days. Odlično.</div>';
+    return;
+  }
+
+  box.innerHTML = days
+    .slice()
+    .reverse()
+    .map(d => `
+      <div class="record-item">
+        <span>${d.date}</span>
+        <span class="record-value" style="color:#fecaca;">${d.reason}</span>
+      </div>
+    `)
+    .join('');
+}
     function init() {
       renderLists();
       bindFields();
@@ -1210,6 +1258,7 @@ ${f.note || '-'}`;
 
     document.addEventListener('DOMContentLoaded', () => {
       loadDailyQuote(false);
+      renderLoserDays();
     });
 
     init();
