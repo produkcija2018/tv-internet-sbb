@@ -869,16 +869,53 @@
     function reportText() {
       const state = loadState();
       const f = state.fields;
-      const doneTasks = TASKS.filter(t => state.tasks[t.id]).map(t => '✓ ' + t.text).join('\n');
-      const risks = RISKS.filter(r => state.risks[r.id]).map(r => '⚠ ' + r.text).join('\n') || 'Nema rizika';
-      const status = document.getElementById('statusBadge').textContent;
-      return `MEDSCAN dnevni izveštaj\n\nDatum: ${new Date().toLocaleDateString('sr-RS')}\nStatus: ${status}\n\nTežina: ${f.weight || '-'} kg\nKoraci: ${f.steps || '-'}\nKm: ${f.km || '-'}\nKalorije: ${f.calories || '-'}\nGlad: ${f.hunger || '-'} / 10\nEnergija: ${f.energy || '-'} / 10\nSan: ${f.sleep || '-'} h\nVečera: ${f.dinnerTime || '-'}\n\nSprava:\nVisenje: ${f.hang || 0} sek\nZgib uz pomoć: ${f.pull || 0}\nPodizanje kolena: ${f.knee || 0}\nPropadanje/držanje: ${f.dip || 0} sek\nNapomena ruka: ${f.armNote || '-'}
+      const doneTasks = TASKS.filter(t => state.tasks[t.id]).map(t => '✓ ' + t.text).join('
+');
+      const risks = RISKS.filter(r => state.risks[r.id]).map(r => '⚠ ' + r.text).join('
+') || 'Nema rizika';
+      const fieldEvents = (state.fieldEvents || []).map(e => `${e.time} - ${eventLabel(e.type)} - ${e.text}`).join('
+') || '-';
+      const status = document.getElementById('statusBadge')?.textContent || '-';
+
+      return `MEDSCAN dnevni izveštaj
+
+Datum: ${new Date().toLocaleDateString('sr-RS')}
+Status: ${status}
+
+Težina: ${f.weight || '-'} kg
+Obim stomaka: ${f.waist || '-'} cm
+Koraci: ${f.steps || '-'}
+Km: ${f.km || '-'}
+Kalorije: ${f.calories || '-'}
+Glad: ${f.hunger || '-'} / 10
+Energija: ${f.energy || '-'} / 10
+San: ${f.sleep || '-'} h
+Večera: ${f.dinnerTime || '-'}
+
+Vitalni znaci:
+Puls: ${f.pulse || '-'}
+Pritisak: ${f.bp || '-'}
+SpO2: ${f.spo2 || '-'}
+Temperatura: ${f.temp || '-'}
+
+Sprava:
+Visenje: ${f.hang || 0} sek
+Zgib uz pomoć: ${f.pull || 0}
+Podizanje kolena: ${f.knee || 0}
+Propadanje/držanje: ${f.dip || 0} sek
+Napomena ruka: ${f.armNote || '-'}
 
 Terenski dnevnik:
-${(state.fieldEvents || []).map(e => `${e.time} - ${eventLabel(e.type)} - ${e.text}`).join('
-') || '-'}
+${fieldEvents}
 
-Završeno:\n${doneTasks || '-'}\n\nRizici:\n${risks}\n\nBeleška:\n${f.note || '-'}`;
+Završeno:
+${doneTasks || '-'}
+
+Rizici:
+${risks}
+
+Beleška:
+${f.note || '-'}`;
     }
 
     async function sendEmail() {
@@ -1103,6 +1140,10 @@ Završeno:\n${doneTasks || '-'}\n\nRizici:\n${risks}\n\nBeleška:\n${f.note || '
       updateClock();
       setInterval(updateClock, 30000);
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDailyQuote(false);
+    });
 
     init();
   </script>
