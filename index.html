@@ -2,1416 +2,206 @@
 <html lang="sr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MEDSCAN Dnevni Panel — Nova verzija</title>
-  <meta name="theme-color" content="#07111f" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>MEDSCAN Mobile v2</title>
+  <meta name="theme-color" content="#08111f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
-    :root{
-      --bg:#07111f;
-      --bg2:#0b1530;
-      --panel:rgba(10,18,32,.78);
-      --panel-strong:rgba(8,14,28,.92);
-      --line:rgba(156,163,175,.18);
-      --text:#eef4ff;
-      --muted:#9fb2cf;
-      --blue:#4da4ff;
-      --blue2:#67e8f9;
-      --green:#22c55e;
-      --amber:#fbbf24;
-      --orange:#fb923c;
-      --red:#ef4444;
-      --purple:#8b5cf6;
-      --shadow:0 28px 80px rgba(0,0,0,.35);
-      --radius:24px;
-      --radius-sm:18px;
-      --max:1540px;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      color:var(--text);
-      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:
-        radial-gradient(circle at 15% 0%, rgba(77,164,255,.18), transparent 28%),
-        radial-gradient(circle at 85% 10%, rgba(103,232,249,.10), transparent 24%),
-        linear-gradient(180deg, var(--bg) 0%, #050c18 45%, #02060f 100%);
-      min-height:100vh;
-      padding:18px;
-    }
-    body::before{
-      content:"";
-      position:fixed; inset:0;
-      pointer-events:none;
-      background:
-        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-      background-size:28px 28px;
-      mask-image:linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,.2));
-      opacity:.35;
-    }
-    .app{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
-    .topbar{
-      display:grid;
-      grid-template-columns:1fr auto auto;
-      gap:16px;
-      align-items:center;
-      margin-bottom:18px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:16px;
-      min-width:0;
-    }
-    .brand-badge{
-      width:76px; height:76px; border-radius:24px;
-      display:grid; place-items:center; font-size:40px;
-      background:linear-gradient(135deg, rgba(77,164,255,.16), rgba(103,232,249,.12));
-      border:1px solid rgba(103,232,249,.18);
-      box-shadow:0 18px 50px rgba(0,0,0,.28), inset 0 0 40px rgba(77,164,255,.12);
-    }
-    h1{margin:0;font-size:clamp(34px,5vw,64px);line-height:.95;letter-spacing:-.05em}
-    .subtitle{margin-top:8px;color:var(--muted);font-size:18px}
-    .top-card{
-      min-width:170px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(14,24,45,.85), rgba(7,12,22,.85));
-      border-radius:22px;
-      padding:16px 18px;
-      box-shadow:var(--shadow);
-      text-align:center;
-      backdrop-filter:blur(14px);
-    }
-    .top-link{
-      display:inline-flex;align-items:center;justify-content:center;
-      min-height:60px; min-width:160px;
-      color:var(--text); text-decoration:none; font-weight:800;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(14,24,45,.85), rgba(7,12,22,.85));
-      border-radius:22px; padding:14px 18px; box-shadow:var(--shadow);
-    }
-    .top-link:hover, button:hover{transform:translateY(-1px)}
-    .hero{
-      border:1px solid rgba(103,232,249,.12);
-      background:
-        radial-gradient(circle at right center, rgba(77,164,255,.12), transparent 30%),
-        linear-gradient(180deg, rgba(12,21,38,.9), rgba(6,11,21,.92));
-      border-radius:30px;
-      box-shadow:var(--shadow);
-      padding:24px;
-      margin-bottom:18px;
-      backdrop-filter:blur(14px);
-    }
-    .hero-head{
-      display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap
-    }
-    .hero-title{font-size:34px;font-weight:900;margin:0 0 8px}
-    .hero-text{color:var(--muted);max-width:900px}
-    .hero-stats{
-      display:grid; grid-template-columns:repeat(4,minmax(160px,1fr)); gap:14px; margin-top:18px;
-    }
-    .stat-card{
-      border:1px solid var(--line); border-radius:22px; padding:16px;
-      background:rgba(8,14,28,.55);
-      min-height:104px;
-    }
-    .stat-card .label{color:var(--muted); font-size:14px}
-    .stat-card .value{font-size:34px; font-weight:900; margin-top:8px}
-    .stat-card .sub{font-size:14px; color:var(--muted)}
-    .badge{
-      display:inline-flex; align-items:center; gap:10px;
-      border-radius:999px; padding:12px 18px; font-weight:900; letter-spacing:.01em;
-      border:1px solid rgba(251,191,36,.35); color:#fde68a; background:rgba(251,191,36,.10);
-    }
-    .badge.clean{color:#86efac;border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.12)}
-    .badge.risk{color:#fecaca;border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.12)}
-    .hero-row{
-      margin-top:20px;
-      display:grid; grid-template-columns: 1.25fr .75fr; gap:18px;
-    }
-    .meter-box{
-      border:1px solid var(--line); border-radius:24px; padding:18px;
-      background:rgba(8,14,28,.46);
-    }
-    .meter-head{
-      display:flex; justify-content:space-between; gap:12px; align-items:end; flex-wrap:wrap; margin-bottom:10px;
-    }
-    .meter-title{font-size:15px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em}
-    .meter-value{font-size:28px; font-weight:900}
-    .meter-track{
-      position:relative; height:18px; border-radius:999px; overflow:hidden;
-      background:rgba(148,163,184,.14);
-      border:1px solid rgba(255,255,255,.06);
-    }
-    .meter-fill{
-      position:absolute; inset:0 auto 0 0; width:0%;
-      border-radius:999px; transition:width .35s ease;
-    }
-    .meter-fill.day{background:linear-gradient(90deg, var(--blue2), var(--blue), var(--purple))}
-    .meter-fill.score{background:linear-gradient(90deg, var(--amber), var(--orange))}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
-    .span-12{grid-column:span 12}
-    .span-8{grid-column:span 8}
-    .span-7{grid-column:span 7}
-    .span-6{grid-column:span 6}
-    .span-5{grid-column:span 5}
-    .span-4{grid-column:span 4}
-    .card{
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(12,21,38,.88), rgba(6,11,21,.92));
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:20px;
-      backdrop-filter:blur(14px);
-    }
-    h2{margin:0 0 8px;font-size:26px;letter-spacing:-.02em}
-    .small{color:var(--muted);font-size:14px;line-height:1.45}
-    .section-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
-    .task-list{display:grid;gap:12px}
-    .task{
-      display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;
-      border:1px solid var(--line);border-radius:18px;padding:14px 16px;background:rgba(255,255,255,.03)
-    }
-    .task.warning{border-color:rgba(251,191,36,.32);background:rgba(251,191,36,.07)}
-    .task.danger{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.09)}
-    .task.done{border-color:rgba(34,197,94,.30);background:rgba(34,197,94,.10)}
-    .task .icon{font-size:24px}
-    .task-title{font-size:18px;font-weight:800}
-    .task-sub{font-size:14px;color:var(--muted);margin-top:2px}
-    .task-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-    .chip{
-      display:inline-flex;align-items:center;gap:8px;
-      border-radius:999px;padding:8px 12px;font-size:12px;
-      border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--muted)
-    }
-    .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-    .metric{
-      border:1px solid var(--line);border-radius:20px;padding:16px;background:rgba(255,255,255,.03)
-    }
-    .metric .k{font-size:14px;color:var(--muted)}
-    .metric .v{font-size:28px;font-weight:900;margin-top:10px}
-    .metric .mini-spark{
-      height:34px;margin-top:10px;border-radius:12px;
-      background:
-        linear-gradient(135deg, transparent 0 14%, rgba(34,197,94,.38) 14% 24%, transparent 24% 34%, rgba(34,197,94,.55) 34% 52%, transparent 52% 66%, rgba(34,197,94,.72) 66% 82%, transparent 82%);
-      opacity:.9
-    }
-    .subgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .field{display:grid;gap:6px}
-    .field label{font-size:13px;color:var(--muted)}
-    input, textarea, select{
-      width:100%; border:1px solid rgba(148,163,184,.22);
-      border-radius:16px; background:rgba(3,8,17,.76); color:var(--text);
-      padding:12px 14px; font-size:15px; outline:none;
-    }
-    input:focus, textarea:focus, select:focus{border-color:rgba(77,164,255,.45);box-shadow:0 0 0 4px rgba(77,164,255,.08)}
-    textarea{min-height:100px;resize:vertical}
-    .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    button,.btn{
-      border:0;border-radius:16px;padding:12px 16px;font-weight:900;cursor:pointer;
-      transition:transform .18s ease, opacity .18s ease;
-      text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px
-    }
-    .btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#03111f}
-    .btn-success{background:linear-gradient(135deg,#22c55e,#86efac);color:#042b14}
-    .btn-warning{background:linear-gradient(135deg,var(--amber),var(--orange));color:#311800}
-    .btn-danger{background:linear-gradient(135deg,#ef4444,#fb7185);color:#fff}
-    .btn-ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--line)}
-    .records{display:grid;gap:10px}
-    .record{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      border-bottom:1px solid var(--line);padding-bottom:10px
-    }
-    .record:last-child{border-bottom:0;padding-bottom:0}
-    .record .name{color:var(--muted)}
-    .record .val{font-weight:900;color:#ddd6fe}
-    .loser-box{
-      border:1px solid rgba(251,146,60,.30);
-      background:linear-gradient(180deg, rgba(80,25,20,.22), rgba(35,10,12,.18));
-      border-radius:22px;padding:16px;margin-top:14px
-    }
-    .loser-item{
-      display:grid; grid-template-columns:120px 1fr auto; gap:10px; align-items:center;
-      border:1px solid rgba(251,146,60,.18); border-radius:16px; padding:12px 14px;
-      background:rgba(255,255,255,.03); margin-top:10px;
-    }
-    .loser-date{color:#fdba74;font-weight:800}
-    .summary-line{
-      display:grid; grid-template-columns:140px 150px 1fr 56px; gap:12px; align-items:center; margin-bottom:12px
-    }
-    .bar{height:12px;border-radius:999px;background:rgba(148,163,184,.16);overflow:hidden}
-    .bar > div{height:100%;border-radius:999px;width:0%}
-    .bar-purple{background:linear-gradient(90deg,#8b5cf6,#a78bfa)}
-    .bar-green{background:linear-gradient(90deg,#22c55e,#4ade80)}
-    .bar-blue{background:linear-gradient(90deg,#38bdf8,#60a5fa)}
-    canvas{
-      width:100%; max-height:260px; margin-top:12px;
-      border:1px solid var(--line); border-radius:20px; background:rgba(255,255,255,.03)
-    }
-    .history-table{width:100%;border-collapse:collapse;margin-top:14px}
-    .history-table th,.history-table td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;font-size:14px}
-    .history-table th{color:var(--text)} .history-table td{color:var(--muted)}
-    .quote-card{
-      border:1px solid rgba(251,191,36,.22);
-      background:linear-gradient(135deg, rgba(251,191,36,.10), rgba(77,164,255,.08));
-      border-radius:22px;padding:18px
-    }
-    .quote-text{font-size:24px;font-weight:900;line-height:1.35}
-    .footer-note{margin-top:18px;color:var(--muted);font-size:13px}
-    .alert{
-      display:none;margin-top:14px;padding:14px 16px;border-radius:18px;
-      border:1px solid rgba(239,68,68,.34); background:rgba(239,68,68,.10); color:#fecaca;font-weight:800
-    }
-    .alert.show{display:block}
-    .night-alarm{
-      display:none;position:fixed;inset:0;z-index:30;align-items:center;justify-content:center;
-      background:rgba(2,6,23,.84);backdrop-filter:blur(10px);padding:20px
-    }
-    .night-alarm.show{display:flex}
-    .alarm-box{
-      max-width:560px;width:100%;padding:24px;border-radius:26px;
-      background:linear-gradient(180deg, rgba(95,22,22,.98), rgba(14,18,30,.96));
-      border:1px solid rgba(239,68,68,.35); box-shadow:var(--shadow)
-    }
-    .bottom-nav{
-      display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:20;
-      grid-template-columns:repeat(4,1fr);gap:8px;padding:8px;
-      border:1px solid var(--line);border-radius:22px;background:rgba(4,10,18,.86);backdrop-filter:blur(14px)
-    }
-    .bottom-nav a{
-      display:block;text-align:center;color:var(--text);text-decoration:none;padding:12px 8px;
-      background:rgba(255,255,255,.05);border-radius:14px;font-weight:800;font-size:12px
-    }
-    @media (max-width:1180px){
-      .hero-stats{grid-template-columns:repeat(2,minmax(160px,1fr))}
-      .hero-row,.subgrid,.metrics{grid-template-columns:1fr 1fr}
-      .topbar{grid-template-columns:1fr}
-      .span-8,.span-7,.span-6,.span-5,.span-4{grid-column:span 12}
-    }
-    @media (max-width:820px){
-      body{padding:12px 12px 88px}
-      .hero-row,.hero-stats,.subgrid,.metrics,.form-grid{grid-template-columns:1fr}
-      .summary-line{grid-template-columns:1fr}
-      .bottom-nav{display:grid}
-      .brand-badge{width:62px;height:62px;font-size:32px}
-      h1{font-size:40px}
-      .task, .loser-item{grid-template-columns:1fr}
-      .task-actions{justify-content:flex-start}
-    }
+    :root{--bg:#050b14;--bg2:#08111f;--card:rgba(15,23,42,.86);--card2:rgba(15,23,42,.65);--line:rgba(148,163,184,.18);--text:#eef4ff;--muted:#9db0cb;--blue:#38bdf8;--blue2:#3b82f6;--green:#22c55e;--yellow:#facc15;--orange:#fb923c;--red:#ef4444;--purple:#8b5cf6;--shadow:0 18px 60px rgba(0,0,0,.28);--safe-bottom:max(18px, env(safe-area-inset-bottom))}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left, rgba(59,130,246,.16), transparent 30%),radial-gradient(circle at top right, rgba(139,92,246,.12), transparent 26%),linear-gradient(180deg,var(--bg2),var(--bg));min-height:100vh}
+    .app{max-width:520px;margin:0 auto;padding:14px 14px calc(96px + var(--safe-bottom))}
+    .topbar{position:sticky;top:0;z-index:20;padding:10px 0 12px;backdrop-filter: blur(12px);background:linear-gradient(180deg, rgba(5,11,20,.95), rgba(5,11,20,.72), transparent)}
+    .brand{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:24px;background:rgba(15,23,42,.74);box-shadow:var(--shadow)}
+    .logo{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue2),var(--purple));font-size:28px;box-shadow:0 10px 24px rgba(59,130,246,.3);flex:0 0 auto}
+    h1{margin:0;font-size:28px;line-height:.98;letter-spacing:-.04em}.subtitle{margin-top:5px;color:var(--muted);font-size:13px}
+    .section{display:none}.section.active{display:block}
+    .card{border:1px solid var(--line);background:linear-gradient(180deg,var(--card),var(--card2));border-radius:24px;padding:16px;box-shadow:var(--shadow);backdrop-filter:blur(14px);margin-top:14px}
+    .hero{padding:18px;border-radius:28px;background:radial-gradient(circle at top right, rgba(255,255,255,.11), transparent 32%),linear-gradient(135deg, #132547, #182c57 42%, #3b2a86)}
+    .hero h2{margin:0;font-size:15px;color:#dbeafe;text-transform:uppercase;letter-spacing:.12em}.hero .big{margin-top:8px;font-size:34px;font-weight:900;line-height:.95;letter-spacing:-.05em}
+    .small{font-size:13px;color:var(--muted);line-height:1.45}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;font-weight:900;border:1px solid var(--line);background:rgba(255,255,255,.06);margin-top:10px}
+    .badge.clean{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.12);color:#86efac}.badge.mid{border-color:rgba(250,204,21,.4);background:rgba(250,204,21,.12);color:#fde047}.badge.risk{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.12);color:#fecaca}
+    .progress-block{margin-top:14px}.progress-label{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);margin-bottom:6px}
+    .bar{height:12px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.08);border:1px solid var(--line)}.fill{height:100%;width:0%;border-radius:999px;transition:width .25s ease}.fill.day{background:linear-gradient(90deg,var(--blue),var(--purple))}.fill.system{background:linear-gradient(90deg,var(--yellow),var(--orange))}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .stat{border:1px solid var(--line);border-radius:18px;padding:14px;background:rgba(2,6,23,.28)} .stat strong{display:block;font-size:26px;margin-top:8px;letter-spacing:-.04em}
+    .score{width:86px;height:86px;border-radius:50%;background:conic-gradient(var(--blue) var(--score,0%), rgba(255,255,255,.1) 0);display:grid;place-items:center;position:relative}.score::before{content:"";position:absolute;inset:8px;border-radius:50%;background:#07101f}.score span{position:relative;font-weight:900;font-size:20px}
+    h2{margin:0 0 10px;font-size:21px;letter-spacing:-.03em}
+    .quote{font-size:22px;font-weight:900;line-height:1.25}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--muted);font-size:12px;border:1px solid var(--line)}
+    .list{display:grid;gap:10px;margin-top:12px}
+    .item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:12px 14px;background:rgba(255,255,255,.04)} .item.done{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.08)} .item.warn{border-color:rgba(250,204,21,.35);background:rgba(250,204,21,.08)} .item.risk{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.1)} .item .icon{font-size:22px}
+    button{appearance:none;border:0;cursor:pointer;font-weight:900;border-radius:16px;padding:12px 14px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#03111f}
+    button.ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--line)} button.success{background:linear-gradient(135deg,#22c55e,#4ade80);color:#04220f} button.warning{background:linear-gradient(135deg,#facc15,#fb923c);color:#2b1500} button.danger{background:linear-gradient(135deg,#ef4444,#f97316);color:white}
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .field{display:grid;gap:6px;margin-top:10px}.field label{font-size:13px;color:var(--muted)}
+    input,textarea,select{width:100%;border:1px solid var(--line);background:rgba(2,6,23,.52);color:var(--text);border-radius:16px;padding:14px 14px;font-size:16px;outline:none} textarea{min-height:96px;resize:vertical}
+    .seg,.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .canvas-wrap{padding:10px;border:1px solid var(--line);border-radius:18px;background:rgba(2,6,23,.28);margin-top:10px} canvas{width:100%;height:auto;border-radius:14px;display:block}
+    table{width:100%;border-collapse:collapse;margin-top:12px} th,td{padding:9px 8px;border-bottom:1px solid var(--line);font-size:13px;text-align:left} th{color:var(--text);background:rgba(255,255,255,.05)} td{color:var(--muted)}
+    .danger-zone{border:1px solid rgba(239,68,68,.28);background:linear-gradient(180deg, rgba(127,29,29,.18), rgba(15,23,42,.62))}
+    .loser{display:grid;gap:10px;margin-top:12px}.loser-item{border:1px solid rgba(251,146,60,.28);background:rgba(251,146,60,.08);border-radius:16px;padding:12px}
+    .sticky-nav{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));max-width:520px;margin:auto;border:1px solid var(--line);background:rgba(2,6,23,.88);backdrop-filter:blur(18px);display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:8px;border-radius:22px;z-index:30}
+    .nav-btn{background:transparent;border:0;color:var(--muted);padding:10px 4px;border-radius:16px;font-weight:800;font-size:11px}.nav-btn.active{background:rgba(255,255,255,.08);color:#fff}
+    @media (max-width:420px){.grid2,.seg,.quick-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-badge">🩺</div>
-        <div>
-          <h1>MEDSCAN Dnevni Panel</h1>
-          <div class="subtitle">Modernija i stabilnija verzija panela. Fokus: pregled, ritam i izvršenje.</div>
-        </div>
-      </div>
-      <div class="top-card">
-        <strong id="todayText">—</strong><br>
-        <span id="timeText" class="small">—</span>
-      </div>
-      <a href="#history" class="top-link">↩ Istorija</a>
-    </header>
+<div class="app">
+  <div class="topbar"><div class="brand"><div class="logo">🩺</div><div><h1>MEDSCAN Mobile</h1><div class="subtitle">Brz dnevni unos. Fokus na telefonu.</div></div></div></div>
 
-    <section class="hero" id="top">
-      <div class="hero-head">
-        <div>
-          <div class="hero-title">Dnevni status</div>
-          <div class="hero-text">Gornja linija sada prikazuje koliko je dana prošlo. Dnevni skor ostaje vezan za izvršenje sistema i ručno zatvorene obaveze.</div>
-        </div>
-        <div id="statusBadge" class="badge">🟡 DAN U TOKU</div>
-      </div>
-
-      <div class="hero-stats">
-        <div class="stat-card">
-          <div class="label">Dnevni skor</div>
-          <div id="scoreText" class="value">0%</div>
-          <div class="sub">zatvorene obaveze</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">Proteklo dana</div>
-          <div id="dayProgressText" class="value">0%</div>
-          <div class="sub">vremenski napredak</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">Koraci</div>
-          <div id="stepsText" class="value">0 / 10.000</div>
-          <div class="sub">dnevni cilj</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">Kalorijski deficit</div>
-          <div id="deficitText" class="value">— kcal</div>
-          <div class="sub">unesi realno</div>
-        </div>
-      </div>
-
-      <div class="hero-row">
-        <div class="meter-box">
-          <div class="meter-head">
-            <div>
-              <div class="meter-title">Dan napreduje</div>
-              <div id="dayProgressDetail" class="meter-value">0%</div>
-            </div>
-            <div class="small">od 06:00 do 23:00</div>
-          </div>
-          <div class="meter-track">
-            <div id="progressBar" class="meter-fill day"></div>
-          </div>
-        </div>
-        <div class="meter-box">
-          <div class="meter-head">
-            <div>
-              <div class="meter-title">Izvršenje sistema</div>
-              <div id="scoreDetail" class="meter-value">0%</div>
-            </div>
-            <div class="small">prema taskovima</div>
-          </div>
-          <div class="meter-track">
-            <div id="scoreBar" class="meter-fill score"></div>
-          </div>
-        </div>
-      </div>
-
-      <div id="redAlert" class="alert">🔴 Posle 19:00 dan nije zatvoren. Fokus: glavni obrok, šetnja i bez kasnog jela.</div>
-    </section>
-
-    <div class="grid">
-      <section class="card span-7" id="tasks">
-        <div class="section-head">
-          <div>
-            <h2>⚠️ Prioriteti i nedovršeno</h2>
-            <div class="small">Pametni spisak kombinuje satnicu dana i tvoje stvarne unose.</div>
-          </div>
-          <div class="chip">Auto-prioritet po satu</div>
-        </div>
-        <div id="unfinishedList" class="task-list"></div>
-      </section>
-
-      <section class="card span-5">
-        <div class="section-head">
-          <div>
-            <h2>✅ Zatvoreno danas</h2>
-            <div class="small">Sve što je već obeleženo kao urađeno.</div>
-          </div>
-          <div class="chip">Ručno zatvaranje</div>
-        </div>
-        <div id="finishedList" class="task-list"></div>
-      </section>
-
-      <section class="card span-12">
-        <div class="subgrid">
-          <div class="card" style="padding:0;border:none;background:none;box-shadow:none">
-            <div class="section-head">
-              <div>
-                <h2>❤️ Vitalni znaci</h2>
-                <div class="small">Pregled + unos.</div>
-              </div>
-            </div>
-            <div class="metrics">
-              <div class="metric"><div class="k">Puls</div><div id="pulseText" class="v">—</div><div class="mini-spark"></div></div>
-              <div class="metric"><div class="k">Krvni pritisak</div><div id="bpText" class="v">—</div><div class="mini-spark"></div></div>
-              <div class="metric"><div class="k">SpO₂</div><div id="spo2Text" class="v">—%</div><div class="mini-spark"></div></div>
-              <div class="metric"><div class="k">Temperatura</div><div id="tempText" class="v">—°C</div><div class="mini-spark"></div></div>
-            </div>
-            <div class="form-grid" style="margin-top:14px">
-              <div class="field"><label>Puls</label><input id="pulse" type="number" placeholder="68"></div>
-              <div class="field"><label>Pritisak</label><input id="bp" placeholder="128/78"></div>
-              <div class="field"><label>SpO₂</label><input id="spo2" type="number" placeholder="97"></div>
-              <div class="field"><label>Temperatura</label><input id="temp" type="number" step="0.1" placeholder="36.6"></div>
-            </div>
-          </div>
-
-          <div class="card" style="padding:0;border:none;background:none;box-shadow:none">
-            <div class="section-head">
-              <div>
-                <h2>⚖️ Telesne metrike</h2>
-                <div class="small">Pregled + unos.</div>
-              </div>
-            </div>
-            <div class="metrics" style="grid-template-columns:repeat(3,1fr)">
-              <div class="metric"><div class="k">Težina</div><div id="weightText" class="v">— kg</div><div id="weightChangeText" class="small">—</div></div>
-              <div class="metric"><div class="k">Obim stomaka</div><div id="waistText" class="v">— cm</div><div class="small">istorija ide u graf</div></div>
-              <div class="metric"><div class="k">Telesna mast</div><div id="fatText" class="v">—%</div><div class="small">opciono</div></div>
-            </div>
-            <div class="form-grid" style="margin-top:14px">
-              <div class="field"><label>Jutarnja težina (kg)</label><input id="weight" type="number" step="0.1" placeholder="112.0"></div>
-              <div class="field"><label>Obim stomaka (cm)</label><input id="waist" type="number" step="0.1" placeholder="118"></div>
-              <div class="field"><label>Telesna mast (%)</label><input id="bodyFat" type="number" step="0.1" placeholder="29.5"></div>
-              <div class="field"><label>Koraci</label><input id="steps" type="number" placeholder="8000"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="card span-6">
-        <div class="section-head">
-          <div>
-            <h2>🧾 Dnevni rezime</h2>
-            <div class="small">Tri glavna pokazatelja.</div>
-          </div>
-        </div>
-        <div class="summary-line">
-          <span>Unos kalorija</span>
-          <span id="calorieSummary">— / 2400 kcal</span>
-          <div class="bar"><div id="calorieFill" class="bar-purple"></div></div>
-          <span id="caloriePct">0%</span>
-        </div>
-        <div class="summary-line">
-          <span>Proteini</span>
-          <span id="proteinSummary">— / 110 g</span>
-          <div class="bar"><div id="proteinFill" class="bar-green"></div></div>
-          <span id="proteinPct">0%</span>
-        </div>
-        <div class="summary-line">
-          <span>Voda</span>
-          <span id="waterSummary">— / 3.0 L</span>
-          <div class="bar"><div id="waterFill" class="bar-blue"></div></div>
-          <span id="waterPct">0%</span>
-        </div>
-        <div class="form-grid" style="margin-top:12px">
-          <div class="field"><label>Unos kalorija</label><input id="calorieIn" type="number" placeholder="1780"></div>
-          <div class="field"><label>Proteini (g)</label><input id="protein" type="number" placeholder="115"></div>
-          <div class="field"><label>Voda (L)</label><input id="waterLiters" type="number" step="0.1" placeholder="1.8"></div>
-          <div class="field"><label>Aktivne kalorije sa sata</label><input id="calories" type="number" placeholder="620"></div>
-        </div>
-      </section>
-
-      <section class="card span-6">
-        <div class="section-head">
-          <div>
-            <h2>📥 Dnevni unos</h2>
-            <div class="small">Glad, energija, san, večera i kretanje.</div>
-          </div>
-        </div>
-        <div class="form-grid">
-          <div class="field"><label>Kilometri šetnje</label><input id="km" type="number" step="0.1" placeholder="3.0"></div>
-          <div class="field"><label>Glad 1–10</label><input id="hunger" type="number" min="1" max="10" placeholder="5"></div>
-          <div class="field"><label>Energija 1–10</label><input id="energy" type="number" min="1" max="10" placeholder="7"></div>
-          <div class="field"><label>San prethodne noći (h)</label><input id="sleep" type="number" step="0.5" placeholder="6.5"></div>
-          <div class="field"><label>Vreme glavnog obroka</label><input id="dinnerTime" type="time"></div>
-          <div class="field"><label>Napomena dana</label><input id="noteInline" placeholder="kratak fokus za danas"></div>
-        </div>
-      </section>
-
-      <section class="card span-8" id="training">
-        <div class="section-head">
-          <div>
-            <h2>🏋️ Sprava — današnji trening</h2>
-            <div class="small">Realan unos bez foliranja.</div>
-          </div>
-        </div>
-        <div class="form-grid">
-          <div class="field"><label>Visenje — sek</label><input id="hang" type="number" placeholder="15"></div>
-          <div class="field"><label>Zgib uz pomoć — ponavljanja</label><input id="pull" type="number" placeholder="0"></div>
-          <div class="field"><label>Podizanje kolena — ponavljanja</label><input id="knee" type="number" placeholder="5"></div>
-          <div class="field"><label>Propadanje / držanje — sek</label><input id="dip" type="number" placeholder="5"></div>
-        </div>
-        <div class="field" style="margin-top:12px"><label>Napomena za ruku / osećaj</label><textarea id="armNote" placeholder="Npr. blago zatezanje, bez bola..."></textarea></div>
-      </section>
-
-      <aside class="card span-4">
-        <div class="section-head">
-          <div>
-            <h2>🏆 Rekordi i milestone</h2>
-            <div class="small">Početak transformacije: 13.05.2026.</div>
-          </div>
-        </div>
-        <div class="records">
-          <div class="record"><span class="name">Visenje</span><span id="recHang" class="val">0 sek</span></div>
-          <div class="record"><span class="name">Zgib uz pomoć</span><span id="recPull" class="val">0</span></div>
-          <div class="record"><span class="name">Podizanje kolena</span><span id="recKnee" class="val">0</span></div>
-          <div class="record"><span class="name">Propadanje / držanje</span><span id="recDip" class="val">0 sek</span></div>
-          <div class="record"><span class="name">Koraci</span><span id="recSteps" class="val">0</span></div>
-        </div>
-        <div id="recordMessage" class="small" style="margin-top:12px">🔥 Svaki rekord počinje od nule.</div>
-
-        <div class="loser-box">
-          <div style="font-size:15px;font-weight:900;color:#fdba74">⚠️ Loser days — dani upozorenja</div>
-          <div class="small" style="margin-top:6px">Nije za krivicu, nego za opomenu i povratak sistemu.</div>
-          <div class="form-grid" style="margin-top:12px">
-            <div class="field"><label>Datum</label><input id="loserDate" type="date"></div>
-            <div class="field"><label>Razlog</label><input id="loserReason" placeholder="Npr. pivo, preskočena šetnja..."></div>
-          </div>
-          <div class="btn-row">
-            <button class="btn-danger" type="button" onclick="addLoserDay()">Dodaj loser day</button>
-          </div>
-          <div id="loserDaysList"></div>
-        </div>
-      </aside>
-
-      <section class="card span-4">
-        <div class="section-head">
-          <div>
-            <h2>⚠️ Rizici danas</h2>
-            <div class="small">Rizik ne ruši sistem, samo traži korekciju.</div>
-          </div>
-        </div>
-        <div id="riskList" class="task-list"></div>
-      </section>
-
-      <section class="card span-8">
-        <div class="section-head">
-          <div>
-            <h2>🧭 Terenski dnevnik</h2>
-            <div class="small">Brzi zapis sa trenutnim vremenom.</div>
-          </div>
-        </div>
-        <div class="form-grid">
-          <div class="field">
-            <label>Tip događaja</label>
-            <select id="fieldEventType">
-              <option value="info">Info / napomena</option>
-              <option value="water">Voda</option>
-              <option value="beer">Pivo</option>
-              <option value="soda">Gazirano / sok</option>
-              <option value="food">Hrana van plana</option>
-              <option value="walk">Šetnja / koraci</option>
-              <option value="symptom">Simptom / osećaj</option>
-            </select>
-          </div>
-          <div class="field"><label>Kratak unos</label><input id="fieldEventText" placeholder="Npr. popio Heineken 0.5 bez grickalica"></div>
-        </div>
-        <div class="btn-row">
-          <button class="btn-warning" type="button" onclick="addFieldEvent()">Dodaj sa trenutnim vremenom</button>
-          <button class="btn-ghost" type="button" onclick="clearFieldEvents()">Očisti današnji dnevnik</button>
-        </div>
-        <div id="fieldLogTable"></div>
-      </section>
-
-      <section class="card span-12" id="history">
-        <div class="section-head">
-          <div>
-            <h2>📈 Težina, obim i streak</h2>
-            <div class="small">Istorija poslednjih 30 dana od datuma transformacije.</div>
-          </div>
-        </div>
-        <div class="metrics" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
-          <div class="metric"><div class="k">Trenutni streak</div><div id="streakNow" class="v">0 dana</div></div>
-          <div class="metric"><div class="k">Najbolji streak</div><div id="streakBest" class="v">0 dana</div></div>
-          <div class="metric"><div class="k">Promena 30 dana</div><div id="weightDelta" class="v">-</div></div>
-        </div>
-        <canvas id="weightChart" width="1100" height="260"></canvas>
-        <canvas id="waistChart" width="1100" height="220"></canvas>
-        <div id="historyTable"></div>
-      </section>
-
-      <section class="card span-6">
-        <div class="section-head">
-          <div>
-            <h2>🏆 Achievement sistem</h2>
-            <div class="small">Otključava se automatski.</div>
-          </div>
-        </div>
-        <div id="achievementList" class="task-list"></div>
-      </section>
-
-      <section class="card span-6">
-        <div class="section-head">
-          <div>
-            <h2>📅 Plan za sutra</h2>
-            <div class="small">Zapiši plan dok ti je dan još svež.</div>
-          </div>
-        </div>
-        <div class="form-grid">
-          <div class="field"><label>Kada šetnja?</label><input id="tomorrowWalk" type="time"></div>
-          <div class="field"><label>Kada sprava?</label><input id="tomorrowWorkout" type="time"></div>
-        </div>
-        <div class="field" style="margin-top:12px"><label>Sutrašnji fokus</label><textarea id="tomorrowFocus" placeholder="Npr. bez piva, više vode, ranija šetnja..."></textarea></div>
-      </section>
-
-      <section class="card span-12">
-        <div class="section-head">
-          <div>
-            <h2>⭐ Dnevna reč bodrenja</h2>
-            <div class="small">Samo stabilan lokalni quote sistem.</div>
-          </div>
-        </div>
-        <div class="quote-card">
-          <div id="dailyQuote" class="quote-text">Učitavam dnevnu poruku...</div>
-          <div id="dailyQuoteAuthor" class="small" style="margin-top:10px"></div>
-          <div class="btn-row">
-            <button class="btn-warning" type="button" onclick="loadDailyQuote(true)">Nova poruka</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="card span-12">
-        <div class="section-head">
-          <div>
-            <h2>📝 Zaključak dana</h2>
-            <div class="small">Sačuvaj, pošalji email ili izvezi lokalne podatke.</div>
-          </div>
-        </div>
-        <div class="field"><label>Kratka beleška</label><textarea id="note" placeholder="Kako je prošao dan, šta je bilo teško, šta popravljaš sutra..."></textarea></div>
-        <div class="btn-row">
-          <button class="btn-success" type="button" onclick="saveDay()">Sačuvaj dan</button>
-          <button class="btn-primary" type="button" onclick="sendEmail()">Pošalji izveštaj emailom</button>
-          <button class="btn-warning" type="button" onclick="exportJSON()">Izvezi podatke</button>
-          <button class="btn-danger" type="button" onclick="resetToday()">Reset dana</button>
-        </div>
-        <div class="footer-note">EmailJS ostaje podržan. Ako ne prođe, otvara se običan mailto fallback.</div>
-      </section>
+  <section id="screen-home" class="section active">
+    <div class="card hero">
+      <h2>Danas</h2><div class="big" id="todayText">—</div><div class="small" id="timeText">—</div><div id="statusBadge" class="badge mid">🟡 DAN U TOKU</div>
+      <div class="progress-block"><div class="progress-label"><span>Proteklo dana</span><span id="dayPctText">0%</span></div><div class="bar"><div id="dayProgress" class="fill day"></div></div></div>
+      <div class="progress-block"><div class="progress-label"><span>Izvršenje sistema</span><span id="systemPctText">0%</span></div><div class="bar"><div id="systemProgress" class="fill system"></div></div></div>
     </div>
-  </div>
-
-  <nav class="bottom-nav">
-    <a href="#top">Status</a>
-    <a href="#tasks">Obaveze</a>
-    <a href="#training">Sprava</a>
-    <a href="#history">Grafovi</a>
-  </nav>
-
-  <div id="nightAlarm" class="night-alarm">
-    <div class="alarm-box">
-      <h2 style="margin-top:0">🔴 Dan nije zatvoren</h2>
-      <p>Posle 21:30 i dalje fale ključne stavke. Fokus na minimum: glavni obrok, šetnja, bez kasnog jela.</p>
-      <div class="btn-row">
-        <button class="btn-success" type="button" onclick="dismissNightAlarm()">Razumem</button>
-      </div>
+    <div class="grid2">
+      <div class="card stat"><span class="small">Koraci</span><strong id="stepsStat">0</strong><span class="small">cilj 10.000</span></div>
+      <div class="card stat"><span class="small">Težina</span><strong id="weightStat">—</strong><span class="small">jutarnji unos</span></div>
+      <div class="card stat"><span class="small">Voda</span><strong id="waterStat">0.0 L</strong><span class="small">cilj 3.0 L</span></div>
+      <div class="card stat" style="display:flex;justify-content:center;align-items:center"><div><div class="score" id="scoreRing"><span id="scoreText">0%</span></div><div class="small" style="text-align:center;margin-top:8px;">dnevni score</div></div></div>
     </div>
-  </div>
-
-  <script>
-    const EMAILJS_CONFIG = {
-      publicKey: 'nsqG-_xjWMfl5fk6Y',
-      serviceId: 'service_oofn0gf',
-      templateId: 'template_dxt6uwg',
-      toEmail: '2025produkcija@gmail.com'
-    };
-
-    const TASKS = [
-      { id: 'warmLemonWater', text: '500 ml tople vode + pola limuna', time: '06:00–08:00', icon:'🍋' },
-      { id: 'waterTea', text: 'Jutarnji čaj bez šećera', time: '07:00–10:30', icon:'🍵' },
-      { id: 'smoothie', text: 'Smoothie popijen', time: '11:00–12:00', icon:'🥤' },
-      { id: 'almondsSmart', text: 'Bademi samo po potrebi, bez preterivanja', time: '13:00–14:00', icon:'🥜' },
-      { id: 'mainMeal', text: 'Glavni obrok zatvoren', time: '17:00–18:30', icon:'🍽️' },
-      { id: 'noBread', text: 'Bez hleba', time: 'ceo dan', icon:'🥖' },
-      { id: 'noSugar', text: 'Bez šećera / sokova', time: 'ceo dan', icon:'🥤' },
-      { id: 'walk', text: 'Šetnja / 8–10k koraka', time: 'do kraja dana', icon:'🚶' },
-      { id: 'bars', text: 'Sprava 10–15 min, lagano', time: '17:30–18:30', icon:'🏋️' },
-      { id: 'noLateFood', text: 'Bez kasnog jela', time: 'posle večere', icon:'🌙' }
-    ];
-
-    const RISKS = [
-      { id: 'beer', text: 'Pivo', icon:'🍺' },
-      { id: 'bread', text: 'Hleb / pecivo', icon:'🥖' },
-      { id: 'sweet', text: 'Slatko / sok / Cedevita', icon:'🍭' },
-      { id: 'lateFood', text: 'Kasno jelo', icon:'🌙' },
-      { id: 'missedWalk', text: 'Preskočena šetnja', icon:'🚷' }
-    ];
-
-    const LOCAL_QUOTES = [
-      'Mali koraci svaki dan. Velike promene zauvek.',
-      'Ne mora savršeno. Mora zatvoreno.',
-      'Danas ne juriš motivaciju — gradiš sistem.',
-      'Telo pamti disciplinu čak i kad vaga ćuti.',
-      'Jedan čist dan je cigla u novom životu.',
-      'Kad ti je teško, uradi minimum. Minimum čuva ritam.',
-      'Ne pobeđuje najjači dan, nego najdosledniji čovek.',
-      'Svaki zapis je dokaz da vodiš svoj proces.',
-      'Disciplina danas znači lakše telo sutra.',
-      'Zatvoren dan je pobeda čak i kad nije savršen.',
-      'Nije poenta brzina. Poenta je smer.',
-      'Tvoje telo već primećuje promene.',
-      'Ne odustaj zbog jednog lošeg dana.',
-      'Sistem je jači od motivacije.',
-      'Svaki kilogram dole menja budućnost.',
-      'San, voda i hodanje menjaju više nego ekstremi.',
-      'Tvoje sutra zavisi od današnjih malih odluka.',
-      'Doslednost pravi transformaciju.',
-      'Kad zatvoriš dan — pobedio si.',
-      'Telo voli ritam.'
-    ];
-
-    const TRANSFORMATION_START = '2026-05-13';
-    const START_WEIGHT = 115;
-    const DAY_START_HOUR = 6;
-    const DAY_END_HOUR = 23;
-
-    const dayKey = () => 'medscan-day-' + new Date().toISOString().slice(0,10);
-    const recordsKey = 'medscan-records';
-    const freezeKey = 'medscan-freeze';
-    const loserDaysKey = 'medscan-loser-days';
-    const dismissedAlarmKey = () => 'medscan-alarm-dismissed-' + new Date().toISOString().slice(0,10);
-
-    function defaultState(){
-      return { tasks:{}, risks:{}, fields:{}, fieldEvents:[] };
-    }
-    function safeParse(json, fallback){
-      try { return JSON.parse(json); } catch(e){ return fallback; }
-    }
-    function loadState(){
-      return safeParse(localStorage.getItem(dayKey()) || '', defaultState());
-    }
-    function saveState(state){
-      localStorage.setItem(dayKey(), JSON.stringify(state));
-    }
-    function loadRecords(){
-      return safeParse(localStorage.getItem(recordsKey) || '', { hang:0, pull:0, knee:0, dip:0, steps:0 });
-    }
-    function saveRecords(records){
-      localStorage.setItem(recordsKey, JSON.stringify(records));
-    }
-    function loadFreeze(){
-      return Number(localStorage.getItem(freezeKey) || '1');
-    }
-    function loadLoserDays(){
-      return safeParse(localStorage.getItem(loserDaysKey) || '', []);
-    }
-    function saveLoserDays(days){
-      localStorage.setItem(loserDaysKey, JSON.stringify(days));
-    }
-
-    function getEl(id){ return document.getElementById(id); }
-    function setText(id, value){
-      const el = getEl(id);
-      if (el) el.textContent = value;
-    }
-    function setHTML(id, value){
-      const el = getEl(id);
-      if (el) el.innerHTML = value;
-    }
-    function todayISO(){
-      return new Date().toISOString().slice(0,10);
-    }
-
-    function completionPercent(state){
-      const done = TASKS.filter(t => state.tasks && state.tasks[t.id]).length;
-      return Math.round(done / TASKS.length * 100);
-    }
-    function riskCount(state){
-      return RISKS.filter(r => state.risks && state.risks[r.id]).length;
-    }
-
-    function dayProgressPercent(now = new Date()){
-      const start = new Date(now);
-      start.setHours(DAY_START_HOUR,0,0,0);
-      const end = new Date(now);
-      end.setHours(DAY_END_HOUR,0,0,0);
-      if (now <= start) return 0;
-      if (now >= end) return 100;
-      return Math.round(((now - start) / (end - start)) * 100);
-    }
-
-    function updateClock(){
-      const now = new Date();
-      setText('todayText', now.toLocaleDateString('sr-RS', { weekday:'long', day:'2-digit', month:'2-digit', year:'numeric' }));
-      setText('timeText', now.toLocaleTimeString('sr-RS', { hour:'2-digit', minute:'2-digit' }));
-    }
-
-    function bindFields(){
-      const ids = ['weight','waist','steps','km','calories','hunger','energy','sleep','dinnerTime','hang','pull','knee','dip','armNote','note','tomorrowWalk','tomorrowWorkout','tomorrowFocus','pulse','bp','spo2','temp','calorieIn','protein','waterLiters','bodyFat','noteInline'];
-      const state = loadState();
-      ids.forEach(id => {
-        const el = getEl(id);
-        if (!el) return;
-        el.value = (state.fields && state.fields[id]) || '';
-        el.addEventListener('input', () => {
-          const s = loadState();
-          s.fields = s.fields || {};
-          s.fields[id] = el.value;
-          if (id === 'noteInline' && !s.fields.note && getEl('note')) {
-            getEl('note').value = el.value;
-            s.fields.note = el.value;
-          }
-          saveState(s);
-          updateStatus();
-          updateRecords(false);
-          renderTaskSections();
-          renderHistory();
-        });
-      });
-    }
-
-    function toggleTask(id){
-      const state = loadState();
-      state.tasks = state.tasks || {};
-      state.tasks[id] = !state.tasks[id];
-      saveState(state);
-      updateStatus();
-      renderTaskSections();
-      renderHistory();
-    }
-
-    function toggleRisk(id){
-      const state = loadState();
-      state.risks = state.risks || {};
-      state.risks[id] = !state.risks[id];
-      saveState(state);
-      updateStatus();
-      renderRiskList();
-      renderHistory();
-    }
-
-    function taskUrgency(taskId, state){
-      const now = new Date();
-      const hour = now.getHours() + now.getMinutes() / 60;
-      const steps = Number(state.fields?.steps || 0);
-      const water = Number(state.fields?.waterLiters || 0);
-
-      const urgencyMap = {
-        warmLemonWater: hour >= 8 ? 10 : hour >= 7 ? 6 : 2,
-        waterTea: hour >= 10.5 ? 10 : hour >= 9 ? 6 : 2,
-        smoothie: hour >= 12 ? 10 : hour >= 11 ? 6 : 2,
-        almondsSmart: hour >= 14 ? 8 : hour >= 13 ? 5 : 1,
-        mainMeal: hour >= 18.5 ? 10 : hour >= 17 ? 6 : 2,
-        noBread: 4,
-        noSugar: 4,
-        walk: steps >= 10000 ? 0 : hour >= 20 ? 10 : hour >= 18 ? 8 : hour >= 15 ? 5 : 2,
-        bars: hour >= 18.5 ? 9 : hour >= 17.5 ? 6 : 2,
-        noLateFood: hour >= 21 ? 8 : 2
-      };
-
-      let urgency = urgencyMap[taskId] ?? 1;
-      if (taskId === 'walk' && steps < 6000 && hour >= 18) urgency += 1;
-      if (taskId === 'warmLemonWater' && water < 0.5 && hour >= 9) urgency += 1;
-      return urgency;
-    }
-
-    function priorityItems(state){
-      const items = [];
-      const undone = TASKS.filter(t => !(state.tasks && state.tasks[t.id]));
-      undone.forEach(t => {
-        items.push({
-          type:'task',
-          id:t.id,
-          icon:t.icon,
-          title:t.text,
-          sub:t.time,
-          urgency: taskUrgency(t.id, state),
-          action:`toggleTask('${t.id}')`
-        });
-      });
-
-      const steps = Number(state.fields?.steps || 0);
-      const water = Number(state.fields?.waterLiters || 0);
-      const now = new Date();
-      const hour = now.getHours() + now.getMinutes()/60;
-
-      if (hour >= 14 && water < 1.5) {
-        items.push({ type:'smart', id:'water-reminder', icon:'💧', title:'Voda je ispod ritma', sub:`Uneto ${water || 0} L. Cilj do sada bi već trebalo da bude veći.`, urgency:8 });
-      }
-      if (hour >= 17 && steps < 7000) {
-        items.push({ type:'smart', id:'walk-reminder', icon:'🚶', title:'Koraci kasne', sub:`Trenutno ${steps.toLocaleString('sr-RS')} koraka. Uhvati ritam pre večeri.`, urgency:9 });
-      }
-      if (hour >= 19 && !(state.tasks && state.tasks.mainMeal)) {
-        items.push({ type:'smart', id:'meal-reminder', icon:'🍽️', title:'Glavni obrok nije zatvoren', sub:'Ne ostavljaj glavni obrok prekasno.', urgency:10 });
-      }
-
-      return items.sort((a,b) => b.urgency - a.urgency);
-    }
-
-    function renderTaskSections(){
-      const state = loadState();
-      const unfinished = getEl('unfinishedList');
-      const finished = getEl('finishedList');
-      if (unfinished) {
-        const items = priorityItems(state);
-        if (!items.length) {
-          unfinished.innerHTML = '<div class="task done"><div class="icon">✅</div><div><div class="task-title">Sve je pod kontrolom</div><div class="task-sub">Nema aktivnih upozorenja.</div></div><div class="chip">miran dan</div></div>';
-        } else {
-          unfinished.innerHTML = items.map(item => {
-            const cls = item.urgency >= 9 ? 'danger' : 'warning';
-            const button = item.type === 'task'
-              ? `<button class="btn-warning" type="button" onclick="${item.action}">Zabeleži</button>`
-              : '';
-            return `<div class="task ${cls}">
-              <div class="icon">${item.icon}</div>
-              <div>
-                <div class="task-title">${item.title}</div>
-                <div class="task-sub">${item.sub}</div>
-              </div>
-              <div class="task-actions">
-                <div class="chip">prioritet ${item.urgency}/10</div>
-                ${button}
-              </div>
-            </div>`;
-          }).join('');
-        }
-      }
-
-      if (finished) {
-        const done = TASKS.filter(t => state.tasks && state.tasks[t.id]);
-        finished.innerHTML = done.length
-          ? done.map(t => `<div class="task done">
-              <div class="icon">✅</div>
-              <div>
-                <div class="task-title">${t.text}</div>
-                <div class="task-sub">Zabeleženo</div>
-              </div>
-              <div class="chip">${t.time}</div>
-            </div>`).join('')
-          : '<div class="task warning"><div class="icon">⏳</div><div><div class="task-title">Još nema zatvorenih stavki</div><div class="task-sub">Počni od prve lake pobede.</div></div><div class="chip">start</div></div>';
-      }
-    }
-
-    function renderRiskList(){
-      const state = loadState();
-      const box = getEl('riskList');
-      if (!box) return;
-      box.innerHTML = RISKS.map(r => {
-        const active = state.risks && state.risks[r.id];
-        return `<div class="task ${active ? 'danger' : ''}">
-          <div class="icon">${r.icon}</div>
-          <div>
-            <div class="task-title">${r.text}</div>
-            <div class="task-sub">${active ? 'Aktivan rizik danas' : 'Nije označeno'}</div>
-          </div>
-          <div class="task-actions">
-            <button class="${active ? 'btn-danger' : 'btn-ghost'}" type="button" onclick="toggleRisk('${r.id}')">${active ? 'Ukloni' : 'Označi'}</button>
-          </div>
-        </div>`;
-      }).join('');
-    }
-
-    function updateSummaryBars(f){
-      const cal = Number(f.calorieIn || 0);
-      const protein = Number(f.protein || 0);
-      const water = Number(f.waterLiters || 0);
-      const calPct = Math.min(100, Math.round((cal / 2400) * 100));
-      const proteinPct = Math.min(140, Math.round((protein / 110) * 100));
-      const waterPct = Math.min(100, Math.round((water / 3) * 100));
-
-      setText('calorieSummary', `${cal || '—'} / 2400 kcal`);
-      setText('proteinSummary', `${protein || '—'} / 110 g`);
-      setText('waterSummary', `${water || '—'} / 3.0 L`);
-      setText('caloriePct', `${calPct}%`);
-      setText('proteinPct', `${proteinPct}%`);
-      setText('waterPct', `${waterPct}%`);
-
-      const c = getEl('calorieFill'); if (c) c.style.width = calPct + '%';
-      const p = getEl('proteinFill'); if (p) p.style.width = Math.min(100, proteinPct) + '%';
-      const w = getEl('waterFill'); if (w) w.style.width = waterPct + '%';
-    }
-
-    function updateRecords(showPopup = true){
-      const state = loadState();
-      const rec = loadRecords();
-      const f = state.fields || {};
-      const values = {
-        hang:Number(f.hang || 0),
-        pull:Number(f.pull || 0),
-        knee:Number(f.knee || 0),
-        dip:Number(f.dip || 0),
-        steps:Number(f.steps || 0)
-      };
-      let newRecord = false;
-      Object.keys(values).forEach(key => {
-        if (values[key] > (Number(rec[key]) || 0)) {
-          rec[key] = values[key];
-          newRecord = true;
-        }
-      });
-      saveRecords(rec);
-      renderRecords();
-      if (newRecord && showPopup) {
-        setText('recordMessage', '🔥 Novi rekord! Telo pamti doslednost.');
-      }
-    }
-
-    function renderRecords(){
-      const rec = loadRecords();
-      setText('recHang', `${rec.hang || 0} sek`);
-      setText('recPull', String(rec.pull || 0));
-      setText('recKnee', String(rec.knee || 0));
-      setText('recDip', `${rec.dip || 0} sek`);
-      setText('recSteps', String(rec.steps || 0));
-    }
-
-    function updateStatus(){
-      updateClock();
-      const state = loadState();
-      const pct = completionPercent(state);
-      const dayPct = dayProgressPercent();
-      const risks = riskCount(state);
-      const now = new Date();
-      const after19 = now.getHours() >= 19;
-      const after2130 = now.getHours() > 21 || (now.getHours() === 21 && now.getMinutes() >= 30);
-      const mustClosed = !!(state.tasks?.mainMeal && state.tasks?.walk && state.tasks?.noLateFood);
-      const f = state.fields || {};
-
-      setText('scoreText', `${pct}%`);
-      setText('scoreDetail', `${pct}%`);
-      setText('dayProgressText', `${dayPct}%`);
-      setText('dayProgressDetail', `${dayPct}%`);
-      setText('stepsText', `${Number(f.steps || 0).toLocaleString('sr-RS')} / 10.000`);
-      setText('deficitText', `${f.calories || '—'} kcal`);
-      setText('pulseText', f.pulse || '—');
-      setText('bpText', f.bp || '—');
-      setText('spo2Text', f.spo2 ? `${f.spo2}%` : '—%');
-      setText('tempText', f.temp ? `${f.temp}°C` : '—°C');
-      setText('weightText', f.weight ? `${f.weight} kg` : '— kg');
-      setText('waistText', f.waist ? `${f.waist} cm` : '— cm');
-      setText('fatText', f.bodyFat ? `${f.bodyFat}%` : '—%');
-
-      const weightNow = Number(f.weight || 0);
-      if (weightNow) {
-        const delta = (weightNow - START_WEIGHT).toFixed(1);
-        setText('weightChangeText', `${delta > 0 ? '+' : ''}${delta} kg od starta`);
-      } else {
-        setText('weightChangeText', '—');
-      }
-
-      updateSummaryBars(f);
-
-      const pBar = getEl('progressBar'); if (pBar) pBar.style.width = `${dayPct}%`;
-      const sBar = getEl('scoreBar'); if (sBar) sBar.style.width = `${pct}%`;
-
-      const badge = getEl('statusBadge');
-      if (badge) {
-        badge.className = 'badge';
-        if (risks > 0 || (after19 && !mustClosed)) {
-          badge.classList.add('risk');
-          badge.textContent = '🔴 RIZIČAN DAN';
-        } else if (pct >= 90) {
-          badge.classList.add('clean');
-          badge.textContent = '🟢 ČIST DAN';
-        } else {
-          badge.textContent = '🟡 DAN U TOKU';
-        }
-      }
-
-      const alert = getEl('redAlert');
-      if (alert) alert.classList.toggle('show', after19 && !mustClosed);
-
-      const dismissed = localStorage.getItem(dismissedAlarmKey()) === '1';
-      const nightAlarm = getEl('nightAlarm');
-      if (nightAlarm) nightAlarm.classList.toggle('show', after2130 && !mustClosed && !dismissed);
-
-      renderTaskSections();
-      renderRiskList();
-    }
-
-    function dismissNightAlarm(){
-      localStorage.setItem(dismissedAlarmKey(), '1');
-      const alarm = getEl('nightAlarm');
-      if (alarm) alarm.classList.remove('show');
-    }
-
-    function eventLabel(type){
-      const map = {
-        info:'ℹ️ Info',
-        water:'💧 Voda',
-        beer:'🍺 Pivo',
-        soda:'🥤 Gazirano/sok',
-        food:'🍽️ Hrana van plana',
-        walk:'🚶 Šetnja',
-        symptom:'🩺 Simptom'
-      };
-      return map[type] || 'ℹ️ Info';
-    }
-
-    function addFieldEvent(){
-      const typeEl = getEl('fieldEventType');
-      const textEl = getEl('fieldEventText');
-      if (!typeEl || !textEl) return;
-      const type = typeEl.value;
-      const text = textEl.value.trim();
-      if (!text) {
-        alert('Upiši kratak opis događaja.');
-        return;
-      }
-      const state = loadState();
-      state.fieldEvents = state.fieldEvents || [];
-      const now = new Date();
-      state.fieldEvents.push({
-        time: now.toLocaleTimeString('sr-RS', { hour:'2-digit', minute:'2-digit' }),
-        type,
-        text
-      });
-      if (type === 'beer') state.risks.beer = true;
-      if (type === 'soda') state.risks.sweet = true;
-      if (type === 'food') state.risks.bread = true;
-      if (type === 'walk') state.tasks.walk = true;
-      saveState(state);
-      textEl.value = '';
-      renderFieldEvents();
-      updateStatus();
-      renderHistory();
-    }
-
-    function clearFieldEvents(){
-      if (!confirm('Obrisati samo današnji terenski dnevnik?')) return;
-      const state = loadState();
-      state.fieldEvents = [];
-      saveState(state);
-      renderFieldEvents();
-    }
-
-    function renderFieldEvents(){
-      const box = getEl('fieldLogTable');
-      if (!box) return;
-      const events = loadState().fieldEvents || [];
-      if (!events.length) {
-        box.innerHTML = '<div class="small" style="margin-top:12px">Još nema terenskih zapisa za danas.</div>';
-        return;
-      }
-      box.innerHTML = `
-        <table class="history-table">
-          <thead><tr><th>Vreme</th><th>Tip</th><th>Opis</th></tr></thead>
-          <tbody>
-            ${events.slice().reverse().map(e => `<tr><td>${e.time}</td><td>${eventLabel(e.type)}</td><td>${e.text}</td></tr>`).join('')}
-          </tbody>
-        </table>
-      `;
-    }
-
-    function loadDailyQuote(force = false){
-      const quoteBox = getEl('dailyQuote');
-      const authorBox = getEl('dailyQuoteAuthor');
-      if (!quoteBox || !authorBox) return;
-      const today = new Date();
-      const dateKey = today.toISOString().slice(0,10);
-      const baseIndex = (today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()) % LOCAL_QUOTES.length;
-      const cursorKey = 'medscan-quote-cursor-' + dateKey;
-      let index = Number(localStorage.getItem(cursorKey));
-      if (Number.isNaN(index)) index = baseIndex;
-      if (force) index = (index + 1) % LOCAL_QUOTES.length;
-      localStorage.setItem(cursorKey, String(index));
-      quoteBox.textContent = `“${LOCAL_QUOTES[index]}”`;
-      authorBox.textContent = 'MEDSCAN dnevna poruka';
-    }
-
-    function addLoserDay(){
-      const dateEl = getEl('loserDate');
-      const reasonEl = getEl('loserReason');
-      if (!dateEl || !reasonEl) return;
-      const date = dateEl.value;
-      const reason = reasonEl.value.trim();
-      if (!date || !reason) {
-        alert('Upiši datum i razlog.');
-        return;
-      }
-      const days = loadLoserDays();
-      days.push({ id: Date.now(), date, reason });
-      saveLoserDays(days);
-      dateEl.value = '';
-      reasonEl.value = '';
-      renderLoserDays();
-    }
-
-    function deleteLoserDay(id){
-      const next = loadLoserDays().filter(d => d.id !== id);
-      saveLoserDays(next);
-      renderLoserDays();
-    }
-
-    function renderLoserDays(){
-      const box = getEl('loserDaysList');
-      if (!box) return;
-      const days = loadLoserDays();
-      if (!days.length) {
-        box.innerHTML = '<div class="small" style="margin-top:10px">Još nema loser days. Odlično.</div>';
-        return;
-      }
-      box.innerHTML = days.slice().reverse().map(d => `
-        <div class="loser-item">
-          <div class="loser-date">${d.date}</div>
-          <div>${d.reason}</div>
-          <button class="btn-danger" type="button" onclick="deleteLoserDay(${d.id})">Obriši</button>
-        </div>
-      `).join('');
-    }
-
-    function dayKeys(days = 30){
-      const keys = [];
-      const today = new Date();
-      const start = new Date(TRANSFORMATION_START + 'T00:00:00');
-      const first = new Date(today);
-      first.setDate(today.getDate() - (days - 1));
-      const realStart = first < start ? start : first;
-      for (let d = new Date(realStart); d <= today; d.setDate(d.getDate() + 1)) {
-        keys.push('medscan-day-' + d.toISOString().slice(0,10));
-      }
-      return keys;
-    }
-
-    function isCleanDay(state){
-      if (!state) return false;
-      return completionPercent(state) >= 90 && riskCount(state) === 0;
-    }
-
-    function isAlmostClean(state){
-      if (!state) return false;
-      return completionPercent(state) >= 70 && riskCount(state) <= 1;
-    }
-
-    function historyData(){
-      return dayKeys(30).map(k => {
-        const date = k.replace('medscan-day-', '');
-        const state = safeParse(localStorage.getItem(k) || '', null);
-        const weight = state?.fields?.weight ? Number(state.fields.weight) : null;
-        const waist = state?.fields?.waist ? Number(state.fields.waist) : null;
-        return {
-          date,
-          state,
-          weight,
-          waist,
-          clean:isCleanDay(state),
-          steps:state?.fields?.steps || '',
-          status: state ? (isCleanDay(state) ? '🟢' : '🟡/🔴') : '-'
-        };
-      });
-    }
-
-    function streaks(data){
-      let current = 0;
-      let freeze = loadFreeze();
-      for (let i = data.length - 1; i >= 0; i--) {
-        if (data[i].clean) {
-          current++;
-        } else if (freeze > 0 && isAlmostClean(data[i].state)) {
-          freeze--;
-          current++;
-        } else {
-          break;
-        }
-      }
-      let best = 0;
-      let run = 0;
-      data.forEach(d => {
-        if (d.clean) run++; else run = 0;
-        best = Math.max(best, run);
-      });
-      return { current, best };
-    }
-
-    function renderAchievements(data){
-      const latestWeight = [...data].reverse().find(d => d.weight !== null)?.weight;
-      const achievements = [];
-      if (latestWeight !== undefined && latestWeight <= 110) achievements.push('🏆 Prvih -5 kg');
-      if (latestWeight !== undefined && latestWeight <= 105) achievements.push('🏆 Dvocifren pad težine');
-      const rec = loadRecords();
-      if ((rec.pull || 0) >= 1) achievements.push('🏆 Prvi zgib uz pomoć');
-      if ((rec.hang || 0) >= 30) achievements.push('🏆 30 sekundi visenja');
-      const s = streaks(data);
-      if (s.current >= 7) achievements.push('🏆 7 čistih dana');
-      setHTML('achievementList', achievements.length
-        ? achievements.map(a => `<div class="task done"><div class="icon">🔥</div><div><div class="task-title">${a}</div><div class="task-sub">otključano</div></div><div class="chip">achievement</div></div>`).join('')
-        : '<div class="task warning"><div class="icon">⭐</div><div><div class="task-title">Achievement-i će se pojavljivati automatski</div><div class="task-sub">Nastavi unos i ritam.</div></div><div class="chip">u toku</div></div>');
-    }
-
-    function drawLineChart(canvasId, points, valueKey, color, emptyText, suffix=''){
-      const canvas = getEl(canvasId);
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.fillStyle = 'rgba(255,255,255,0.03)';
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-
-      ctx.strokeStyle = 'rgba(255,255,255,0.10)';
-      ctx.lineWidth = 1;
-      for (let y = 40; y < canvas.height; y += 42) {
-        ctx.beginPath();
-        ctx.moveTo(40, y);
-        ctx.lineTo(canvas.width - 20, y);
-        ctx.stroke();
-      }
-
-      const filtered = points.map((p,i) => ({...p, i, value:p[valueKey]})).filter(p => p.value !== null);
-      if (filtered.length < 2) {
-        ctx.fillStyle = '#9ca3af';
-        ctx.font = '18px system-ui';
-        ctx.fillText(emptyText, 36, Math.round(canvas.height / 2));
-        return;
-      }
-
-      const min = Math.min(...filtered.map(p => p.value)) - 0.5;
-      const max = Math.max(...filtered.map(p => p.value)) + 0.5;
-      const x = idx => 45 + (idx / Math.max(1, points.length - 1)) * (canvas.width - 75);
-      const y = val => canvas.height - 38 - ((val - min) / Math.max(1, max - min)) * (canvas.height - 80);
-
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      filtered.forEach((p, idx) => {
-        const px = x(p.i), py = y(p.value);
-        if (idx === 0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
-      });
-      ctx.stroke();
-
-      filtered.forEach(p => {
-        ctx.fillStyle = p.clean ? '#22c55e' : color;
-        ctx.beginPath();
-        ctx.arc(x(p.i), y(p.value), 5, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      ctx.fillStyle = '#e5e7eb';
-      ctx.font = '13px system-ui';
-      ctx.fillText(max.toFixed(1) + suffix, 8, y(max) + 5);
-      ctx.fillText(min.toFixed(1) + suffix, 8, y(min) + 5);
-    }
-
-    function renderHistory(){
-      const data = historyData();
-      const s = streaks(data);
-      setText('streakNow', `${s.current} dana`);
-      setText('streakBest', `${s.best} dana`);
-
-      const weights = data.filter(d => d.weight !== null);
-      if (weights.length >= 2) {
-        const delta = (weights[weights.length - 1].weight - weights[0].weight).toFixed(1);
-        setText('weightDelta', `${delta > 0 ? '+' : ''}${delta} kg`);
-      } else {
-        setText('weightDelta', '-');
-      }
-
-      drawLineChart('weightChart', data, 'weight', '#38bdf8', 'Unesi bar 2 težine da se pojavi graf.', ' kg');
-      drawLineChart('waistChart', data, 'waist', '#a78bfa', 'Unesi bar 2 obima stomaka da se pojavi graf.', ' cm');
-      renderAchievements(data);
-
-      setHTML('historyTable', `
-        <table class="history-table">
-          <thead><tr><th>Datum</th><th>Kg</th><th>Struk</th><th>Koraci</th><th>Status</th></tr></thead>
-          <tbody>
-            ${data.slice(-10).reverse().map(d => `<tr><td>${d.date}</td><td>${d.weight ?? '-'}</td><td>${d.waist ?? '-'}</td><td>${d.steps || '-'}</td><td>${d.status}</td></tr>`).join('')}
-          </tbody>
-        </table>
-      `);
-    }
-
-    function reportText(){
-      const state = loadState();
-      const f = state.fields || {};
-      const doneTasks = TASKS.filter(t => state.tasks && state.tasks[t.id]).map(t => '✓ ' + t.text).join('\n') || '-';
-      const risks = RISKS.filter(r => state.risks && state.risks[r.id]).map(r => '⚠ ' + r.text).join('\n') || 'Nema rizika';
-      const fieldEvents = (state.fieldEvents || []).map(e => `${e.time} - ${eventLabel(e.type)} - ${e.text}`).join('\n') || '-';
-      const status = getEl('statusBadge') ? getEl('statusBadge').textContent : '-';
-
-      return `MEDSCAN dnevni izveštaj
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2>⭐ Dnevna poruka</h2><button class="warning" onclick="loadDailyQuote(true)">Nova poruka</button></div><div class="quote" id="dailyQuote">Učitavam...</div><div class="small" id="dailyQuoteAuthor" style="margin-top:8px;">MEDSCAN</div></div>
+    <div class="card"><h2>⚠️ Prioriteti sada</h2><div class="small">Šta trenutno kasni ili treba zatvoriti.</div><div id="priorityList" class="list"></div></div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2>✅ Danas završeno</h2><span class="pill" id="doneCountPill">0 / 10</span></div><div id="doneList" class="list"></div></div>
+  </section>
+
+  <section id="screen-entry" class="section">
+    <div class="card">
+      <h2>⚡ Quick entry</h2><div class="small">Veliki inputi za brz unos sa telefona.</div>
+      <div class="quick-grid">
+        <div class="field"><label>Težina (kg)</label><input id="weight" type="number" step="0.1"></div>
+        <div class="field"><label>Struk (cm)</label><input id="waist" type="number" step="0.1"></div>
+        <div class="field"><label>Koraci</label><input id="steps" type="number"></div>
+        <div class="field"><label>Km</label><input id="km" type="number" step="0.1"></div>
+        <div class="field"><label>Aktivne kcal</label><input id="calories" type="number"></div>
+        <div class="field"><label>Unos kalorija</label><input id="calorieIn" type="number"></div>
+        <div class="field"><label>Proteini (g)</label><input id="protein" type="number"></div>
+        <div class="field"><label>Voda (L)</label><input id="waterLiters" type="number" step="0.1"></div>
+        <div class="field"><label>Glad 1–10</label><input id="hunger" type="number" min="1" max="10"></div>
+        <div class="field"><label>Energija 1–10</label><input id="energy" type="number" min="1" max="10"></div>
+        <div class="field"><label>San (h)</label><input id="sleep" type="number" step="0.5"></div>
+        <div class="field"><label>Večera</label><input id="dinnerTime" type="time"></div>
+        <div class="field"><label>Puls</label><input id="pulse" type="number"></div>
+        <div class="field"><label>Pritisak</label><input id="bp"></div>
+        <div class="field"><label>SpO₂</label><input id="spo2" type="number"></div>
+        <div class="field"><label>Temperatura</label><input id="temp" type="number" step="0.1"></div>
+      </div>
+      <div class="field"><label>Beleška dana</label><textarea id="note"></textarea></div>
+      <div class="btn-row"><button class="success" onclick="saveDay()">Sačuvaj dan</button><button class="ghost" onclick="resetToday()">Reset dana</button></div>
+    </div>
+    <div class="card"><h2>📋 Brze obaveze</h2><div class="small">Tap za zatvaranje današnjeg sistema.</div><div id="taskChecklist" class="list"></div></div>
+    <div class="card"><h2>🏋️ Trening</h2><div class="quick-grid"><div class="field"><label>Visenje (sek)</label><input id="hang" type="number"></div><div class="field"><label>Zgib uz pomoć</label><input id="pull" type="number"></div><div class="field"><label>Kolena</label><input id="knee" type="number"></div><div class="field"><label>Propadanje / držanje</label><input id="dip" type="number"></div></div><div class="field"><label>Napomena za telo / ruku</label><textarea id="armNote"></textarea></div></div>
+  </section>
+
+  <section id="screen-history" class="section">
+    <div class="card"><h2>📈 Istorija</h2><div class="grid2"><div class="stat"><span class="small">Trenutni streak</span><strong id="streakNow">0</strong></div><div class="stat"><span class="small">Najbolji streak</span><strong id="streakBest">0</strong></div><div class="stat"><span class="small">Promena težine</span><strong id="weightDelta">—</strong></div><div class="stat"><span class="small">Rekord koraka</span><strong id="recSteps">0</strong></div></div></div>
+    <div class="card"><h2>⚖️ Graf težine</h2><div class="canvas-wrap"><canvas id="weightChart" width="420" height="220"></canvas></div></div>
+    <div class="card"><h2>📏 Graf struka</h2><div class="canvas-wrap"><canvas id="waistChart" width="420" height="220"></canvas></div></div>
+    <div class="card"><h2>📚 Poslednji dani</h2><div id="historyTable"></div></div>
+  </section>
+
+  <section id="screen-logs" class="section">
+    <div class="card"><h2>🧭 Terenski dnevnik</h2><div class="field"><label>Tip</label><select id="fieldEventType"><option value="info">Info / napomena</option><option value="water">Voda</option><option value="beer">Pivo</option><option value="soda">Gazirano / sok</option><option value="food">Hrana van plana</option><option value="walk">Šetnja / koraci</option><option value="symptom">Simptom / osećaj</option></select></div><div class="field"><label>Kratak unos</label><input id="fieldEventText"></div><div class="btn-row"><button class="warning" onclick="addFieldEvent()">Dodaj sa vremenom</button><button class="ghost" onclick="clearFieldEvents()">Očisti današnji log</button></div><div id="fieldLogTable"></div></div>
+    <div class="card danger-zone"><div class="small">🚀 Početak transformacije</div><div style="font-size:28px;font-weight:900;margin-top:4px;">13.05.2026.</div><div class="small" style="margin-top:6px;">Dani upozorenja nisu za krivicu nego za opomenu.</div><div class="seg" style="margin-top:12px;"><div class="field" style="margin-top:0"><label>Datum</label><input id="loserDate" type="date"></div><div class="field" style="margin-top:0"><label>Razlog</label><input id="loserReason"></div></div><div class="btn-row"><button class="danger" onclick="addLoserDay()">Dodaj loser day</button></div><div id="loserDaysList" class="loser"></div></div>
+    <div class="card"><h2>🏆 Rekordi</h2><div id="recordList" class="list"></div></div>
+  </section>
+
+  <section id="screen-more" class="section">
+    <div class="card"><h2>📤 Izveštaj i backup</h2><div class="btn-row"><button onclick="sendEmail()">Pošalji email</button><button class="ghost" onclick="exportJSON()">Izvezi JSON</button></div><div class="small" style="margin-top:10px;">EmailJS radi ako su ključevi podešeni. U suprotnom otvara mail app.</div></div>
+    <div class="card"><h2>📅 Plan za sutra</h2><div class="seg"><div class="field" style="margin-top:0"><label>Kada šetnja?</label><input id="tomorrowWalk" type="time"></div><div class="field" style="margin-top:0"><label>Kada trening?</label><input id="tomorrowWorkout" type="time"></div></div><div class="field"><label>Fokus sutra</label><textarea id="tomorrowFocus"></textarea></div></div>
+    <div class="card"><h2>🏆 Achievement sistem</h2><div id="achievementList" class="list"></div></div>
+    <div class="card"><h2>📲 Put ka app verziji</h2><div class="small">Ovo je mobile-first HTML baza. Sledeći koraci su PWA manifest, ikonica, offline cache i onda Android packaging.</div></div>
+  </section>
+</div>
+
+<nav class="sticky-nav">
+  <button class="nav-btn active" data-screen="home">Danas</button>
+  <button class="nav-btn" data-screen="entry">Unos</button>
+  <button class="nav-btn" data-screen="history">Istorija</button>
+  <button class="nav-btn" data-screen="logs">Log</button>
+  <button class="nav-btn" data-screen="more">Više</button>
+</nav>
+
+<script>
+const EMAILJS_CONFIG={publicKey:'nsqG-_xjWMfl5fk6Y',serviceId:'service_oofn0gf',templateId:'template_dxt6uwg',toEmail:'2025produkcija@gmail.com'};
+const TASKS=[{id:'warmLemonWater',text:'500 ml vode po buđenju',time:7,icon:'💧'},{id:'waterTea',text:'Jutarnji čaj bez šećera',time:10,icon:'🍵'},{id:'smoothie',text:'Smoothie zatvoren',time:12,icon:'🥤'},{id:'mainMeal',text:'Glavni obrok zatvoren',time:18,icon:'🍽️'},{id:'walk',text:'Šetnja / koraci',time:19,icon:'🚶'},{id:'bars',text:'Sprava 10–15 min',time:20,icon:'🏋️'},{id:'noBread',text:'Bez hleba',time:21,icon:'🥖'},{id:'noSugar',text:'Bez šećera / sokova',time:21,icon:'🍭'},{id:'noLateFood',text:'Bez kasnog jela',time:22,icon:'🌙'},{id:'waterGoal',text:'Voda 3.0L',time:21,icon:'🫗'}];
+const RISKS=[{id:'beer',text:'Pivo'},{id:'bread',text:'Hleb / pecivo'},{id:'sweet',text:'Slatko / sok'},{id:'lateFood',text:'Kasno jelo'},{id:'missedWalk',text:'Preskočena šetnja'}];
+const LOCAL_QUOTES=['Mali koraci svaki dan. Velike promene zauvek.','Ne mora savršeno. Mora zatvoreno.','Danas ne juriš motivaciju — gradiš sistem.','Telo pamti disciplinu čak i kad vaga ćuti.','Jedan čist dan je cigla u novom životu.','Kad ti je teško, uradi minimum. Minimum čuva ritam.','Ne pobeđuje najjači dan, nego najdosledniji čovek.','Svaki zapis je dokaz da vodiš svoj proces.','Disciplina danas znači lakše telo sutra.','Zatvoren dan je pobeda čak i kad nije savršen.','Nije poenta brzina. Poenta je smer.','Ne odustaj zbog jednog lošeg dana.','Sistem je jači od motivacije.','San, voda i hodanje menjaju više nego ekstremi.','Doslednost pravi transformaciju.'];
+const TRANSFORMATION_START='2026-05-13', recordsKey='medscan-records-v2', loserKey='medscan-loser-days-v2';
+const key=()=> 'medscan-day-v2-' + new Date().toISOString().slice(0,10);
+const defaultState=()=>({tasks:{},risks:{},fields:{},fieldEvents:[]});
+function loadState(){try{return JSON.parse(localStorage.getItem(key())||JSON.stringify(defaultState()));}catch(e){return defaultState();}}
+function saveState(s){localStorage.setItem(key(),JSON.stringify(s));}
+function loadRecords(){try{return JSON.parse(localStorage.getItem(recordsKey)||'{"hang":0,"pull":0,"knee":0,"dip":0,"steps":0}');}catch(e){return {hang:0,pull:0,knee:0,dip:0,steps:0};}}
+function saveRecords(r){localStorage.setItem(recordsKey,JSON.stringify(r));}
+function loadLoserDays(){try{return JSON.parse(localStorage.getItem(loserKey)||'[]');}catch(e){return [];}}
+function saveLoserDays(items){localStorage.setItem(loserKey,JSON.stringify(items));}
+function setText(id,v){const el=document.getElementById(id); if(el) el.textContent=v;}
+function setWidth(id,pct){const el=document.getElementById(id); if(el) el.style.width=pct+'%';}
+function bindNav(){document.querySelectorAll('.nav-btn').forEach(btn=>btn.addEventListener('click',()=>{const s=btn.dataset.screen;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b===btn));document.querySelectorAll('.section').forEach(sec=>sec.classList.remove('active'));const t=document.getElementById('screen-'+s); if(t) t.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}));}
+function bindFields(){const ids=['weight','waist','steps','km','calories','calorieIn','protein','waterLiters','hunger','energy','sleep','dinnerTime','pulse','bp','spo2','temp','note','hang','pull','knee','dip','armNote','tomorrowWalk','tomorrowWorkout','tomorrowFocus']; const state=loadState(); ids.forEach(id=>{const el=document.getElementById(id); if(!el) return; el.value=state.fields[id]||''; el.addEventListener('input',()=>{const s=loadState(); s.fields[id]=el.value; if(id==='waterLiters') s.tasks.waterGoal=Number(el.value||0)>=3; saveState(s); refresh();});});}
+function completionPercent(state){const done=TASKS.filter(t=>state.tasks[t.id]).length; return Math.round((done/TASKS.length)*100);}
+function riskCount(state){return RISKS.filter(r=>state.risks[r.id]).length;}
+function dayProgressPercent(){const now=new Date(), start=new Date(now), end=new Date(now); start.setHours(6,0,0,0); end.setHours(23,0,0,0); if(now<=start) return 0; if(now>=end) return 100; return Math.round(((now-start)/(end-start))*100);}
+function statusMeta(state){const pct=completionPercent(state), risks=riskCount(state), h=new Date().getHours(), critical=state.tasks.mainMeal&&state.tasks.walk&&state.tasks.noLateFood; if(risks>0 || (h>=20 && !critical)) return {cls:'risk',text:'🔴 RIZIČAN DAN'}; if(pct>=90) return {cls:'clean',text:'🟢 ČIST DAN'}; return {cls:'mid',text:'🟡 DAN U TOKU'};}
+function renderHeader(){setText('todayText', new Date().toLocaleDateString('sr-RS',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'})); setText('timeText', new Date().toLocaleTimeString('sr-RS',{hour:'2-digit',minute:'2-digit'}));}
+function loadDailyQuote(force=false){const quoteBox=document.getElementById('dailyQuote'), authorBox=document.getElementById('dailyQuoteAuthor'); if(!quoteBox||!authorBox) return; const today=new Date(), dateKey=today.toISOString().slice(0,10), baseIndex=(today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate())%LOCAL_QUOTES.length, cursorKey='medscan-quote-cursor-v2-'+dateKey; let index=Number(localStorage.getItem(cursorKey)); if(Number.isNaN(index)) index=baseIndex; if(force) index=(index+1)%LOCAL_QUOTES.length; localStorage.setItem(cursorKey,String(index)); quoteBox.textContent='“'+LOCAL_QUOTES[index]+'”'; authorBox.textContent='MEDSCAN dnevna poruka';}
+function renderHome(){const state=loadState(), dayPct=dayProgressPercent(), sysPct=completionPercent(state), meta=statusMeta(state), badge=document.getElementById('statusBadge'); if(badge){badge.className='badge '+meta.cls; badge.textContent=meta.text;} setText('dayPctText', dayPct+'%'); setWidth('dayProgress',dayPct); setText('systemPctText', sysPct+'%'); setWidth('systemProgress',sysPct); setText('scoreText',sysPct+'%'); const ring=document.getElementById('scoreRing'); if(ring) ring.style.setProperty('--score',sysPct+'%'); const f=state.fields||{}; setText('stepsStat',Number(f.steps||0).toLocaleString('sr-RS')); setText('weightStat',f.weight?(f.weight+' kg'):'—'); setText('waterStat',(f.waterLiters||'0.0')+' L'); renderPriorities(); renderDoneList();}
+function toggleTask(id){const s=loadState(); s.tasks[id]=!s.tasks[id]; saveState(s); refresh();}
+function renderTaskChecklist(){const box=document.getElementById('taskChecklist'); if(!box) return; const state=loadState(); box.innerHTML=TASKS.map(t=>`<div class="item ${state.tasks[t.id]?'done':'warn'}"><div class="icon">${t.icon}</div><div><strong>${t.text}</strong><div class="small">rok oko ${String(t.time).padStart(2,'0')}:00</div></div><button class="${state.tasks[t.id]?'ghost':''}" onclick="toggleTask('${t.id}')">${state.tasks[t.id]?'Poništi':'Zatvori'}</button></div>`).join('');}
+function renderPriorities(){const state=loadState(), box=document.getElementById('priorityList'); if(!box) return; const f=state.fields||{}, hour=new Date().getHours(), items=[]; TASKS.forEach(t=>{if(!state.tasks[t.id]&&hour>=t.time) items.push({icon:t.icon,title:t.text,note:'Kasni za današnji ritam',action:t.id});}); if(Number(f.steps||0)<6000&&hour>=18) items.push({icon:'👟',title:'Koraci su niski',note:'Pojačaj šetnju večeras',action:'walk'}); if(Number(f.waterLiters||0)<2&&hour>=16) items.push({icon:'💧',title:'Voda je niska',note:'Dodaj još vode danas',action:'waterGoal'}); if(!items.length){box.innerHTML='<div class="item done"><div class="icon">✅</div><div><strong>Trenutno nema kritičnih kašnjenja.</strong><div class="small">Nastavi ritam i zatvori dan.</div></div><span class="pill">mirno</span></div>'; return;} box.innerHTML=items.slice(0,6).map(i=>`<div class="item risk"><div class="icon">${i.icon}</div><div><strong>${i.title}</strong><div class="small">${i.note}</div></div><button class="danger" onclick="toggleTask('${i.action}')">Zatvori</button></div>`).join('');}
+function renderDoneList(){const box=document.getElementById('doneList'), pill=document.getElementById('doneCountPill'); if(!box) return; const state=loadState(), done=TASKS.filter(t=>state.tasks[t.id]); if(pill) pill.textContent=done.length+' / '+TASKS.length; box.innerHTML=done.length?done.map(t=>`<div class="item done"><div class="icon">${t.icon}</div><div><strong>${t.text}</strong><div class="small">zatvoreno</div></div><span class="pill">ok</span></div>`).join(''):'<div class="small">Još nema zatvorenih stavki danas.</div>';}
+function updateRecords(showPopup=false){const s=loadState(), rec=loadRecords(), vals={hang:Number(s.fields.hang||0),pull:Number(s.fields.pull||0),knee:Number(s.fields.knee||0),dip:Number(s.fields.dip||0),steps:Number(s.fields.steps||0)}; let changed=false; Object.keys(vals).forEach(k=>{if(vals[k]>rec[k]){rec[k]=vals[k];changed=true;}}); saveRecords(rec); renderRecords(); if(changed&&showPopup) alert('Novi rekord je sačuvan.');}
+function renderRecords(){const rec=loadRecords(); setText('recSteps', rec.steps||0); const box=document.getElementById('recordList'); if(!box) return; box.innerHTML=[['Visenje',rec.hang+' sek'],['Zgib uz pomoć',rec.pull],['Podizanje kolena',rec.knee],['Propadanje / držanje',rec.dip+' sek'],['Koraci',rec.steps]].map(([a,b])=>`<div class="item done"><div class="icon">🏆</div><div><strong>${a}</strong><div class="small">lični rekord</div></div><span class="pill">${b}</span></div>`).join('');}
+function eventLabel(type){const map={info:'ℹ️ Info',water:'💧 Voda',beer:'🍺 Pivo',soda:'🥤 Sok',food:'🍽️ Hrana',walk:'🚶 Šetnja',symptom:'🩺 Simptom'}; return map[type]||'ℹ️ Info';}
+function addFieldEvent(){const typeEl=document.getElementById('fieldEventType'), textEl=document.getElementById('fieldEventText'); if(!typeEl||!textEl) return; const text=textEl.value.trim(); if(!text){alert('Upiši kratak unos.'); return;} const s=loadState(); s.fieldEvents=s.fieldEvents||[]; const now=new Date(); s.fieldEvents.push({time:now.toLocaleTimeString('sr-RS',{hour:'2-digit',minute:'2-digit'}),type:typeEl.value,text}); if(typeEl.value==='beer') s.risks.beer=true; if(typeEl.value==='soda') s.risks.sweet=true; if(typeEl.value==='food') s.risks.bread=true; saveState(s); textEl.value=''; refresh();}
+function clearFieldEvents(){if(!confirm('Obrisati samo današnji terenski log?')) return; const s=loadState(); s.fieldEvents=[]; saveState(s); refresh();}
+function renderFieldEvents(){const box=document.getElementById('fieldLogTable'); if(!box) return; const events=loadState().fieldEvents||[]; if(!events.length){box.innerHTML='<div class="small" style="margin-top:12px;">Još nema terenskih zapisa danas.</div>'; return;} box.innerHTML=`<table><thead><tr><th>Vreme</th><th>Tip</th><th>Opis</th></tr></thead><tbody>${events.slice().reverse().map(e=>`<tr><td>${e.time}</td><td>${eventLabel(e.type)}</td><td>${e.text}</td></tr>`).join('')}</tbody></table>`;}
+function addLoserDay(){const dateEl=document.getElementById('loserDate'), reasonEl=document.getElementById('loserReason'); if(!dateEl||!reasonEl) return; const date=dateEl.value, reason=reasonEl.value.trim(); if(!date||!reason){alert('Upiši datum i razlog.'); return;} const items=loadLoserDays(); items.unshift({id:Date.now(),date,reason}); saveLoserDays(items); dateEl.value=''; reasonEl.value=''; renderLoserDays();}
+function removeLoserDay(id){saveLoserDays(loadLoserDays().filter(x=>x.id!==id)); renderLoserDays();}
+function renderLoserDays(){const box=document.getElementById('loserDaysList'); if(!box) return; const items=loadLoserDays(); box.innerHTML=items.length?items.map(i=>`<div class="loser-item"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><strong>${i.date}</strong><button class="danger" onclick="removeLoserDay(${i.id})">Obriši</button></div><div class="small" style="margin-top:8px;color:#fed7aa">${i.reason}</div></div>`).join(''):'<div class="small" style="margin-top:10px;">Još nema upisanih loser days.</div>';}
+function dayKeys(days=30){const keys=[], today=new Date(), start=new Date(TRANSFORMATION_START+'T00:00:00'), first=new Date(today); first.setDate(today.getDate()-(days-1)); const realStart=first<start?start:first; for(let d=new Date(realStart); d<=today; d.setDate(d.getDate()+1)) keys.push('medscan-day-v2-'+d.toISOString().slice(0,10)); return keys;}
+function isCleanDay(state){if(!state) return false; return completionPercent(state)>=80 && riskCount(state)===0;}
+function historyData(){return dayKeys(30).map(k=>{const date=k.replace('medscan-day-v2-',''); let state=null; try{state=JSON.parse(localStorage.getItem(k)||'null');}catch(e){} const weight=state?.fields?.weight?Number(state.fields.weight):null, waist=state?.fields?.waist?Number(state.fields.waist):null; return {date,state,weight,waist,clean:isCleanDay(state),steps:state?.fields?.steps||''};});}
+function streaks(data){let current=0,best=0,run=0; for(let i=data.length-1;i>=0;i--){if(data[i].clean) current++; else break;} data.forEach(d=>{if(d.clean) run++; else run=0; best=Math.max(best,run);}); return {current,best};}
+function drawChart(canvasId, points, color, labelText){const canvas=document.getElementById(canvasId); if(!canvas) return; const ctx=canvas.getContext('2d'); ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle='rgba(255,255,255,.03)'; ctx.fillRect(0,0,canvas.width,canvas.height); for(let y=30;y<canvas.height;y+=40){ctx.strokeStyle='rgba(255,255,255,.08)'; ctx.beginPath(); ctx.moveTo(34,y); ctx.lineTo(canvas.width-10,y); ctx.stroke();} if(points.length<2){ctx.fillStyle='#94a3b8'; ctx.font='15px system-ui'; ctx.fillText(labelText,22,110); return;} const values=points.map(p=>p.value), min=Math.min(...values)-0.5, max=Math.max(...values)+0.5, x=i=>38+(i/Math.max(1,points.length-1))*(canvas.width-58), y=v=>180-((v-min)/Math.max(1,max-min))*130; ctx.strokeStyle=color; ctx.lineWidth=4; ctx.beginPath(); points.forEach((p,i)=>{const px=x(i), py=y(p.value); if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);}); ctx.stroke(); points.forEach((p,i)=>{const px=x(i), py=y(p.value); ctx.fillStyle=p.clean?'#22c55e':color; ctx.beginPath(); ctx.arc(px,py,5,0,Math.PI*2); ctx.fill();});}
+function renderHistory(){const data=historyData(), s=streaks(data); setText('streakNow',s.current+' dana'); setText('streakBest',s.best+' dana'); const weights=data.filter(d=>d.weight!==null); if(weights.length>=2){const delta=(weights[weights.length-1].weight-weights[0].weight).toFixed(1); setText('weightDelta',(delta>0?'+':'')+delta+' kg');} else setText('weightDelta','—'); drawChart('weightChart',weights.map(d=>({value:d.weight,clean:d.clean})),'#38bdf8','Unesi bar 2 težine za graf.'); const waists=data.filter(d=>d.waist!==null); drawChart('waistChart',waists.map(d=>({value:d.waist,clean:d.clean})),'#a78bfa','Unesi bar 2 struka za graf.'); const table=document.getElementById('historyTable'); if(table) table.innerHTML=`<table><thead><tr><th>Datum</th><th>Kg</th><th>Struk</th><th>Koraci</th></tr></thead><tbody>${data.slice(-10).reverse().map(d=>`<tr><td>${d.date}</td><td>${d.weight??'-'}</td><td>${d.waist??'-'}</td><td>${d.steps||'-'}</td></tr>`).join('')}</tbody></table>`; renderAchievements(data);}
+function renderAchievements(data){const box=document.getElementById('achievementList'); if(!box) return; const achievements=[], rec=loadRecords(), latestWeight=[...data].reverse().find(d=>d.weight!==null)?.weight, s=streaks(data); if(latestWeight!==undefined&&latestWeight<=110) achievements.push('🏆 Prvih -5 kg'); if(rec.hang>=30) achievements.push('🏆 30 sekundi visenja'); if(rec.pull>=1) achievements.push('🏆 Prvi zgib uz pomoć'); if(s.current>=7) achievements.push('🏆 7 čistih dana'); box.innerHTML=achievements.length?achievements.map(a=>`<div class="item done"><div class="icon">🔥</div><div><strong>${a}</strong><div class="small">otključano</div></div><span class="pill">da</span></div>`).join(''):'<div class="small">Achievement-i će se pojavljivati automatski.</div>';}
+function reportText(){const state=loadState(), f=state.fields||{}, doneTasks=TASKS.filter(t=>state.tasks[t.id]).map(t=>'✓ '+t.text).join('\n')||'-', fieldEvents=(state.fieldEvents||[]).map(e=>`${e.time} - ${eventLabel(e.type)} - ${e.text}`).join('\n')||'-', status=document.getElementById('statusBadge')?.textContent||'-'; return `MEDSCAN Mobile dnevni izveštaj
 
 Datum: ${new Date().toLocaleDateString('sr-RS')}
 Status: ${status}
 
-Težina: ${f.weight || '-'} kg
-Obim stomaka: ${f.waist || '-'} cm
-Koraci: ${f.steps || '-'}
-Km: ${f.km || '-'}
-Kalorije: ${f.calories || '-'}
-Glad: ${f.hunger || '-'} / 10
-Energija: ${f.energy || '-'} / 10
-San: ${f.sleep || '-'} h
-Večera: ${f.dinnerTime || '-'}
+Težina: ${f.weight||'-'} kg
+Struk: ${f.waist||'-'} cm
+Koraci: ${f.steps||'-'}
+Km: ${f.km||'-'}
+Aktivne kcal: ${f.calories||'-'}
+Unos kalorija: ${f.calorieIn||'-'}
+Proteini: ${f.protein||'-'}
+Voda: ${f.waterLiters||'-'} L
+Glad: ${f.hunger||'-'}
+Energija: ${f.energy||'-'}
+San: ${f.sleep||'-'} h
 
-Vitalni znaci:
-Puls: ${f.pulse || '-'}
-Pritisak: ${f.bp || '-'}
-SpO₂: ${f.spo2 || '-'}
-Temperatura: ${f.temp || '-'}
+Vitalni:
+Puls: ${f.pulse||'-'}
+Pritisak: ${f.bp||'-'}
+SpO2: ${f.spo2||'-'}
+Temperatura: ${f.temp||'-'}
 
-Sprava:
-Visenje: ${f.hang || 0} sek
-Zgib uz pomoć: ${f.pull || 0}
-Podizanje kolena: ${f.knee || 0}
-Propadanje/držanje: ${f.dip || 0} sek
-Napomena ruka: ${f.armNote || '-'}
+Trening:
+Visenje: ${f.hang||0}
+Zgib uz pomoć: ${f.pull||0}
+Kolena: ${f.knee||0}
+Propadanje/držanje: ${f.dip||0}
+Napomena: ${f.armNote||'-'}
 
 Terenski dnevnik:
 ${fieldEvents}
@@ -1419,89 +209,15 @@ ${fieldEvents}
 Završeno:
 ${doneTasks}
 
-Rizici:
-${risks}
-
 Beleška:
-${f.note || f.noteInline || '-'}`;
-    }
-
-    async function sendEmail(){
-      const subjectRaw = 'MEDSCAN dnevni izveštaj - ' + new Date().toLocaleDateString('sr-RS');
-      const bodyRaw = reportText();
-      const emailReady = EMAILJS_CONFIG.publicKey && EMAILJS_CONFIG.serviceId && EMAILJS_CONFIG.templateId;
-
-      if (!emailReady) {
-        window.location.href = `mailto:?subject=${encodeURIComponent(subjectRaw)}&body=${encodeURIComponent(bodyRaw)}`;
-        return;
-      }
-
-      try {
-        emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
-        await emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
-          subject: subjectRaw,
-          message: bodyRaw,
-          to_email: EMAILJS_CONFIG.toEmail || undefined
-        });
-        alert('Email izveštaj je poslat automatski.');
-      } catch (err) {
-        console.error(err);
-        alert('Automatski email nije prošao. Otvaram običan email kao rezervu.');
-        window.location.href = `mailto:?subject=${encodeURIComponent(subjectRaw)}&body=${encodeURIComponent(bodyRaw)}`;
-      }
-    }
-
-    function saveDay(){
-      const state = loadState();
-      const noteInline = getEl('noteInline');
-      const note = getEl('note');
-      if (noteInline && note && !note.value && noteInline.value) {
-        note.value = noteInline.value;
-        state.fields.note = noteInline.value;
-        saveState(state);
-      }
-      updateRecords(true);
-      updateStatus();
-      renderHistory();
-      alert('Dan je sačuvan.');
-    }
-
-    function exportJSON(){
-      const data = {
-        today: loadState(),
-        records: loadRecords(),
-        loserDays: loadLoserDays()
-      };
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'medscan-dnevni-panel-modern.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function resetToday(){
-      if (!confirm('Resetovati samo današnji unos?')) return;
-      localStorage.removeItem(dayKey());
-      location.reload();
-    }
-
-    function init(){
-      bindFields();
-      loadDailyQuote(false);
-      renderLoserDays();
-      renderFieldEvents();
-      renderRecords();
-      updateRecords(false);
-      updateStatus();
-      renderHistory();
-      setInterval(() => {
-        updateStatus();
-      }, 30000);
-    }
-
-    document.addEventListener('DOMContentLoaded', init);
-  </script>
+${f.note||'-'}`;}
+async function sendEmail(){const subjectRaw='MEDSCAN Mobile izveštaj - '+new Date().toLocaleDateString('sr-RS'), bodyRaw=reportText(), emailReady=EMAILJS_CONFIG.publicKey&&EMAILJS_CONFIG.serviceId&&EMAILJS_CONFIG.templateId; if(!emailReady){const subject=encodeURIComponent(subjectRaw), body=encodeURIComponent(bodyRaw); window.location.href=`mailto:?subject=${subject}&body=${body}`; return;} try{emailjs.init({publicKey:EMAILJS_CONFIG.publicKey}); await emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {subject:subjectRaw,message:bodyRaw,to_email:EMAILJS_CONFIG.toEmail||undefined}); alert('Izveštaj je poslat.');}catch(err){console.error(err);const subject=encodeURIComponent(subjectRaw), body=encodeURIComponent(bodyRaw); window.location.href=`mailto:?subject=${subject}&body=${body}`;}}
+function exportJSON(){const payload={today:loadState(),records:loadRecords(),loserDays:loadLoserDays(),generatedAt:new Date().toISOString()}, blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}), url=URL.createObjectURL(blob), a=document.createElement('a'); a.href=url; a.download='medscan-mobile-v2.json'; a.click(); URL.revokeObjectURL(url);}
+function saveDay(){updateRecords(true); refresh(); alert('Dan je sačuvan.');}
+function resetToday(){if(!confirm('Resetovati samo današnji unos?')) return; localStorage.removeItem(key()); location.reload();}
+function refresh(){renderHeader(); renderHome(); renderTaskChecklist(); renderFieldEvents(); renderLoserDays(); updateRecords(false); renderHistory();}
+window.toggleTask=toggleTask; window.addFieldEvent=addFieldEvent; window.clearFieldEvents=clearFieldEvents; window.addLoserDay=addLoserDay; window.removeLoserDay=removeLoserDay; window.loadDailyQuote=loadDailyQuote; window.sendEmail=sendEmail; window.exportJSON=exportJSON; window.saveDay=saveDay; window.resetToday=resetToday;
+bindNav(); bindFields(); loadDailyQuote(false); renderRecords(); refresh(); setInterval(renderHeader,60000);
+</script>
 </body>
 </html>
