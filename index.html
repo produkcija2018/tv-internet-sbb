@@ -416,12 +416,8 @@
         <h2>⭐ Dnevna reč bodrenja</h2>
         <div class="small">Automatski pokušava da povuče dnevni motivacioni citat. Ako internet/API ne radi, prikazuje lokalnu MEDSCAN poruku.</div>
         <div class="card" style="margin-top:12px;background:linear-gradient(135deg,rgba(250,204,21,.10),rgba(56,189,248,.08));">
-          <div id="dailyQuote" style="font-size:22px;font-weight:800;line-height:1.35;">
-            “Ne mora savršeno. Mora zatvoreno.”
-          </div>
-          <div id="dailyQuoteAuthor" class="small" style="margin-top:10px;">
-            MEDSCAN dnevna poruka
-          </div>
+          <div id="dailyQuote" style="font-size:22px;font-weight:800;line-height:1.35;">Učitavam dnevnu poruku...</div>
+          <div id="dailyQuoteAuthor" class="small" style="margin-top:10px;"></div>
           <div class="btn-row">
             <button onclick="loadDailyQuote(true)" class="warning">🔄 Nova poruka</button>
           </div>
@@ -626,10 +622,19 @@
       if (!quoteBox || !authorBox) return;
 
       const today = new Date();
-      let index = today.getFullYear() + today.getMonth() + today.getDate();
-      if (force) index = index + Math.floor(Math.random() * LOCAL_QUOTES.length);
-      const quote = LOCAL_QUOTES[index % LOCAL_QUOTES.length];
+      const dailyIndex = (today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()) % LOCAL_QUOTES.length;
+      const cursorKey = 'medscan-quote-cursor-' + today.toISOString().slice(0,10);
+      let index = dailyIndex;
 
+      if (force) {
+        const current = Number(localStorage.getItem(cursorKey) || dailyIndex);
+        index = (current + 1) % LOCAL_QUOTES.length;
+        localStorage.setItem(cursorKey, String(index));
+      } else {
+        index = Number(localStorage.getItem(cursorKey) || dailyIndex);
+      }
+
+      const quote = LOCAL_QUOTES[index];
       quoteBox.textContent = '“' + quote + '”';
       authorBox.textContent = 'MEDSCAN dnevna poruka';
     }
@@ -843,11 +848,14 @@
         ['Hang','hang'], ['Pull','pull'], ['Knee','knee'], ['Dip','dip']
       ];
       pairs.forEach(([label, keyName]) => {
+        const bar = document.getElementById('bar' + label);
+        const text = document.getElementById('bar' + label + 'Text');
+        if (!bar || !text) return;
         const current = Number(fields[keyName] || 0);
         const max = Math.max(rec[keyName], current, 1);
         const pct = Math.min(100, Math.round(current / max * 100));
-        document.getElementById('bar' + label).style.width = pct + '%';
-        document.getElementById('bar' + label + 'Text').textContent = pct + '%';
+        bar.style.width = pct + '%';
+        text.textContent = pct + '%';
       });
     }
 
@@ -971,7 +979,8 @@ Završeno:\n${doneTasks || '-'}\n\nRizici:\n${risks}\n\nBeleška:\n${f.note || '
       const data = historyData();
       const s = streaks(data);
       document.getElementById('streakNow').textContent = s.current + ' dana';
-      document.getElementById('freezeCount').textContent = s.freezeLeft;
+      const freezeEl = document.getElementById('freezeCount');
+      if (freezeEl) freezeEl.textContent = s.freezeLeft;
       document.getElementById('streakBest').textContent = s.best + ' dana';
       const weights = data.filter(d => d.weight !== null);
       if (weights.length >= 2) {
@@ -1036,7 +1045,8 @@ Završeno:\n${doneTasks || '-'}\n\nRizici:\n${risks}\n\nBeleška:\n${f.note || '
       if (lowEnergy >= 2) msg = '⚠️ Energija pada poslednjih dana — proveri san i unos hrane.';
       if (badSleep >= 2) msg = '⚠️ San je nestabilan više dana — ne forsiraj kasne aktivnosti.';
       if (missedWalk >= 2) msg = '⚠️ Šetnje padaju — ulaziš u zonu gubitka ritma.';
-      document.getElementById('riskPattern').textContent = msg;
+      const riskPatternEl = document.getElementById('riskPattern');
+      if (riskPatternEl) riskPatternEl.textContent = msg;
     }
 
     function drawWeightChart(data) {
