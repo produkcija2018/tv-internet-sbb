@@ -355,6 +355,28 @@
           <div class="small">🚀 Početak transformacije</div>
           <div class="milestone-date">13.05.2026.</div>
           <div class="small">Dan prekretnice. Od ovog datuma se trajno prate disciplina, razvoj, snaga i uspeh.</div>
+      
+          <div style="margin-top:14px;">
+            <div class="small" style="color:#fecaca;font-weight:800;">⚠️ Loser days — dani upozorenja</div>
+            <div class="small">Dani kada nisam ispoštovao sistem. Ne za krivicu — nego za opomenu.</div>
+
+            <div class="form-grid" style="margin-top:10px;">
+              <div class="field">
+                <label>Datum</label>
+                <input id="loserDate" type="date" />
+              </div>
+              <div class="field">
+                <label>Razlog</label>
+                <input id="loserReason" placeholder="Npr. lenjost, pivo, preskočena šetnja..." />
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button class="danger" onclick="addLoserDay()">➕ Dodaj loser day</button>
+            </div>
+
+            <div id="loserDaysList" class="record-list"></div>
+          </div>
         </div>
         <h2>🏆 Trenutni rekordi</h2>
         <div class="small">Svaki mali pomak se pamti.</div>
