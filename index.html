@@ -413,6 +413,18 @@
       </section>
 
       <section class="card span-12">
+        <h2>⭐ Dnevna reč bodrenja</h2>
+        <div class="small">Automatski pokušava da povuče dnevni motivacioni citat. Ako internet/API ne radi, prikazuje lokalnu MEDSCAN poruku.</div>
+        <div class="card" style="margin-top:12px;background:linear-gradient(135deg,rgba(250,204,21,.10),rgba(56,189,248,.08));">
+          <div id="dailyQuote" style="font-size:22px;font-weight:800;line-height:1.35;">Učitavam dnevnu poruku...</div>
+          <div id="dailyQuoteAuthor" class="small" style="margin-top:10px;"></div>
+          <div class="btn-row">
+            <button onclick="loadDailyQuote(true)" class="warning">🔄 Nova poruka</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card span-12">
         <h2>🧭 Terenski dnevnik</h2>
         <div class="small">Brzi zapis svega što se desi na terenu. Klik na plus automatski upisuje trenutno vreme.</div>
         <div class="form-grid">
@@ -574,6 +586,49 @@
       state.risks[id] = !state.risks[id];
       saveState(state);
       renderLists(); updateStatus();
+    }
+
+    const LOCAL_QUOTES = [
+      'Mali koraci svaki dan. Velike promene zauvek.',
+      'Ne mora savršeno. Mora zatvoreno.',
+      'Danas ne juriš motivaciju — gradiš sistem.',
+      'Telo pamti disciplinu čak i kad vaga ćuti.',
+      'Jedan čist dan je cigla u novom životu.',
+      'Kad ti je teško, uradi minimum. Minimum čuva ritam.',
+      'Ne pobeđuje najjači dan, nego najdosledniji čovek.',
+      'Svaki zapis je dokaz da vodiš svoj proces.'
+    ];
+
+    async function loadDailyQuote(force = false) {
+      const today = new Date().toISOString().slice(0,10);
+      const cacheKey = 'medscan-quote-' + today;
+      const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+      const quoteBox = document.getElementById('dailyQuote');
+      const authorBox = document.getElementById('dailyQuoteAuthor');
+      if (!quoteBox || !authorBox) return;
+
+      if (cached && !force) {
+        quoteBox.textContent = '“' + cached.text + '”';
+        authorBox.textContent = cached.author || 'MEDSCAN';
+        return;
+      }
+
+      try {
+        const res = await fetch('https://zenquotes.io/api/today');
+        const data = await res.json();
+        const q = Array.isArray(data) && data[0] ? data[0] : null;
+        if (!q || !q.q) throw new Error('Nema citata');
+        const item = { text: q.q, author: (q.a || 'ZenQuotes') + ' · ZenQuotes' };
+        localStorage.setItem(cacheKey, JSON.stringify(item));
+        quoteBox.textContent = '“' + item.text + '”';
+        authorBox.textContent = item.author;
+      } catch (e) {
+        const text = LOCAL_QUOTES[Math.floor(Math.random() * LOCAL_QUOTES.length)];
+        const item = { text, author: 'MEDSCAN lokalna poruka' };
+        localStorage.setItem(cacheKey, JSON.stringify(item));
+        quoteBox.textContent = '“' + item.text + '”';
+        authorBox.textContent = item.author;
+      }
     }
 
     function eventLabel(type) {
@@ -1029,6 +1084,7 @@ Završeno:\n${doneTasks || '-'}\n\nRizici:\n${risks}\n\nBeleška:\n${f.note || '
       bindFields();
       renderRecords();
       renderFieldEvents();
+      loadDailyQuote(false);
       updateBars();
       renderHistory();
       updateClock();
