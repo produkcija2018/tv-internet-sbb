@@ -422,6 +422,51 @@
             <button onclick="loadDailyQuote(true)" class="warning">🔄 Nova poruka</button>
           </div>
         </div>
+        <script>
+          window.MEDSCAN_QUOTES = [
+            'Mali koraci svaki dan. Velike promene zauvek.',
+            'Ne mora savršeno. Mora zatvoreno.',
+            'Danas ne juriš motivaciju — gradiš sistem.',
+            'Telo pamti disciplinu čak i kad vaga ćuti.',
+            'Jedan čist dan je cigla u novom životu.',
+            'Kad ti je teško, uradi minimum. Minimum čuva ritam.',
+            'Ne pobeđuje najjači dan, nego najdosledniji čovek.',
+            'Svaki zapis je dokaz da vodiš svoj proces.',
+            'Disciplina danas znači lakše telo sutra.',
+            'Zatvoren dan je pobeda čak i kad nije savršen.',
+            'Nije poenta brzina. Poenta je smer.',
+            'Tvoje telo već primećuje promene.',
+            'Ne odustaj zbog jednog lošeg dana.',
+            'Sistem je jači od motivacije.',
+            'Svaki kilogram dole menja budućnost.',
+            'San, voda i hodanje menjaju više nego ekstremi.',
+            'Tvoje sutra zavisi od današnjih malih odluka.',
+            'Doslednost pravi transformaciju.',
+            'Kad zatvoriš dan — pobedio si.',
+            'Telo voli ritam.'
+          ];
+
+          window.loadDailyQuote = function(force = false) {
+            const quoteBox = document.getElementById('dailyQuote');
+            const authorBox = document.getElementById('dailyQuoteAuthor');
+            if (!quoteBox || !authorBox) return;
+
+            const today = new Date();
+            const dateKey = today.toISOString().slice(0, 10);
+            const baseIndex = (today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()) % window.MEDSCAN_QUOTES.length;
+            const cursorKey = 'medscan-quote-cursor-' + dateKey;
+            let index = Number(localStorage.getItem(cursorKey));
+
+            if (Number.isNaN(index)) index = baseIndex;
+            if (force) index = (index + 1) % window.MEDSCAN_QUOTES.length;
+
+            localStorage.setItem(cursorKey, String(index));
+            quoteBox.textContent = '“' + window.MEDSCAN_QUOTES[index] + '”';
+            authorBox.textContent = 'MEDSCAN dnevna poruka';
+          };
+
+          window.loadDailyQuote(false);
+        </script>
       </section>
 
       <section class="card span-12">
