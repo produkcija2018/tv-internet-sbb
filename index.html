@@ -589,47 +589,46 @@
     }
 
     const LOCAL_QUOTES = [
-  "Mali koraci svaki dan. Velike promene zauvek.",
-  "Ne mora savršeno. Mora zatvoreno.",
-  "Danas ne juriš motivaciju — gradiš sistem.",
-  "Telo pamti disciplinu čak i kad vaga ćuti.",
-  "Jedan čist dan je cigla u novom životu.",
-  "Kad ti je teško, uradi minimum. Minimum čuva ritam.",
-  "Ne pobeđuje najjači dan, nego najdosledniji čovek.",
-  "Svaki zapis je dokaz da vodiš svoj proces.",
-  "Disciplina danas znači lakše telo sutra.",
-  "Zatvoren dan je pobeda čak i kad nije savršen.",
-  "Nije poenta brzina. Poenta je smer.",
-  "Tvoje telo već primećuje promene.",
-  "Ne odustaj zbog jednog lošeg dana.",
-  "Sistem je jači od motivacije.",
-  "Svaki kilogram dole menja budućnost.",
-  "San, voda i hodanje menjaju više nego ekstremi.",
-  "Tvoje sutra zavisi od današnjih malih odluka.",
-  "Doslednost pravi transformaciju.",
-  "Kad zatvoriš dan — pobedio si.",
-  "Telo voli ritam."
-];
+      'Mali koraci svaki dan. Velike promene zauvek.',
+      'Ne mora savršeno. Mora zatvoreno.',
+      'Danas ne juriš motivaciju — gradiš sistem.',
+      'Telo pamti disciplinu čak i kad vaga ćuti.',
+      'Jedan čist dan je cigla u novom životu.',
+      'Kad ti je teško, uradi minimum. Minimum čuva ritam.',
+      'Ne pobeđuje najjači dan, nego najdosledniji čovek.',
+      'Svaki zapis je dokaz da vodiš svoj proces.',
+      'Disciplina danas znači lakše telo sutra.',
+      'Zatvoren dan je pobeda čak i kad nije savršen.',
+      'Nije poenta brzina. Poenta je smer.',
+      'Tvoje telo već primećuje promene.',
+      'Ne odustaj zbog jednog lošeg dana.',
+      'Sistem je jači od motivacije.',
+      'Svaki kilogram dole menja budućnost.',
+      'San, voda i hodanje menjaju više nego ekstremi.',
+      'Tvoje sutra zavisi od današnjih malih odluka.',
+      'Doslednost pravi transformaciju.',
+      'Kad zatvoriš dan — pobedio si.',
+      'Telo voli ritam.',
+      'Danas se ne takmičiš sa drugima, nego sa starim sobom.',
+      'Ako dan krene loše, zatvori ga bolje nego što je počeo.',
+      'Jedna šetnja može spasiti ceo dan.',
+      'Ne moraš biti savršen da bi napredovao.',
+      'Uspeti znači vratiti se sistemu posle odstupanja.'
+    ];
 
-function loadDailyQuote() {
-  const quoteBox = document.getElementById('dailyQuote');
-  const authorBox = document.getElementById('dailyQuoteAuthor');
+    function loadDailyQuote(force = false) {
+      const quoteBox = document.getElementById('dailyQuote');
+      const authorBox = document.getElementById('dailyQuoteAuthor');
+      if (!quoteBox || !authorBox) return;
 
-  if (!quoteBox || !authorBox) return;
+      const today = new Date();
+      let index = today.getFullYear() + today.getMonth() + today.getDate();
+      if (force) index = index + Math.floor(Math.random() * LOCAL_QUOTES.length);
+      const quote = LOCAL_QUOTES[index % LOCAL_QUOTES.length];
 
-  const today = new Date();
-  const index =
-    today.getFullYear() +
-    today.getMonth() +
-    today.getDate();
-
-  const quote =
-    LOCAL_QUOTES[index % LOCAL_QUOTES.length];
-
-  quoteBox.textContent = "“" + quote + "”";
-  authorBox.textContent =
-    "MEDSCAN dnevna poruka";
-}
+      quoteBox.textContent = '“' + quote + '”';
+      authorBox.textContent = 'MEDSCAN dnevna poruka';
+    }
 
     function eventLabel(type) {
       const map = {
