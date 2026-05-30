@@ -633,6 +633,61 @@
       .heroCtas .btn{width:auto;flex:1 1 190px}
       .nav .btn.primary{display:none}
     }
+  
+    /* ===== IMAGE FIX v2: show complete proof visuals, do not crop ===== */
+    .panelVisual img,
+    .imageCard img,
+    .imageCard.compact img,
+    .proofVisuals .imageCard img{
+      width:100%;
+      object-fit:contain !important;
+      object-position:center center !important;
+      background:#07090A;
+    }
+
+    .panelVisual img{
+      height:360px !important;
+      padding:8px;
+    }
+
+    .imageCard img{
+      height:560px !important;
+      padding:8px;
+    }
+
+    .proofVisuals .imageCard img{
+      height:520px !important;
+      padding:8px;
+    }
+
+    .caseShell .imageCard img{
+      height:620px !important;
+    }
+
+    #situacije .imageCard img{
+      height:680px !important;
+    }
+
+    @media (max-width:980px){
+      .panelVisual img{height:420px !important;}
+      .imageCard img,
+      .proofVisuals .imageCard img,
+      .caseShell .imageCard img,
+      #situacije .imageCard img{
+        height:520px !important;
+      }
+    }
+
+    @media (max-width:640px){
+      .panelVisual img{height:360px !important;}
+      .imageCard img,
+      .proofVisuals .imageCard img,
+      .caseShell .imageCard img,
+      #situacije .imageCard img{
+        height:440px !important;
+      }
+    }
+
   </style>
 </head>
 
