@@ -472,10 +472,12 @@
     .panelVisual img{
       display:block;
       width:100%;
-      height:220px;
-      object-fit:cover;
+      height:280px;
+      object-fit:contain;
       object-position:center;
+      background:#070909;
       filter:saturate(.95) contrast(1.04);
+      cursor:zoom-in;
     }
     .panelCaption{
       display:flex;
@@ -513,12 +515,14 @@
     .imageCard img{
       display:block;
       width:100%;
-      height:285px;
-      object-fit:cover;
+      height:clamp(320px, 36vw, 460px);
+      object-fit:contain;
       object-position:center;
+      background:#070909;
+      cursor:zoom-in;
     }
     .imageCard.compact img{
-      height:230px;
+      height:clamp(300px, 30vw, 400px);
     }
     .imageCard figcaption{
       padding:14px 16px;
@@ -539,6 +543,90 @@
     .imageCard.dark figcaption b{
       color:#fff;
     }
+
+    .proof-zoom-img{
+      transition:transform .18s ease, filter .18s ease;
+    }
+    .proof-zoom-img:hover{
+      transform:scale(1.015);
+      filter:saturate(1.02) contrast(1.04);
+    }
+    .imageCard.zoomable,
+    .panelVisual.zoomable{
+      position:relative;
+    }
+    .imageCard.zoomable::after,
+    .panelVisual.zoomable::after{
+      content:"Kliknite za uvećanje";
+      position:absolute;
+      top:12px;
+      right:12px;
+      z-index:3;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(0,0,0,.72);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.18);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.01em;
+      backdrop-filter:blur(10px);
+      pointer-events:none;
+    }
+    .imageLightbox{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:28px;
+      background:rgba(0,0,0,.88);
+      backdrop-filter:blur(8px);
+    }
+    .imageLightbox.open{display:flex}
+    .imageLightboxInner{
+      position:relative;
+      width:min(96vw, 1180px);
+      height:min(92vh, 980px);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+    }
+    .imageLightbox img{
+      max-width:100%;
+      max-height:calc(92vh - 72px);
+      object-fit:contain;
+      border-radius:18px;
+      box-shadow:0 30px 90px rgba(0,0,0,.55);
+      background:#060707;
+    }
+    .imageLightboxCaption{
+      color:rgba(255,255,255,.86);
+      font-weight:850;
+      font-size:14px;
+      text-align:center;
+      max-width:80ch;
+    }
+    .imageLightboxClose{
+      position:absolute;
+      top:0;
+      right:0;
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.20);
+      background:rgba(244,20,20,.92);
+      color:#fff;
+      font-size:26px;
+      line-height:1;
+      cursor:pointer;
+      box-shadow:0 12px 34px rgba(0,0,0,.32);
+    }
+    .imageLightboxClose:hover{background:var(--red)}
+
     .proofVisuals{
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -551,7 +639,7 @@
       box-shadow:none;
     }
     .proofVisuals .imageCard img{
-      height:230px;
+      height:clamp(320px, 32vw, 430px);
     }
     .proofVisuals .imageCard figcaption{
       color:var(--whiteMuted);
@@ -618,7 +706,7 @@
     @media (max-width:980px){
       .menu{display:none}
       .imageGrid,.imageGrid.three,.proofVisuals{grid-template-columns:1fr}
-      .panelVisual img{height:210px}
+      .panelVisual img{height:320px}
       .heroGrid,.grid2,.grid3,.scope,.caseShell{grid-template-columns:1fr}
       .proofGrid{grid-template-columns:1fr 1fr}
       .heroGrid{padding:46px 0 42px}
@@ -626,6 +714,15 @@
       .sticky{display:block}
     }
     @media (max-width:640px){
+      .imageCard img{height:420px}
+      .proofVisuals .imageCard img{height:420px}
+      .imageCard.zoomable::after,
+      .panelVisual.zoomable::after{font-size:11px; top:10px; right:10px}
+      .imageLightbox{padding:12px}
+      .imageLightboxInner{width:100vw;height:100vh}
+      .imageLightbox img{max-height:calc(100vh - 82px); border-radius:12px}
+      .imageLightboxClose{top:10px;right:10px}
+
       .brand img{width:104px}
       .proofGrid{grid-template-columns:1fr}
       .hero h1{font-size:40px}
@@ -766,8 +863,8 @@
               <div class="num">03</div>
               <div><b>Merenje i primopredaja</b><span>Fluke izveštaji, mapa portova i dokumentacija u dogovorenom obimu.</span></div>
             </div>
-            <figure class="panelVisual">
-              <img src="assets/satvision-sks-optika-mrezna-infrastruktura.png" alt="SATVISION SKS, optika i mrežna infrastruktura" />
+            <figure class="panelVisual zoomable zoomable">
+            <img class="proof-zoom-img" src="assets/satvision-sks-optika-mrezna-infrastruktura.png" alt="SATVISION SKS, optika i mrežna infrastruktura"  title="Kliknite za uvećanje: SATVISION SKS, optika i mrežna infrastruktura" />
               <figcaption class="panelCaption"><span>SKS</span><span>Optika</span><span>Mrežna infrastruktura</span></figcaption>
             </figure>
           </div>
@@ -838,12 +935,12 @@
         </div>
 
         <div class="imageGrid">
-          <figure class="imageCard">
-            <img src="assets/satvision-opticki-backbone-spajanje.png" alt="Optički backbone i spajanje za poslovnu infrastrukturu" />
+          <figure class="imageCard zoomable zoomable">
+            <img class="proof-zoom-img" src="assets/satvision-opticki-backbone-spajanje.png" alt="Optički backbone i spajanje za poslovnu infrastrukturu"  title="Kliknite za uvećanje: Optički backbone i spajanje za poslovnu infrastrukturu" />
             <figcaption><b>Optički backbone / spajanje</b> Optička osnova za povezivanje spratova, tehničkih prostorija i pouzdanu mrežnu komunikaciju.</figcaption>
           </figure>
-          <figure class="imageCard">
-            <img src="assets/satvision-sks-optika-mrezna-infrastruktura.png" alt="SKS, optika i mrežna infrastruktura za firme" />
+          <figure class="imageCard zoomable zoomable">
+            <img class="proof-zoom-img" src="assets/satvision-sks-optika-mrezna-infrastruktura.png" alt="SKS, optika i mrežna infrastruktura za firme"  title="Kliknite za uvećanje: SKS, optika i mrežna infrastruktura za firme" />
             <figcaption><b>SKS, optika i mrežna infrastruktura</b> Jedna infrastrukturna osnova za podatke, WiFi, PoE, IP kamere, interfoni i buduće proširenje.</figcaption>
           </figure>
         </div>
@@ -915,16 +1012,16 @@
           </div>
 
           <div class="proofVisuals">
-            <figure class="imageCard dark">
-              <img src="assets/satvision-fluke-testiranje-svakog-linka.png" alt="Fluke testiranje svakog dogovorenog linka" />
+            <figure class="imageCard dark zoomable zoomable">
+            <img class="proof-zoom-img" src="assets/satvision-fluke-testiranje-svakog-linka.png" alt="Fluke testiranje svakog dogovorenog linka"  title="Kliknite za uvećanje: Fluke testiranje svakog dogovorenog linka" />
               <figcaption><b>Fluke testiranje</b> Testiranje svakog dogovorenog linka pre primopredaje.</figcaption>
             </figure>
-            <figure class="imageCard dark">
-              <img src="assets/satvision-mapa-portova-dokumentacija-koja-stedi-sate.png" alt="Mapa portova i dokumentacija koja štedi sate u održavanju" />
+            <figure class="imageCard dark zoomable zoomable">
+            <img class="proof-zoom-img" src="assets/satvision-mapa-portova-dokumentacija-koja-stedi-sate.png" alt="Mapa portova i dokumentacija koja štedi sate u održavanju"  title="Kliknite za uvećanje: Mapa portova i dokumentacija koja štedi sate u održavanju" />
               <figcaption><b>Mapa portova</b> Dokumentacija koja štedi sate u održavanju i otklanjanju problema.</figcaption>
             </figure>
-            <figure class="imageCard dark">
-              <img src="assets/satvision-sta-dobijate-na-primopredaji.png" alt="SATVISION primopredajni paket sa izveštajima i dokumentacijom" />
+            <figure class="imageCard dark zoomable zoomable">
+            <img class="proof-zoom-img" src="assets/satvision-sta-dobijate-na-primopredaji.png" alt="SATVISION primopredajni paket sa izveštajima i dokumentacijom"  title="Kliknite za uvećanje: SATVISION primopredajni paket sa izveštajima i dokumentacijom" />
               <figcaption><b>Primopredajni paket</b> Izveštaji, mapa portova, as-built i foto zapis završnog stanja.</figcaption>
             </figure>
           </div>
@@ -968,8 +1065,8 @@
         </div>
 
         <div class="imageGrid" style="grid-template-columns:1fr;margin-top:16px">
-          <figure class="imageCard">
-            <img src="assets/satvision-pre-i-posle-rek-organizacija.png" alt="Pre i posle rek organizacije za poslovnu mrežnu infrastrukturu" />
+          <figure class="imageCard zoomable zoomable">
+            <img class="proof-zoom-img" src="assets/satvision-pre-i-posle-rek-organizacija.png" alt="Pre i posle rek organizacije za poslovnu mrežnu infrastrukturu"  title="Kliknite za uvećanje: Pre i posle rek organizacije za poslovnu mrežnu infrastrukturu" />
             <figcaption><b>Pre / posle rek organizacija</b> Od kablovskog haosa do obeležene, dokumentovane i održive infrastrukture.</figcaption>
           </figure>
         </div>
@@ -997,8 +1094,8 @@
     <section class="section" id="primer">
       <div class="wrap">
         <div class="caseShell">
-          <figure class="imageCard">
-            <img src="assets/satvision-sta-dobijate-na-primopredaji.png" alt="Primer SATVISION primopredajnih dokaza za infrastrukturne projekte" />
+          <figure class="imageCard zoomable zoomable">
+            <img class="proof-zoom-img" src="assets/satvision-sta-dobijate-na-primopredaji.png" alt="Primer SATVISION primopredajnih dokaza za infrastrukturne projekte"  title="Kliknite za uvećanje: Primer SATVISION primopredajnih dokaza za infrastrukturne projekte" />
             <figcaption><b>Proof slot za primopredaju</b> Privremeni vizuelni dokaz. Zameniti realnim fotografijama projekta i anonimizovanom dokumentacijom kada budu dostupni.</figcaption>
           </figure>
 
@@ -1085,11 +1182,67 @@
     </div>
   </footer>
 
+
+  <div class="imageLightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="Uvećan prikaz slike">
+    <div class="imageLightboxInner">
+      <button class="imageLightboxClose" type="button" aria-label="Zatvori uvećanu sliku">×</button>
+      <img id="imageLightboxImg" src="" alt="" />
+      <div class="imageLightboxCaption" id="imageLightboxCaption"></div>
+    </div>
+  </div>
+
   <div class="sticky" aria-label="Brzi kontakt">
     <div class="inner">
       <a class="btn primary" href="tel:063374210">Pozovi</a>
       <a class="btn dark" href="#kontakt">Procena</a>
     </div>
   </div>
+
+  <script>
+    (function(){
+      const lightbox = document.getElementById('imageLightbox');
+      const lightboxImg = document.getElementById('imageLightboxImg');
+      const caption = document.getElementById('imageLightboxCaption');
+      const closeBtn = lightbox.querySelector('.imageLightboxClose');
+
+      function openLightbox(img){
+        lightboxImg.src = img.currentSrc || img.src;
+        lightboxImg.alt = img.alt || '';
+        caption.textContent = img.alt || 'SATVISION proof image';
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox(){
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        lightboxImg.src = '';
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.proof-zoom-img').forEach(function(img){
+        img.addEventListener('click', function(){ openLightbox(img); });
+        img.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            openLightbox(img);
+          }
+        });
+        img.setAttribute('tabindex','0');
+        img.setAttribute('role','button');
+        img.setAttribute('aria-label','Kliknite za uvećanje slike: ' + (img.alt || 'SATVISION proof image'));
+      });
+
+      closeBtn.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function(e){
+        if(e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+      });
+    })();
+  </script>
+
 </body>
 </html>
