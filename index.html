@@ -1,223 +1,1040 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>MEDSCAN Mobile v2</title>
-  <meta name="theme-color" content="#08111f" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Usluge | SKS, optika, mreže i IP sistemi | SATVISION</title>
+  <meta name="description" content="SATVISION projektuje, izvodi, testira i dokumentuje SKS, optičku, mrežnu i IP infrastrukturu za firme u Srbiji: video nadzor, interfon, alarm, ozvučenje, Fluke izveštaji, as-built i mapa portova." />
+  <meta name="theme-color" content="#111111" />
+
   <style>
-    :root{--bg:#050b14;--bg2:#08111f;--card:rgba(15,23,42,.86);--card2:rgba(15,23,42,.65);--line:rgba(148,163,184,.18);--text:#eef4ff;--muted:#9db0cb;--blue:#38bdf8;--blue2:#3b82f6;--green:#22c55e;--yellow:#facc15;--orange:#fb923c;--red:#ef4444;--purple:#8b5cf6;--shadow:0 18px 60px rgba(0,0,0,.28);--safe-bottom:max(18px, env(safe-area-inset-bottom))}
-    *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{margin:0;color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left, rgba(59,130,246,.16), transparent 30%),radial-gradient(circle at top right, rgba(139,92,246,.12), transparent 26%),linear-gradient(180deg,var(--bg2),var(--bg));min-height:100vh}
-    .app{max-width:520px;margin:0 auto;padding:14px 14px calc(96px + var(--safe-bottom))}
-    .topbar{position:sticky;top:0;z-index:20;padding:10px 0 12px;backdrop-filter: blur(12px);background:linear-gradient(180deg, rgba(5,11,20,.95), rgba(5,11,20,.72), transparent)}
-    .brand{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:24px;background:rgba(15,23,42,.74);box-shadow:var(--shadow)}
-    .logo{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue2),var(--purple));font-size:28px;box-shadow:0 10px 24px rgba(59,130,246,.3);flex:0 0 auto}
-    h1{margin:0;font-size:28px;line-height:.98;letter-spacing:-.04em}.subtitle{margin-top:5px;color:var(--muted);font-size:13px}
-    .section{display:none}.section.active{display:block}
-    .card{border:1px solid var(--line);background:linear-gradient(180deg,var(--card),var(--card2));border-radius:24px;padding:16px;box-shadow:var(--shadow);backdrop-filter:blur(14px);margin-top:14px}
-    .hero{padding:18px;border-radius:28px;background:radial-gradient(circle at top right, rgba(255,255,255,.11), transparent 32%),linear-gradient(135deg, #132547, #182c57 42%, #3b2a86)}
-    .hero h2{margin:0;font-size:15px;color:#dbeafe;text-transform:uppercase;letter-spacing:.12em}.hero .big{margin-top:8px;font-size:34px;font-weight:900;line-height:.95;letter-spacing:-.05em}
-    .small{font-size:13px;color:var(--muted);line-height:1.45}
-    .badge{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;font-weight:900;border:1px solid var(--line);background:rgba(255,255,255,.06);margin-top:10px}
-    .badge.clean{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.12);color:#86efac}.badge.mid{border-color:rgba(250,204,21,.4);background:rgba(250,204,21,.12);color:#fde047}.badge.risk{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.12);color:#fecaca}
-    .progress-block{margin-top:14px}.progress-label{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);margin-bottom:6px}
-    .bar{height:12px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.08);border:1px solid var(--line)}.fill{height:100%;width:0%;border-radius:999px;transition:width .25s ease}.fill.day{background:linear-gradient(90deg,var(--blue),var(--purple))}.fill.system{background:linear-gradient(90deg,var(--yellow),var(--orange))}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .stat{border:1px solid var(--line);border-radius:18px;padding:14px;background:rgba(2,6,23,.28)} .stat strong{display:block;font-size:26px;margin-top:8px;letter-spacing:-.04em}
-    .score{width:86px;height:86px;border-radius:50%;background:conic-gradient(var(--blue) var(--score,0%), rgba(255,255,255,.1) 0);display:grid;place-items:center;position:relative}.score::before{content:"";position:absolute;inset:8px;border-radius:50%;background:#07101f}.score span{position:relative;font-weight:900;font-size:20px}
-    h2{margin:0 0 10px;font-size:21px;letter-spacing:-.03em}
-    .quote{font-size:22px;font-weight:900;line-height:1.25}
-    .pill{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--muted);font-size:12px;border:1px solid var(--line)}
-    .list{display:grid;gap:10px;margin-top:12px}
-    .item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:12px 14px;background:rgba(255,255,255,.04)} .item.done{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.08)} .item.warn{border-color:rgba(250,204,21,.35);background:rgba(250,204,21,.08)} .item.risk{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.1)} .item .icon{font-size:22px}
-    button{appearance:none;border:0;cursor:pointer;font-weight:900;border-radius:16px;padding:12px 14px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#03111f}
-    button.ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--line)} button.success{background:linear-gradient(135deg,#22c55e,#4ade80);color:#04220f} button.warning{background:linear-gradient(135deg,#facc15,#fb923c);color:#2b1500} button.danger{background:linear-gradient(135deg,#ef4444,#f97316);color:white}
-    .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .field{display:grid;gap:6px;margin-top:10px}.field label{font-size:13px;color:var(--muted)}
-    input,textarea,select{width:100%;border:1px solid var(--line);background:rgba(2,6,23,.52);color:var(--text);border-radius:16px;padding:14px 14px;font-size:16px;outline:none} textarea{min-height:96px;resize:vertical}
-    .seg,.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .canvas-wrap{padding:10px;border:1px solid var(--line);border-radius:18px;background:rgba(2,6,23,.28);margin-top:10px} canvas{width:100%;height:auto;border-radius:14px;display:block}
-    table{width:100%;border-collapse:collapse;margin-top:12px} th,td{padding:9px 8px;border-bottom:1px solid var(--line);font-size:13px;text-align:left} th{color:var(--text);background:rgba(255,255,255,.05)} td{color:var(--muted)}
-    .danger-zone{border:1px solid rgba(239,68,68,.28);background:linear-gradient(180deg, rgba(127,29,29,.18), rgba(15,23,42,.62))}
-    .loser{display:grid;gap:10px;margin-top:12px}.loser-item{border:1px solid rgba(251,146,60,.28);background:rgba(251,146,60,.08);border-radius:16px;padding:12px}
-    .sticky-nav{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));max-width:520px;margin:auto;border:1px solid var(--line);background:rgba(2,6,23,.88);backdrop-filter:blur(18px);display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:8px;border-radius:22px;z-index:30}
-    .nav-btn{background:transparent;border:0;color:var(--muted);padding:10px 4px;border-radius:16px;font-weight:800;font-size:11px}.nav-btn.active{background:rgba(255,255,255,.08);color:#fff}
-    @media (max-width:420px){.grid2,.seg,.quick-grid{grid-template-columns:1fr}}
+    :root{
+      --red:#F41414;
+      --red2:#B90E0E;
+      --black:#101314;
+      --black2:#171B1D;
+      --charcoal:#23282B;
+      --ink:#111315;
+      --muted:#647078;
+      --muted2:#879099;
+      --bg:#F5F4F1;
+      --bg2:#ECEAE5;
+      --card:#FFFFFF;
+      --line:rgba(16,19,20,.12);
+      --lineDark:rgba(255,255,255,.14);
+      --white:rgba(255,255,255,.94);
+      --whiteMuted:rgba(255,255,255,.72);
+      --ok:#22C55E;
+      --shadow:0 22px 60px rgba(16,19,20,.14);
+      --shadow2:0 12px 28px rgba(16,19,20,.10);
+      --radius:26px;
+      --radius2:18px;
+      --max:1180px;
+      --font:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -12%, rgba(244,20,20,.10), transparent 60%),
+        radial-gradient(800px 380px at 95% -8%, rgba(16,19,20,.10), transparent 58%),
+        linear-gradient(180deg,var(--bg),var(--bg2));
+      overflow-x:hidden;
+      line-height:1.65;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+
+    .topline{
+      height:5px;
+      background:linear-gradient(90deg,var(--red),#FF4A4A,var(--red2));
+    }
+
+    .nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(245,244,241,.92);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+    }
+    .navin{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+    .brand img{
+      width:126px;
+      height:auto;
+      display:block;
+      filter:drop-shadow(0 8px 18px rgba(16,19,20,.10));
+    }
+    .brandText{
+      border-left:1px solid var(--line);
+      padding-left:14px;
+      line-height:1.2;
+    }
+    .brandText strong{
+      display:block;
+      font-size:14px;
+      letter-spacing:.2px;
+    }
+    .brandText span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:3px;
+    }
+    .menu{
+      display:flex;
+      gap:6px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .menu a{
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+      padding:9px 10px;
+      border-radius:12px;
+    }
+    .menu a:hover{background:rgba(16,19,20,.06);color:var(--ink)}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:13px 17px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      font-weight:900;
+      font-size:14px;
+      box-shadow:var(--shadow2);
+      white-space:nowrap;
+      transition:.15s transform,.15s box-shadow,.15s background;
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(16,19,20,.14)}
+    .btn.primary{
+      background:linear-gradient(135deg,var(--red),var(--red2));
+      color:#fff;
+      border-color:rgba(244,20,20,.28);
+      box-shadow:0 18px 44px rgba(244,20,20,.24);
+    }
+    .btn.dark{
+      background:var(--black);
+      color:#fff;
+      border-color:rgba(255,255,255,.12);
+      box-shadow:0 18px 44px rgba(16,19,20,.20);
+    }
+    .btn.ghost{
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+      box-shadow:none;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
+    }
+    .dot{width:8px;height:8px;border-radius:99px;background:var(--red);box-shadow:0 0 0 5px rgba(244,20,20,.12)}
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      background:
+        radial-gradient(900px 520px at 18% 18%, rgba(244,20,20,.22), transparent 60%),
+        radial-gradient(700px 420px at 88% 20%, rgba(255,255,255,.08), transparent 55%),
+        linear-gradient(135deg,#0D0F10 0%, #1B1F21 56%, #0B0C0D 100%);
+      color:#fff;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size:44px 44px;
+      mask-image:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.18));
+      pointer-events:none;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      right:-160px;
+      top:70px;
+      width:520px;
+      height:520px;
+      border-radius:50%;
+      border:70px solid rgba(244,20,20,.10);
+      pointer-events:none;
+    }
+    .heroGrid{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:1.12fr .88fr;
+      gap:26px;
+      align-items:center;
+      padding:70px 0 54px;
+    }
+    .hero h1{
+      margin:16px 0 14px;
+      max-width:880px;
+      font-size:clamp(42px,5.5vw,74px);
+      line-height:1.02;
+      letter-spacing:-1.4px;
+    }
+    .hero h1 span{color:#FF4242}
+    .hero p{
+      margin:0;
+      max-width:74ch;
+      color:var(--whiteMuted);
+      font-size:18px;
+      line-height:1.72;
+    }
+    .heroMeta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+    .hero .pill{
+      background:rgba(255,255,255,.08);
+      border-color:rgba(255,255,255,.14);
+      color:rgba(255,255,255,.80);
+    }
+    .heroCtas{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:24px;
+    }
+
+    .commandPanel{
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 30px 90px rgba(0,0,0,.35);
+      border-radius:var(--radius);
+      overflow:hidden;
+      backdrop-filter:blur(10px);
+    }
+    .panelHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:16px 18px;
+      border-bottom:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
+    }
+    .panelHead b{font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+    .panelHead span{color:var(--whiteMuted);font-size:12px}
+    .panelBody{padding:18px;display:grid;gap:12px}
+    .metric{
+      display:grid;
+      grid-template-columns:42px 1fr;
+      gap:12px;
+      align-items:start;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.11);
+    }
+    .num{
+      width:42px;height:42px;border-radius:15px;
+      display:grid;place-items:center;
+      background:rgba(244,20,20,.16);
+      color:#fff;
+      border:1px solid rgba(244,20,20,.32);
+      font-weight:950;
+    }
+    .metric b{display:block;font-size:14px}
+    .metric span{display:block;color:var(--whiteMuted);font-size:13px;line-height:1.45;margin-top:3px}
+
+    .section{padding:34px 0}
+    .secTitle{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+      margin:0 0 16px;
+    }
+    .secTitle h2{
+      margin:0;
+      font-size:clamp(26px,3vw,38px);
+      line-height:1.12;
+      letter-spacing:-.55px;
+    }
+    .secTitle p{
+      margin:0;
+      color:var(--muted);
+      max-width:76ch;
+      font-size:15px;
+    }
+
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+
+    .card{
+      position:relative;
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(500px 160px at 12% 0%, rgba(244,20,20,.08), transparent 58%),
+        radial-gradient(420px 160px at 100% 0%, rgba(16,19,20,.06), transparent 58%);
+      pointer-events:none;
+    }
+    .card > *{position:relative;z-index:1}
+    .pad{padding:20px}
+
+    .feature{
+      min-height:174px;
+      padding:18px;
+      border-radius:var(--radius2);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.94);
+      box-shadow:var(--shadow2);
+      overflow:hidden;
+      position:relative;
+    }
+    .feature::after{
+      content:"";
+      position:absolute;
+      right:-80px;
+      bottom:-90px;
+      width:240px;height:240px;border-radius:50%;
+      background:radial-gradient(circle at 35% 35%, rgba(244,20,20,.12), transparent 62%);
+      pointer-events:none;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:10px;
+    }
+    .tag i{width:10px;height:10px;border-radius:999px;background:var(--red);display:inline-block}
+    .feature h3,.card h3{margin:0 0 8px;font-size:17px;line-height:1.25}
+    .feature p,.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+
+    .list{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .list li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.65;
+    }
+    .check{
+      width:20px;height:20px;border-radius:8px;
+      flex:0 0 auto;
+      margin-top:2px;
+      display:grid;place-items:center;
+      background:rgba(244,20,20,.10);
+      border:1px solid rgba(244,20,20,.18);
+      color:var(--red);
+      font-weight:950;
+      font-size:12px;
+    }
+
+    .proofBand{
+      background:linear-gradient(135deg,var(--black),#22282B);
+      color:#fff;
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:0 28px 80px rgba(16,19,20,.24);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+      position:relative;
+    }
+    .proofBand::after{
+      content:"";
+      position:absolute;
+      right:-130px;top:-130px;
+      width:360px;height:360px;border-radius:50%;
+      background:rgba(244,20,20,.18);
+      pointer-events:none;
+    }
+    .proofBand > *{position:relative;z-index:1}
+    .proofBand h2{margin:0 0 10px;font-size:clamp(26px,3vw,38px);line-height:1.1}
+    .proofBand p{margin:0;color:var(--whiteMuted);max-width:82ch}
+    .proofGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+    .proofItem{
+      padding:15px;
+      border-radius:18px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .proofItem b{display:block;font-size:14px;margin-bottom:5px}
+    .proofItem span{display:block;color:var(--whiteMuted);font-size:13px;line-height:1.45}
+
+    .scope{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    .scopeBlock{
+      padding:20px;
+      border-radius:var(--radius);
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow2);
+    }
+    .scopeBlock h3{margin:0 0 12px}
+    .scopeBlock .list li{font-size:14px}
+
+    .caseShell{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    .placeholder{
+      min-height:280px;
+      border-radius:var(--radius);
+      background:
+        linear-gradient(135deg,rgba(16,19,20,.88),rgba(35,40,43,.95)),
+        repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 8px,transparent 8px 16px);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:var(--shadow);
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:24px;
+      overflow:hidden;
+      position:relative;
+    }
+    .placeholder::before{
+      content:"";
+      position:absolute;
+      width:300px;height:300px;border-radius:50%;
+      right:-120px;bottom:-120px;
+      background:rgba(244,20,20,.18);
+    }
+    .placeholder div{position:relative;z-index:1}
+    .placeholder b{display:block;font-size:20px;margin-bottom:8px}
+    .placeholder span{display:block;color:var(--whiteMuted);font-size:14px;max-width:40ch}
+
+
+    .panelVisual{
+      margin-top:6px;
+      overflow:hidden;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.13);
+      background:rgba(0,0,0,.22);
+    }
+    .panelVisual img{
+      display:block;
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      object-position:center;
+      filter:saturate(.95) contrast(1.04);
+    }
+    .panelCaption{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 14px;
+      color:var(--whiteMuted);
+      font-size:12px;
+      font-weight:850;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+    .imageGrid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-top:16px;
+    }
+    .imageGrid.three{
+      grid-template-columns:repeat(3,1fr);
+    }
+    .imageCard{
+      overflow:hidden;
+      border-radius:var(--radius);
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow2);
+      margin:0;
+    }
+    .imageCard.dark{
+      background:var(--black);
+      color:#fff;
+      border-color:rgba(255,255,255,.12);
+      box-shadow:0 26px 70px rgba(16,19,20,.20);
+    }
+    .imageCard img{
+      display:block;
+      width:100%;
+      height:285px;
+      object-fit:cover;
+      object-position:center;
+    }
+    .imageCard.compact img{
+      height:230px;
+    }
+    .imageCard figcaption{
+      padding:14px 16px;
+      font-size:13px;
+      font-weight:850;
+      color:var(--muted);
+      line-height:1.45;
+    }
+    .imageCard.dark figcaption{
+      color:var(--whiteMuted);
+    }
+    .imageCard figcaption b{
+      display:block;
+      color:var(--ink);
+      font-size:15px;
+      margin-bottom:4px;
+    }
+    .imageCard.dark figcaption b{
+      color:#fff;
+    }
+    .proofVisuals{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+    .proofVisuals .imageCard{
+      background:rgba(255,255,255,.08);
+      border-color:rgba(255,255,255,.12);
+      box-shadow:none;
+    }
+    .proofVisuals .imageCard img{
+      height:230px;
+    }
+    .proofVisuals .imageCard figcaption{
+      color:var(--whiteMuted);
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+    .proofVisuals .imageCard figcaption b{
+      color:#fff;
+    }
+
+    .ctaBox{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+      padding:22px;
+      border-radius:var(--radius);
+      background:#fff;
+      border:1px solid rgba(244,20,20,.18);
+      box-shadow:var(--shadow);
+    }
+    .ctaBox h3{margin:0;font-size:21px}
+    .ctaBox p{margin:6px 0 0;color:var(--muted);max-width:72ch}
+
+    details{
+      padding:15px 16px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+    }
+    summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight:950;
+      font-size:15px;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0;color:var(--muted);font-size:14px}
+
+    .footer{
+      margin-top:20px;
+      background:var(--black);
+      color:var(--whiteMuted);
+      padding:28px 0 92px;
+      font-size:13px;
+    }
+    .footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    .footer b{color:#fff}
+
+    .sticky{
+      display:none;
+      position:fixed;
+      left:0;right:0;bottom:0;
+      z-index:60;
+      padding:10px 12px;
+      background:rgba(245,244,241,.92);
+      border-top:1px solid var(--line);
+      backdrop-filter:blur(14px);
+    }
+    .sticky .inner{max-width:var(--max);margin:0 auto;display:flex;gap:10px}
+    .sticky .btn{flex:1}
+
+    @media (max-width:980px){
+      .menu{display:none}
+      .imageGrid,.imageGrid.three,.proofVisuals{grid-template-columns:1fr}
+      .panelVisual img{height:210px}
+      .heroGrid,.grid2,.grid3,.scope,.caseShell{grid-template-columns:1fr}
+      .proofGrid{grid-template-columns:1fr 1fr}
+      .heroGrid{padding:46px 0 42px}
+      .brandText{display:none}
+      .sticky{display:block}
+    }
+    @media (max-width:640px){
+      .brand img{width:104px}
+      .proofGrid{grid-template-columns:1fr}
+      .hero h1{font-size:40px}
+      .btn{width:100%}
+      .heroCtas .btn{width:auto;flex:1 1 190px}
+      .nav .btn.primary{display:none}
+    }
   </style>
 </head>
+
 <body>
-<div class="app">
-  <div class="topbar"><div class="brand"><div class="logo">🩺</div><div><h1>MEDSCAN Mobile</h1><div class="subtitle">Brz dnevni unos. Fokus na telefonu.</div></div></div></div>
+  <div class="topline"></div>
 
-  <section id="screen-home" class="section active">
-    <div class="card hero">
-      <h2>Danas</h2><div class="big" id="todayText">—</div><div class="small" id="timeText">—</div><div id="statusBadge" class="badge mid">🟡 DAN U TOKU</div>
-      <div class="progress-block"><div class="progress-label"><span>Proteklo dana</span><span id="dayPctText">0%</span></div><div class="bar"><div id="dayProgress" class="fill day"></div></div></div>
-      <div class="progress-block"><div class="progress-label"><span>Izvršenje sistema</span><span id="systemPctText">0%</span></div><div class="bar"><div id="systemProgress" class="fill system"></div></div></div>
-    </div>
-    <div class="grid2">
-      <div class="card stat"><span class="small">Koraci</span><strong id="stepsStat">0</strong><span class="small">cilj 10.000</span></div>
-      <div class="card stat"><span class="small">Težina</span><strong id="weightStat">—</strong><span class="small">jutarnji unos</span></div>
-      <div class="card stat"><span class="small">Voda</span><strong id="waterStat">0.0 L</strong><span class="small">cilj 3.0 L</span></div>
-      <div class="card stat" style="display:flex;justify-content:center;align-items:center"><div><div class="score" id="scoreRing"><span id="scoreText">0%</span></div><div class="small" style="text-align:center;margin-top:8px;">dnevni score</div></div></div>
-    </div>
-    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2>⭐ Dnevna poruka</h2><button class="warning" onclick="loadDailyQuote(true)">Nova poruka</button></div><div class="quote" id="dailyQuote">Učitavam...</div><div class="small" id="dailyQuoteAuthor" style="margin-top:8px;">MEDSCAN</div></div>
-    <div class="card"><h2>⚠️ Prioriteti sada</h2><div class="small">Šta trenutno kasni ili treba zatvoriti.</div><div id="priorityList" class="list"></div></div>
-    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2>✅ Danas završeno</h2><span class="pill" id="doneCountPill">0 / 10</span></div><div id="doneList" class="list"></div></div>
-  </section>
+  <header class="nav">
+    <div class="wrap navin">
+      <a class="brand" href="#top" aria-label="SATVISION početna">
+        <img src="assets/Flat-Sat-Vision-Logo-1024x521-1.png" alt="SATVISION" />
+        <div class="brandText">
+          <strong>Biznis infrastruktura</strong>
+          <span>SKS • Optika • Mreže • IP sistemi</span>
+        </div>
+      </a>
 
-  <section id="screen-entry" class="section">
-    <div class="card">
-      <h2>⚡ Quick entry</h2><div class="small">Veliki inputi za brz unos sa telefona.</div>
-      <div class="quick-grid">
-        <div class="field"><label>Težina (kg)</label><input id="weight" type="number" step="0.1"></div>
-        <div class="field"><label>Struk (cm)</label><input id="waist" type="number" step="0.1"></div>
-        <div class="field"><label>Koraci</label><input id="steps" type="number"></div>
-        <div class="field"><label>Km</label><input id="km" type="number" step="0.1"></div>
-        <div class="field"><label>Aktivne kcal</label><input id="calories" type="number"></div>
-        <div class="field"><label>Unos kalorija</label><input id="calorieIn" type="number"></div>
-        <div class="field"><label>Proteini (g)</label><input id="protein" type="number"></div>
-        <div class="field"><label>Voda (L)</label><input id="waterLiters" type="number" step="0.1"></div>
-        <div class="field"><label>Glad 1–10</label><input id="hunger" type="number" min="1" max="10"></div>
-        <div class="field"><label>Energija 1–10</label><input id="energy" type="number" min="1" max="10"></div>
-        <div class="field"><label>San (h)</label><input id="sleep" type="number" step="0.5"></div>
-        <div class="field"><label>Večera</label><input id="dinnerTime" type="time"></div>
-        <div class="field"><label>Puls</label><input id="pulse" type="number"></div>
-        <div class="field"><label>Pritisak</label><input id="bp"></div>
-        <div class="field"><label>SpO₂</label><input id="spo2" type="number"></div>
-        <div class="field"><label>Temperatura</label><input id="temp" type="number" step="0.1"></div>
+      <nav class="menu" aria-label="Navigacija">
+        <a href="#zasto">Zašto</a>
+        <a href="#opseg">Usluge</a>
+        <a href="#ip-sistemi">Sistemi</a>
+        <a href="#primopredaja">Primopredaja</a>
+        <a href="#proces">Proces</a>
+        <a href="#situacije">Kada</a>
+        <a href="#objekti">Objekti</a>
+        <a href="#primer">Primer</a>
+        <a href="#rizik">Rizik</a>
+        <a href="#kontakt">Kontakt</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <a class="btn primary" href="tel:063374210">063/374-210</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap heroGrid">
+        <div>
+          <div class="pill"><span class="dot"></span> Infrastruktura za firme u Srbiji</div>
+          <h1>SKS, optika i mrežna infrastruktura <span>koja se meri, predaje i održava.</span></h1>
+          <p>
+            SATVISION projektuje, izvodi, testira i dokumentuje poslovnu infrastrukturu:
+            strukturno kabliranje, optičke trase, rek organizaciju, patch panele, obeležavanje,
+            Fluke izveštaje i as-built primopredaju.
+          </p>
+
+          <div class="heroMeta">
+            <span class="pill">Cat6 / Cat6A</span>
+            <span class="pill">Optika / backbone</span>
+            <span class="pill">Fluke report</span>
+            <span class="pill">As-built dokumentacija</span>
+            <span class="pill">Rek organizacija</span>
+          </div>
+
+          <div class="heroCtas">
+            <a class="btn primary" href="#kontakt">Zatražite procenu infrastrukture</a>
+            <a class="btn ghost" href="#primopredaja">Šta dobijate na kraju</a>
+          </div>
+        </div>
+
+        <aside class="commandPanel" aria-label="SATVISION delivery sistem">
+          <div class="panelHead">
+            <b>Delivery Control</b>
+            <span>Audit → Build → Certify → Handover</span>
+          </div>
+          <div class="panelBody">
+            <div class="metric">
+              <div class="num">01</div>
+              <div><b>Plan i opseg</b><span>Obilazak, nacrt ili procena postojećeg stanja pre početka radova.</span></div>
+            </div>
+            <div class="metric">
+              <div class="num">02</div>
+              <div><b>Uredno izvođenje</b><span>Trase, terminacije, rek, patch panel i obeležavanje bez improvizacije.</span></div>
+            </div>
+            <div class="metric">
+              <div class="num">03</div>
+              <div><b>Merenje i primopredaja</b><span>Fluke izveštaji, mapa portova i dokumentacija u dogovorenom obimu.</span></div>
+            </div>
+            <figure class="panelVisual">
+              <img src="assets/satvision-sks-optika-mrezna-infrastruktura.png" alt="SATVISION SKS, optika i mrežna infrastruktura" />
+              <figcaption class="panelCaption"><span>SKS</span><span>Optika</span><span>Mrežna infrastruktura</span></figcaption>
+            </figure>
+          </div>
+        </aside>
       </div>
-      <div class="field"><label>Beleška dana</label><textarea id="note"></textarea></div>
-      <div class="btn-row"><button class="success" onclick="saveDay()">Sačuvaj dan</button><button class="ghost" onclick="resetToday()">Reset dana</button></div>
+    </section>
+
+    <section id="zasto" class="section">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>Zašto SATVISION</h2>
+            <p>Razlika nije u tome što se kabl provuče. Razlika je u tome da infrastruktura bude izmerena, obeležena, dokumentovana i laka za održavanje.</p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="feature">
+            <div class="tag"><i></i> Certification</div>
+            <h3>Fluke izveštaj kao dokaz</h3>
+            <p>Linkovi se ne predaju na poverenje. Kada je sertifikacija deo obima, klijent dobija merljiv izveštaj po dogovorenom standardu.</p>
+          </div>
+          <div class="feature">
+            <div class="tag"><i></i> Documentation</div>
+            <h3>Mapa portova i as-built</h3>
+            <p>IT tim zna gde je šta povezano. To smanjuje haos u održavanju i ubrzava kasnije izmene.</p>
+          </div>
+          <div class="feature">
+            <div class="tag"><i></i> Operations</div>
+            <h3>Fazni rad u poslovnom prostoru</h3>
+            <p>Izvođenje se planira po zonama, spratovima ili terminima kako bi prekid rada bio što manji.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="opseg" class="section">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>Šta radimo</h2>
+            <p>Fokus je na fizičkoj i mrežnoj infrastrukturi poslovnih objekata. Bez prevelikih obećanja — samo ono što može da se izvede, izmeri i preda.</p>
+          </div>
+        </div>
+
+        <div class="scope">
+          <div class="scopeBlock">
+            <h3>Osnovna infrastruktura</h3>
+            <ul class="list">
+              <li><span class="check">✓</span>SKS / strukturno kabliranje Cat6 i Cat6A</li>
+              <li><span class="check">✓</span>Optičke trase i backbone po potrebi objekta</li>
+              <li><span class="check">✓</span>Patch paneli, keystone moduli, utičnice i terminacije</li>
+              <li><span class="check">✓</span>Rek organizacija i cable management</li>
+              <li><span class="check">✓</span>Obeležavanje portova, kablova i patch pozicija</li>
+            </ul>
+          </div>
+
+          <div class="scopeBlock">
+            <h3>Mrežna i IP priprema</h3>
+            <ul class="list">
+              <li><span class="check">✓</span>LAN infrastruktura i priprema za switching</li>
+              <li><span class="check">✓</span>WiFi / AP pozicije i PoE infrastruktura</li>
+              <li><span class="check">✓</span>IP kamere, interfon i kontrola pristupa kao infrastrukturalni sloj</li>
+              <li><span class="check">✓</span>Fluke testiranje u dogovorenom obimu</li>
+              <li><span class="check">✓</span>As-built dokumentacija i primopredajni paket</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="imageGrid">
+          <figure class="imageCard">
+            <img src="assets/satvision-opticki-backbone-spajanje.png" alt="Optički backbone i spajanje za poslovnu infrastrukturu" />
+            <figcaption><b>Optički backbone / spajanje</b> Optička osnova za povezivanje spratova, tehničkih prostorija i pouzdanu mrežnu komunikaciju.</figcaption>
+          </figure>
+          <figure class="imageCard">
+            <img src="assets/satvision-sks-optika-mrezna-infrastruktura.png" alt="SKS, optika i mrežna infrastruktura za firme" />
+            <figcaption><b>SKS, optika i mrežna infrastruktura</b> Jedna infrastrukturna osnova za podatke, WiFi, PoE, IP kamere, interfoni i buduće proširenje.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="ip-sistemi" class="section">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>Dodatni infrastrukturni sistemi</h2>
+            <p>SKS, optika i mrežna osnova su temelj. Na toj infrastrukturi SATVISION može da izvede i poveže sisteme koji su važni za svakodnevni rad, sigurnost i komunikaciju u poslovnom prostoru.</p>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="feature">
+            <div class="tag"><i></i> IP Security</div>
+            <h3>IP video nadzor</h3>
+            <p>Kamere visoke rezolucije, snimači sa detekcijom pokreta, povezivanje na mrežu i pristup preko računara ili mobilnih uređaja — izvedeno na urednoj kablovskoj i mrežnoj osnovi.</p>
+          </div>
+
+          <div class="feature">
+            <div class="tag"><i></i> Access & Safety</div>
+            <h3>Alarmni sistemi i interfoni</h3>
+            <p>Alarmi, interfoni, video interfoni i kontrola pristupa kada su deo dogovorenog opsega — povezani tako da objekat ima jasnu sigurnosnu i komunikacionu logiku.</p>
+          </div>
+
+          <div class="feature">
+            <div class="tag"><i></i> Communication</div>
+            <h3>IP telefonija i komunikacija</h3>
+            <p>Priprema mrežne infrastrukture za IP telefone, kancelarijske korisnike i komunikacione uređaje, uz portove, PoE i rek organizaciju planirane prema realnom načinu rada.</p>
+          </div>
+
+          <div class="feature">
+            <div class="tag"><i></i> Audio Systems</div>
+            <h3>Ozvučenje prostora</h3>
+            <p>Ozvučenje kancelarija, lokala, prodajnih prostora i sala za sastanke, sa diskretnom montažom i povezivanjem kroz uredno izvedenu infrastrukturu objekta.</p>
+          </div>
+        </div>
+
+        <div class="ctaBox" style="margin-top:14px">
+          <div>
+            <h3>Jedna infrastruktura. Više poslovnih sistema.</h3>
+            <p>Kada su SKS, optika, rek i portovi izvedeni kako treba, video nadzor, interfon, telefonija, WiFi, PoE i ozvučenje se lakše planiraju, održavaju i proširuju.</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn dark" href="#primopredaja">Kako se predaje sistem</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section id="primopredaja" class="section">
+      <div class="wrap">
+        <div class="proofBand">
+          <h2>Šta klijent dobija na primopredaji</h2>
+          <p>
+            Ovo je najvažniji deo SATVISION razlike. Projekat nije završen kada su kablovi postavljeni,
+            već kada je sistem testiran, obeležen, dokumentovan i razumljiv IT timu.
+          </p>
+
+          <div class="proofGrid">
+            <div class="proofItem"><b>Fluke report</b><span>Dokaz merenja u dogovorenom obimu projekta.</span></div>
+            <div class="proofItem"><b>Mapa portova</b><span>Veza između utičnice, patch panela, reka i lokacije.</span></div>
+            <div class="proofItem"><b>As-built</b><span>Dokumentovano završno stanje izvedene infrastrukture.</span></div>
+            <div class="proofItem"><b>Foto zapis</b><span>Završno stanje reka, patch panela i obeležavanja.</span></div>
+          </div>
+
+          <div class="proofVisuals">
+            <figure class="imageCard dark">
+              <img src="assets/satvision-fluke-testiranje-svakog-linka.png" alt="Fluke testiranje svakog dogovorenog linka" />
+              <figcaption><b>Fluke testiranje</b> Testiranje svakog dogovorenog linka pre primopredaje.</figcaption>
+            </figure>
+            <figure class="imageCard dark">
+              <img src="assets/satvision-mapa-portova-dokumentacija-koja-stedi-sate.png" alt="Mapa portova i dokumentacija koja štedi sate u održavanju" />
+              <figcaption><b>Mapa portova</b> Dokumentacija koja štedi sate u održavanju i otklanjanju problema.</figcaption>
+            </figure>
+            <figure class="imageCard dark">
+              <img src="assets/satvision-sta-dobijate-na-primopredaji.png" alt="SATVISION primopredajni paket sa izveštajima i dokumentacijom" />
+              <figcaption><b>Primopredajni paket</b> Izveštaji, mapa portova, as-built i foto zapis završnog stanja.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proces" class="section">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>Kako radimo projekat</h2>
+            <p>Proces je kratak, kontrolisan i razumljiv za IT, operacije i menadžment.</p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="feature"><div class="tag"><i></i> 01 Scope</div><h3>Procena i opseg</h3><p>Lokacija, broj portova, rok, postojeća infrastruktura, nacrt ili obilazak objekta.</p></div>
+          <div class="feature"><div class="tag"><i></i> 02 Plan</div><h3>Predlog rešenja</h3><p>Trase, rek logika, patch paneli, optika po potrebi i način obeležavanja.</p></div>
+          <div class="feature"><div class="tag"><i></i> 03 Build</div><h3>Fazno izvođenje</h3><p>Rad po zonama ili terminima kako bi se smanjio uticaj na poslovanje.</p></div>
+          <div class="feature"><div class="tag"><i></i> 04 Certify</div><h3>Testiranje</h3><p>Fluke sertifikacija kada je deo dogovorenog obima, uz pregled rezultata.</p></div>
+          <div class="feature"><div class="tag"><i></i> 05 Document</div><h3>Dokumentacija</h3><p>Mapa portova, oznake, as-built i završni elementi dogovorene primopredaje.</p></div>
+          <div class="feature"><div class="tag"><i></i> 06 Handover</div><h3>Primopredaja</h3><p>Klijent dobija sistem koji može da održava, širi i kontroliše bez pogađanja.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="situacije">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>Kada vam treba SATVISION</h2>
+            <p>Najveća vrednost je kada postojeća infrastruktura mora da postane stabilna, pregledna i spremna za rast.</p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="feature"><h3>Selite firmu ili otvarate lokaciju</h3><p>Planiranje portova, trasa, WiFi/AP pozicija i osnovne mrežne infrastrukture pre useljenja.</p></div>
+          <div class="feature"><h3>Rek je neuredan ili bez dokumentacije</h3><p>Sređivanje patch panela, labeling, mapa portova i dokumentovanje završnog stanja.</p></div>
+          <div class="feature"><h3>Uvodite WiFi, VoIP, PoE ili IP kamere</h3><p>Priprema kablovske i mrežne osnove da sistemi rade stabilno i bez improvizacije.</p></div>
+        </div>
+
+        <div class="imageGrid" style="grid-template-columns:1fr;margin-top:16px">
+          <figure class="imageCard">
+            <img src="assets/satvision-pre-i-posle-rek-organizacija.png" alt="Pre i posle rek organizacije za poslovnu mrežnu infrastrukturu" />
+            <figcaption><b>Pre / posle rek organizacija</b> Od kablovskog haosa do obeležene, dokumentovane i održive infrastrukture.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="objekti">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>Za koje poslovne objekte radimo</h2>
+            <p>Fokus je na objektima gde mreža, optika i IP sistemi moraju biti pregledni, stabilni i spremni za održavanje.</p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="feature"><div class="tag"><i></i> Offices</div><h3>Kancelarije i poslovni prostori</h3><p>Radna mesta, sale za sastanke, tehničke prostorije, WiFi/AP pozicije i uredna rek organizacija.</p></div>
+          <div class="feature"><div class="tag"><i></i> Retail</div><h3>Lokali, retail i više lokacija</h3><p>Standardizovana infrastruktura za kase, mrežu, IP kamere, interfon i daljinsku podršku.</p></div>
+          <div class="feature"><div class="tag"><i></i> Operations</div><h3>Magacini i proizvodni prostori</h3><p>Optika, backbone, PoE, WiFi osnova i zone gde su preglednost i pouzdanost važni za svakodnevni rad.</p></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="primer">
+      <div class="wrap">
+        <div class="caseShell">
+          <figure class="imageCard">
+            <img src="assets/satvision-sta-dobijate-na-primopredaji.png" alt="Primer SATVISION primopredajnih dokaza za infrastrukturne projekte" />
+            <figcaption><b>Proof slot za primopredaju</b> Privremeni vizuelni dokaz. Zameniti realnim fotografijama projekta i anonimizovanom dokumentacijom kada budu dostupni.</figcaption>
+          </figure>
+
+          <div class="card">
+            <div class="pad">
+              <div class="tag"><i></i> Mini case study format</div>
+              <h2 style="margin:0 0 12px;line-height:1.12">Primer isporuke koji treba popuniti pre objave</h2>
+              <ul class="list">
+                <li><span class="check">✓</span>Tip objekta: kancelarija, retail, magacin ili proizvodni prostor</li>
+                <li><span class="check">✓</span>Obim: broj portova, Cat6/Cat6A, optika po potrebi</li>
+                <li><span class="check">✓</span>Radovi: trase, rek, patch panel, obeležavanje</li>
+                <li><span class="check">✓</span>Primopredaja: Fluke report, mapa portova, as-built</li>
+                <li><span class="check">✓</span>Rezultat: uredna, merljiva i održiva infrastruktura</li>
+              </ul>
+              <div style="margin-top:16px">
+                <a class="btn dark" href="#kontakt">Zatražite sličnu procenu</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section" id="rizik">
+      <div class="wrap">
+        <div class="card">
+          <div class="pad">
+            <div class="secTitle" style="margin-top:0">
+              <div>
+                <h2>Manje improvizacije. Lakše održavanje. Jasnija odgovornost.</h2>
+                <p>Direktor ne kupuje kablove. IT tim ne kupuje samo portove. Firma kupuje infrastrukturu koja je poznata, obeležena i proverljiva.</p>
+              </div>
+            </div>
+
+            <div class="grid3">
+              <div class="feature"><h3>Manje zastoja</h3><p>Kada postoje oznake, mapa portova i dokumentacija, problem se pronalazi brže i bez nagađanja.</p></div>
+              <div class="feature"><h3>Lakše proširenje</h3><p>Nova radna mesta, WiFi, VoIP, PoE i IP kamere se planiraju na poznatoj infrastrukturi, ne na improvizaciji.</p></div>
+              <div class="feature"><h3>Jasna primopredaja</h3><p>Klijent zna šta je izvedeno, gde je završeno i koje dokaze dobija nakon završetka projekta.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section id="kontakt" class="section">
+      <div class="wrap">
+        <div class="ctaBox">
+          <div>
+            <h3>Zatražite procenu infrastrukture</h3>
+            <p>Za brzu procenu pošaljite: lokaciju, tip objekta, broj radnih mesta/portova, postojeće stanje, rok, da li imate nacrt i da li je potrebna Fluke sertifikacija.</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn primary" href="tel:063374210">Pozovite 063/374-210</a>
+            <a class="btn" href="mailto:office@satvision.rs">Pošaljite upit</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>Česta pitanja</h2>
+            <p>Kratki odgovori pre početka projekta.</p>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <details open><summary>Da li radite u celoj Srbiji?</summary><p>Da. SKS, optiku i mrežnu infrastrukturu izvodimo za poslovne objekte u Srbiji, uz obim i rokove po dogovoru.</p></details>
+          <details><summary>Da li dobijamo Fluke izveštaj?</summary><p>Da, kada je Fluke sertifikacija deo dogovorenog obima projekta. Izveštaj se predaje uz dokumentaciju.</p></details>
+          <details><summary>Da li radite postojeće neuredne rekove?</summary><p>Da. Možemo uraditi pregled, reorganizaciju, obeležavanje i dokumentovanje postojećeg stanja.</p></details>
+          <details><summary>Da li radite fazno ili van radnog vremena?</summary><p>Po dogovoru. Kod poslovnih objekata rad se može planirati po zonama, spratovima ili terminima da bi se smanjio prekid rada.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div><b>SATVISION</b> — SKS, optika i mrežna infrastruktura za firme.</div>
+      <div>Projektovanje • Izvođenje • Testiranje • Dokumentacija • Primopredaja</div>
     </div>
-    <div class="card"><h2>📋 Brze obaveze</h2><div class="small">Tap za zatvaranje današnjeg sistema.</div><div id="taskChecklist" class="list"></div></div>
-    <div class="card"><h2>🏋️ Trening</h2><div class="quick-grid"><div class="field"><label>Visenje (sek)</label><input id="hang" type="number"></div><div class="field"><label>Zgib uz pomoć</label><input id="pull" type="number"></div><div class="field"><label>Kolena</label><input id="knee" type="number"></div><div class="field"><label>Propadanje / držanje</label><input id="dip" type="number"></div></div><div class="field"><label>Napomena za telo / ruku</label><textarea id="armNote"></textarea></div></div>
-  </section>
+  </footer>
 
-  <section id="screen-history" class="section">
-    <div class="card"><h2>📈 Istorija</h2><div class="grid2"><div class="stat"><span class="small">Trenutni streak</span><strong id="streakNow">0</strong></div><div class="stat"><span class="small">Najbolji streak</span><strong id="streakBest">0</strong></div><div class="stat"><span class="small">Promena težine</span><strong id="weightDelta">—</strong></div><div class="stat"><span class="small">Rekord koraka</span><strong id="recSteps">0</strong></div></div></div>
-    <div class="card"><h2>⚖️ Graf težine</h2><div class="canvas-wrap"><canvas id="weightChart" width="420" height="220"></canvas></div></div>
-    <div class="card"><h2>📏 Graf struka</h2><div class="canvas-wrap"><canvas id="waistChart" width="420" height="220"></canvas></div></div>
-    <div class="card"><h2>📚 Poslednji dani</h2><div id="historyTable"></div></div>
-  </section>
-
-  <section id="screen-logs" class="section">
-    <div class="card"><h2>🧭 Terenski dnevnik</h2><div class="field"><label>Tip</label><select id="fieldEventType"><option value="info">Info / napomena</option><option value="water">Voda</option><option value="beer">Pivo</option><option value="soda">Gazirano / sok</option><option value="food">Hrana van plana</option><option value="walk">Šetnja / koraci</option><option value="symptom">Simptom / osećaj</option></select></div><div class="field"><label>Kratak unos</label><input id="fieldEventText"></div><div class="btn-row"><button class="warning" onclick="addFieldEvent()">Dodaj sa vremenom</button><button class="ghost" onclick="clearFieldEvents()">Očisti današnji log</button></div><div id="fieldLogTable"></div></div>
-    <div class="card danger-zone"><div class="small">🚀 Početak transformacije</div><div style="font-size:28px;font-weight:900;margin-top:4px;">13.05.2026.</div><div class="small" style="margin-top:6px;">Dani upozorenja nisu za krivicu nego za opomenu.</div><div class="seg" style="margin-top:12px;"><div class="field" style="margin-top:0"><label>Datum</label><input id="loserDate" type="date"></div><div class="field" style="margin-top:0"><label>Razlog</label><input id="loserReason"></div></div><div class="btn-row"><button class="danger" onclick="addLoserDay()">Dodaj loser day</button></div><div id="loserDaysList" class="loser"></div></div>
-    <div class="card"><h2>🏆 Rekordi</h2><div id="recordList" class="list"></div></div>
-  </section>
-
-  <section id="screen-more" class="section">
-    <div class="card"><h2>📤 Izveštaj i backup</h2><div class="btn-row"><button onclick="sendEmail()">Pošalji email</button><button class="ghost" onclick="exportJSON()">Izvezi JSON</button></div><div class="small" style="margin-top:10px;">EmailJS radi ako su ključevi podešeni. U suprotnom otvara mail app.</div></div>
-    <div class="card"><h2>📅 Plan za sutra</h2><div class="seg"><div class="field" style="margin-top:0"><label>Kada šetnja?</label><input id="tomorrowWalk" type="time"></div><div class="field" style="margin-top:0"><label>Kada trening?</label><input id="tomorrowWorkout" type="time"></div></div><div class="field"><label>Fokus sutra</label><textarea id="tomorrowFocus"></textarea></div></div>
-    <div class="card"><h2>🏆 Achievement sistem</h2><div id="achievementList" class="list"></div></div>
-    <div class="card"><h2>📲 Put ka app verziji</h2><div class="small">Ovo je mobile-first HTML baza. Sledeći koraci su PWA manifest, ikonica, offline cache i onda Android packaging.</div></div>
-  </section>
-</div>
-
-<nav class="sticky-nav">
-  <button class="nav-btn active" data-screen="home">Danas</button>
-  <button class="nav-btn" data-screen="entry">Unos</button>
-  <button class="nav-btn" data-screen="history">Istorija</button>
-  <button class="nav-btn" data-screen="logs">Log</button>
-  <button class="nav-btn" data-screen="more">Više</button>
-</nav>
-
-<script>
-const EMAILJS_CONFIG={publicKey:'nsqG-_xjWMfl5fk6Y',serviceId:'service_oofn0gf',templateId:'template_dxt6uwg',toEmail:'2025produkcija@gmail.com'};
-const TASKS=[{id:'warmLemonWater',text:'500 ml vode po buđenju',time:7,icon:'💧'},{id:'waterTea',text:'Jutarnji čaj bez šećera',time:10,icon:'🍵'},{id:'smoothie',text:'Smoothie zatvoren',time:12,icon:'🥤'},{id:'mainMeal',text:'Glavni obrok zatvoren',time:18,icon:'🍽️'},{id:'walk',text:'Šetnja / koraci',time:19,icon:'🚶'},{id:'bars',text:'Sprava 10–15 min',time:20,icon:'🏋️'},{id:'noBread',text:'Bez hleba',time:21,icon:'🥖'},{id:'noSugar',text:'Bez šećera / sokova',time:21,icon:'🍭'},{id:'noLateFood',text:'Bez kasnog jela',time:22,icon:'🌙'},{id:'waterGoal',text:'Voda 3.0L',time:21,icon:'🫗'}];
-const RISKS=[{id:'beer',text:'Pivo'},{id:'bread',text:'Hleb / pecivo'},{id:'sweet',text:'Slatko / sok'},{id:'lateFood',text:'Kasno jelo'},{id:'missedWalk',text:'Preskočena šetnja'}];
-const LOCAL_QUOTES=['Mali koraci svaki dan. Velike promene zauvek.','Ne mora savršeno. Mora zatvoreno.','Danas ne juriš motivaciju — gradiš sistem.','Telo pamti disciplinu čak i kad vaga ćuti.','Jedan čist dan je cigla u novom životu.','Kad ti je teško, uradi minimum. Minimum čuva ritam.','Ne pobeđuje najjači dan, nego najdosledniji čovek.','Svaki zapis je dokaz da vodiš svoj proces.','Disciplina danas znači lakše telo sutra.','Zatvoren dan je pobeda čak i kad nije savršen.','Nije poenta brzina. Poenta je smer.','Ne odustaj zbog jednog lošeg dana.','Sistem je jači od motivacije.','San, voda i hodanje menjaju više nego ekstremi.','Doslednost pravi transformaciju.'];
-const TRANSFORMATION_START='2026-05-13', recordsKey='medscan-records-v2', loserKey='medscan-loser-days-v2';
-const key=()=> 'medscan-day-v2-' + new Date().toISOString().slice(0,10);
-const defaultState=()=>({tasks:{},risks:{},fields:{},fieldEvents:[]});
-function loadState(){try{return JSON.parse(localStorage.getItem(key())||JSON.stringify(defaultState()));}catch(e){return defaultState();}}
-function saveState(s){localStorage.setItem(key(),JSON.stringify(s));}
-function loadRecords(){try{return JSON.parse(localStorage.getItem(recordsKey)||'{"hang":0,"pull":0,"knee":0,"dip":0,"steps":0}');}catch(e){return {hang:0,pull:0,knee:0,dip:0,steps:0};}}
-function saveRecords(r){localStorage.setItem(recordsKey,JSON.stringify(r));}
-function loadLoserDays(){try{return JSON.parse(localStorage.getItem(loserKey)||'[]');}catch(e){return [];}}
-function saveLoserDays(items){localStorage.setItem(loserKey,JSON.stringify(items));}
-function setText(id,v){const el=document.getElementById(id); if(el) el.textContent=v;}
-function setWidth(id,pct){const el=document.getElementById(id); if(el) el.style.width=pct+'%';}
-function bindNav(){document.querySelectorAll('.nav-btn').forEach(btn=>btn.addEventListener('click',()=>{const s=btn.dataset.screen;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b===btn));document.querySelectorAll('.section').forEach(sec=>sec.classList.remove('active'));const t=document.getElementById('screen-'+s); if(t) t.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}));}
-function bindFields(){const ids=['weight','waist','steps','km','calories','calorieIn','protein','waterLiters','hunger','energy','sleep','dinnerTime','pulse','bp','spo2','temp','note','hang','pull','knee','dip','armNote','tomorrowWalk','tomorrowWorkout','tomorrowFocus']; const state=loadState(); ids.forEach(id=>{const el=document.getElementById(id); if(!el) return; el.value=state.fields[id]||''; el.addEventListener('input',()=>{const s=loadState(); s.fields[id]=el.value; if(id==='waterLiters') s.tasks.waterGoal=Number(el.value||0)>=3; saveState(s); refresh();});});}
-function completionPercent(state){const done=TASKS.filter(t=>state.tasks[t.id]).length; return Math.round((done/TASKS.length)*100);}
-function riskCount(state){return RISKS.filter(r=>state.risks[r.id]).length;}
-function dayProgressPercent(){const now=new Date(), start=new Date(now), end=new Date(now); start.setHours(6,0,0,0); end.setHours(23,0,0,0); if(now<=start) return 0; if(now>=end) return 100; return Math.round(((now-start)/(end-start))*100);}
-function statusMeta(state){const pct=completionPercent(state), risks=riskCount(state), h=new Date().getHours(), critical=state.tasks.mainMeal&&state.tasks.walk&&state.tasks.noLateFood; if(risks>0 || (h>=20 && !critical)) return {cls:'risk',text:'🔴 RIZIČAN DAN'}; if(pct>=90) return {cls:'clean',text:'🟢 ČIST DAN'}; return {cls:'mid',text:'🟡 DAN U TOKU'};}
-function renderHeader(){setText('todayText', new Date().toLocaleDateString('sr-RS',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'})); setText('timeText', new Date().toLocaleTimeString('sr-RS',{hour:'2-digit',minute:'2-digit'}));}
-function loadDailyQuote(force=false){const quoteBox=document.getElementById('dailyQuote'), authorBox=document.getElementById('dailyQuoteAuthor'); if(!quoteBox||!authorBox) return; const today=new Date(), dateKey=today.toISOString().slice(0,10), baseIndex=(today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate())%LOCAL_QUOTES.length, cursorKey='medscan-quote-cursor-v2-'+dateKey; let index=Number(localStorage.getItem(cursorKey)); if(Number.isNaN(index)) index=baseIndex; if(force) index=(index+1)%LOCAL_QUOTES.length; localStorage.setItem(cursorKey,String(index)); quoteBox.textContent='“'+LOCAL_QUOTES[index]+'”'; authorBox.textContent='MEDSCAN dnevna poruka';}
-function renderHome(){const state=loadState(), dayPct=dayProgressPercent(), sysPct=completionPercent(state), meta=statusMeta(state), badge=document.getElementById('statusBadge'); if(badge){badge.className='badge '+meta.cls; badge.textContent=meta.text;} setText('dayPctText', dayPct+'%'); setWidth('dayProgress',dayPct); setText('systemPctText', sysPct+'%'); setWidth('systemProgress',sysPct); setText('scoreText',sysPct+'%'); const ring=document.getElementById('scoreRing'); if(ring) ring.style.setProperty('--score',sysPct+'%'); const f=state.fields||{}; setText('stepsStat',Number(f.steps||0).toLocaleString('sr-RS')); setText('weightStat',f.weight?(f.weight+' kg'):'—'); setText('waterStat',(f.waterLiters||'0.0')+' L'); renderPriorities(); renderDoneList();}
-function toggleTask(id){const s=loadState(); s.tasks[id]=!s.tasks[id]; saveState(s); refresh();}
-function renderTaskChecklist(){const box=document.getElementById('taskChecklist'); if(!box) return; const state=loadState(); box.innerHTML=TASKS.map(t=>`<div class="item ${state.tasks[t.id]?'done':'warn'}"><div class="icon">${t.icon}</div><div><strong>${t.text}</strong><div class="small">rok oko ${String(t.time).padStart(2,'0')}:00</div></div><button class="${state.tasks[t.id]?'ghost':''}" onclick="toggleTask('${t.id}')">${state.tasks[t.id]?'Poništi':'Zatvori'}</button></div>`).join('');}
-function renderPriorities(){const state=loadState(), box=document.getElementById('priorityList'); if(!box) return; const f=state.fields||{}, hour=new Date().getHours(), items=[]; TASKS.forEach(t=>{if(!state.tasks[t.id]&&hour>=t.time) items.push({icon:t.icon,title:t.text,note:'Kasni za današnji ritam',action:t.id});}); if(Number(f.steps||0)<6000&&hour>=18) items.push({icon:'👟',title:'Koraci su niski',note:'Pojačaj šetnju večeras',action:'walk'}); if(Number(f.waterLiters||0)<2&&hour>=16) items.push({icon:'💧',title:'Voda je niska',note:'Dodaj još vode danas',action:'waterGoal'}); if(!items.length){box.innerHTML='<div class="item done"><div class="icon">✅</div><div><strong>Trenutno nema kritičnih kašnjenja.</strong><div class="small">Nastavi ritam i zatvori dan.</div></div><span class="pill">mirno</span></div>'; return;} box.innerHTML=items.slice(0,6).map(i=>`<div class="item risk"><div class="icon">${i.icon}</div><div><strong>${i.title}</strong><div class="small">${i.note}</div></div><button class="danger" onclick="toggleTask('${i.action}')">Zatvori</button></div>`).join('');}
-function renderDoneList(){const box=document.getElementById('doneList'), pill=document.getElementById('doneCountPill'); if(!box) return; const state=loadState(), done=TASKS.filter(t=>state.tasks[t.id]); if(pill) pill.textContent=done.length+' / '+TASKS.length; box.innerHTML=done.length?done.map(t=>`<div class="item done"><div class="icon">${t.icon}</div><div><strong>${t.text}</strong><div class="small">zatvoreno</div></div><span class="pill">ok</span></div>`).join(''):'<div class="small">Još nema zatvorenih stavki danas.</div>';}
-function updateRecords(showPopup=false){const s=loadState(), rec=loadRecords(), vals={hang:Number(s.fields.hang||0),pull:Number(s.fields.pull||0),knee:Number(s.fields.knee||0),dip:Number(s.fields.dip||0),steps:Number(s.fields.steps||0)}; let changed=false; Object.keys(vals).forEach(k=>{if(vals[k]>rec[k]){rec[k]=vals[k];changed=true;}}); saveRecords(rec); renderRecords(); if(changed&&showPopup) alert('Novi rekord je sačuvan.');}
-function renderRecords(){const rec=loadRecords(); setText('recSteps', rec.steps||0); const box=document.getElementById('recordList'); if(!box) return; box.innerHTML=[['Visenje',rec.hang+' sek'],['Zgib uz pomoć',rec.pull],['Podizanje kolena',rec.knee],['Propadanje / držanje',rec.dip+' sek'],['Koraci',rec.steps]].map(([a,b])=>`<div class="item done"><div class="icon">🏆</div><div><strong>${a}</strong><div class="small">lični rekord</div></div><span class="pill">${b}</span></div>`).join('');}
-function eventLabel(type){const map={info:'ℹ️ Info',water:'💧 Voda',beer:'🍺 Pivo',soda:'🥤 Sok',food:'🍽️ Hrana',walk:'🚶 Šetnja',symptom:'🩺 Simptom'}; return map[type]||'ℹ️ Info';}
-function addFieldEvent(){const typeEl=document.getElementById('fieldEventType'), textEl=document.getElementById('fieldEventText'); if(!typeEl||!textEl) return; const text=textEl.value.trim(); if(!text){alert('Upiši kratak unos.'); return;} const s=loadState(); s.fieldEvents=s.fieldEvents||[]; const now=new Date(); s.fieldEvents.push({time:now.toLocaleTimeString('sr-RS',{hour:'2-digit',minute:'2-digit'}),type:typeEl.value,text}); if(typeEl.value==='beer') s.risks.beer=true; if(typeEl.value==='soda') s.risks.sweet=true; if(typeEl.value==='food') s.risks.bread=true; saveState(s); textEl.value=''; refresh();}
-function clearFieldEvents(){if(!confirm('Obrisati samo današnji terenski log?')) return; const s=loadState(); s.fieldEvents=[]; saveState(s); refresh();}
-function renderFieldEvents(){const box=document.getElementById('fieldLogTable'); if(!box) return; const events=loadState().fieldEvents||[]; if(!events.length){box.innerHTML='<div class="small" style="margin-top:12px;">Još nema terenskih zapisa danas.</div>'; return;} box.innerHTML=`<table><thead><tr><th>Vreme</th><th>Tip</th><th>Opis</th></tr></thead><tbody>${events.slice().reverse().map(e=>`<tr><td>${e.time}</td><td>${eventLabel(e.type)}</td><td>${e.text}</td></tr>`).join('')}</tbody></table>`;}
-function addLoserDay(){const dateEl=document.getElementById('loserDate'), reasonEl=document.getElementById('loserReason'); if(!dateEl||!reasonEl) return; const date=dateEl.value, reason=reasonEl.value.trim(); if(!date||!reason){alert('Upiši datum i razlog.'); return;} const items=loadLoserDays(); items.unshift({id:Date.now(),date,reason}); saveLoserDays(items); dateEl.value=''; reasonEl.value=''; renderLoserDays();}
-function removeLoserDay(id){saveLoserDays(loadLoserDays().filter(x=>x.id!==id)); renderLoserDays();}
-function renderLoserDays(){const box=document.getElementById('loserDaysList'); if(!box) return; const items=loadLoserDays(); box.innerHTML=items.length?items.map(i=>`<div class="loser-item"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><strong>${i.date}</strong><button class="danger" onclick="removeLoserDay(${i.id})">Obriši</button></div><div class="small" style="margin-top:8px;color:#fed7aa">${i.reason}</div></div>`).join(''):'<div class="small" style="margin-top:10px;">Još nema upisanih loser days.</div>';}
-function dayKeys(days=30){const keys=[], today=new Date(), start=new Date(TRANSFORMATION_START+'T00:00:00'), first=new Date(today); first.setDate(today.getDate()-(days-1)); const realStart=first<start?start:first; for(let d=new Date(realStart); d<=today; d.setDate(d.getDate()+1)) keys.push('medscan-day-v2-'+d.toISOString().slice(0,10)); return keys;}
-function isCleanDay(state){if(!state) return false; return completionPercent(state)>=80 && riskCount(state)===0;}
-function historyData(){return dayKeys(30).map(k=>{const date=k.replace('medscan-day-v2-',''); let state=null; try{state=JSON.parse(localStorage.getItem(k)||'null');}catch(e){} const weight=state?.fields?.weight?Number(state.fields.weight):null, waist=state?.fields?.waist?Number(state.fields.waist):null; return {date,state,weight,waist,clean:isCleanDay(state),steps:state?.fields?.steps||''};});}
-function streaks(data){let current=0,best=0,run=0; for(let i=data.length-1;i>=0;i--){if(data[i].clean) current++; else break;} data.forEach(d=>{if(d.clean) run++; else run=0; best=Math.max(best,run);}); return {current,best};}
-function drawChart(canvasId, points, color, labelText){const canvas=document.getElementById(canvasId); if(!canvas) return; const ctx=canvas.getContext('2d'); ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle='rgba(255,255,255,.03)'; ctx.fillRect(0,0,canvas.width,canvas.height); for(let y=30;y<canvas.height;y+=40){ctx.strokeStyle='rgba(255,255,255,.08)'; ctx.beginPath(); ctx.moveTo(34,y); ctx.lineTo(canvas.width-10,y); ctx.stroke();} if(points.length<2){ctx.fillStyle='#94a3b8'; ctx.font='15px system-ui'; ctx.fillText(labelText,22,110); return;} const values=points.map(p=>p.value), min=Math.min(...values)-0.5, max=Math.max(...values)+0.5, x=i=>38+(i/Math.max(1,points.length-1))*(canvas.width-58), y=v=>180-((v-min)/Math.max(1,max-min))*130; ctx.strokeStyle=color; ctx.lineWidth=4; ctx.beginPath(); points.forEach((p,i)=>{const px=x(i), py=y(p.value); if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);}); ctx.stroke(); points.forEach((p,i)=>{const px=x(i), py=y(p.value); ctx.fillStyle=p.clean?'#22c55e':color; ctx.beginPath(); ctx.arc(px,py,5,0,Math.PI*2); ctx.fill();});}
-function renderHistory(){const data=historyData(), s=streaks(data); setText('streakNow',s.current+' dana'); setText('streakBest',s.best+' dana'); const weights=data.filter(d=>d.weight!==null); if(weights.length>=2){const delta=(weights[weights.length-1].weight-weights[0].weight).toFixed(1); setText('weightDelta',(delta>0?'+':'')+delta+' kg');} else setText('weightDelta','—'); drawChart('weightChart',weights.map(d=>({value:d.weight,clean:d.clean})),'#38bdf8','Unesi bar 2 težine za graf.'); const waists=data.filter(d=>d.waist!==null); drawChart('waistChart',waists.map(d=>({value:d.waist,clean:d.clean})),'#a78bfa','Unesi bar 2 struka za graf.'); const table=document.getElementById('historyTable'); if(table) table.innerHTML=`<table><thead><tr><th>Datum</th><th>Kg</th><th>Struk</th><th>Koraci</th></tr></thead><tbody>${data.slice(-10).reverse().map(d=>`<tr><td>${d.date}</td><td>${d.weight??'-'}</td><td>${d.waist??'-'}</td><td>${d.steps||'-'}</td></tr>`).join('')}</tbody></table>`; renderAchievements(data);}
-function renderAchievements(data){const box=document.getElementById('achievementList'); if(!box) return; const achievements=[], rec=loadRecords(), latestWeight=[...data].reverse().find(d=>d.weight!==null)?.weight, s=streaks(data); if(latestWeight!==undefined&&latestWeight<=110) achievements.push('🏆 Prvih -5 kg'); if(rec.hang>=30) achievements.push('🏆 30 sekundi visenja'); if(rec.pull>=1) achievements.push('🏆 Prvi zgib uz pomoć'); if(s.current>=7) achievements.push('🏆 7 čistih dana'); box.innerHTML=achievements.length?achievements.map(a=>`<div class="item done"><div class="icon">🔥</div><div><strong>${a}</strong><div class="small">otključano</div></div><span class="pill">da</span></div>`).join(''):'<div class="small">Achievement-i će se pojavljivati automatski.</div>';}
-function reportText(){const state=loadState(), f=state.fields||{}, doneTasks=TASKS.filter(t=>state.tasks[t.id]).map(t=>'✓ '+t.text).join('\n')||'-', fieldEvents=(state.fieldEvents||[]).map(e=>`${e.time} - ${eventLabel(e.type)} - ${e.text}`).join('\n')||'-', status=document.getElementById('statusBadge')?.textContent||'-'; return `MEDSCAN Mobile dnevni izveštaj
-
-Datum: ${new Date().toLocaleDateString('sr-RS')}
-Status: ${status}
-
-Težina: ${f.weight||'-'} kg
-Struk: ${f.waist||'-'} cm
-Koraci: ${f.steps||'-'}
-Km: ${f.km||'-'}
-Aktivne kcal: ${f.calories||'-'}
-Unos kalorija: ${f.calorieIn||'-'}
-Proteini: ${f.protein||'-'}
-Voda: ${f.waterLiters||'-'} L
-Glad: ${f.hunger||'-'}
-Energija: ${f.energy||'-'}
-San: ${f.sleep||'-'} h
-
-Vitalni:
-Puls: ${f.pulse||'-'}
-Pritisak: ${f.bp||'-'}
-SpO2: ${f.spo2||'-'}
-Temperatura: ${f.temp||'-'}
-
-Trening:
-Visenje: ${f.hang||0}
-Zgib uz pomoć: ${f.pull||0}
-Kolena: ${f.knee||0}
-Propadanje/držanje: ${f.dip||0}
-Napomena: ${f.armNote||'-'}
-
-Terenski dnevnik:
-${fieldEvents}
-
-Završeno:
-${doneTasks}
-
-Beleška:
-${f.note||'-'}`;}
-async function sendEmail(){const subjectRaw='MEDSCAN Mobile izveštaj - '+new Date().toLocaleDateString('sr-RS'), bodyRaw=reportText(), emailReady=EMAILJS_CONFIG.publicKey&&EMAILJS_CONFIG.serviceId&&EMAILJS_CONFIG.templateId; if(!emailReady){const subject=encodeURIComponent(subjectRaw), body=encodeURIComponent(bodyRaw); window.location.href=`mailto:?subject=${subject}&body=${body}`; return;} try{emailjs.init({publicKey:EMAILJS_CONFIG.publicKey}); await emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {subject:subjectRaw,message:bodyRaw,to_email:EMAILJS_CONFIG.toEmail||undefined}); alert('Izveštaj je poslat.');}catch(err){console.error(err);const subject=encodeURIComponent(subjectRaw), body=encodeURIComponent(bodyRaw); window.location.href=`mailto:?subject=${subject}&body=${body}`;}}
-function exportJSON(){const payload={today:loadState(),records:loadRecords(),loserDays:loadLoserDays(),generatedAt:new Date().toISOString()}, blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}), url=URL.createObjectURL(blob), a=document.createElement('a'); a.href=url; a.download='medscan-mobile-v2.json'; a.click(); URL.revokeObjectURL(url);}
-function saveDay(){updateRecords(true); refresh(); alert('Dan je sačuvan.');}
-function resetToday(){if(!confirm('Resetovati samo današnji unos?')) return; localStorage.removeItem(key()); location.reload();}
-function refresh(){renderHeader(); renderHome(); renderTaskChecklist(); renderFieldEvents(); renderLoserDays(); updateRecords(false); renderHistory();}
-window.toggleTask=toggleTask; window.addFieldEvent=addFieldEvent; window.clearFieldEvents=clearFieldEvents; window.addLoserDay=addLoserDay; window.removeLoserDay=removeLoserDay; window.loadDailyQuote=loadDailyQuote; window.sendEmail=sendEmail; window.exportJSON=exportJSON; window.saveDay=saveDay; window.resetToday=resetToday;
-bindNav(); bindFields(); loadDailyQuote(false); renderRecords(); refresh(); setInterval(renderHeader,60000);
-</script>
+  <div class="sticky" aria-label="Brzi kontakt">
+    <div class="inner">
+      <a class="btn primary" href="tel:063374210">Pozovi</a>
+      <a class="btn dark" href="#kontakt">Procena</a>
+    </div>
+  </div>
 </body>
 </html>
