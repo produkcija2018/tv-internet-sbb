@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanitized Engineering Brief</title>
+  <style>
+    :root{
+      --bg:#081120;
+      --bg2:#10213f;
+      --card:#ffffff;
+      --ink:#192640;
+      --muted:#627391;
+      --line:#dae3f2;
+      --blue:#2563eb;
+      --cyan:#00b3ff;
+      --green:#11965b;
+      --shadow:0 18px 42px rgba(16,32,72,.10);
+      --radius:22px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 480px at 15% 0%, rgba(37,99,235,.22), transparent 50%),
+        radial-gradient(900px 420px at 85% 10%, rgba(0,179,255,.16), transparent 42%),
+        linear-gradient(180deg, var(--bg), var(--bg2) 24%, #eef3fb 24%, #eef3fb 100%);
+      line-height:1.6;
+    }
+    .wrap{max-width:var(--max);margin:0 auto;padding:28px 22px 72px}
+    .hero{
+      color:#fff;
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:28px;
+      padding:30px;
+      box-shadow:0 24px 54px rgba(0,0,0,.18);
+      margin-bottom:22px;
+    }
+    .hero h1{font-size:42px;line-height:1.05;letter-spacing:-0.03em;margin:0 0 10px}
+    .hero p{font-size:17px;color:#dce8ff;max-width:920px;margin:0 0 10px}
+    .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .chip{
+      padding:9px 13px;border-radius:999px;font-size:13px;color:#eef4ff;
+      border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08)
+    }
+    .grid{display:grid;grid-template-columns:1fr;gap:20px}
+    .section{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
+    h2{font-size:30px;line-height:1.08;letter-spacing:-0.025em;margin:0 0 14px}
+    h3{font-size:21px;margin:20px 0 10px}
+    p{margin:0 0 12px}
+    ul, ol{margin:8px 0 14px 22px}
+    li{margin:6px 0}
+    .lead{font-size:17px;color:#334566}
+    .callout{
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid #dbe5f2;
+      box-shadow: 0 10px 26px rgba(16,32,72,0.08);
+      padding: 16px 18px;
+      border-radius: 14px;
+      margin: 16px 0;
+      color: #22324d;
+      line-height: 1.7;
+    }
+    .callout b{color:#111c30}
+    .good{background:linear-gradient(180deg,#f1fbf5 0%,#e6f6ec 100%);border-color:#c9e7d3;color:#1d4d32}
+    .warn{background:linear-gradient(180deg,#fffaf0 0%,#fff4df 100%);border-color:#efd9a6;color:#5f4715}
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .box{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      background:#f7fafe;
+    }
+    .box h4{margin:0 0 8px;font-size:16px}
+    .box p{font-size:14px;color:#46597c;margin:0}
+    table{width:100%;border-collapse:collapse;margin:12px 0 18px}
+    th,td{border:1px solid var(--line);padding:11px 12px;text-align:left;vertical-align:top;font-size:14px}
+    th{background:#f6f9ff}
+    .footer{color:#6d7b99;font-size:13px;margin-top:8px}
+    @media (max-width:780px){
+      .hero h1{font-size:34px}
+      .cards{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Sanitized Engineering Brief</h1>
+      <p>Materijal za razgovor sa senior engineering lead-om bez otkrivanja stvarne suštine projekta.</p>
+      <p>Fokus nije na proizvodu kao ideji, već na organizaciji tima, ownership modelu, izboru stack-a i prelazu iz ranog pilota u ozbiljan build.</p>
+      <div class="chips">
+        <div class="chip">Multi-channel system</div>
+        <div class="chip">Case-driven core</div>
+        <div class="chip">Interface vs control split</div>
+        <div class="chip">Pilot to production</div>
+        <div class="chip">Team design</div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="section">
+        <h2>1. Kako sistem predstaviti bez otkrivanja suštine</h2>
+        <p class="lead">Sistem predstavi kao rani build jednog <b>multi-channel case-driven sistema</b> sa jasnom podelom između <b>interface/device layer-a</b> i <b>control/state/process layer-a</b>.</p>
+        <div class="callout good"><b>Formula:</b> “Radim na ranom multi-channel case-driven platform buildu sa device frontend-om, voice gateway-em, continuity handoff-om i backend jezgrom koje drži case, state, decision i process trigger logiku.”</div>
+        <div class="callout warn"><b>Ne otkrivati:</b> stvarno ime sistema, tržišni wedge, krajnji narativ, komercijalnu prednost continuity-ja, stvarne ciljne korisnike i dugoročnu ambiciju iza pilota.</div>
+      </section>
+
+      <section class="section">
+        <h2>2. Sanitizovani opis trenutnog stanja</h2>
+        <table>
+          <tr><th>Oblast</th><th>Sanitizovani opis</th></tr>
+          <tr><td>Frontend/device</td><td>Postoji kiosk/tablet ili device frontend sa vođenim interaction tokovima.</td></tr>
+          <tr><td>Voice</td><td>Postoji voice gateway i voice interaction flow sa fallback logikom.</td></tr>
+          <tr><td>Continuity</td><td>Postoji handoff / continuation između uređaja i session continuity model.</td></tr>
+          <tr><td>Backend core</td><td>Backend se gradi oko case, state, decision i process/action logike.</td></tr>
+          <tr><td>Cilj</td><td>Kontrolisan prelaz iz ranog pilota/demo faze u ozbiljan production-grade build.</td></tr>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2>3. Tehnički smer koji je bezbedno pomenuti</h2>
+        <div class="cards">
+          <div class="box"><h4>Backend</h4><p>Python / FastAPI za core control i servisne grupe.</p></div>
+          <div class="box"><h4>Data</h4><p>PostgreSQL kao source of truth za core zapis i audit.</p></div>
+          <div class="box"><h4>Session / cache</h4><p>Redis za session, queue signalizaciju i kratkožive state informacije.</p></div>
+          <div class="box"><h4>Device frontend</h4><p>React kiosk/device frontend kao prvi sloj interakcije.</p></div>
+          <div class="box"><h4>Voice</h4><p>Twilio kao gateway, ne kao business logic sloj.</p></div>
+          <div class="box"><h4>Architecture style</h4><p>Modularni monolit kao početak, bez prerane mikroservis fragmentacije.</p></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>4. Tim o kome tražiš savet</h2>
+        <p class="lead">Ne pitaš ga “ko mi treba za moj projekat”, nego “kako bi organizovao rani tim za sistem ove klase”.</p>
+        <table>
+          <tr><th>Rola</th><th>Zašto je relevantna</th></tr>
+          <tr><td>Lead Architect / CTO</td><td>Arhitektura, standardi, ownership, kritične tehničke odluke.</td></tr>
+          <tr><td>Senior Backend Engineer</td><td>Case/state/decision/process jezgro.</td></tr>
+          <tr><td>Senior Full-Stack / Device Engineer</td><td>Kiosk/device frontend, UX state i continuity bridge.</td></tr>
+          <tr><td>Senior Voice / Conversation Engineer</td><td>Voice gateway, STT/TTS flow, fallback logika.</td></tr>
+          <tr><td>Platform / DevOps</td><td>Deploy, observability, backup, environments, uptime.</td></tr>
+          <tr><td>Product / Delivery Owner</td><td>Prioriteti, acceptance kriterijumi, scope kontrola.</td></tr>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2>5. Šta tačno želiš da izvučeš iz razgovora</h2>
+        <ul>
+          <li>Koje role zaista moraju prve ući full-time, a koje mogu kasnije.</li>
+          <li>Kako se online aktivira tim bez ownership haosa.</li>
+          <li>Kako se podele moduli, review i tehničke odluke.</li>
+          <li>Kada sistem treba da ostane u jednom jezgru, a kada sme da se deli.</li>
+          <li>Kako izgleda zdrav prelaz iz pilot/demo faze u pravi foundation build.</li>
+          <li>Kako se uvodi disciplina u API contracte, naming, state truth, migrations i Definition of Done.</li>
+        </ul>
+        <div class="callout"><b>Važno:</b> Tražiš savet o vođenju sistema i tima, ne procenu tržišne ideje.</div>
+      </section>
+
+      <section class="section">
+        <h2>6. Najbolja centralna pitanja za senior lead-a</h2>
+        <ol>
+          <li><b>Koje role bi ti prve zaključao full-time za ovakav build?</b></li>
+          <li><b>Koji bi bio redosled uključivanja ljudi u tim?</b></li>
+          <li><b>Kako bi podelio ownership između frontend/device, voice i backend core sloja?</b></li>
+          <li><b>Kako bi organizovao rad online: ritam, review, tehničke odluke i escalation?</b></li>
+          <li><b>Kako odlučuješ šta ostaje u Python monolitu, a šta kasnije ide u poseban servis?</b></li>
+          <li><b>Koje su najčešće greške kada pilot prelazi u ozbiljan build?</b></li>
+          <li><b>Kako bi definisao minimalni engineering operating system za tim od 4–6 ljudi?</b></li>
+        </ol>
+      </section>
+
+      <section class="section">
+        <h2>7. Ultra-kratak uvod za poruku ili poziv</h2>
+        <div class="callout good">
+          <b>Predlog:</b><br><br>
+          “Radim na ranom multi-channel case-driven buildu sa device frontend-om, voice gateway-em, continuity handoff-om i backend control layer-om koji drži case, state, decision i process logiku. Ne treba mi procena ideje, nego savet kako bi iskusan lead organizovao tim, ownership i prelaz iz pilota u ozbiljan production-grade build.”
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>8. Šta ne pominjati u razgovoru</h2>
+        <ul>
+          <li>Pravo ime sistema i interni narativ.</li>
+          <li>Tržišni positioning i komercijalni wedge.</li>
+          <li>Zašto je baš continuity strateški važan za realni biznis model.</li>
+          <li>Pravi cilj ili krajnju transformaciju sistema.</li>
+          <li>Detalje koji bi nekome otkrili o kojoj industriji, distribuciji ili budućem playbook-u se radi.</li>
+        </ul>
+        <p class="footer">Poenta je da dobiješ znanje o vođenju složenog tehničkog build-a, bez otkrivanja o čemu je sistem stvarno.</p>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
