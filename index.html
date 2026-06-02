@@ -1184,9 +1184,6 @@
 <body>
   <div class="topline"></div>
 
-  <body>
-  <div class="topline"></div>
-
   <div class="topContact">
     <div class="topContactInner">
       <div class="topContactLeft">
@@ -1203,8 +1200,6 @@
       </div>
     </div>
   </div>
-
-  <header class="nav">
 
   <header class="nav">
     <div class="wrap navin">
@@ -1691,39 +1686,72 @@
 
   <script>
     (function(){
-      const lightbox = document.getElementById('imageLightbox');
-      const lightboxImg = document.getElementById('imageLightboxImg');
-      const caption = document.getElementById('imageLightboxCaption');
-      const closeBtn = lightbox.querySelector('.imageLightboxClose');
+      function initLightbox(){
+        const lightbox = document.getElementById('imageLightbox');
+        const lightboxImg = document.getElementById('imageLightboxImg');
+        const caption = document.getElementById('imageLightboxCaption');
 
-      function openLightbox(img){
-        lightboxImg.src = img.currentSrc || img.src;
-        lightboxImg.alt = img.alt || '';
-        caption.textContent = img.alt || 'SATVISION proof image';
-        lightbox.classList.add('open');
-        lightbox.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-      }
+        if(!lightbox || !lightboxImg || !caption){
+          return;
+        }
 
-      function closeLightbox(){
-        lightbox.classList.remove('open');
-        lightbox.setAttribute('aria-hidden', 'true');
-        lightboxImg.src = '';
-        document.body.style.overflow = '';
-      }
+        const closeBtn = lightbox.querySelector('.imageLightboxClose');
 
-      document.querySelectorAll('.proof-zoom-img').forEach(function(img){
-        img.addEventListener('click', function(){ openLightbox(img); });
-        img.addEventListener('keydown', function(e){
-          if(e.key === 'Enter' || e.key === ' '){
+        function openLightbox(img){
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt || '';
+          caption.textContent = img.alt || img.title || 'SATVISION proof image';
+          lightbox.classList.add('open');
+          lightbox.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(){
+          lightbox.classList.remove('open');
+          lightbox.setAttribute('aria-hidden', 'true');
+          lightboxImg.src = '';
+          document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.proof-zoom-img').forEach(function(img){
+          img.setAttribute('tabindex','0');
+          img.setAttribute('role','button');
+          img.setAttribute('aria-label','Kliknite za uvećanje slike: ' + (img.alt || 'SATVISION proof image'));
+        });
+
+        document.addEventListener('click', function(e){
+          const img = e.target.closest('.proof-zoom-img');
+          if(!img) return;
+          e.preventDefault();
+          e.stopPropagation();
+          openLightbox(img);
+        });
+
+        document.addEventListener('keydown', function(e){
+          const img = e.target.closest && e.target.closest('.proof-zoom-img');
+          if(img && (e.key === 'Enter' || e.key === ' ')){
             e.preventDefault();
             openLightbox(img);
+            return;
+          }
+
+          if(e.key === 'Escape' && lightbox.classList.contains('open')){
+            closeLightbox();
           }
         });
-        img.setAttribute('tabindex','0');
-        img.setAttribute('role','button');
-        img.setAttribute('aria-label','Kliknite za uvećanje slike: ' + (img.alt || 'SATVISION proof image'));
-      });
+
+        if(closeBtn){
+          closeBtn.addEventListener('click', closeLightbox);
+        }
+
+        lightbox.addEventListener('click', function(e){
+          if(e.target === lightbox){
+            closeLightbox();
+          }
+        });
+      }
+
+      initLightbox();
 
 
       const proofSlider = document.querySelector('[data-proof-slider]');
@@ -1773,15 +1801,6 @@
         startSlider();
       }
 
-      closeBtn.addEventListener('click', closeLightbox);
-      lightbox.addEventListener('click', function(e){
-        if(e.target === lightbox) closeLightbox();
-      });
-      document.addEventListener('keydown', function(e){
-        if(e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
-      });
-    })();
-  
     (function(){
       function initRackCarousel(root){
         const slides = Array.from(root.querySelectorAll('.rackCarouselSlide'));
