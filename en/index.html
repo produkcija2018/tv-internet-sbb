@@ -1,1 +1,1677 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Services | Structured Cabling, Fiber, Networks & IP Systems | SATVISION</title>
+  <meta name="description" content="SATVISION designs, deploys, tests and documents structured cabling, fiber, network and IP infrastructure for businesses in Serbia: video surveillance, intercom, alarm systems, audio systems, Fluke reports, as-built documentation and port maps." />
+  <meta name="theme-color" content="#111111" />
+  <link rel="alternate" hreflang="sr" href="https://satvision.rs/usluge/" />
+  <link rel="alternate" hreflang="en" href="https://satvision.rs/usluge/en/" />
+  <link rel="alternate" hreflang="x-default" href="https://satvision.rs/usluge/" />
+
+
+  <style>
+    :root{
+      --red:#F41414;
+      --red2:#B90E0E;
+      --black:#101314;
+      --black2:#171B1D;
+      --charcoal:#23282B;
+      --ink:#111315;
+      --muted:#647078;
+      --muted2:#879099;
+      --bg:#F5F4F1;
+      --bg2:#ECEAE5;
+      --card:#FFFFFF;
+      --line:rgba(16,19,20,.12);
+      --lineDark:rgba(255,255,255,.14);
+      --white:rgba(255,255,255,.94);
+      --whiteMuted:rgba(255,255,255,.72);
+      --ok:#22C55E;
+      --shadow:0 22px 60px rgba(16,19,20,.14);
+      --shadow2:0 12px 28px rgba(16,19,20,.10);
+      --radius:26px;
+      --radius2:18px;
+      --max:1180px;
+      --font:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 8% -12%, rgba(244,20,20,.10), transparent 60%),
+        radial-gradient(800px 380px at 95% -8%, rgba(16,19,20,.10), transparent 58%),
+        linear-gradient(180deg,var(--bg),var(--bg2));
+      overflow-x:hidden;
+      line-height:1.65;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+
+    .topline{
+      height:5px;
+      background:linear-gradient(90deg,var(--red),#FF4A4A,var(--red2));
+    }
+
+    .nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(245,244,241,.92);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+    }
+    .navin{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+    .brand img{
+      width:126px;
+      height:auto;
+      display:block;
+      filter:drop-shadow(0 8px 18px rgba(16,19,20,.10));
+    }
+    .brandText{
+      border-left:1px solid var(--line);
+      padding-left:14px;
+      line-height:1.2;
+    }
+    .brandText strong{
+      display:block;
+      font-size:14px;
+      letter-spacing:.2px;
+    }
+    .brandText span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:3px;
+    }
+    .menu{
+      display:flex;
+      gap:6px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .menu a{
+      color:var(--muted);
+      font-weight:800;
+      font-size:13px;
+      padding:9px 10px;
+      border-radius:12px;
+    }
+    .menu a:hover{background:rgba(16,19,20,.06);color:var(--ink)}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:13px 17px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      font-weight:900;
+      font-size:14px;
+      box-shadow:var(--shadow2);
+      white-space:nowrap;
+      transition:.15s transform,.15s box-shadow,.15s background;
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(16,19,20,.14)}
+    .btn.primary{
+      background:linear-gradient(135deg,var(--red),var(--red2));
+      color:#fff;
+      border-color:rgba(244,20,20,.28);
+      box-shadow:0 18px 44px rgba(244,20,20,.24);
+    }
+    .btn.dark{
+      background:var(--black);
+      color:#fff;
+      border-color:rgba(255,255,255,.12);
+      box-shadow:0 18px 44px rgba(16,19,20,.20);
+    }
+
+    .langSwitch{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height:40px;
+      min-width:46px;
+      padding:0 13px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      font-weight:950;
+      font-size:13px;
+      box-shadow:var(--shadow2);
+      transition:.15s transform,.15s box-shadow,.15s background;
+    }
+    .langSwitch:hover{
+      transform:translateY(-1px);
+      box-shadow:0 18px 40px rgba(16,19,20,.14);
+      background:#fff;
+    }
+
+    .btn.ghost{
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+      box-shadow:none;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
+    }
+    .dot{width:8px;height:8px;border-radius:99px;background:var(--red);box-shadow:0 0 0 5px rgba(244,20,20,.12)}
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      background:
+        radial-gradient(900px 520px at 18% 18%, rgba(244,20,20,.22), transparent 60%),
+        radial-gradient(700px 420px at 88% 20%, rgba(255,255,255,.08), transparent 55%),
+        linear-gradient(135deg,#0D0F10 0%, #1B1F21 56%, #0B0C0D 100%);
+      color:#fff;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size:44px 44px;
+      mask-image:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.18));
+      pointer-events:none;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      right:-160px;
+      top:70px;
+      width:520px;
+      height:520px;
+      border-radius:50%;
+      border:70px solid rgba(244,20,20,.10);
+      pointer-events:none;
+    }
+    .heroGrid{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:1.12fr .88fr;
+      gap:26px;
+      align-items:center;
+      padding:70px 0 54px;
+    }
+    .hero h1{
+      margin:16px 0 14px;
+      max-width:880px;
+      font-size:clamp(42px,5.5vw,74px);
+      line-height:1.02;
+      letter-spacing:-1.4px;
+    }
+    .hero h1 span{color:#FF4242}
+    .hero p{
+      margin:0;
+      max-width:74ch;
+      color:var(--whiteMuted);
+      font-size:18px;
+      line-height:1.72;
+    }
+    .heroMeta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+    .hero .pill{
+      background:rgba(255,255,255,.08);
+      border-color:rgba(255,255,255,.14);
+      color:rgba(255,255,255,.80);
+    }
+    .heroCtas{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:24px;
+    }
+
+    .commandPanel{
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 30px 90px rgba(0,0,0,.35);
+      border-radius:var(--radius);
+      overflow:hidden;
+      backdrop-filter:blur(10px);
+    }
+    .panelHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:16px 18px;
+      border-bottom:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18);
+    }
+    .panelHead b{font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+    .panelHead span{color:var(--whiteMuted);font-size:12px}
+    .panelBody{padding:18px;display:grid;gap:12px}
+    .metric{
+      display:grid;
+      grid-template-columns:42px 1fr;
+      gap:12px;
+      align-items:start;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.11);
+    }
+    .num{
+      width:42px;height:42px;border-radius:15px;
+      display:grid;place-items:center;
+      background:rgba(244,20,20,.16);
+      color:#fff;
+      border:1px solid rgba(244,20,20,.32);
+      font-weight:950;
+    }
+    .metric b{display:block;font-size:14px}
+    .metric span{display:block;color:var(--whiteMuted);font-size:13px;line-height:1.45;margin-top:3px}
+
+    .section{padding:34px 0}
+    .secTitle{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+      margin:0 0 16px;
+    }
+    .secTitle h2{
+      margin:0;
+      font-size:clamp(26px,3vw,38px);
+      line-height:1.12;
+      letter-spacing:-.55px;
+    }
+    .secTitle p{
+      margin:0;
+      color:var(--muted);
+      max-width:76ch;
+      font-size:15px;
+    }
+
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+
+    .card{
+      position:relative;
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(500px 160px at 12% 0%, rgba(244,20,20,.08), transparent 58%),
+        radial-gradient(420px 160px at 100% 0%, rgba(16,19,20,.06), transparent 58%);
+      pointer-events:none;
+    }
+    .card > *{position:relative;z-index:1}
+    .pad{padding:20px}
+
+    .feature{
+      min-height:174px;
+      padding:18px;
+      border-radius:var(--radius2);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.94);
+      box-shadow:var(--shadow2);
+      overflow:hidden;
+      position:relative;
+    }
+    .feature::after{
+      content:"";
+      position:absolute;
+      right:-46px;
+      bottom:-42px;
+      width:220px;
+      height:112px;
+      background:url("../assets/Flat-Sat-Vision-Logo-1024x521-1.png") center / contain no-repeat;
+      opacity:.045;
+      pointer-events:none;
+      filter:none;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:10px;
+    }
+    .tag i{width:10px;height:10px;border-radius:999px;background:var(--red);display:inline-block}
+    .feature h3,.card h3{margin:0 0 8px;font-size:17px;line-height:1.25}
+    .feature p,.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+
+    .list{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .list li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.65;
+    }
+    .check{
+      width:20px;height:20px;border-radius:8px;
+      flex:0 0 auto;
+      margin-top:2px;
+      display:grid;place-items:center;
+      background:rgba(244,20,20,.10);
+      border:1px solid rgba(244,20,20,.18);
+      color:var(--red);
+      font-weight:950;
+      font-size:12px;
+    }
+
+    .proofBand{
+      background:linear-gradient(135deg,var(--black),#22282B);
+      color:#fff;
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:0 28px 80px rgba(16,19,20,.24);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+      position:relative;
+    }
+    .proofBand::after{
+      content:"";
+      position:absolute;
+      right:-130px;top:-130px;
+      width:360px;height:360px;border-radius:50%;
+      background:rgba(244,20,20,.18);
+      pointer-events:none;
+    }
+    .proofBand > *{position:relative;z-index:1}
+    .proofBand h2{margin:0 0 10px;font-size:clamp(26px,3vw,38px);line-height:1.1}
+    .proofBand p{margin:0;color:var(--whiteMuted);max-width:82ch}
+    .proofGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+    .proofItem{
+      padding:15px;
+      border-radius:18px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .proofItem b{display:block;font-size:14px;margin-bottom:5px}
+    .proofItem span{display:block;color:var(--whiteMuted);font-size:13px;line-height:1.45}
+
+    .scope{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    .scopeBlock{
+      padding:20px;
+      border-radius:var(--radius);
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow2);
+    }
+    .scopeBlock h3{margin:0 0 12px}
+    .scopeBlock .list li{font-size:14px}
+
+    .caseShell{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    .placeholder{
+      min-height:280px;
+      border-radius:var(--radius);
+      background:
+        linear-gradient(135deg,rgba(16,19,20,.88),rgba(35,40,43,.95)),
+        repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 8px,transparent 8px 16px);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:var(--shadow);
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:24px;
+      overflow:hidden;
+      position:relative;
+    }
+    .placeholder::before{
+      content:"";
+      position:absolute;
+      width:300px;height:300px;border-radius:50%;
+      right:-120px;bottom:-120px;
+      background:rgba(244,20,20,.18);
+    }
+    .placeholder div{position:relative;z-index:1}
+    .placeholder b{display:block;font-size:20px;margin-bottom:8px}
+    .placeholder span{display:block;color:var(--whiteMuted);font-size:14px;max-width:40ch}
+
+
+    .panelVisual{
+      margin-top:6px;
+      overflow:hidden;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.13);
+      background:rgba(0,0,0,.22);
+    }
+    .panelVisual img{
+      display:block;
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      object-position:center;
+      filter:saturate(.95) contrast(1.04);
+    }
+    .panelCaption{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 14px;
+      color:var(--whiteMuted);
+      font-size:12px;
+      font-weight:850;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+    .imageGrid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-top:16px;
+    }
+    .imageGrid.three{
+      grid-template-columns:repeat(3,1fr);
+    }
+    .imageCard{
+      overflow:hidden;
+      border-radius:var(--radius);
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow2);
+      margin:0;
+    }
+    .imageCard.dark{
+      background:var(--black);
+      color:#fff;
+      border-color:rgba(255,255,255,.12);
+      box-shadow:0 26px 70px rgba(16,19,20,.20);
+    }
+    .imageCard img{
+      display:block;
+      width:100%;
+      height:285px;
+      object-fit:cover;
+      object-position:center;
+    }
+    .imageCard.compact img{
+      height:230px;
+    }
+    .imageCard figcaption{
+      padding:14px 16px;
+      font-size:13px;
+      font-weight:850;
+      color:var(--muted);
+      line-height:1.45;
+    }
+    .imageCard.dark figcaption{
+      color:var(--whiteMuted);
+    }
+    .imageCard figcaption b{
+      display:block;
+      color:var(--ink);
+      font-size:15px;
+      margin-bottom:4px;
+    }
+    .imageCard.dark figcaption b{
+      color:#fff;
+    }
+    .proofVisuals{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+    .proofVisuals .imageCard{
+      background:rgba(255,255,255,.08);
+      border-color:rgba(255,255,255,.12);
+      box-shadow:none;
+    }
+    .proofVisuals .imageCard img{
+      height:230px;
+    }
+    .proofVisuals .imageCard figcaption{
+      color:var(--whiteMuted);
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+    .proofVisuals .imageCard figcaption b{
+      color:#fff;
+    }
+
+    .ctaBox{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+      padding:22px;
+      border-radius:var(--radius);
+      background:#fff;
+      border:1px solid rgba(244,20,20,.18);
+      box-shadow:var(--shadow);
+    }
+    .ctaBox h3{margin:0;font-size:21px}
+    .ctaBox p{margin:6px 0 0;color:var(--muted);max-width:72ch}
+
+    details{
+      padding:15px 16px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
+    }
+    summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight:950;
+      font-size:15px;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0;color:var(--muted);font-size:14px}
+
+    .footer{
+      margin-top:20px;
+      background:var(--black);
+      color:var(--whiteMuted);
+      padding:28px 0 92px;
+      font-size:13px;
+    }
+    .footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    .footer b{color:#fff}
+
+    .sticky{
+      display:none;
+      position:fixed;
+      left:0;right:0;bottom:0;
+      z-index:60;
+      padding:10px 12px;
+      background:rgba(245,244,241,.92);
+      border-top:1px solid var(--line);
+      backdrop-filter:blur(14px);
+    }
+    .sticky .inner{max-width:var(--max);margin:0 auto;display:flex;gap:10px}
+    .sticky .btn{flex:1}
+
+
+    /* Final proof image behavior: show full infographics, do not crop */
+    .panelVisual img,
+    .imageCard img{
+      object-fit:contain !important;
+      object-position:center;
+      background:#070909;
+      cursor:zoom-in;
+    }
+    .imageCard img{
+      height:clamp(320px, 36vw, 460px) !important;
+    }
+    .imageCard.compact img{
+      height:clamp(300px, 30vw, 400px) !important;
+    }
+    .heroProofShowcase{
+      margin-top:8px;
+      position:relative;
+    }
+    .heroProofShowcase .panelVisual{
+      display:none;
+      margin:0;
+    }
+    .heroProofShowcase .panelVisual.active{
+      display:block;
+      animation:proofFade .45s ease both;
+    }
+    @keyframes proofFade{
+      from{opacity:0; transform:translateY(6px)}
+      to{opacity:1; transform:none}
+    }
+    .heroProofShowcase .panelVisual img{
+      height:clamp(360px, 42vw, 520px) !important;
+      width:100%;
+      display:block;
+    }
+    .heroProofShowcase .panelCaption{
+      display:block;
+      padding:12px 14px 14px;
+    }
+    .heroProofShowcase .panelCaption b{
+      display:block;
+      color:#fff;
+      font-size:13px;
+      margin-bottom:3px;
+    }
+    .heroProofShowcase .panelCaption span{
+      display:block;
+      color:var(--whiteMuted);
+      font-size:12px;
+      line-height:1.45;
+    }
+    .proofSliderControls{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      margin-top:10px;
+    }
+    .proofSliderControls button{
+      width:9px;
+      height:9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.32);
+      background:rgba(255,255,255,.22);
+      cursor:pointer;
+      padding:0;
+      transition:.16s ease;
+    }
+    .proofSliderControls button.active{
+      width:26px;
+      background:var(--red);
+      border-color:rgba(244,20,20,.72);
+      box-shadow:0 0 0 5px rgba(244,20,20,.10);
+    }
+    .proof-zoom-img{
+      transition:transform .18s ease, filter .18s ease;
+    }
+    .proof-zoom-img:hover{
+      transform:scale(1.015);
+      filter:saturate(1.02) contrast(1.04);
+    }
+    .imageCard.zoomable,
+    .panelVisual.zoomable{
+      position:relative;
+    }
+    .imageCard.zoomable::after,
+    .panelVisual.zoomable::after{
+      content:"Click to enlarge";
+      position:absolute;
+      top:12px;
+      right:12px;
+      z-index:3;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(0,0,0,.72);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.18);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.01em;
+      backdrop-filter:blur(10px);
+      pointer-events:none;
+    }
+    .imageLightbox{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:28px;
+      background:rgba(0,0,0,.88);
+      backdrop-filter:blur(8px);
+    }
+    .imageLightbox.open{display:flex}
+    .imageLightboxInner{
+      position:relative;
+      width:min(96vw, 1180px);
+      height:min(92vh, 980px);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+    }
+    .imageLightbox img{
+      max-width:100%;
+      max-height:calc(92vh - 72px);
+      object-fit:contain;
+      border-radius:18px;
+      box-shadow:0 30px 90px rgba(0,0,0,.55);
+      background:#060707;
+    }
+    .imageLightboxCaption{
+      color:rgba(255,255,255,.86);
+      font-weight:850;
+      font-size:14px;
+      text-align:center;
+      max-width:80ch;
+    }
+    .imageLightboxClose{
+      position:absolute;
+      top:0;
+      right:0;
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.20);
+      background:rgba(244,20,20,.92);
+      color:#fff;
+      font-size:26px;
+      line-height:1;
+      cursor:pointer;
+      box-shadow:0 12px 34px rgba(0,0,0,.32);
+    }
+    .imageLightboxClose:hover{background:var(--red2)}
+
+    @media (max-width:980px){
+      .imageGrid,.imageGrid.three,.proofVisuals{grid-template-columns:1fr}
+      .panelVisual img,.imageCard img,.imageCard.compact img,.proofVisuals .imageCard img{height:auto;min-height:210px}
+
+      .menu{display:none}
+      .heroGrid,.grid2,.grid3,.scope,.caseShell{grid-template-columns:1fr}
+      .proofGrid{grid-template-columns:1fr 1fr}
+      .heroGrid{padding:46px 0 42px}
+      .brandText{display:none}
+      .sticky{display:block}
+    }
+    @media (max-width:640px){
+      .brand img{width:104px}
+      .proofGrid{grid-template-columns:1fr}
+      .hero h1{font-size:40px}
+      .btn{width:100%}
+      .heroCtas .btn{width:auto;flex:1 1 190px}
+      .nav .btn.primary{display:none}
+    }
+    /* Rack organization proof layout */
+    .rackProofLayout{
+      display:grid;
+      grid-template-columns:minmax(280px,.86fr) minmax(360px,1.14fr);
+      gap:16px;
+      align-items:stretch;
+      margin-top:18px;
+    }
+    .rackPosterCard,
+    .rackDetailCard{
+      overflow:hidden;
+      border-radius:var(--radius);
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      margin:0;
+    }
+    .rackPosterFrame{
+      min-height:520px;
+      padding:18px;
+      background:
+        radial-gradient(460px 260px at 50% 18%, rgba(244,20,20,.13), transparent 62%),
+        linear-gradient(135deg,#060707,#101314 70%,#060707);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .rackPosterFrame img{
+      display:block;
+      width:auto;
+      max-width:100%;
+      max-height:500px;
+      object-fit:contain;
+      object-position:center;
+      cursor:zoom-in;
+      border-radius:14px;
+      box-shadow:0 18px 52px rgba(0,0,0,.28);
+      background:#050505;
+    }
+    .rackPosterCard figcaption,
+    .rackDetailCard figcaption{
+      padding:16px 18px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:850;
+      line-height:1.45;
+      background:#fff;
+      border-top:1px solid var(--line);
+    }
+    .rackPosterCard figcaption b,
+    .rackDetailCard figcaption b{
+      display:block;
+      color:var(--ink);
+      font-size:16px;
+      margin-bottom:4px;
+    }
+    .rackDetailCard{
+      background:linear-gradient(135deg,var(--black),#202629);
+      color:#fff;
+      border-color:rgba(255,255,255,.12);
+    }
+    .rackDetailHead{
+      padding:18px 18px 0;
+    }
+    .rackDetailHead .tag{
+      color:rgba(255,255,255,.62);
+    }
+    .rackDetailHead h3{
+      margin:4px 0 6px;
+      color:#fff;
+      font-size:22px;
+      line-height:1.15;
+      letter-spacing:-.2px;
+    }
+    .rackDetailHead p{
+      margin:0 0 14px;
+      color:rgba(255,255,255,.68);
+      font-size:14px;
+      line-height:1.6;
+    }
+    .rackCarouselStage{
+      position:relative;
+      overflow:hidden;
+      margin:0 18px 0;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.14);
+      background:#070909;
+      min-height:340px;
+    }
+    .rackCarouselSlide{
+      display:none;
+      position:relative;
+    }
+    .rackCarouselSlide.active{
+      display:block;
+    }
+    .rackCarouselSlide img{
+      display:block;
+      width:100%;
+      height:360px;
+      object-fit:cover;
+      object-position:center;
+      cursor:zoom-in;
+      background:#070909;
+    }
+    .rackCarouselLabel{
+      position:absolute;
+      left:14px;
+      bottom:14px;
+      max-width:calc(100% - 28px);
+      padding:9px 11px;
+      border-radius:14px;
+      background:rgba(0,0,0,.68);
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff;
+      backdrop-filter:blur(10px);
+      font-size:12px;
+      font-weight:900;
+      line-height:1.35;
+    }
+    .rackCarouselControls{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 18px 18px;
+    }
+    .rackCarouselDots{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .rackCarouselDots button{
+      width:10px;
+      height:10px;
+      border-radius:99px;
+      border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.24);
+      cursor:pointer;
+      padding:0;
+      transition:.16s ease;
+    }
+    .rackCarouselDots button.active{
+      width:26px;
+      background:var(--red);
+      border-color:rgba(244,20,20,.72);
+      box-shadow:0 0 0 5px rgba(244,20,20,.10);
+    }
+    .rackCarouselArrows{
+      display:flex;
+      gap:8px;
+    }
+    .rackCarouselArrows button{
+      width:38px;
+      height:38px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      font-weight:950;
+      cursor:pointer;
+    }
+    .rackDetailCard figcaption{
+      background:rgba(255,255,255,.06);
+      border-top:1px solid rgba(255,255,255,.10);
+      color:rgba(255,255,255,.72);
+    }
+    .rackDetailCard figcaption b{
+      color:#fff;
+    }
+    .rackProofLayout .zoomable{
+      position:relative;
+    }
+    .rackProofLayout .zoomable::after{
+      content:"Kliknite za uvećanje";
+      position:absolute;
+      top:12px;
+      right:12px;
+      z-index:5;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(0,0,0,.72);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.18);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.01em;
+      backdrop-filter:blur(10px);
+      pointer-events:none;
+    }
+
+    @media (max-width:980px){
+      .rackProofLayout{
+        grid-template-columns:1fr;
+      }
+      .rackPosterFrame{
+        min-height:480px;
+      }
+      .rackPosterFrame img{
+        max-height:440px;
+      }
+      .rackCarouselSlide img{
+        height:340px;
+      }
+    }
+    @media (max-width:640px){
+      .rackPosterFrame{
+        min-height:420px;
+        padding:14px;
+      }
+      .rackPosterFrame img{
+        max-height:390px;
+      }
+      .rackCarouselStage{
+        min-height:260px;
+        margin:0 14px;
+      }
+      .rackCarouselSlide img{
+        height:260px;
+      }
+      .rackCarouselControls{
+        padding:12px 14px 16px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="topline"></div>
+
+  <header class="nav">
+    <div class="wrap navin">
+      <a class="brand" href="#top" aria-label="SATVISION početna">
+        <img src="../assets/Flat-Sat-Vision-Logo-1024x521-1.png" alt="SATVISION" />
+        <div class="brandText">
+          <strong>Business Infrastructure</strong>
+          <span>Cabling • Fiber • Networks • IP Systems</span>
+        </div>
+      </a>
+
+      <nav class="menu" aria-label="Navigacija">
+        <a href="#zasto">Why</a>
+        <a href="#opseg">Services</a>
+        <a href="#ip-sistemi">Systems</a>
+        <a href="#primopredaja">Handover</a>
+        <a href="#proces">Process</a>
+        <a href="#situacije">When</a>
+        <a href="#objekti">Facilities</a>
+        <a href="#primer">Example</a>
+        <a href="#rizik">Risk</a>
+        <a href="#kontakt">Contact</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <a class="langSwitch" href="../index.html" aria-label="Serbian version">SR</a>
+      <a class="btn primary" href="tel:063374210">063/374-210</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap heroGrid">
+        <div>
+          <div class="pill"><span class="dot"></span> Infrastructure for Businesses in Serbia</div>
+          <h1>Structured cabling, fiber and network infrastructure <span>that is measured, handed over and maintained.</span></h1>
+          <p>
+            SATVISION designs, deploys, tests and documents business infrastructure:
+            structured cabling, fiber routes, rack organization, patch panels, labeling,
+            Fluke reports and as-built handover documentation.
+          </p>
+
+          <div class="heroMeta">
+            <span class="pill">Cat6 / Cat6A</span>
+            <span class="pill">Fiber / Backbone</span>
+            <span class="pill">Fluke report</span>
+            <span class="pill">As-built Documentation</span>
+            <span class="pill">Rack Organization</span>
+          </div>
+
+          <div class="heroCtas">
+            <a class="btn primary" href="#kontakt">Request an Infrastructure Assessment</a>
+            <a class="btn ghost" href="#primopredaja">What You Receive at Handover</a>
+          </div>
+        </div>
+
+        <aside class="commandPanel" aria-label="SATVISION delivery sistem">
+          <div class="panelHead">
+            <b>Delivery Control</b>
+            <span>Audit → Build → Certify → Handover</span>
+          </div>
+          <div class="panelBody">
+            <div class="metric">
+              <div class="num">01</div>
+              <div><b>Plan and Scope</b><span>Site visit, drawings or assessment of the existing state before work begins.</span></div>
+            </div>
+            <div class="metric">
+              <div class="num">02</div>
+              <div><b>Controlled Deployment</b><span>Routes, terminations, rack, patch panel and labeling without improvisation.</span></div>
+            </div>
+            <div class="metric">
+              <div class="num">03</div>
+              <div><b>Testing and Handover</b><span>Fluke reports, port map and documentation within the agreed project scope.</span></div>
+            </div>
+
+            <div class="heroProofShowcase" data-proof-slider aria-label="SATVISION proof slideshow">
+              <figure class="panelVisual zoomable active">
+                <img class="proof-zoom-img" src="../assets/satvision-sks-optika-mrezna-infrastruktura.png" alt="Structured cabling, fiber and network infrastructure" title="Click to enlarge: Structured cabling, fiber and network infrastructure" />
+                <figcaption class="panelCaption"><b>Structured Cabling, Fiber and Networks</b><span>One infrastructure foundation for data, WiFi, PoE, IP cameras and future expansion.</span></figcaption>
+              </figure>
+              <figure class="panelVisual zoomable">
+                <img class="proof-zoom-img" src="../assets/satvision-pre-i-posle-rek-organizacija.png" alt="Before and after rack organization" title="Click to enlarge: Before and after rack organization" />
+                <figcaption class="panelCaption"><b>Before / After Rack Organization</b><span>From cable chaos to labeled, documented and maintainable infrastructure.</span></figcaption>
+              </figure>
+              <figure class="panelVisual zoomable">
+                <img class="proof-zoom-img" src="../assets/satvision-opticki-backbone-spajanje.png" alt="Fiber backbone and optical splicing" title="Click to enlarge: Fiber backbone and optical splicing" />
+                <figcaption class="panelCaption"><b>Fiber Backbone / Optical Splicing</b><span>Optical foundation for floors, technical rooms and key network points.</span></figcaption>
+              </figure>
+              <figure class="panelVisual zoomable">
+                <img class="proof-zoom-img" src="../assets/satvision-fluke-testiranje-svakog-linka.png" alt="Fluke testing of every agreed link" title="Click to enlarge: Fluke testing of every agreed link" />
+                <figcaption class="panelCaption"><b>Fluke Testing of Every Link</b><span>Measurable performance proof before handover and documentation.</span></figcaption>
+              </figure>
+              <figure class="panelVisual zoomable">
+                <img class="proof-zoom-img" src="../assets/satvision-mapa-portova-dokumentacija-koja-stedi-sate.png" alt="Port map documentation that saves hours" title="Click to enlarge: Port map documentation that saves hours" />
+                <figcaption class="panelCaption"><b>Port Map</b><span>Documentation that saves hours during maintenance and troubleshooting.</span></figcaption>
+              </figure>
+              <figure class="panelVisual zoomable">
+                <img class="proof-zoom-img" src="../assets/satvision-sta-dobijate-na-primopredaji.png" alt="What you receive at handover" title="Click to enlarge: What you receive at handover" />
+                <figcaption class="panelCaption"><b>Handover Package</b><span>Reports, port map, as-built and final photo record.</span></figcaption>
+              </figure>
+
+              <div class="proofSliderControls" aria-label="Proof slideshow controls">
+                <button type="button" class="active" aria-label="Show image 1"></button>
+                <button type="button" aria-label="Show image 2"></button>
+                <button type="button" aria-label="Show image 3"></button>
+                <button type="button" aria-label="Show image 4"></button>
+                <button type="button" aria-label="Show image 5"></button>
+                <button type="button" aria-label="Show image 6"></button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="zasto" class="section">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>Why SATVISION</h2>
+            <p>The difference is not that a cable is pulled. The difference is that the infrastructure is measured, labeled, documented and easy to maintain.</p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="feature">
+            <div class="tag"><i></i> Certification</div>
+            <h3>Fluke Report as Proof</h3>
+            <p>Links are not handed over “on trust”. When certification is part of the scope, the client receives a measurable report according to the agreed standard.</p>
+          </div>
+          <div class="feature">
+            <div class="tag"><i></i> Documentation</div>
+            <h3>Port Map and As-Built</h3>
+            <p>The IT team knows what is connected where. This reduces maintenance chaos and accelerates future changes.</p>
+          </div>
+          <div class="feature">
+            <div class="tag"><i></i> Operations</div>
+            <h3>Phased Work in Business Facilities</h3>
+            <p>Deployment is planned by zones, floors or time windows to minimize disruption to business operations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="opseg" class="section">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>What We Do</h2>
+            <p>The focus is on physical and network infrastructure for business facilities. No exaggerated promises — only what can be deployed, tested and handed over.</p>
+          </div>
+        </div>
+
+        <div class="scope">
+          <div class="scopeBlock">
+            <h3>Core Infrastructure</h3>
+            <ul class="list">
+              <li><span class="check">✓</span>Structured cabling: Cat6 and Cat6A</li>
+              <li><span class="check">✓</span>Fiber routes and backbone according to facility requirements</li>
+              <li><span class="check">✓</span>Patch panels, keystone modules, outlets and terminations</li>
+              <li><span class="check">✓</span>Rack organization and cable management</li>
+              <li><span class="check">✓</span>Labeling of ports, cables and patch positions</li>
+            </ul>
+          </div>
+
+          <div class="scopeBlock">
+            <h3>Network and IP Readiness</h3>
+            <ul class="list">
+              <li><span class="check">✓</span>LAN infrastructure and switching readiness</li>
+              <li><span class="check">✓</span>WiFi / AP positions and PoE infrastructure</li>
+              <li><span class="check">✓</span>IP cameras, intercom and access control as an infrastructure layer</li>
+              <li><span class="check">✓</span>Fluke testing within the agreed scope</li>
+              <li><span class="check">✓</span>As-built documentation and handover package</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="imageGrid">
+          <figure class="imageCard zoomable">
+            <img class="proof-zoom-img" src="../assets/satvision-opticki-backbone-spajanje.png" alt="Fiber backbone and optical splicing for business infrastructure" />
+            <figcaption><b>Fiber Backbone / Optical Splicing</b> Optical infrastructure for facility backbone, technical rooms and high-reliability connectivity.</figcaption>
+          </figure>
+          <figure class="imageCard zoomable">
+            <img class="proof-zoom-img" src="../assets/satvision-sks-optika-mrezna-infrastruktura.png" alt="Structured cabling, fiber and network infrastructure concept" />
+            <figcaption><b>Structured Cabling, Fiber and Networks</b> One infrastructure foundation for data, WiFi, PoE, IP cameras, intercom and future expansion.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="ip-sistemi" class="section">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>Additional Infrastructure Systems</h2>
+            <p>Structured cabling, fiber and network infrastructure are the foundation. On top of that foundation, SATVISION can deploy and connect systems that support daily operations, security and communication in business facilities.</p>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="feature">
+            <div class="tag"><i></i> IP Security</div>
+            <h3>IP Video Surveillance</h3>
+            <p>High-resolution cameras, recorders with motion detection, network connectivity and access from computers or mobile devices — deployed on a clean cabling and network foundation.</p>
+          </div>
+
+          <div class="feature">
+            <div class="tag"><i></i> Access & Safety</div>
+            <h3>Alarm Systems and Intercoms</h3>
+            <p>Alarms, intercoms, video intercoms and access control when included in the agreed scope — connected so the facility has a clear security and communication logic.</p>
+          </div>
+
+          <div class="feature">
+            <div class="tag"><i></i> Communication</div>
+            <h3>IP Telephony and Communication</h3>
+            <p>Network infrastructure readiness for IP phones, office users and communication devices, with ports, PoE and rack organization planned around real workflows.</p>
+          </div>
+
+          <div class="feature">
+            <div class="tag"><i></i> Audio Systems</div>
+            <h3>Audio Systems for Facilities</h3>
+            <p>Audio systems for offices, retail spaces, sales areas and meeting rooms, with discreet installation and connectivity through a properly deployed facility infrastructure.</p>
+          </div>
+        </div>
+
+        <div class="ctaBox" style="margin-top:14px">
+          <div>
+            <h3>One Infrastructure. Multiple Business Systems.</h3>
+            <p>When cabling, fiber, racks and ports are deployed properly, video surveillance, intercom, telephony, WiFi, PoE and audio systems are easier to plan, maintain and expand.</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn dark" href="#primopredaja">How the System Is Handed Over</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section id="primopredaja" class="section">
+      <div class="wrap">
+        <div class="proofBand">
+          <h2>What the Client Receives at Handover</h2>
+          <p>
+            This is the most important part of the SATVISION difference. A project is not complete when the cables are installed,
+            but when the system is tested, labeled, documented and understandable for the IT team.
+          </p>
+
+          <div class="proofGrid">
+            <div class="proofItem"><b>Fluke report</b><span>Proof of testing within the agreed project scope.</span></div>
+            <div class="proofItem"><b>Port Map</b><span>Connection between outlet, patch panel, rack and location.</span></div>
+            <div class="proofItem"><b>As-built</b><span>Documented final state of the deployed infrastructure.</span></div>
+            <div class="proofItem"><b>Photo Record</b><span>Final state of racks, patch panels and labeling.</span></div>
+          </div>
+
+          <div class="proofVisuals">
+            <figure class="imageCard dark zoomable">
+              <img class="proof-zoom-img" src="../assets/satvision-fluke-testiranje-svakog-linka.png" alt="Fluke testing of every agreed structured cabling link" />
+              <figcaption><b>Fluke Testing</b> Testing every agreed link before handover.</figcaption>
+            </figure>
+            <figure class="imageCard dark zoomable">
+              <img class="proof-zoom-img" src="../assets/satvision-mapa-portova-dokumentacija-koja-stedi-sate.png" alt="Port map documentation that saves maintenance time" />
+              <figcaption><b>Port Map</b> Documentation that saves hours during maintenance.</figcaption>
+            </figure>
+            <figure class="imageCard dark zoomable">
+              <img class="proof-zoom-img" src="../assets/satvision-sta-dobijate-na-primopredaji.png" alt="SATVISION handover package with reports and documentation" />
+              <figcaption><b>Handover Package</b> Reports, port map, as-built and final photo record.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proces" class="section">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>How We Deliver the Project</h2>
+            <p>The process is clear, controlled and understandable for IT, operations and management.</p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="feature"><div class="tag"><i></i> 01 Scope</div><h3>Assessment and Scope</h3><p>Location, number of ports, deadline, existing infrastructure, drawings or site visit.</p></div>
+          <div class="feature"><div class="tag"><i></i> 02 Plan</div><h3>Solution Proposal</h3><p>Routes, rack logic, patch panels, fiber if needed and labeling method.</p></div>
+          <div class="feature"><div class="tag"><i></i> 03 Build</div><h3>Phased Deployment</h3><p>Work by zones or time windows to reduce impact on business operations.</p></div>
+          <div class="feature"><div class="tag"><i></i> 04 Certify</div><h3>Testing</h3><p>Fluke certification when included in the agreed scope, with review of results.</p></div>
+          <div class="feature"><div class="tag"><i></i> 05 Document</div><h3>Documentation</h3><p>Port Map, oznake, as-built i završni elementi dogovorene primopredaje.</p></div>
+          <div class="feature"><div class="tag"><i></i> 06 Handover</div><h3>Handover</h3><p>The client receives a system that can be maintained, expanded and controlled without guesswork.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="situacije">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>When You Need SATVISION</h2>
+            <p>The greatest value appears when existing infrastructure needs to become stable, transparent and ready for growth.</p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="feature"><h3>You Are Moving or Opening a New Location</h3><p>Planning ports, routes, WiFi/AP positions and core network infrastructure before move-in.</p></div>
+          <div class="feature"><h3>The Rack Is Messy or Undocumented</h3><p>Patch panel organization, labeling, port map and documentation of the final state.</p></div>
+          <div class="feature"><h3>You Are Deploying WiFi, VoIP, PoE or IP Cameras</h3><p>Preparing the cabling and network foundation so systems operate reliably and without improvisation.</p></div>
+        </div>
+
+        <div class="rackProofLayout">
+          <figure class="rackPosterCard zoomable">
+            <div class="rackPosterFrame">
+              <img class="proof-zoom-img" src="../assets/satvision-pre-i-posle-rek-organizacija.png" alt="Before and after rack organization for business network infrastructure" title="Click to enlarge: Before and after rack organization" />
+            </div>
+            <figcaption><b>Before / After Rack Organization</b> Main proof poster: from cable chaos to labeled, documented and maintainable infrastructure.</figcaption>
+          </figure>
+
+          <figure class="rackDetailCard">
+            <div class="rackDetailHead">
+              <div class="tag"><i></i> Rack execution details</div>
+              <h3>Execution and Quality Control Details</h3>
+              <p>The right-side block shows supporting proof: clean patch panels, rack work, link testing and quality control. The poster remains proportional while the operational details rotate next to it.</p>
+            </div>
+
+            <div class="rackCarouselStage" data-rack-carousel>
+              <div class="rackCarouselSlide active">
+                <img class="proof-zoom-img" src="../assets/sks-hero-1.jpg" alt="Fiber and network connections inside a rack cabinet" />
+                <div class="rackCarouselLabel">Clean patch panel and fiber/network connectivity</div>
+              </div>
+              <div class="rackCarouselSlide">
+                <img class="proof-zoom-img" src="../assets/sks-hero-2.jpg" alt="Technician working on network infrastructure inside a rack cabinet" />
+                <div class="rackCarouselLabel">Rack work and network equipment control</div>
+              </div>
+              <div class="rackCarouselSlide">
+                <img class="proof-zoom-img" src="../assets/sks-hero-3.jpg" alt="Link testing and network performance verification" />
+                <div class="rackCarouselLabel">Link testing and performance verification</div>
+              </div>
+              <div class="rackCarouselSlide">
+                <img class="proof-zoom-img" src="../assets/sks-hero-4.jpg" alt="Cable management and organized network infrastructure" />
+                <div class="rackCarouselLabel">Cable management, clarity and maintenance readiness</div>
+              </div>
+            </div>
+
+            <div class="rackCarouselControls" data-rack-controls>
+              <div class="rackCarouselDots" aria-label="Rack proof slideshow controls">
+                <button type="button" class="active" aria-label="Image 1"></button>
+                <button type="button" aria-label="Image 2"></button>
+                <button type="button" aria-label="Image 3"></button>
+                <button type="button" aria-label="Image 4"></button>
+              </div>
+              <div class="rackCarouselArrows">
+                <button type="button" data-rack-prev aria-label="Previous image">‹</button>
+                <button type="button" data-rack-next aria-label="Next image">›</button>
+              </div>
+            </div>
+
+            <figcaption><b>Supporting proof</b> Additional images create a real execution feel while the before/after poster remains the clear transformation proof.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="objekti">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>Business Facilities We Work With</h2>
+            <p>The focus is on facilities where networks, fiber and IP systems must be clear, stable and ready for maintenance.</p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="feature"><div class="tag"><i></i> Offices</div><h3>Offices and Business Spaces</h3><p>Workstations, meeting rooms, technical rooms, WiFi/AP positions and clean rack organization.</p></div>
+          <div class="feature"><div class="tag"><i></i> Retail</div><h3>Retail Spaces and Multi-Site Locations</h3><p>Standardized infrastructure for POS systems, network, IP cameras, intercom and remote support.</p></div>
+          <div class="feature"><div class="tag"><i></i> Operations</div><h3>Warehouses and Production Facilities</h3><p>Fiber, backbone, PoE, WiFi foundation and zones where visibility and reliability matter for daily work.</p></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="primer">
+      <div class="wrap">
+        <div class="caseShell">
+          <figure class="imageCard zoomable">
+            <img class="proof-zoom-img" src="../assets/satvision-sta-dobijate-na-primopredaji.png" alt="Example SATVISION handover deliverables for infrastructure projects" />
+            <figcaption><b>Handover Proof Slot</b> Replace this visual with real project photos and anonymized documentation when available.</figcaption>
+          </figure>
+
+          <div class="card">
+            <div class="pad">
+              <div class="tag"><i></i> Mini Case Study Format</div>
+              <h2 style="margin:0 0 12px;line-height:1.12">Delivery Example / Case Study Format</h2>
+              <ul class="list">
+                <li><span class="check">✓</span>Facility type: office, retail, warehouse or production facility</li>
+                <li><span class="check">✓</span>Scope: number of ports, Cat6/Cat6A, fiber if required</li>
+                <li><span class="check">✓</span>Works: routes, rack, patch panel, labeling</li>
+                <li><span class="check">✓</span>Handover: Fluke report, port map, as-built</li>
+                <li><span class="check">✓</span>Result: clean, measurable and maintainable infrastructure</li>
+              </ul>
+              <div style="margin-top:16px">
+                <a class="btn dark" href="#kontakt">Request a Similar Assessment</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section" id="rizik">
+      <div class="wrap">
+        <div class="card">
+          <div class="pad">
+            <div class="secTitle" style="margin-top:0">
+              <div>
+                <h2>Less Improvisation. Easier Maintenance. Clearer Responsibility.</h2>
+                <p>A director is not buying cables. The IT team is not buying only ports. The company is buying infrastructure that is known, labeled and verifiable.</p>
+              </div>
+            </div>
+
+            <div class="grid3">
+              <div class="feature"><h3>Less Downtime</h3><p>When labels, a port map and documentation exist, issues are found faster and without guessing.</p></div>
+              <div class="feature"><h3>Easier Expansion</h3><p>New workstations, WiFi, VoIP, PoE and IP cameras are planned on known infrastructure, not on improvisation.</p></div>
+              <div class="feature"><h3>Clear Handover</h3><p>The client knows what was delivered, where it ends and which proof is received after project completion.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section id="kontakt" class="section">
+      <div class="wrap">
+        <div class="ctaBox">
+          <div>
+            <h3>Request an Infrastructure Assessment</h3>
+            <p>For a quick assessment, send: location, facility type, number of workstations/ports, current state, deadline, whether drawings exist and whether Fluke certification is required.</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn primary" href="tel:063374210">Call 063/374-210</a>
+            <a class="btn" href="mailto:office@satvision.rs">Send Inquiry</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="secTitle">
+          <div>
+            <h2>Frequently Asked Questions</h2>
+            <p>Short answers before the project begins.</p>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <details open><summary>Do you work across Serbia?</summary><p>Yes. We deploy structured cabling, fiber and network infrastructure for business facilities in Serbia, with scope and deadlines agreed in advance.</p></details>
+          <details><summary>Do we receive a Fluke report?</summary><p>Yes, when Fluke certification is part of the agreed project scope. The report is delivered with the documentation.</p></details>
+          <details><summary>Do you reorganize existing messy racks?</summary><p>Yes. We can perform assessment, reorganization, labeling and documentation of the existing state.</p></details>
+          <details><summary>Can you work in phases or outside business hours?</summary><p>By agreement. In business facilities, work can be planned by zones, floors or time windows to reduce operational disruption.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div><b>SATVISION</b> — Structured cabling, fiber and network infrastructure for businesses.</div>
+      <div>Projektovanje • Izvođenje • Testing • Documentation • Handover</div>
+    </div>
+  </footer>
+
+
+  <div class="imageLightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-label="Enlarged image view">
+    <div class="imageLightboxInner">
+      <button class="imageLightboxClose" type="button" aria-label="Close enlarged image">×</button>
+      <img id="imageLightboxImg" src="" alt="" />
+      <div class="imageLightboxCaption" id="imageLightboxCaption"></div>
+    </div>
+  </div>
+
+  <div class="sticky" aria-label="Quick Contact">
+    <div class="inner">
+      <a class="btn primary" href="tel:063374210">Call</a>
+      <a class="btn dark" href="#kontakt">Assessment</a>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const lightbox = document.getElementById('imageLightbox');
+      const lightboxImg = document.getElementById('imageLightboxImg');
+      const caption = document.getElementById('imageLightboxCaption');
+      const closeBtn = lightbox.querySelector('.imageLightboxClose');
+
+      function openLightbox(img){
+        lightboxImg.src = img.currentSrc || img.src;
+        lightboxImg.alt = img.alt || '';
+        caption.textContent = img.alt || 'SATVISION proof image';
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox(){
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        lightboxImg.src = '';
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.proof-zoom-img').forEach(function(img){
+        img.addEventListener('click', function(){ openLightbox(img); });
+        img.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            openLightbox(img);
+          }
+        });
+        img.setAttribute('tabindex','0');
+        img.setAttribute('role','button');
+        img.setAttribute('aria-label','Click to enlarge image: ' + (img.alt || 'SATVISION proof image'));
+      });
+
+      const proofSlider = document.querySelector('[data-proof-slider]');
+      if(proofSlider){
+        const slides = Array.from(proofSlider.querySelectorAll('.panelVisual'));
+        const dots = Array.from(proofSlider.querySelectorAll('.proofSliderControls button'));
+        let activeSlide = 0;
+        let timer = null;
+
+        function showSlide(index){
+          activeSlide = (index + slides.length) % slides.length;
+          slides.forEach(function(slide, i){
+            slide.classList.toggle('active', i === activeSlide);
+          });
+          dots.forEach(function(dot, i){
+            dot.classList.toggle('active', i === activeSlide);
+          });
+        }
+
+        function startSlider(){
+          stopSlider();
+          timer = window.setInterval(function(){
+            showSlide(activeSlide + 1);
+          }, 4500);
+        }
+
+        function stopSlider(){
+          if(timer){
+            window.clearInterval(timer);
+            timer = null;
+          }
+        }
+
+        dots.forEach(function(dot, i){
+          dot.addEventListener('click', function(){
+            showSlide(i);
+            startSlider();
+          });
+        });
+
+        proofSlider.addEventListener('mouseenter', stopSlider);
+        proofSlider.addEventListener('mouseleave', startSlider);
+        proofSlider.addEventListener('focusin', stopSlider);
+        proofSlider.addEventListener('focusout', startSlider);
+
+        showSlide(0);
+        startSlider();
+      }
+
+      closeBtn.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function(e){
+        if(e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+      });
+    })();
+  
+    (function(){
+      function initRackCarousel(root){
+        const slides = Array.from(root.querySelectorAll('.rackCarouselSlide'));
+        if (!slides.length) return;
+        const card = root.closest('.rackDetailCard');
+        const dots = Array.from(card.querySelectorAll('.rackCarouselDots button'));
+        const prev = card.querySelector('[data-rack-prev]');
+        const next = card.querySelector('[data-rack-next]');
+        let index = 0;
+        let timer = null;
+
+        function show(i){
+          index = (i + slides.length) % slides.length;
+          slides.forEach((slide, n) => slide.classList.toggle('active', n === index));
+          dots.forEach((dot, n) => dot.classList.toggle('active', n === index));
+        }
+        function start(){
+          stop();
+          timer = setInterval(() => show(index + 1), 5200);
+        }
+        function stop(){
+          if (timer) clearInterval(timer);
+          timer = null;
+        }
+
+        dots.forEach((dot, n) => dot.addEventListener('click', () => { show(n); start(); }));
+        if (prev) prev.addEventListener('click', () => { show(index - 1); start(); });
+        if (next) next.addEventListener('click', () => { show(index + 1); start(); });
+
+        card.addEventListener('mouseenter', stop);
+        card.addEventListener('mouseleave', start);
+        card.addEventListener('focusin', stop);
+        card.addEventListener('focusout', start);
+
+        show(0);
+        start();
+      }
+
+      document.querySelectorAll('[data-rack-carousel]').forEach(initRackCarousel);
+    })();
+
+  </script>
+
+</body>
+</html>
 
