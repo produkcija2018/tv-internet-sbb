@@ -1684,75 +1684,78 @@
     </div>
   </div>
 
+  
   <script>
     (function(){
-      function initLightbox(){
-        const lightbox = document.getElementById('imageLightbox');
-        const lightboxImg = document.getElementById('imageLightboxImg');
-        const caption = document.getElementById('imageLightboxCaption');
+      const lightbox = document.getElementById('imageLightbox');
+      const lightboxImg = document.getElementById('imageLightboxImg');
+      const caption = document.getElementById('imageLightboxCaption');
+      const closeBtn = lightbox ? lightbox.querySelector('.imageLightboxClose') : null;
 
-        if(!lightbox || !lightboxImg || !caption){
+      function openLightbox(img){
+        if(!lightbox || !lightboxImg || !caption || !img) return;
+
+        lightboxImg.src = img.currentSrc || img.src;
+        lightboxImg.alt = img.alt || '';
+        caption.textContent = img.alt || img.title || 'SATVISION proof image';
+
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox(){
+        if(!lightbox || !lightboxImg) return;
+
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        lightboxImg.src = '';
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.proof-zoom-img').forEach(function(img){
+        img.setAttribute('tabindex','0');
+        img.setAttribute('role','button');
+        img.setAttribute('aria-label','Kliknite za uvećanje slike: ' + (img.alt || 'SATVISION proof image'));
+      });
+
+      document.addEventListener('click', function(e){
+        const img = e.target.closest && e.target.closest('.proof-zoom-img');
+        if(!img) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        openLightbox(img);
+      }, true);
+
+      document.addEventListener('keydown', function(e){
+        const img = e.target.closest && e.target.closest('.proof-zoom-img');
+
+        if(img && (e.key === 'Enter' || e.key === ' ')){
+          e.preventDefault();
+          openLightbox(img);
           return;
         }
 
-        const closeBtn = lightbox.querySelector('.imageLightboxClose');
-
-        function openLightbox(img){
-          lightboxImg.src = img.currentSrc || img.src;
-          lightboxImg.alt = img.alt || '';
-          caption.textContent = img.alt || img.title || 'SATVISION proof image';
-          lightbox.classList.add('open');
-          lightbox.setAttribute('aria-hidden', 'false');
-          document.body.style.overflow = 'hidden';
+        if(e.key === 'Escape' && lightbox && lightbox.classList.contains('open')){
+          closeLightbox();
         }
+      });
 
-        function closeLightbox(){
-          lightbox.classList.remove('open');
-          lightbox.setAttribute('aria-hidden', 'true');
-          lightboxImg.src = '';
-          document.body.style.overflow = '';
-        }
-
-        document.querySelectorAll('.proof-zoom-img').forEach(function(img){
-          img.setAttribute('tabindex','0');
-          img.setAttribute('role','button');
-          img.setAttribute('aria-label','Kliknite za uvećanje slike: ' + (img.alt || 'SATVISION proof image'));
-        });
-
-        document.addEventListener('click', function(e){
-          const img = e.target.closest('.proof-zoom-img');
-          if(!img) return;
+      if(closeBtn){
+        closeBtn.addEventListener('click', function(e){
           e.preventDefault();
-          e.stopPropagation();
-          openLightbox(img);
+          closeLightbox();
         });
+      }
 
-        document.addEventListener('keydown', function(e){
-          const img = e.target.closest && e.target.closest('.proof-zoom-img');
-          if(img && (e.key === 'Enter' || e.key === ' ')){
-            e.preventDefault();
-            openLightbox(img);
-            return;
-          }
-
-          if(e.key === 'Escape' && lightbox.classList.contains('open')){
-            closeLightbox();
-          }
-        });
-
-        if(closeBtn){
-          closeBtn.addEventListener('click', closeLightbox);
-        }
-
+      if(lightbox){
         lightbox.addEventListener('click', function(e){
           if(e.target === lightbox){
             closeLightbox();
           }
         });
       }
-
-      initLightbox();
-
 
       const proofSlider = document.querySelector('[data-proof-slider]');
       if(proofSlider){
@@ -1762,10 +1765,14 @@
         let timer = null;
 
         function showSlide(index){
+          if(!slides.length) return;
+
           activeSlide = (index + slides.length) % slides.length;
+
           slides.forEach(function(slide, i){
             slide.classList.toggle('active', i === activeSlide);
           });
+
           dots.forEach(function(dot, i){
             dot.classList.toggle('active', i === activeSlide);
           });
@@ -1773,6 +1780,8 @@
 
         function startSlider(){
           stopSlider();
+          if(slides.length < 2) return;
+
           timer = window.setInterval(function(){
             showSlide(activeSlide + 1);
           }, 4500);
@@ -1786,7 +1795,8 @@
         }
 
         dots.forEach(function(dot, i){
-          dot.addEventListener('click', function(){
+          dot.addEventListener('click', function(e){
+            e.preventDefault();
             showSlide(i);
             startSlider();
           });
@@ -1801,39 +1811,77 @@
         startSlider();
       }
 
-    (function(){
-      function initRackCarousel(root){
-        const slides = Array.from(root.querySelectorAll('.rackCarouselSlide'));
-        if (!slides.length) return;
-        const card = root.closest('.rackDetailCard');
-        const dots = Array.from(card.querySelectorAll('.rackCarouselDots button'));
-        const prev = card.querySelector('[data-rack-prev]');
-        const next = card.querySelector('[data-rack-next]');
+      function initRackCarousel(stage){
+        const card = stage.closest('.rackDetailCard') || stage.parentElement;
+        const slides = Array.from(stage.querySelectorAll('.rackCarouselSlide'));
+        const controls = card ? card.querySelector('[data-rack-controls]') : null;
+        const dots = controls ? Array.from(controls.querySelectorAll('.rackCarouselDots button')) : [];
+        const prev = controls ? controls.querySelector('[data-rack-prev]') : null;
+        const next = controls ? controls.querySelector('[data-rack-next]') : null;
+
         let index = 0;
         let timer = null;
 
-        function show(i){
-          index = (i + slides.length) % slides.length;
-          slides.forEach((slide, n) => slide.classList.toggle('active', n === index));
-          dots.forEach((dot, n) => dot.classList.toggle('active', n === index));
+        function show(nextIndex){
+          if(!slides.length) return;
+
+          index = (nextIndex + slides.length) % slides.length;
+
+          slides.forEach(function(slide, i){
+            slide.classList.toggle('active', i === index);
+          });
+
+          dots.forEach(function(dot, i){
+            dot.classList.toggle('active', i === index);
+          });
         }
+
         function start(){
           stop();
-          timer = setInterval(() => show(index + 1), 5200);
+          if(slides.length < 2) return;
+
+          timer = window.setInterval(function(){
+            show(index + 1);
+          }, 5200);
         }
+
         function stop(){
-          if (timer) clearInterval(timer);
-          timer = null;
+          if(timer){
+            window.clearInterval(timer);
+            timer = null;
+          }
         }
 
-        dots.forEach((dot, n) => dot.addEventListener('click', () => { show(n); start(); }));
-        if (prev) prev.addEventListener('click', () => { show(index - 1); start(); });
-        if (next) next.addEventListener('click', () => { show(index + 1); start(); });
+        dots.forEach(function(dot, i){
+          dot.addEventListener('click', function(e){
+            e.preventDefault();
+            show(i);
+            start();
+          });
+        });
 
-        card.addEventListener('mouseenter', stop);
-        card.addEventListener('mouseleave', start);
-        card.addEventListener('focusin', stop);
-        card.addEventListener('focusout', start);
+        if(prev){
+          prev.addEventListener('click', function(e){
+            e.preventDefault();
+            show(index - 1);
+            start();
+          });
+        }
+
+        if(next){
+          next.addEventListener('click', function(e){
+            e.preventDefault();
+            show(index + 1);
+            start();
+          });
+        }
+
+        if(card){
+          card.addEventListener('mouseenter', stop);
+          card.addEventListener('mouseleave', start);
+          card.addEventListener('focusin', stop);
+          card.addEventListener('focusout', start);
+        }
 
         show(0);
         start();
@@ -1841,7 +1889,6 @@
 
       document.querySelectorAll('[data-rack-carousel]').forEach(initRackCarousel);
     })();
-
   </script>
 
 </body>
