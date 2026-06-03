@@ -1200,14 +1200,18 @@
         padding:12px 14px 16px;
       }
     }
-/* ===== FINAL STABLE HEADER FIX ===== */
+/* ===== LIVE HEADER + HERO FIX v5 ===== */
+
+.topContact{
+  display:block !important;
+}
 
 .navin{
   display:flex !important;
   align-items:center !important;
   justify-content:space-between !important;
   gap:14px !important;
-  padding:14px 0 !important;
+  padding:12px 0 !important;
 }
 
 .brand{
@@ -1215,9 +1219,13 @@
 }
 
 .brand img{
-  width:140px !important;
-  max-width:140px !important;
+  width:126px !important;
+  max-width:126px !important;
   height:auto !important;
+}
+
+.brandText{
+  display:block !important;
 }
 
 .menu{
@@ -1229,13 +1237,13 @@
 
 .menu a{
   font-size:12px !important;
-  padding:8px 7px !important;
+  padding:7px 6px !important;
 }
 
 .langSwitch,
 .planSwitch{
   height:42px !important;
-  min-width:48px !important;
+  min-width:46px !important;
   width:auto !important;
   padding:0 13px !important;
   border-radius:999px !important;
@@ -1243,27 +1251,36 @@
 }
 
 .nav .btn.primary{
-  height:52px !important;
+  height:48px !important;
   width:auto !important;
-  padding:0 22px !important;
-  border-radius:18px !important;
+  padding:0 20px !important;
+  border-radius:16px !important;
   font-size:15px !important;
 }
 
+.heroGrid{
+  padding:56px 0 48px !important;
+}
+
 .hero h1{
-  font-size:clamp(38px, 4.6vw, 64px) !important;
+  font-size:clamp(38px, 4.4vw, 62px) !important;
   line-height:1.04 !important;
   max-width:980px !important;
+  letter-spacing:-1px !important;
 }
 
 .hero p{
   font-size:18px !important;
   line-height:1.65 !important;
-  max-width:78ch !important;
+  max-width:76ch !important;
 }
 
-/* Medium screens */
+/* laptop / narrow desktop */
 @media(max-width:1180px){
+  .brandText{
+    display:none !important;
+  }
+
   .menu{
     display:none !important;
   }
@@ -1271,20 +1288,26 @@
   .navin{
     display:grid !important;
     grid-template-columns:auto auto auto auto !important;
+    align-items:center !important;
     justify-content:space-between !important;
+    gap:14px !important;
   }
 
   .brand img{
-    width:126px !important;
-    max-width:126px !important;
+    width:118px !important;
+    max-width:118px !important;
   }
 
   .hero h1{
-    font-size:clamp(36px, 5.2vw, 56px) !important;
+    font-size:clamp(36px, 5vw, 54px) !important;
+  }
+
+  .hero p{
+    font-size:17px !important;
   }
 }
 
-/* Mobile */
+/* mobile */
 @media(max-width:700px){
   .topContact{
     display:none !important;
@@ -1296,15 +1319,15 @@
   }
 
   .brand img{
-    width:108px !important;
-    max-width:108px !important;
+    width:104px !important;
+    max-width:104px !important;
   }
 
   .langSwitch,
   .planSwitch{
-    height:42px !important;
-    min-width:46px !important;
-    padding:0 12px !important;
+    height:40px !important;
+    min-width:44px !important;
+    padding:0 11px !important;
     font-size:12px !important;
   }
 
@@ -1312,9 +1335,14 @@
     display:none !important;
   }
 
+  .heroGrid{
+    padding:38px 0 34px !important;
+  }
+
   .hero h1{
-    font-size:36px !important;
+    font-size:34px !important;
     line-height:1.07 !important;
+    letter-spacing:-.5px !important;
   }
 
   .hero p{
