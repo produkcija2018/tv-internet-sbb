@@ -239,6 +239,29 @@
       box-shadow:var(--shadow2);
       transition:.15s transform,.15s box-shadow,.15s background;
     }
+    .planSwitch{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:40px;
+  min-width:46px;
+  padding:0 13px;
+  border-radius:999px;
+  border:1px solid rgba(244,20,20,.24);
+  background:linear-gradient(135deg,var(--red),var(--red2));
+  color:#fff;
+  font-weight:950;
+  font-size:13px;
+  box-shadow:0 16px 36px rgba(244,20,20,.20);
+  transition:.15s transform,.15s box-shadow,.15s background;
+}
+
+.planSwitch:hover{
+  transform:translateY(-1px);
+  box-shadow:0 20px 44px rgba(244,20,20,.26);
+  color:#fff;
+}
+    
     .langSwitch:hover{
       transform:translateY(-1px);
       box-shadow:0 18px 40px rgba(16,19,20,.14);
@@ -1226,6 +1249,7 @@
       </nav>
 
       <a class="langSwitch" href="en/index.html" aria-label="English version">EN</a>
+      <a class="planSwitch" href="satvision-go-to-market-plan-director-final.html" aria-label="Marketing plan">MP</a>
       <a class="btn primary" href="tel:063374210">063/374-210</a>
     </div>
   </header>
