@@ -239,33 +239,33 @@
       box-shadow:var(--shadow2);
       transition:.15s transform,.15s box-shadow,.15s background;
     }
-    .planSwitch{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  height:40px;
-  min-width:46px;
-  padding:0 13px;
-  border-radius:999px;
-  border:1px solid rgba(244,20,20,.24);
-  background:linear-gradient(135deg,var(--red),var(--red2));
-  color:#fff;
-  font-weight:950;
-  font-size:13px;
-  box-shadow:0 16px 36px rgba(244,20,20,.20);
-  transition:.15s transform,.15s box-shadow,.15s background;
-}
-
-.planSwitch:hover{
-  transform:translateY(-1px);
-  box-shadow:0 20px 44px rgba(244,20,20,.26);
-  color:#fff;
-}
-    
     .langSwitch:hover{
       transform:translateY(-1px);
       box-shadow:0 18px 40px rgba(16,19,20,.14);
       background:#fff;
+    }
+
+
+    .planSwitch{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height:40px;
+      min-width:46px;
+      padding:0 13px;
+      border-radius:999px;
+      border:1px solid rgba(244,20,20,.24);
+      background:linear-gradient(135deg,var(--red),var(--red2));
+      color:#fff;
+      font-weight:950;
+      font-size:13px;
+      box-shadow:0 16px 36px rgba(244,20,20,.20);
+      transition:.15s transform,.15s box-shadow,.15s background;
+    }
+    .planSwitch:hover{
+      transform:translateY(-1px);
+      box-shadow:0 20px 44px rgba(244,20,20,.26);
+      color:#fff;
     }
 
     .btn.ghost{
@@ -1200,156 +1200,7 @@
         padding:12px 14px 16px;
       }
     }
-/* ===== LIVE HEADER + HERO FIX v5 ===== */
 
-.topContact{
-  display:block !important;
-}
-
-.navin{
-  display:flex !important;
-  align-items:center !important;
-  justify-content:space-between !important;
-  gap:14px !important;
-  padding:12px 0 !important;
-}
-
-.brand{
-  flex:0 0 auto !important;
-}
-
-.brand img{
-  width:126px !important;
-  max-width:126px !important;
-  height:auto !important;
-}
-
-.brandText{
-  display:block !important;
-}
-
-.menu{
-  display:flex !important;
-  flex:1 1 auto !important;
-  justify-content:center !important;
-  gap:4px !important;
-}
-
-.menu a{
-  font-size:12px !important;
-  padding:7px 6px !important;
-}
-
-.langSwitch,
-.planSwitch{
-  height:42px !important;
-  min-width:46px !important;
-  width:auto !important;
-  padding:0 13px !important;
-  border-radius:999px !important;
-  font-size:13px !important;
-}
-
-.nav .btn.primary{
-  height:48px !important;
-  width:auto !important;
-  padding:0 20px !important;
-  border-radius:16px !important;
-  font-size:15px !important;
-}
-
-.heroGrid{
-  padding:56px 0 48px !important;
-}
-
-.hero h1{
-  font-size:clamp(38px, 4.4vw, 62px) !important;
-  line-height:1.04 !important;
-  max-width:980px !important;
-  letter-spacing:-1px !important;
-}
-
-.hero p{
-  font-size:18px !important;
-  line-height:1.65 !important;
-  max-width:76ch !important;
-}
-
-/* laptop / narrow desktop */
-@media(max-width:1180px){
-  .brandText{
-    display:none !important;
-  }
-
-  .menu{
-    display:none !important;
-  }
-
-  .navin{
-    display:grid !important;
-    grid-template-columns:auto auto auto auto !important;
-    align-items:center !important;
-    justify-content:space-between !important;
-    gap:14px !important;
-  }
-
-  .brand img{
-    width:118px !important;
-    max-width:118px !important;
-  }
-
-  .hero h1{
-    font-size:clamp(36px, 5vw, 54px) !important;
-  }
-
-  .hero p{
-    font-size:17px !important;
-  }
-}
-
-/* mobile */
-@media(max-width:700px){
-  .topContact{
-    display:none !important;
-  }
-
-  .navin{
-    grid-template-columns:1fr auto auto !important;
-    gap:10px !important;
-  }
-
-  .brand img{
-    width:104px !important;
-    max-width:104px !important;
-  }
-
-  .langSwitch,
-  .planSwitch{
-    height:40px !important;
-    min-width:44px !important;
-    padding:0 11px !important;
-    font-size:12px !important;
-  }
-
-  .nav .btn.primary{
-    display:none !important;
-  }
-
-  .heroGrid{
-    padding:38px 0 34px !important;
-  }
-
-  .hero h1{
-    font-size:34px !important;
-    line-height:1.07 !important;
-    letter-spacing:-.5px !important;
-  }
-
-  .hero p{
-    font-size:16px !important;
-    line-height:1.6 !important;
-  }
-}
   </style>
 </head>
 
@@ -1398,7 +1249,7 @@
       </nav>
 
       <a class="langSwitch" href="en/index.html" aria-label="English version">EN</a>
-      <a class="planSwitch" href="satvision-go-to-market-plan-director-final-zoom.html" aria-label="Marketing plan">MP</a>
+      <a class="planSwitch" href="satvision-go-to-market-plan-director-final-zoom.html" aria-label="Market plan">MP</a>
       <a class="btn primary" href="tel:063374210">063/374-210</a>
     </div>
   </header>
@@ -1432,6 +1283,7 @@
         <aside class="commandPanel" aria-label="SATVISION delivery sistem">
           <div class="panelHead">
             <b>Delivery Control</b>
+            <span>Audit → Build → Certify → Handover</span>
           </div>
           <div class="panelBody">
             <div class="metric">
@@ -1491,15 +1343,15 @@
         <div class="secTitle">
           <div>
             <h2>Zašto SATVISION</h2>
-            <p>SATVISION smanjuje operativni rizik tako što SKS, optičku, mrežnu i IP infrastrukturu predaje kao uređen, testiran i dokumentovan sistem — spreman za rad, održavanje i buduće proširenje.</p>
+            <p>Razlika nije u tome što se kabl provuče. Razlika je u tome da infrastruktura bude izmerena, obeležena, dokumentovana i laka za održavanje.</p>
           </div>
         </div>
 
         <div class="grid3">
           <div class="feature">
             <div class="tag"><i></i> Certification</div>
-            <h3>Fluke izveštaj</h3>
-            <p>Kada je sertifikacija deo obima, klijent dobija merljiv izveštaj po dogovorenom standardu.</p>
+            <h3>Fluke izveštaj kao dokaz</h3>
+            <p>Linkovi se ne predaju na poverenje. Kada je sertifikacija deo obima, klijent dobija merljiv izveštaj po dogovorenom standardu.</p>
           </div>
           <div class="feature">
             <div class="tag"><i></i> Documentation</div>
@@ -1520,7 +1372,7 @@
         <div class="secTitle">
           <div>
             <h2>Šta radimo</h2>
-            <p>Fokus je na fizičkoj i mrežnoj infrastrukturi poslovnih objekata.</p>
+            <p>Fokus je na fizičkoj i mrežnoj infrastrukturi poslovnih objekata. Bez prevelikih obećanja — samo ono što može da se izvede, izmeri i preda.</p>
           </div>
         </div>
 
@@ -1754,7 +1606,7 @@
         <div class="caseShell">
           <figure class="imageCard zoomable zoomable">
             <img class="proof-zoom-img" src="assets/satvision-sta-dobijate-na-primopredaji.png" alt="Primer SATVISION primopredajnih dokaza za infrastrukturne projekte"  title="Kliknite za uvećanje: Primer SATVISION primopredajnih dokaza za infrastrukturne projekte" />
-            <figcaption><b>Proof slot za primopredaju</b> vizuelni dok.</figcaption>
+            <figcaption><b>Proof slot za primopredaju</b> Privremeni vizuelni dokaz. Zameniti realnim fotografijama projekta i anonimizovanom dokumentacijom kada budu dostupni.</figcaption>
           </figure>
 
           <div class="card">
@@ -1785,7 +1637,7 @@
             <div class="secTitle" style="margin-top:0">
               <div>
                 <h2>Manje improvizacije. Lakše održavanje. Jasnija odgovornost.</h2>
-                <p>Firma kupuje infrastrukturu koja je poznata, obeležena i proverljiva.</p>
+                <p>Direktor ne kupuje kablove. IT tim ne kupuje samo portove. Firma kupuje infrastrukturu koja je poznata, obeležena i proverljiva.</p>
               </div>
             </div>
 
