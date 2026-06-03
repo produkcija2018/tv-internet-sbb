@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SATVISION Go-To-Market Plan v1.0 | Direktorsko odobrenje</title>
+  <meta name="description" content="SATVISION go-to-market plan za izlazak na tržište nakon objave sajta i društvenih mreža: direktna B2B prodaja, partneri, selektivni tenderi i proof content." />
+  <style>
+    :root{
+      --red:#e41212;
+      --red2:#ff2a2a;
+      --black:#080909;
+      --charcoal:#121516;
+      --charcoal2:#1b2022;
+      --paper:#f5f5f2;
+      --white:#ffffff;
+      --text:#101314;
+      --muted:#667078;
+      --line:rgba(16,19,20,.12);
+      --lineDark:rgba(255,255,255,.13);
+      --shadow:0 22px 70px rgba(0,0,0,.18);
+      --radius:24px;
+      --max:1180px;
+      --font:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:
+        radial-gradient(900px 460px at 5% -10%, rgba(228,18,18,.13), transparent 60%),
+        linear-gradient(180deg,#f7f7f4,#eeeeea);
+      line-height:1.62;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      background:rgba(8,9,9,.92);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--lineDark);
+      color:white;
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900}
+    .mark{
+      width:58px;height:34px;border-radius:10px;
+      background:linear-gradient(135deg,var(--red),#b80808);
+      display:grid;place-items:center;
+      color:#fff;font-weight:1000;font-size:20px;font-style:italic;letter-spacing:-2px;
+      box-shadow:0 12px 34px rgba(228,18,18,.28);
+    }
+    .brand small{display:block;color:rgba(255,255,255,.62);font-size:12px;font-weight:650;margin-top:-3px}
+    .menu{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+    .menu a{
+      color:rgba(255,255,255,.75);font-size:13px;font-weight:750;
+      padding:8px 10px;border-radius:999px;border:1px solid transparent;
+    }
+    .menu a:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12);color:white}
+    .hero{
+      background:
+        linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.55)),
+        radial-gradient(900px 520px at 85% 20%, rgba(228,18,18,.28), transparent 60%),
+        linear-gradient(135deg,#070808,#1a1e20);
+      color:white;
+      padding:68px 0 44px;
+      border-bottom:5px solid var(--red);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:after{
+      content:"";position:absolute;right:-220px;top:-220px;width:520px;height:520px;
+      border:1px solid rgba(228,18,18,.35);border-radius:50%;
+      box-shadow:0 0 90px rgba(228,18,18,.18) inset;
+    }
+    .heroGrid{display:grid;grid-template-columns:1.13fr .87fr;gap:28px;align-items:center;position:relative;z-index:1}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 12px;border:1px solid var(--lineDark);border-radius:999px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.82);font-size:13px;font-weight:800}
+    .dot{width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 20px rgba(228,18,18,.8)}
+    h1{font-size:clamp(38px,5.4vw,72px);line-height:.98;letter-spacing:-1.6px;margin:18px 0 16px}
+    .hero p{max-width:78ch;color:rgba(255,255,255,.78);font-size:18px;margin:0}
+    .red{color:var(--red2)}
+    .heroBtns{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 16px;border-radius:14px;font-weight:950;font-size:14px;border:1px solid var(--line);background:white;color:var(--text);box-shadow:0 14px 34px rgba(0,0,0,.10)}
+    .btn.primary{background:linear-gradient(135deg,var(--red),#b70707);color:white;border-color:rgba(255,255,255,.12);box-shadow:0 18px 48px rgba(228,18,18,.25)}
+    .panel{
+      border:1px solid var(--lineDark);
+      background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045));
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:0 28px 80px rgba(0,0,0,.28);
+    }
+    .panel h3{margin:0 0 10px;font-size:17px}
+    .kpiGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+    .kpi{border:1px solid var(--lineDark);border-radius:18px;padding:14px;background:rgba(0,0,0,.22)}
+    .kpi b{display:block;font-size:22px;color:white}
+    .kpi span{display:block;font-size:12px;color:rgba(255,255,255,.65);line-height:1.4;margin-top:4px}
+    .section{padding:38px 0}
+    .title{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+    .title h2{font-size:31px;line-height:1.1;letter-spacing:-.7px;margin:0}
+    .title p{margin:0;color:var(--muted);max-width:68ch;font-size:14px}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .card{
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .cardPad{padding:20px}
+    .tag{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px}
+    .tag:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 16px rgba(228,18,18,.35)}
+    .card h3{margin:0 0 8px;font-size:18px;line-height:1.18}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .num{font-size:36px;font-weight:1000;color:var(--red);line-height:1;margin-bottom:8px}
+    .dark{
+      background:
+        radial-gradient(800px 360px at 18% 0%,rgba(228,18,18,.18),transparent 65%),
+        linear-gradient(180deg,#0b0d0e,#15191b);
+      color:white;
+      border-top:1px solid rgba(255,255,255,.08);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .dark .title p,.dark .card p{color:rgba(255,255,255,.67)}
+    .dark .card{background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.12);box-shadow:none}
+    .dark .tag{color:rgba(255,255,255,.56)}
+    .list{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:9px}
+    .list li{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:14px}
+    .dark .list li{color:rgba(255,255,255,.7)}
+    .check{flex:0 0 auto;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:rgba(228,18,18,.10);border:1px solid rgba(228,18,18,.28);color:var(--red);font-weight:1000;font-size:12px;margin-top:1px}
+    .timeline{display:grid;gap:12px}
+    .step{display:grid;grid-template-columns:130px 1fr;gap:16px;align-items:start;background:white;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 12px 32px rgba(0,0,0,.06)}
+    .when{font-weight:1000;color:var(--red)}
+    .step h3{margin:0 0 5px;font-size:17px}
+    .step p{margin:0;color:var(--muted);font-size:14px}
+    .tableWrap{overflow:auto;border:1px solid var(--line);border-radius:24px;background:white;box-shadow:var(--shadow)}
+    table{width:100%;border-collapse:collapse;min-width:780px}
+    th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+    th{background:#111516;color:white;font-size:13px;text-transform:uppercase;letter-spacing:.4px}
+    tr:last-child td{border-bottom:0}
+    td b{color:var(--text)}
+    .priority{display:inline-flex;padding:4px 8px;border-radius:999px;background:rgba(228,18,18,.11);color:#b70707;font-weight:1000;font-size:12px}
+    .callout{
+      border-left:6px solid var(--red);
+      background:white;
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      padding:22px;
+    }
+    .callout h3{margin:0 0 8px;font-size:22px}
+    .callout p{margin:0;color:var(--muted)}
+    .footer{background:#070808;color:rgba(255,255,255,.67);padding:28px 0;margin-top:30px;border-top:5px solid var(--red)}
+    .footer b{color:white}
+
+    .visualGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+    .visualCard{
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .visualCard.darkVisual{
+      background:#080909;
+      border-color:rgba(255,255,255,.12);
+      color:white;
+    }
+    .visualCard img{
+      display:block;
+      width:100%;
+      height:360px;
+      object-fit:contain;
+      object-position:center;
+      background:#050606;
+      padding:8px;
+    }
+    .visualCard.signature img{
+      height:310px;
+      background:#f5f5f2;
+    }
+    .visualCard figcaption{
+      padding:14px 16px;
+      border-top:1px solid var(--line);
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.45;
+      font-weight:750;
+    }
+    .dark .visualCard figcaption,
+    .visualCard.darkVisual figcaption{
+      border-top:1px solid rgba(255,255,255,.12);
+      color:rgba(255,255,255,.68);
+    }
+    .visualCard figcaption b{
+      display:block;
+      color:var(--text);
+      font-size:15px;
+      margin-bottom:4px;
+    }
+    .dark .visualCard figcaption b,
+    .visualCard.darkVisual figcaption b{
+      color:#fff;
+    }
+    .flowMap{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px}
+    .flowStep{
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:#fff;
+      padding:16px;
+      box-shadow:0 12px 32px rgba(0,0,0,.06);
+      position:relative;
+    }
+    .flowStep:after{
+      content:"→";
+      position:absolute;
+      right:-13px;
+      top:50%;
+      transform:translateY(-50%);
+      color:var(--red);
+      font-weight:1000;
+      font-size:22px;
+      z-index:2;
+    }
+    .flowStep:last-child:after{display:none}
+    .flowStep b{display:block;font-size:15px;margin-bottom:5px;color:var(--text)}
+    .flowStep span{display:block;font-size:12.5px;color:var(--muted);line-height:1.45}
+    .dark .flowStep{background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.12);box-shadow:none}
+    .dark .flowStep b{color:#fff}
+    .dark .flowStep span{color:rgba(255,255,255,.66)}
+    .channelBadge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(228,18,18,.10);
+      color:#b70707;
+      font-weight:1000;
+      font-size:12px;
+      margin-bottom:10px;
+    }
+
+    /* ===== GTM visual proof zoom / lightbox ===== */
+    .visualCard{
+      cursor:zoom-in;
+    }
+    .visualCard::after{
+      content:"Kliknite za uvećanje";
+      position:absolute;
+      top:12px;
+      right:12px;
+      z-index:5;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(0,0,0,.74);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.18);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.01em;
+      backdrop-filter:blur(10px);
+      pointer-events:none;
+    }
+    .visualCard.signature::after{
+      background:rgba(8,9,9,.78);
+    }
+    .gtm-zoom-img{
+      cursor:zoom-in;
+      transition:transform .18s ease, filter .18s ease;
+    }
+    .visualCard:hover .gtm-zoom-img{
+      transform:scale(1.012);
+      filter:saturate(1.03) contrast(1.03);
+    }
+    .gtmLightbox{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:28px;
+      background:rgba(0,0,0,.90);
+      backdrop-filter:blur(8px);
+    }
+    .gtmLightbox.open{display:flex}
+    .gtmLightboxInner{
+      position:relative;
+      width:min(96vw, 1180px);
+      height:min(92vh, 980px);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+    }
+    .gtmLightbox img{
+      max-width:100%;
+      max-height:calc(92vh - 72px);
+      object-fit:contain;
+      border-radius:18px;
+      box-shadow:0 30px 90px rgba(0,0,0,.58);
+      background:#050606;
+    }
+    .gtmLightboxCaption{
+      color:rgba(255,255,255,.86);
+      font-weight:850;
+      font-size:14px;
+      text-align:center;
+      max-width:84ch;
+    }
+    .gtmLightboxClose{
+      position:absolute;
+      top:0;
+      right:0;
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(228,18,18,.94);
+      color:#fff;
+      font-size:26px;
+      line-height:1;
+      cursor:pointer;
+      box-shadow:0 12px 34px rgba(0,0,0,.35);
+    }
+    .gtmLightboxClose:hover{background:#ff2a2a}
+    @media(max-width:640px){
+      .gtmLightbox{padding:12px}
+      .gtmLightboxInner{width:100vw;height:100vh}
+      .gtmLightbox img{max-height:calc(100vh - 82px);border-radius:12px}
+      .gtmLightboxClose{top:10px;right:10px}
+      .visualCard::after{font-size:11px;top:10px;right:10px}
+    }
+
+
+    @media(max-width:980px){
+      .visualGrid{grid-template-columns:1fr}
+      .visualCard img,.visualCard.signature img{height:auto;max-height:none}
+      .flowMap{grid-template-columns:1fr}
+      .flowStep:after{display:none}
+    }
+
+    @media(max-width:980px){
+      .heroGrid,.grid4,.grid3,.grid2{grid-template-columns:1fr}
+      .menu{display:none}
+      .step{grid-template-columns:1fr}
+      .kpiGrid{grid-template-columns:1fr}
+      h1{font-size:42px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top">
+        <span class="mark">SAT</span>
+        <span>SATVISION<small>Go-To-Market Plan v1.0 • Director Approval</small></span>
+      </a>
+      <nav class="menu">
+        <a href="#strategija">Strategija</a>
+        <a href="#kanali">Kanali</a>
+        <a href="#ekosistem">Proof ekosistem</a>
+        <a href="#90dana">90 dana</a>
+        <a href="#tenderi">Tenderi</a>
+        <a href="#partneri">Partneri</a>
+        <a href="#kit">GTM Kit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap heroGrid">
+        <div>
+          <span class="eyebrow"><span class="dot"></span> P0 plan za izlazak na tržište nakon objave sajta</span>
+          <h1>Kako SATVISION izlazi na tržište kao <span class="red">Infrastructure Partner</span></h1>
+          <p>
+            Kratko: <b>da, šalju se emailovi. Da, ide se na tendere.</b>
+            Ali najjači plan nije čekanje upita i takmičenje najnižom cenom.
+            Najjači plan je <b>direktna B2B prodaja + partneri + selektivni tenderi + proof content</b>.
+          </p>
+          <div class="heroBtns">
+            <a class="btn primary" href="#90dana">Plan prvih 90 dana</a>
+            <a class="btn" href="#kit">Šta treba pripremiti</a>
+          </div>
+        </div>
+        <aside class="panel">
+          <h3>Direktorska odluka</h3>
+          <p>
+            SATVISION ne izlazi na tržište kao “firma za kablove”, već kao firma koja projektuje,
+            izvodi, meri, dokumentuje i predaje poslovnu infrastrukturu.
+          </p>
+          <div class="kpiGrid">
+            <div class="kpi"><b>200</b><span>ciljanih firmi u prvom talasu</span></div>
+            <div class="kpi"><b>50</b><span>potencijalnih partnera</span></div>
+            <div class="kpi"><b>90</b><span>dana za prvi prodajni pipeline</span></div>
+            <div class="kpi"><b>P0</b><span>proof pre marketing hype-a</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="strategija">
+      <div class="wrap">
+        <div class="title">
+          <div>
+            <h2>1. Finalna tržišna strategija</h2>
+            <p>Sajt i društvene mreže nisu kraj posla. Oni su dokaz poverenja koji podržava direktnu prodaju, partnere i tender nastupe.</p>
+          </div>
+        </div>
+        <div class="grid4">
+          <article class="card"><div class="cardPad">
+            <div class="num">01</div><h3>Direktna B2B prodaja</h3>
+            <p>Targetirani email, LinkedIn i pozivi prema firmama koje imaju realnu potrebu: selidba, širenje, novi objekat, neuredna mreža.</p>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="num">02</div><h3>Partneri</h3>
+            <p>Elektro firme, security integratori, IT support firme, projektanti i facility management kao kanali koji već imaju klijente.</p>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="num">03</div><h3>Selektivni tenderi</h3>
+            <p>Ne svaki tender. Samo oni gde se vrednuju SKS, optika, Fluke, dokumentacija, fazno izvođenje i jasna primopredaja.</p>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="num">04</div><h3>Proof content</h3>
+            <p>LinkedIn, Google, YouTube i Instagram služe kao dokaz: rek, Fluke, mapa portova, optika, primopredaja, pre/posle.</p>
+          </div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="poruka">
+      <div class="wrap">
+        <div class="title">
+          <div>
+            <h2>2. Poruka koja se plasira na tržište</h2>
+            <p>Poruka mora da podigne SATVISION iz Level 1 izvođača u Level 2/3 infrastructure partner poziciju.</p>
+          </div>
+        </div>
+        <div class="grid3">
+          <article class="card"><div class="cardPad">
+            <div class="tag">Glavna poruka</div>
+            <h3>Ne prodajemo kablove. Predajemo sistem.</h3>
+            <p>SKS, optika, rek organizacija, Fluke testiranje, mapa portova i as-built dokumentacija kao jedna kontrolisana isporuka.</p>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="tag">Za IT menadžera</div>
+            <h3>Merljivo, označeno, dokumentovano.</h3>
+            <p>Svaki port, link i trasa imaju logiku. Lakše održavanje, brže intervencije i manje improvizacije.</p>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="tag">Za direktora</div>
+            <h3>Manje rizika, jasna odgovornost.</h3>
+            <p>Uredna infrastruktura smanjuje zastoje, troškove kasnijeg održavanja i zavisnost od “majstora koji zna gde je šta”.</p>
+          </div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kanali">
+      <div class="wrap">
+        <div class="title">
+          <div>
+            <h2>3. Kanali prodaje i tržišnog plasmana</h2>
+            <p>Svaki kanal ima svoju ulogu. Ne mešati authority content sa direktnom prodajom.</p>
+          </div>
+        </div>
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr><th>Kanal</th><th>Prioritet</th><th>Uloga</th><th>Šta radimo</th><th>Šta ne radimo</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Targetirani email</b></td><td><span class="priority">P0</span></td>
+                <td>Otvaranje razgovora</td>
+                <td>50–100 pažljivo izabranih firmi mesečno, personalizovana poruka, follow-up i poziv na assessment.</td>
+                <td>Ne masovni spam, ne generičko “radimo kabliranje”.</td>
+              </tr>
+              <tr>
+                <td><b>LinkedIn</b></td><td><span class="priority">P0</span></td>
+                <td>Direktori, IT menadžeri, partneri</td>
+                <td>2 objave nedeljno + povezivanje sa relevantnim ljudima + kratke direktne poruke.</td>
+                <td>Ne objave bez dokaza i ne hype.</td>
+              </tr>
+              <tr>
+                <td><b>Google Business Profile</b></td><td><span class="priority">P0</span></td>
+                <td>Lokalno poverenje</td>
+                <td>Fotografije, usluge, recenzije, update jednom nedeljno.</td>
+                <td>Ne ostaviti prazan profil.</td>
+              </tr>
+              <tr>
+                <td><b>YouTube</b></td><td><span class="priority">P0</span></td>
+                <td>Proof engine</td>
+                <td>Kratki video dokazi: Fluke, pre/posle rek, mapa portova, optika, primopredaja.</td>
+                <td>Ne skupi promo spot bez realnog dokaza.</td>
+              </tr>
+              <tr>
+                <td><b>Tenderi</b></td><td><span class="priority">P1</span></td>
+                <td>Veći poslovi i reference</td>
+                <td>Selektivno, kada tender traži kvalitet, dokumentaciju, testiranje i jasnu primopredaju.</td>
+                <td>Ne tenderi gde pobeđuje samo najniža cena.</td>
+              </tr>
+              <tr>
+                <td><b>Partneri</b></td><td><span class="priority">P0</span></td>
+                <td>Najveći leverage</td>
+                <td>Elektro, IT, security, projektanti, facility management. “Vaš klijent, naša infrastrukturalna isporuka.”</td>
+                <td>Ne ulaziti nejasno u tuđe klijente bez dogovora.</td>
+              </tr>
+              <tr>
+                <td><b>Instagram / Facebook</b></td><td><span class="priority">P1</span></td>
+                <td>Vizuelni dokaz</td>
+                <td>Pre/posle, teren, rack, optika, Fluke, kratke edukacije.</td>
+                <td>Ne tretirati kao glavni B2B kanal.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section dark" id="ekosistem">
+      <div class="wrap">
+        <div class="title">
+          <div>
+            <h2>4. Proof ekosistem: sajt + email + društvene mreže</h2>
+            <p>Ovo nije dekoracija. Ovo je sistem poverenja koji podržava svaki email, poziv, LinkedIn poruku, tender nastup i razgovor sa partnerima.</p>
+          </div>
+        </div>
+
+        <div class="flowMap">
+          <div class="flowStep"><b>1. Sajt</b><span>/usluge/ stranica pokazuje šta SATVISION isporučuje: SKS, optika, mreže, IP sistemi, testiranje i dokumentacija.</span></div>
+          <div class="flowStep"><b>2. Email</b><span>Targetirani email otvara razgovor i vodi ka proceni infrastrukture, ne ka generičkoj prodaji kablova.</span></div>
+          <div class="flowStep"><b>3. Social proof</b><span>LinkedIn, YouTube, Google i Instagram potvrđuju da iza poruke postoji vidljiv proof system.</span></div>
+          <div class="flowStep"><b>4. Partneri / tenderi</b><span>Materijali se koriste kao dokaz sposobnosti u razgovorima sa partnerima i selektivnim tenderima.</span></div>
+          <div class="flowStep"><b>5. Pipeline</b><span>Cilj su razgovori, obilasci, ponude i prvi case study dokazi, ne vanity metrike.</span></div>
+        </div>
+
+        <div class="visualGrid">
+          <figure class="visualCard signature">
+            <img class="gtm-zoom-img" src="assets/Capture.JPG" alt="SATVISION email potpis za B2B outreach" title="Kliknite za uvećanje: SATVISION email potpis za B2B outreach">
+            <figcaption><b>Email signature / outreach identity</b> Svaki kontakt odmah vidi poziciju: SKS, optika, mrežna infrastruktura, procena, planiranje, testiranje i dokumentacija.</figcaption>
+          </figure>
+
+          <figure class="visualCard darkVisual">
+            <img class="gtm-zoom-img" src="assets/satvision-linkedin-mockup.png" alt="SATVISION LinkedIn company page mockup" title="Kliknite za uvećanje: SATVISION LinkedIn company page mockup">
+            <figcaption><b>LinkedIn — P0</b> Glavni B2B authority kanal za direktore, IT menadžere, operations i partnere.</figcaption>
+          </figure>
+
+          <figure class="visualCard darkVisual">
+            <img class="gtm-zoom-img" src="assets/satvision-youtube-mockup.png" alt="SATVISION YouTube channel mockup" title="Kliknite za uvećanje: SATVISION YouTube channel mockup">
+            <figcaption><b>YouTube — P0</b> Proof engine: Fluke, rack, port map, optika, pre/posle i primopredaja kroz kratke video dokaze.</figcaption>
+          </figure>
+
+          <figure class="visualCard darkVisual">
+            <img class="gtm-zoom-img" src="assets/satvision-google-business-profile-mockup.png" alt="SATVISION Google Business Profile mockup" title="Kliknite za uvećanje: SATVISION Google Business Profile mockup">
+            <figcaption><b>Google Business Profile — P0</b> Lokalno poverenje, recenzije, fotografije, usluge i vidljiv dokaz da firma postoji i radi.</figcaption>
+          </figure>
+
+          <figure class="visualCard darkVisual">
+            <img class="gtm-zoom-img" src="assets/satvision-instagram-mockup.png" alt="SATVISION Instagram profile mockup" title="Kliknite za uvećanje: SATVISION Instagram profile mockup">
+            <figcaption><b>Instagram — P1</b> Vizuelni dokaz: projekti, rack, optika, dokumentacija i primopredaja.</figcaption>
+          </figure>
+
+          <figure class="visualCard darkVisual">
+            <img class="gtm-zoom-img" src="assets/satvision-facebook-mockup.png" alt="SATVISION Facebook page mockup" title="Kliknite za uvećanje: SATVISION Facebook page mockup">
+            <figcaption><b>Facebook — P1</b> Lokalna prisutnost, reference, objave i podrška poverenju u Srbiji.</figcaption>
+          </figure>
+
+          <figure class="visualCard darkVisual">
+            <img class="gtm-zoom-img" src="assets/satvision-whatsapp-business-mockup.png" alt="SATVISION WhatsApp Business profile mockup" title="Kliknite za uvećanje: SATVISION WhatsApp Business profile mockup">
+            <figcaption><b>WhatsApp Business — P1</b> Brza komunikacija za upite, slike objekta, lokaciju i dogovor termina procene.</figcaption>
+          </figure>
+
+          <figure class="visualCard darkVisual">
+            <img class="gtm-zoom-img" src="assets/satvision-tiktok-mockup.png" alt="SATVISION TikTok profile mockup" title="Kliknite za uvećanje: SATVISION TikTok profile mockup">
+            <figcaption><b>TikTok — P2</b> Kratki edukativni proof sadržaj: pre/posle, rack rescue, Fluke i optički backbone.</figcaption>
+          </figure>
+
+          <figure class="visualCard darkVisual">
+            <img class="gtm-zoom-img" src="assets/satvision-wechat-mockup.png" alt="SATVISION WeChat profile mockup" title="Kliknite za uvećanje: SATVISION WeChat profile mockup">
+            <figcaption><b>WeChat — P2 / future export</b> Nije prioritet za Srbiju. Koristan kasnije za international-ready prisustvo i azijske kontakte.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="90dana">
+      <div class="wrap">
+        <div class="title">
+          <div>
+            <h2>5. Plan prvih 90 dana</h2>
+            <p>Cilj nije viralnost. Cilj je pipeline: razgovori, obilasci, ponude, partneri i prvi dokazni projekti.</p>
+          </div>
+        </div>
+        <div class="timeline">
+          <div class="step">
+            <div class="when">Mesec 1</div>
+            <div><h3>Postavljanje prodajne infrastrukture</h3><p>Objava sajta, društvene mreže, PDF profil, Handover PDF, email/LinkedIn skripte, CRM tabela, lista 200 firmi i 50 partnera.</p></div>
+          </div>
+          <div class="step">
+            <div class="when">Mesec 2</div>
+            <div><h3>Prvi direktni outreach</h3><p>100 emailova, 50 LinkedIn konekcija, 20 poziva, 2 objave nedeljno, 1 video, 1 Google update nedeljno. Cilj: 5–10 razgovora.</p></div>
+          </div>
+          <div class="step">
+            <div class="when">Mesec 3</div>
+            <div><h3>Partneri + tender monitoring</h3><p>20+ partner kontakata, tender screening jednom nedeljno, prve ponude i obilasci. Cilj: 2–4 obilaska i 1–2 ozbiljne ponude.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="email">
+      <div class="wrap">
+        <div class="title">
+          <div>
+            <h2>6. Email i LinkedIn sekvenca</h2>
+            <p>Email se šalje, ali cilj nije spam. Cilj je razgovor sa firmama koje imaju infrastrukturalnu potrebu.</p>
+          </div>
+        </div>
+        <div class="grid3">
+          <article class="card"><div class="cardPad">
+            <div class="tag">Email 1</div>
+            <h3>Uvod i problem</h3>
+            <p>“Pomažemo firmama da SKS, optiku i mrežnu infrastrukturu dobiju kao merljiv, označen i dokumentovan sistem.”</p>
+            <ul class="list">
+              <li><span class="check">✓</span>kratko ko smo</li>
+              <li><span class="check">✓</span>šta rešavamo</li>
+              <li><span class="check">✓</span>poziv na procenu</li>
+            </ul>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="tag">Email 2</div>
+            <h3>Proof follow-up</h3>
+            <p>Poslati vizual “Šta dobijate na primopredaji”: Fluke, mapa portova, as-built, označavanje, rack.</p>
+            <ul class="list">
+              <li><span class="check">✓</span>dokaz, ne hvaljenje</li>
+              <li><span class="check">✓</span>pitanje o postojećem stanju</li>
+              <li><span class="check">✓</span>poziv na obilazak</li>
+            </ul>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="tag">Email 3</div>
+            <h3>Use-case</h3>
+            <p>Za firme koje se sele, šire, imaju neuredan rack ili nemaju dokumentaciju.</p>
+            <ul class="list">
+              <li><span class="check">✓</span>selidba / nova lokacija</li>
+              <li><span class="check">✓</span>rekonstrukcija mreže</li>
+              <li><span class="check">✓</span>Infrastructure Assessment</li>
+            </ul>
+          </div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tenderi">
+      <div class="wrap">
+        <div class="title">
+          <div>
+            <h2>7. Tender strategija</h2>
+            <p>Tenderi su korisni samo kada SATVISION može da pobedi kvalitetom, dokazom i metodologijom, ne samo cenom.</p>
+          </div>
+        </div>
+        <div class="grid2">
+          <article class="card"><div class="cardPad">
+            <div class="tag">Idemo na tender kada traže</div>
+            <ul class="list">
+              <li><span class="check">✓</span>SKS / Cat6 / Cat6A</li>
+              <li><span class="check">✓</span>optiku / backbone</li>
+              <li><span class="check">✓</span>rek organizaciju</li>
+              <li><span class="check">✓</span>Fluke sertifikaciju</li>
+              <li><span class="check">✓</span>as-built dokumentaciju</li>
+              <li><span class="check">✓</span>faze, rokove i primopredaju</li>
+            </ul>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="tag">Ne idemo kada je</div>
+            <ul class="list">
+              <li><span class="check">×</span>jedini kriterijum najniža cena</li>
+              <li><span class="check">×</span>traži se samo radna snaga po metru</li>
+              <li><span class="check">×</span>obim nije jasan</li>
+              <li><span class="check">×</span>nema prostora za kvalitet i dokumentaciju</li>
+              <li><span class="check">×</span>rok / kapacitet ugrožava reputaciju</li>
+            </ul>
+          </div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="partneri">
+      <div class="wrap">
+        <div class="title">
+          <div>
+            <h2>8. Partner model</h2>
+            <p>Najveći leverage: firme koje već imaju klijente, ali nemaju specijalizovanu SKS/fiber/dokumentacionu isporuku.</p>
+          </div>
+        </div>
+        <div class="grid3">
+          <article class="card"><div class="cardPad">
+            <div class="tag">Partneri</div>
+            <h3>Ko su cilj partneri</h3>
+            <ul class="list">
+              <li><span class="check">✓</span>elektro izvođači</li>
+              <li><span class="check">✓</span>security integratori</li>
+              <li><span class="check">✓</span>IT support / MSP firme</li>
+              <li><span class="check">✓</span>projektanti i arhitekte</li>
+              <li><span class="check">✓</span>facility management</li>
+            </ul>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="tag">Ponuda</div>
+            <h3>Šta nudimo partneru</h3>
+            <p><b>“Vaš projekat. Naša infrastrukturalna isporuka.”</b></p>
+            <ul class="list">
+              <li><span class="check">✓</span>SATVISION izlazi na teren</li>
+              <li><span class="check">✓</span>radi SKS, optiku, rek</li>
+              <li><span class="check">✓</span>testira i dokumentuje</li>
+              <li><span class="check">✓</span>partner zadržava klijenta</li>
+            </ul>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="tag">Cilj</div>
+            <h3>6 meseci</h3>
+            <ul class="list">
+              <li><span class="check">✓</span>5 aktivnih partnera u pipeline-u</li>
+              <li><span class="check">✓</span>2 partnera šalju upite</li>
+              <li><span class="check">✓</span>1 partner projekat mesečno kao cilj</li>
+            </ul>
+          </div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="ponude">
+      <div class="wrap">
+        <div class="title">
+          <div>
+            <h2>9. Četiri ponude koje tržište lako razume</h2>
+            <p>Ne nudimo “radimo sve po potrebi”. Pakujemo uslugu u jasne ulazne tačke za klijenta.</p>
+          </div>
+        </div>
+        <div class="grid4">
+          <article class="card"><div class="cardPad">
+            <div class="tag">01</div><h3>Infrastructure Assessment</h3>
+            <p>Pregled postojećeg stanja: rack, kablovi, portovi, dokumentacija, problemi i preporuke.</p>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="tag">02</div><h3>Rack Rescue</h3>
+            <p>Sređivanje postojećeg mrežnog ormana: organizacija, označavanje, mapa portova, osnovna dokumentacija.</p>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="tag">03</div><h3>New Office Infrastructure</h3>
+            <p>Za firme koje ulaze u novi prostor: SKS, rek, patch panel, Fluke, as-built i primopredaja.</p>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="tag">04</div><h3>Fiber Backbone Package</h3>
+            <p>Optičke trase između spratova, objekata i ključnih tačaka mreže, uz testiranje i dokumentaciju.</p>
+          </div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kit">
+      <div class="wrap">
+        <div class="title">
+          <div>
+            <h2>10. SATVISION Go-To-Market Kit v1.0</h2>
+            <p>Pre ozbiljnog outreach-a mora postojati komplet koji podržava poverenje i prodaju.</p>
+          </div>
+        </div>
+        <div class="grid2">
+          <article class="card"><div class="cardPad">
+            <div class="tag">P0 — obavezno</div>
+            <ul class="list">
+              <li><span class="check">✓</span>finalna /usluge/ stranica</li>
+              <li><span class="check">✓</span>LinkedIn Company Page</li>
+              <li><span class="check">✓</span>Google Business Profile</li>
+              <li><span class="check">✓</span>PDF profil firme</li>
+              <li><span class="check">✓</span>PDF “Šta dobijate na primopredaji”</li>
+              <li><span class="check">✓</span>email template</li>
+              <li><span class="check">✓</span>LinkedIn message template</li>
+              <li><span class="check">✓</span>CRM tabela</li>
+            </ul>
+          </div></article>
+          <article class="card"><div class="cardPad">
+            <div class="tag">Proof library</div>
+            <ul class="list">
+              <li><span class="check">✓</span>pre/posle rek organizacija</li>
+              <li><span class="check">✓</span>Fluke testiranje svakog linka</li>
+              <li><span class="check">✓</span>optički backbone spajanje</li>
+              <li><span class="check">✓</span>mapa portova</li>
+              <li><span class="check">✓</span>primopredajni paket</li>
+              <li><span class="check">✓</span>kasnije zameniti realnim fotografijama</li>
+            </ul>
+          </div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kpi">
+      <div class="wrap">
+        <div class="title">
+          <div>
+            <h2>11. Success Criteria — prvih 6 meseci</h2>
+            <p>Merimo poslovni pipeline, ne vanity metrike.</p>
+          </div>
+        </div>
+        <div class="grid4">
+          <article class="card"><div class="cardPad"><div class="num">300</div><h3>relevantnih B2B kontakata</h3><p>Direktori, IT menadžeri, facility, partneri.</p></div></article>
+          <article class="card"><div class="cardPad"><div class="num">30</div><h3>razgovora</h3><p>Kontakt koji pokazuje realnu potrebu.</p></div></article>
+          <article class="card"><div class="cardPad"><div class="num">10</div><h3>obilazaka</h3><p>Infrastructure assessment / procena objekta.</p></div></article>
+          <article class="card"><div class="cardPad"><div class="num">6–10</div><h3>ponuda</h3><p>Ponude koje dolaze iz targetiranog pipeline-a.</p></div></article>
+        </div>
+        <div style="height:14px"></div>
+        <div class="grid3">
+          <article class="card"><div class="cardPad"><div class="num">2–4</div><h3>nova projekta</h3><p>Prvi dokazni poslovi za realne case studies.</p></div></article>
+          <article class="card"><div class="cardPad"><div class="num">2</div><h3>case study-ja</h3><p>Realni dokaz za zamenu generisanih vizuala.</p></div></article>
+          <article class="card"><div class="cardPad"><div class="num">5</div><h3>partnera u pipeline-u</h3><p>Od toga cilj: 1 aktivan partner koji donosi upite.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="callout">
+          <h3>Direktorski zaključak</h3>
+          <p>
+            SATVISION ne treba da se osloni na čekanje upita sa sajta. Sajt, društvene mreže i vizuali služe kao
+            dokaz poverenja. Tržište se osvaja kroz direktnu B2B prodaju, partnere, selektivne tendere i stalno
+            prikazivanje dokaza: Fluke, mapa portova, rek organizacija, optika, as-built i primopredaja.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <b>SATVISION Go-To-Market Plan v1.0</b><br/>
+      Namena: interni dokument za direktorsko odobrenje pre tržišnog lansiranja. Fokus: Srbija, SKS, optika, mrežna infrastruktura, security infrastructure kao infrastrukturni sloj.
+    </div>
+  </footer>
+
+  <div class="gtmLightbox" id="gtmLightbox" aria-hidden="true">
+    <div class="gtmLightboxInner">
+      <button class="gtmLightboxClose" type="button" aria-label="Zatvori uvećanu sliku">×</button>
+      <img id="gtmLightboxImg" src="" alt="">
+      <div class="gtmLightboxCaption" id="gtmLightboxCaption"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const lightbox = document.getElementById('gtmLightbox');
+      const lightboxImg = document.getElementById('gtmLightboxImg');
+      const lightboxCaption = document.getElementById('gtmLightboxCaption');
+      const closeBtn = document.querySelector('.gtmLightboxClose');
+
+      function openLightbox(img){
+        if(!lightbox || !lightboxImg) return;
+        const caption = img.getAttribute('alt') || img.getAttribute('title') || 'SATVISION visual proof';
+        lightboxImg.src = img.currentSrc || img.src;
+        lightboxImg.alt = caption;
+        lightboxCaption.textContent = caption;
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox(){
+        if(!lightbox || !lightboxImg) return;
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden','true');
+        lightboxImg.src = '';
+        document.body.style.overflow = '';
+      }
+
+      document.addEventListener('click', function(e){
+        const img = e.target.closest('.gtm-zoom-img');
+        if(img){
+          e.preventDefault();
+          openLightbox(img);
+          return;
+        }
+        if(e.target === lightbox){
+          closeLightbox();
+        }
+      });
+
+      if(closeBtn){
+        closeBtn.addEventListener('click', closeLightbox);
+      }
+
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && lightbox && lightbox.classList.contains('open')){
+          closeLightbox();
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
