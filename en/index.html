@@ -53,6 +53,85 @@
     a{color:inherit;text-decoration:none}
     .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
 
+    .topContact{
+      background:#070809;
+      color:rgba(255,255,255,.86);
+      border-bottom:1px solid rgba(255,255,255,.10);
+      font-size:13px;
+    }
+
+    .topContact .topContactInner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:8px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .topContact a{
+      color:rgba(255,255,255,.88);
+      text-decoration:none;
+      font-weight:800;
+    }
+
+    .topContact a:hover{
+      color:#ffffff;
+    }
+
+    .topContactLeft,
+    .topContactRight{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .topContact .accent{
+      color:var(--red);
+      font-weight:950;
+    }
+
+    .topContact .social{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      font-size:12px;
+    }
+
+    .topContact .social:hover{
+      background:var(--red);
+      border-color:var(--red);
+      color:#fff;
+    }
+
+    @media (max-width:760px){
+      .topContact .topContactInner{
+        justify-content:center;
+        text-align:center;
+      }
+
+      .topContactRight{
+        display:none;
+      }
+
+      .topContactLeft{
+        justify-content:center;
+        gap:10px;
+      }
+
+      .topContact .hideMobile{
+        display:none;
+      }
+    }
+
+
     .topline{
       height:5px;
       background:linear-gradient(90deg,var(--red),#FF4A4A,var(--red2));
@@ -1053,6 +1132,24 @@
 <body>
   <div class="topline"></div>
 
+
+  <div class="topContact">
+    <div class="topContactInner">
+      <div class="topContactLeft">
+        <span><span class="accent">SATVISION</span> Infrastructure</span>
+        <a href="tel:+38163374210">☎ +381 63 374 210</a>
+        <a class="hideMobile" href="mailto:office@satvision.rs">✉ office@satvision.rs</a>
+      </div>
+
+      <div class="topContactRight">
+        <a class="social" href="#" aria-label="LinkedIn">in</a>
+        <a class="social" href="#" aria-label="YouTube">YT</a>
+        <a class="social" href="#" aria-label="Instagram">IG</a>
+        <a class="social" href="#" aria-label="Facebook">f</a>
+      </div>
+    </div>
+  </div>
+
   <header class="nav">
     <div class="wrap navin">
       <a class="brand" href="#top" aria-label="SATVISION početna">
@@ -1129,27 +1226,27 @@
 
             <div class="heroProofShowcase" data-proof-slider aria-label="SATVISION proof slideshow">
               <figure class="panelVisual zoomable active">
-                <img class="proof-zoom-img" src="../assets/satvision-sks-optika-mrezna-infrastruktura.png" alt="Structured cabling, fiber and network infrastructure" title="Click to enlarge: Structured cabling, fiber and network infrastructure" />
+                <img class="proof-zoom-img" src="../assets/satvision-structured-cabling-fiber-network-infrastructure.png" alt="Structured cabling, fiber and network infrastructure" title="Click to enlarge: Structured cabling, fiber and network infrastructure" />
                 <figcaption class="panelCaption"><b>Structured Cabling, Fiber and Networks</b><span>One infrastructure foundation for data, WiFi, PoE, IP cameras and future expansion.</span></figcaption>
               </figure>
               <figure class="panelVisual zoomable">
-                <img class="proof-zoom-img" src="../assets/satvision-pre-i-posle-rek-organizacija.png" alt="Before and after rack organization" title="Click to enlarge: Before and after rack organization" />
+                <img class="proof-zoom-img" src="../assets/satvision-before-after-rack-organization.png" alt="Before and after rack organization" title="Click to enlarge: Before and after rack organization" />
                 <figcaption class="panelCaption"><b>Before / After Rack Organization</b><span>From cable chaos to labeled, documented and maintainable infrastructure.</span></figcaption>
               </figure>
               <figure class="panelVisual zoomable">
-                <img class="proof-zoom-img" src="../assets/satvision-opticki-backbone-spajanje.png" alt="Fiber backbone and optical splicing" title="Click to enlarge: Fiber backbone and optical splicing" />
+                <img class="proof-zoom-img" src="../assets/satvision-fiber-backbone-splicing.png" alt="Fiber backbone and optical splicing" title="Click to enlarge: Fiber backbone and optical splicing" />
                 <figcaption class="panelCaption"><b>Fiber Backbone / Optical Splicing</b><span>Optical foundation for floors, technical rooms and key network points.</span></figcaption>
               </figure>
               <figure class="panelVisual zoomable">
-                <img class="proof-zoom-img" src="../assets/satvision-fluke-testiranje-svakog-linka.png" alt="Fluke testing of every agreed link" title="Click to enlarge: Fluke testing of every agreed link" />
+                <img class="proof-zoom-img" src="../assets/satvision-fluke-testing-every-link.png" alt="Fluke testing of every agreed link" title="Click to enlarge: Fluke testing of every agreed link" />
                 <figcaption class="panelCaption"><b>Fluke Testing of Every Link</b><span>Measurable performance proof before handover and documentation.</span></figcaption>
               </figure>
               <figure class="panelVisual zoomable">
-                <img class="proof-zoom-img" src="../assets/satvision-mapa-portova-dokumentacija-koja-stedi-sate.png" alt="Port map documentation that saves hours" title="Click to enlarge: Port map documentation that saves hours" />
+                <img class="proof-zoom-img" src="../assets/satvision-port-map-documentation-saves-hours.png" alt="Port map documentation that saves hours" title="Click to enlarge: Port map documentation that saves hours" />
                 <figcaption class="panelCaption"><b>Port Map</b><span>Documentation that saves hours during maintenance and troubleshooting.</span></figcaption>
               </figure>
               <figure class="panelVisual zoomable">
-                <img class="proof-zoom-img" src="../assets/satvision-sta-dobijate-na-primopredaji.png" alt="What you receive at handover" title="Click to enlarge: What you receive at handover" />
+                <img class="proof-zoom-img" src="../assets/satvision-handover-package.png" alt="What you receive at handover" title="Click to enlarge: What you receive at handover" />
                 <figcaption class="panelCaption"><b>Handover Package</b><span>Reports, port map, as-built and final photo record.</span></figcaption>
               </figure>
 
@@ -1231,11 +1328,11 @@
 
         <div class="imageGrid">
           <figure class="imageCard zoomable">
-            <img class="proof-zoom-img" src="../assets/satvision-opticki-backbone-spajanje.png" alt="Fiber backbone and optical splicing for business infrastructure" />
+            <img class="proof-zoom-img" src="../assets/satvision-fiber-backbone-splicing.png" alt="Fiber backbone and optical splicing for business infrastructure" />
             <figcaption><b>Fiber Backbone / Optical Splicing</b> Optical infrastructure for facility backbone, technical rooms and high-reliability connectivity.</figcaption>
           </figure>
           <figure class="imageCard zoomable">
-            <img class="proof-zoom-img" src="../assets/satvision-sks-optika-mrezna-infrastruktura.png" alt="Structured cabling, fiber and network infrastructure concept" />
+            <img class="proof-zoom-img" src="../assets/satvision-structured-cabling-fiber-network-infrastructure.png" alt="Structured cabling, fiber and network infrastructure concept" />
             <figcaption><b>Structured Cabling, Fiber and Networks</b> One infrastructure foundation for data, WiFi, PoE, IP cameras, intercom and future expansion.</figcaption>
           </figure>
         </div>
@@ -1308,15 +1405,15 @@
 
           <div class="proofVisuals">
             <figure class="imageCard dark zoomable">
-              <img class="proof-zoom-img" src="../assets/satvision-fluke-testiranje-svakog-linka.png" alt="Fluke testing of every agreed structured cabling link" />
+              <img class="proof-zoom-img" src="../assets/satvision-fluke-testing-every-link.png" alt="Fluke testing of every agreed structured cabling link" />
               <figcaption><b>Fluke Testing</b> Testing every agreed link before handover.</figcaption>
             </figure>
             <figure class="imageCard dark zoomable">
-              <img class="proof-zoom-img" src="../assets/satvision-mapa-portova-dokumentacija-koja-stedi-sate.png" alt="Port map documentation that saves maintenance time" />
+              <img class="proof-zoom-img" src="../assets/satvision-port-map-documentation-saves-hours.png" alt="Port map documentation that saves maintenance time" />
               <figcaption><b>Port Map</b> Documentation that saves hours during maintenance.</figcaption>
             </figure>
             <figure class="imageCard dark zoomable">
-              <img class="proof-zoom-img" src="../assets/satvision-sta-dobijate-na-primopredaji.png" alt="SATVISION handover package with reports and documentation" />
+              <img class="proof-zoom-img" src="../assets/satvision-handover-package.png" alt="SATVISION handover package with reports and documentation" />
               <figcaption><b>Handover Package</b> Reports, port map, as-built and final photo record.</figcaption>
             </figure>
           </div>
@@ -1362,7 +1459,7 @@
         <div class="rackProofLayout">
           <figure class="rackPosterCard zoomable">
             <div class="rackPosterFrame">
-              <img class="proof-zoom-img" src="../assets/satvision-pre-i-posle-rek-organizacija.png" alt="Before and after rack organization for business network infrastructure" title="Click to enlarge: Before and after rack organization" />
+              <img class="proof-zoom-img" src="../assets/satvision-before-after-rack-organization.png" alt="Before and after rack organization for business network infrastructure" title="Click to enlarge: Before and after rack organization" />
             </div>
             <figcaption><b>Before / After Rack Organization</b> Main proof poster: from cable chaos to labeled, documented and maintainable infrastructure.</figcaption>
           </figure>
@@ -1434,7 +1531,7 @@
       <div class="wrap">
         <div class="caseShell">
           <figure class="imageCard zoomable">
-            <img class="proof-zoom-img" src="../assets/satvision-sta-dobijate-na-primopredaji.png" alt="Example SATVISION handover deliverables for infrastructure projects" />
+            <img class="proof-zoom-img" src="../assets/satvision-handover-package.png" alt="Example SATVISION handover deliverables for infrastructure projects" />
             <figcaption><b>Handover Proof Slot</b> Replace this visual with real project photos and anonymized documentation when available.</figcaption>
           </figure>
 
